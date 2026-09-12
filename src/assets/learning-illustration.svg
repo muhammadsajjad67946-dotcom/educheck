@@ -1,0 +1,28 @@
+<svg width="100%" height="100%" viewBox="0 0 720 560" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="0" width="720" height="560" rx="40" fill="#0F172A" />
+  <rect x="42" y="42" width="636" height="476" rx="32" fill="#15203B" />
+  <rect x="78" y="98" width="268" height="210" rx="28" fill="#1E293B" />
+  <rect x="92" y="116" width="236" height="24" rx="12" fill="#38BDF8" />
+  <rect x="92" y="156" width="180" height="16" rx="8" fill="#94A3B8" />
+  <rect x="92" y="186" width="210" height="16" rx="8" fill="#94A3B8" />
+  <rect x="92" y="216" width="160" height="16" rx="8" fill="#94A3B8" />
+  <path d="M458 108C456.343 108 455 109.343 455 111V247C455 248.657 456.343 250 458 250H606C607.657 250 609 248.657 609 247V111C609 109.343 607.657 108 606 108H458Z" fill="#0E172A" stroke="#38BDF8" stroke-width="6"/>
+  <circle cx="532" cy="165" r="28" fill="#38BDF8" />
+  <circle cx="588" cy="165" r="28" fill="#A855F7" />
+  <path d="M498 242C498 233.163 505.163 226 514 226H610C618.837 226 626 233.163 626 242V254H498V242Z" fill="#334155" />
+  <path d="M160 354C164.418 354 168 350.418 168 346C168 341.582 164.418 338 160 338C155.582 338 152 341.582 152 346C152 350.418 155.582 354 160 354Z" fill="#38BDF8" />
+  <path d="M210 384C214.418 384 218 380.418 218 376C218 371.582 214.418 368 210 368C205.582 368 202 371.582 202 376C202 380.418 205.582 384 210 384Z" fill="#A855F7" />
+  <path d="M258 424C262.418 424 266 420.418 266 416C266 411.582 262.418 408 258 408C253.582 408 250 411.582 250 416C250 420.418 253.582 424 258 424Z" fill="#7C3AED" />
+  <path d="M118 316L154 286L192 318" stroke="#38BDF8" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M124 420H244" stroke="#94A3B8" stroke-width="12" stroke-linecap="round"/>
+  <path d="M152 454H216" stroke="#94A3B8" stroke-width="12" stroke-linecap="round"/>
+  <path d="M422 426L462 384L510 434" stroke="#A855F7" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="88" y="340" fill="#FFFFFF" font-family="Inter, sans-serif" font-size="40" font-weight="700">1</text>
+  <text x="146" y="300" fill="#FFFFFF" font-family="Inter, sans-serif" font-size="40" font-weight="700">2</text>
+  <text x="208" y="258" fill="#FFFFFF" font-family="Inter, sans-serif" font-size="40" font-weight="700">3</text>
+  <text x="266" y="216" fill="#FFFFFF" font-family="Inter, sans-serif" font-size="40" font-weight="700">4</text>
+  <text x="324" y="176" fill="#FFFFFF" font-family="Inter, sans-serif" font-size="40" font-weight="700">5</text>
+  <text x="382" y="136" fill="#FFFFFF" font-family="Inter, sans-serif" font-size="40" font-weight="700">6</text>
+  <text x="440" y="156" fill="#FFFFFF" font-family="Inter, sans-serif" font-size="40" font-weight="700">7</text>
+  <text x="498" y="186" fill="#FFFFFF" font-family="Inter, sans-serif" font-size="40" font-weight="700">8</text>
+</svg>

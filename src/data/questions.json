@@ -1,0 +1,1402 @@
+[
+  {
+    "id": 1,
+    "grade": 1,
+    "topic": "Number & Operations",
+    "difficulty": "Low",
+    "question": "What is 7 + 5?",
+    "options": {
+      "A": "10",
+      "B": "11",
+      "C": "12",
+      "D": "13"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 2,
+    "grade": 1,
+    "topic": "Number & Operations",
+    "difficulty": "Low",
+    "question": "Which number comes directly after 19?",
+    "options": {
+      "A": "18",
+      "B": "20",
+      "C": "21",
+      "D": "22"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 3,
+    "grade": 2,
+    "topic": "Number & Operations",
+    "difficulty": "Medium",
+    "question": "What is 45 - 18?",
+    "options": {
+      "A": "27",
+      "B": "28",
+      "C": "37",
+      "D": "23"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 4,
+    "grade": 2,
+    "topic": "Number & Operations",
+    "difficulty": "Low",
+    "question": "Which number is even?",
+    "options": {
+      "A": "13",
+      "B": "21",
+      "C": "34",
+      "D": "45"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 5,
+    "grade": 3,
+    "topic": "Number & Operations",
+    "difficulty": "Medium",
+    "question": "What is 8 × 7?",
+    "options": {
+      "A": "48",
+      "B": "54",
+      "C": "56",
+      "D": "64"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 6,
+    "grade": 3,
+    "topic": "Number & Operations",
+    "difficulty": "Medium",
+    "question": "What is 48 ÷ 6?",
+    "options": {
+      "A": "6",
+      "B": "7",
+      "C": "8",
+      "D": "9"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 7,
+    "grade": 3,
+    "topic": "Number & Operations",
+    "difficulty": "Medium",
+    "question": "Round 384 to the nearest hundred.",
+    "options": {
+      "A": "300",
+      "B": "380",
+      "C": "400",
+      "D": "500"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 8,
+    "grade": 4,
+    "topic": "Number & Operations",
+    "difficulty": "Medium",
+    "question": "What is the place value of 7 in 5,782?",
+    "options": {
+      "A": "Tens",
+      "B": "Hundreds",
+      "C": "Thousands",
+      "D": "Ones"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 9,
+    "grade": 4,
+    "topic": "Number & Operations",
+    "difficulty": "Medium",
+    "question": "Find the sum of 1,250 and 3,750.",
+    "options": {
+      "A": "4,900",
+      "B": "5,000",
+      "C": "5,100",
+      "D": "5,200"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 10,
+    "grade": 4,
+    "topic": "Number & Operations",
+    "difficulty": "Medium",
+    "question": "What is 3/5 + 1/5?",
+    "options": {
+      "A": "4/10",
+      "B": "4/5",
+      "C": "2/5",
+      "D": "3/25"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 11,
+    "grade": 5,
+    "topic": "Number & Operations",
+    "difficulty": "Medium",
+    "question": "Simplify 12/16 to its lowest terms.",
+    "options": {
+      "A": "3/4",
+      "B": "6/8",
+      "C": "2/3",
+      "D": "4/5"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 12,
+    "grade": 5,
+    "topic": "Number & Operations",
+    "difficulty": "Medium",
+    "question": "What is 0.45 + 0.35?",
+    "options": {
+      "A": "0.70",
+      "B": "0.80",
+      "C": "0.75",
+      "D": "0.85"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 13,
+    "grade": 6,
+    "topic": "Number & Operations",
+    "difficulty": "Medium",
+    "question": "Evaluate: (-8) + (+15)",
+    "options": {
+      "A": "-23",
+      "B": "-7",
+      "C": "7",
+      "D": "23"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 14,
+    "grade": 6,
+    "topic": "Number & Operations",
+    "difficulty": "Medium",
+    "question": "What is 15% of 200?",
+    "options": {
+      "A": "20",
+      "B": "25",
+      "C": "30",
+      "D": "35"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 15,
+    "grade": 6,
+    "topic": "Number & Operations",
+    "difficulty": "Medium",
+    "question": "Find the Least Common Multiple (LCM) of 6 and 8.",
+    "options": {
+      "A": "12",
+      "B": "18",
+      "C": "24",
+      "D": "48"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 16,
+    "grade": 7,
+    "topic": "Number & Operations",
+    "difficulty": "Medium",
+    "question": "Evaluate: (-4) × (-9)",
+    "options": {
+      "A": "-36",
+      "B": "36",
+      "C": "-13",
+      "D": "13"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 17,
+    "grade": 7,
+    "topic": "Number & Operations",
+    "difficulty": "High",
+    "question": "Write 0.0045 in scientific notation.",
+    "options": {
+      "A": "4.5 × 10⁻³",
+      "B": "4.5 × 10⁻⁴",
+      "C": "45 × 10⁻⁴",
+      "D": "0.45 × 10⁻²"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 18,
+    "grade": 7,
+    "topic": "Number & Operations",
+    "difficulty": "Medium",
+    "question": "Convert 3/8 to a decimal.",
+    "options": {
+      "A": "0.325",
+      "B": "0.375",
+      "C": "0.380",
+      "D": "0.425"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 19,
+    "grade": 8,
+    "topic": "Number & Operations",
+    "difficulty": "Medium",
+    "question": "What is the value of 5³?",
+    "options": {
+      "A": "15",
+      "B": "25",
+      "C": "125",
+      "D": "625"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 20,
+    "grade": 8,
+    "topic": "Number & Operations",
+    "difficulty": "High",
+    "question": "Simplify: √(144) + ∛(27)",
+    "options": {
+      "A": "15",
+      "B": "17",
+      "C": "18",
+      "D": "21"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 21,
+    "grade": 1,
+    "topic": "Geometry",
+    "difficulty": "Low",
+    "question": "How many sides does a triangle have?",
+    "options": {
+      "A": "2",
+      "B": "3",
+      "C": "4",
+      "D": "5"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 22,
+    "grade": 1,
+    "topic": "Geometry",
+    "difficulty": "Low",
+    "question": "Which shape has no corners/vertices?",
+    "options": {
+      "A": "Square",
+      "B": "Rectangle",
+      "C": "Circle",
+      "D": "Triangle"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 23,
+    "grade": 2,
+    "topic": "Geometry",
+    "difficulty": "Low",
+    "question": "How many sides does a hexagon have?",
+    "options": {
+      "A": "5",
+      "B": "6",
+      "C": "7",
+      "D": "8"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 24,
+    "grade": 2,
+    "topic": "Geometry",
+    "difficulty": "Low",
+    "question": "A square has how many equal sides?",
+    "options": {
+      "A": "2",
+      "B": "3",
+      "C": "4",
+      "D": "6"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 25,
+    "grade": 3,
+    "topic": "Geometry",
+    "difficulty": "Medium",
+    "question": "What type of angle measures exactly 90 degrees?",
+    "options": {
+      "A": "Acute",
+      "B": "Right",
+      "C": "Obtuse",
+      "D": "Straight"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 26,
+    "grade": 3,
+    "topic": "Geometry",
+    "difficulty": "Medium",
+    "question": "Which shape is a 3D figure?",
+    "options": {
+      "A": "Square",
+      "B": "Circle",
+      "C": "Cube",
+      "D": "Triangle"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 27,
+    "grade": 4,
+    "topic": "Geometry",
+    "difficulty": "Medium",
+    "question": "An angle smaller than 90 degrees is called:",
+    "options": {
+      "A": "Obtuse",
+      "B": "Right",
+      "C": "Acute",
+      "D": "Reflex"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 28,
+    "grade": 4,
+    "topic": "Geometry",
+    "difficulty": "Medium",
+    "question": "How many lines of symmetry does a square have?",
+    "options": {
+      "A": "2",
+      "B": "4",
+      "C": "6",
+      "D": "8"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 29,
+    "grade": 5,
+    "topic": "Geometry",
+    "difficulty": "Medium",
+    "question": "What is the sum of angles in any triangle?",
+    "options": {
+      "A": "90°",
+      "B": "180°",
+      "C": "270°",
+      "D": "360°"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 30,
+    "grade": 5,
+    "topic": "Geometry",
+    "difficulty": "Low",
+    "question": "A perimeter is the:",
+    "options": {
+      "A": "Area inside",
+      "B": "Distance around",
+      "C": "Volume",
+      "D": "Height"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 31,
+    "grade": 6,
+    "topic": "Geometry",
+    "difficulty": "Medium",
+    "question": "Find the perimeter of a rectangle with length 8 cm and width 5 cm.",
+    "options": {
+      "A": "13 cm",
+      "B": "26 cm",
+      "C": "40 cm",
+      "D": "20 cm"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 32,
+    "grade": 6,
+    "topic": "Geometry",
+    "difficulty": "High",
+    "question": "What is the area of a right-angled triangle with base 6 cm and height 4 cm?",
+    "options": {
+      "A": "24 cm²",
+      "B": "12 cm²",
+      "C": "10 cm²",
+      "D": "18 cm²"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 33,
+    "grade": 7,
+    "topic": "Geometry",
+    "difficulty": "High",
+    "question": "What is the circumference of a circle with radius 7 cm? (Use π ≈ 22/7)",
+    "options": {
+      "A": "22 cm",
+      "B": "44 cm",
+      "C": "154 cm",
+      "D": "88 cm"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 34,
+    "grade": 7,
+    "topic": "Geometry",
+    "difficulty": "High",
+    "question": "Two angles are supplementary if their sum is:",
+    "options": {
+      "A": "90°",
+      "B": "180°",
+      "C": "270°",
+      "D": "360°"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 35,
+    "grade": 7,
+    "topic": "Geometry",
+    "difficulty": "High",
+    "question": "Find the area of a circle with radius 3 cm. (Use π ≈ 3.14)",
+    "options": {
+      "A": "18.84 cm²",
+      "B": "28.26 cm²",
+      "C": "9.42 cm²",
+      "D": "37.68 cm²"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 36,
+    "grade": 8,
+    "topic": "Geometry",
+    "difficulty": "High",
+    "question": "In a right triangle, if legs are 3 cm and 4 cm, what is the hypotenuse?",
+    "options": {
+      "A": "5 cm",
+      "B": "6 cm",
+      "C": "7 cm",
+      "D": "25 cm"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 37,
+    "grade": 8,
+    "topic": "Geometry",
+    "difficulty": "Medium",
+    "question": "What is the sum of interior angles of a pentagon?",
+    "options": {
+      "A": "360°",
+      "B": "540°",
+      "C": "720°",
+      "D": "180°"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 38,
+    "grade": 8,
+    "topic": "Geometry",
+    "difficulty": "Medium",
+    "question": "Find the volume of a cube with edge length 4 cm.",
+    "options": {
+      "A": "16 cm³",
+      "B": "32 cm³",
+      "C": "64 cm³",
+      "D": "96 cm³"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 39,
+    "grade": 8,
+    "topic": "Geometry",
+    "difficulty": "Medium",
+    "question": "If two triangles are similar, their corresponding sides are:",
+    "options": {
+      "A": "Equal",
+      "B": "Proportional",
+      "C": "Perpendicular",
+      "D": "Parallel"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 40,
+    "grade": 8,
+    "topic": "Geometry",
+    "difficulty": "Medium",
+    "question": "What is the measure of each interior angle of a regular hexagon?",
+    "options": {
+      "A": "108°",
+      "B": "120°",
+      "C": "135°",
+      "D": "140°"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 41,
+    "grade": 1,
+    "topic": "Measurement",
+    "difficulty": "Low",
+    "question": "Which unit is used to measure time?",
+    "options": {
+      "A": "Meter",
+      "B": "Liter",
+      "C": "Hour",
+      "D": "Gram"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 42,
+    "grade": 1,
+    "topic": "Measurement",
+    "difficulty": "Low",
+    "question": "Which tool measures weight?",
+    "options": {
+      "A": "Ruler",
+      "B": "Weighing Scale",
+      "C": "Clock",
+      "D": "Thermometer"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 43,
+    "grade": 2,
+    "topic": "Measurement",
+    "difficulty": "Low",
+    "question": "How many minutes are in 1 hour?",
+    "options": {
+      "A": "30",
+      "B": "50",
+      "C": "60",
+      "D": "100"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 44,
+    "grade": 2,
+    "topic": "Measurement",
+    "difficulty": "Low",
+    "question": "How many centimeters are in 1 meter?",
+    "options": {
+      "A": "10",
+      "B": "100",
+      "C": "1,000",
+      "D": "10000"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 45,
+    "grade": 3,
+    "topic": "Measurement",
+    "difficulty": "Low",
+    "question": "How many grams are in 1 kilogram?",
+    "options": {
+      "A": "100",
+      "B": "500",
+      "C": "1,000",
+      "D": "10,000"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 46,
+    "grade": 3,
+    "topic": "Measurement",
+    "difficulty": "Medium",
+    "question": "If a movie starts at 2:15 PM and ends at 4:15 PM, how long is it?",
+    "options": {
+      "A": "1 hour",
+      "B": "2 hours",
+      "C": "3 hours",
+      "D": "1.5 hours"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 47,
+    "grade": 4,
+    "topic": "Measurement",
+    "difficulty": "Medium",
+    "question": "Convert 3.5 liters into milliliters.",
+    "options": {
+      "A": "35 mL",
+      "B": "350 mL",
+      "C": "3,500 mL",
+      "D": "35,000 mL"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 48,
+    "grade": 4,
+    "topic": "Measurement",
+    "difficulty": "Low",
+    "question": "Which unit is best for measuring liquid capacity?",
+    "options": {
+      "A": "Millimeter",
+      "B": "Liter",
+      "C": "Gram",
+      "D": "Kilometer"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 49,
+    "grade": 5,
+    "topic": "Measurement",
+    "difficulty": "Low",
+    "question": "How many days are in a leap year?",
+    "options": {
+      "A": "365",
+      "B": "366",
+      "C": "364",
+      "D": "360"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 50,
+    "grade": 5,
+    "topic": "Measurement",
+    "difficulty": "Medium",
+    "question": "Convert 4500 meters to kilometers.",
+    "options": {
+      "A": "4.5 km",
+      "B": "45 km",
+      "C": "0.45 km",
+      "D": "450 km"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 51,
+    "grade": 6,
+    "topic": "Measurement",
+    "difficulty": "Medium",
+    "question": "A car travels 150 km in 3 hours. What is its average speed?",
+    "options": {
+      "A": "40 km/h",
+      "B": "50 km/h",
+      "C": "60 km/h",
+      "D": "45 km/h"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 52,
+    "grade": 6,
+    "topic": "Measurement",
+    "difficulty": "High",
+    "question": "What is the area of a square table with side 1.5 m?",
+    "options": {
+      "A": "2.25 m²",
+      "B": "3.0 m²",
+      "C": "6.0 m²",
+      "D": "2.50 m²"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 53,
+    "grade": 7,
+    "topic": "Measurement",
+    "difficulty": "Medium",
+    "question": "Convert 25°C to Fahrenheit using F = (C × 9/5) + 32.",
+    "options": {
+      "A": "68°F",
+      "B": "75°F",
+      "C": "77°F",
+      "D": "82°F"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 54,
+    "grade": 7,
+    "topic": "Measurement",
+    "difficulty": "Medium",
+    "question": "Find the volume of a rectangular prism with length 5 m, width 3 m, height 2 m.",
+    "options": {
+      "A": "30 m³",
+      "B": "10 m³",
+      "C": "25 m³",
+      "D": "60 m³"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 55,
+    "grade": 7,
+    "topic": "Measurement",
+    "difficulty": "Medium",
+    "question": "A runner completes 400 m in 80 seconds. What is their speed in m/s?",
+    "options": {
+      "A": "4 m/s",
+      "B": "5 m/s",
+      "C": "6 m/s",
+      "D": "8 m/s"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 56,
+    "grade": 8,
+    "topic": "Measurement",
+    "difficulty": "Low",
+    "question": "If 1 inch = 2.54 cm, how many cm are in 10 inches?",
+    "options": {
+      "A": "25.4 cm",
+      "B": "254 cm",
+      "C": "2.54 cm",
+      "D": "0.254 cm"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 57,
+    "grade": 8,
+    "topic": "Measurement",
+    "difficulty": "Medium",
+    "question": "What is the surface area of a cube with edge 3 cm?",
+    "options": {
+      "A": "27 cm²",
+      "B": "36 cm²",
+      "C": "54 cm²",
+      "D": "18 cm²"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 58,
+    "grade": 8,
+    "topic": "Measurement",
+    "difficulty": "High",
+    "question": "A cylinder has radius 3 cm and height 7 cm. Find its volume (π ≈ 22/7).",
+    "options": {
+      "A": "198 cm³",
+      "B": "154 cm³",
+      "C": "66 cm³",
+      "D": "132 cm³"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 59,
+    "grade": 8,
+    "topic": "Measurement",
+    "difficulty": "Medium",
+    "question": "Density is calculated as:",
+    "options": {
+      "A": "Mass × Volume",
+      "B": "Mass / Volume",
+      "C": "Volume / Mass",
+      "D": "Mass + Volume"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 60,
+    "grade": 8,
+    "topic": "Measurement",
+    "difficulty": "Medium",
+    "question": "If a map scale is 1 cm : 5 km, what distance does 6 cm represent?",
+    "options": {
+      "A": "11 km",
+      "B": "20 km",
+      "C": "30 km",
+      "D": "35 km"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 61,
+    "grade": 1,
+    "topic": "Algebra",
+    "difficulty": "Low",
+    "question": "Find the missing number: 3 + ___ = 7",
+    "options": {
+      "A": "3",
+      "B": "4",
+      "C": "5",
+      "D": "6"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 62,
+    "grade": 2,
+    "topic": "Algebra",
+    "difficulty": "Low",
+    "question": "Complete the pattern: 2, 4, 6, 8, ___",
+    "options": {
+      "A": "9",
+      "B": "10",
+      "C": "11",
+      "D": "12"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 63,
+    "grade": 3,
+    "topic": "Algebra",
+    "difficulty": "Low",
+    "question": "If x = 5, what is x + 9?",
+    "options": {
+      "A": "12",
+      "B": "13",
+      "C": "14",
+      "D": "15"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 64,
+    "grade": 3,
+    "topic": "Algebra",
+    "difficulty": "Medium",
+    "question": "Find the missing number: ___ - 6 = 10",
+    "options": {
+      "A": "14",
+      "B": "16",
+      "C": "18",
+      "D": "4"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 65,
+    "grade": 4,
+    "topic": "Algebra",
+    "difficulty": "Medium",
+    "question": "Solve for y: y / 4 = 6",
+    "options": {
+      "A": "10",
+      "B": "20",
+      "C": "24",
+      "D": "2"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 66,
+    "grade": 4,
+    "topic": "Algebra",
+    "difficulty": "Low",
+    "question": "What is the next number in pattern: 5, 10, 20, 40, ___?",
+    "options": {
+      "A": "50",
+      "B": "60",
+      "C": "80",
+      "D": "100"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 67,
+    "grade": 5,
+    "topic": "Algebra",
+    "difficulty": "Medium",
+    "question": "Simplify: 3a + 5a - 2a",
+    "options": {
+      "A": "6a",
+      "B": "8a",
+      "C": "10a",
+      "D": "5a"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 68,
+    "grade": 5,
+    "topic": "Algebra",
+    "difficulty": "Medium",
+    "question": "Solve for x: 2x + 4 = 12",
+    "options": {
+      "A": "3",
+      "B": "4",
+      "C": "5",
+      "D": "6"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 69,
+    "grade": 6,
+    "topic": "Algebra",
+    "difficulty": "Medium",
+    "question": "Evaluate 3x² when x = 3.",
+    "options": {
+      "A": "18",
+      "B": "27",
+      "C": "36",
+      "D": "81"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 70,
+    "grade": 6,
+    "topic": "Algebra",
+    "difficulty": "Medium",
+    "question": "Solve for x: 5x - 7 = 18",
+    "options": {
+      "A": "3",
+      "B": "4",
+      "C": "5",
+      "D": "6"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 71,
+    "grade": 6,
+    "topic": "Algebra",
+    "difficulty": "Medium",
+    "question": "Expand the expression: 4(x + 3)",
+    "options": {
+      "A": "4x + 3",
+      "B": "4x + 12",
+      "C": "x + 12",
+      "D": "7x"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 72,
+    "grade": 7,
+    "topic": "Algebra",
+    "difficulty": "Medium",
+    "question": "Factorize completely: 6x + 12",
+    "options": {
+      "A": "6",
+      "B": "3",
+      "C": "2",
+      "D": "6"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 73,
+    "grade": 7,
+    "topic": "Algebra",
+    "difficulty": "Medium",
+    "question": "Solve inequality: 2x + 3 < 11",
+    "options": {
+      "A": "x < 4",
+      "B": "x > 4",
+      "C": "x < 7",
+      "D": "x > 7"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 74,
+    "grade": 7,
+    "topic": "Algebra",
+    "difficulty": "Medium",
+    "question": "If a = 2 and b = -3, evaluate a² - b.",
+    "options": {
+      "A": "1",
+      "B": "7",
+      "C": "-1",
+      "D": "-5"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 75,
+    "grade": 8,
+    "topic": "Algebra",
+    "difficulty": "High",
+    "question": "Solve system of linear equations: x + y = 10 and x - y = 4.",
+    "options": {
+      "A": "x=7, y=3",
+      "B": "x=6, y=4",
+      "C": "x=8, y=2",
+      "D": "x=5, y=5"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 76,
+    "grade": 8,
+    "topic": "Algebra",
+    "difficulty": "Medium",
+    "question": "What is the slope (m) in equation y = -3x + 7?",
+    "options": {
+      "A": "7",
+      "B": "-3",
+      "C": "3",
+      "D": "-7"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 77,
+    "grade": 8,
+    "topic": "Algebra",
+    "difficulty": "High",
+    "question": "Expand: (x + 3)(x + 5)",
+    "options": {
+      "A": "x² + 8x + 15",
+      "B": "x² + 15x + 8",
+      "C": "x² + 8",
+      "D": "x² + 15"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 78,
+    "grade": 8,
+    "topic": "Algebra",
+    "difficulty": "High",
+    "question": "Factorize: x² - 16",
+    "options": {
+      "A": "",
+      "B": "",
+      "C": "",
+      "D": ""
+    },
+    "answer": "B"
+  },
+  {
+    "id": 79,
+    "grade": 8,
+    "topic": "Algebra",
+    "difficulty": "High",
+    "question": "Solve equation: x² - 9 = 0",
+    "options": {
+      "A": "x = 3",
+      "B": "x = -3",
+      "C": "x = ±3",
+      "D": "x = 9"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 80,
+    "grade": 8,
+    "topic": "Algebra",
+    "difficulty": "High",
+    "question": "Simplify: (2x³y²) × (4x²y³)",
+    "options": {
+      "A": "8x⁵y⁵",
+      "B": "6x⁵y⁵",
+      "C": "8x⁶y⁶",
+      "D": "6x⁶y⁶"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 81,
+    "grade": 1,
+    "topic": "Data Analysis",
+    "difficulty": "Low",
+    "question": "A tally mark '卌' represents which number?",
+    "options": {
+      "A": "4",
+      "B": "5",
+      "C": "6",
+      "D": "10"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 82,
+    "grade": 2,
+    "topic": "Data Analysis",
+    "difficulty": "Low",
+    "question": "In a pictogram, if 1 star = 2 apples, how many apples do 4 stars represent?",
+    "options": {
+      "A": "4",
+      "B": "6",
+      "C": "8",
+      "D": "10"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 83,
+    "grade": 3,
+    "topic": "Data Analysis",
+    "difficulty": "Low",
+    "question": "What is the mode of data set: 2, 4, 4, 5, 7, 4, 9?",
+    "options": {
+      "A": "2",
+      "B": "4",
+      "C": "5",
+      "D": "7"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 84,
+    "grade": 3,
+    "topic": "Data Analysis",
+    "difficulty": "Low",
+    "question": "What is the range of numbers: 3, 8, 12, 15, 22?",
+    "options": {
+      "A": "15",
+      "B": "19",
+      "C": "22",
+      "D": "12"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 85,
+    "grade": 4,
+    "topic": "Data Analysis",
+    "difficulty": "Low",
+    "question": "Find the mean (average) of 4, 8, 12.",
+    "options": {
+      "A": "6",
+      "B": "8",
+      "C": "10",
+      "D": "12"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 86,
+    "grade": 4,
+    "topic": "Data Analysis",
+    "difficulty": "Low",
+    "question": "Find the median of numbers: 3, 7, 9, 12, 15.",
+    "options": {
+      "A": "7",
+      "B": "9",
+      "C": "12",
+      "D": "11"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 87,
+    "grade": 5,
+    "topic": "Data Analysis",
+    "difficulty": "Low",
+    "question": "If a fair coin is tossed once, what is the probability of getting Heads?",
+    "options": {
+      "A": "1/4",
+      "B": "1/2",
+      "C": "3/4",
+      "D": "1"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 88,
+    "grade": 5,
+    "topic": "Data Analysis",
+    "difficulty": "Low",
+    "question": "A bar graph shows height of bars. What does bar height represent?",
+    "options": {
+      "A": "Category",
+      "B": "Frequency / Value",
+      "C": "Title",
+      "D": "Width"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 89,
+    "grade": 6,
+    "topic": "Data Analysis",
+    "difficulty": "Medium",
+    "question": "Find the mean of data set: 10, 20, 30, 40, 50.",
+    "options": {
+      "A": "25",
+      "B": "30",
+      "C": "35",
+      "D": "40"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 90,
+    "grade": 6,
+    "topic": "Data Analysis",
+    "difficulty": "Low",
+    "question": "What is the probability of rolling a 4 on a standard 6-sided die?",
+    "options": {
+      "A": "1/4",
+      "B": "1/6",
+      "C": "1/2",
+      "D": "2/6"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 91,
+    "grade": 6,
+    "topic": "Data Analysis",
+    "difficulty": "High",
+    "question": "What is the median of even count data: 4, 8, 12, 16?",
+    "options": {
+      "A": "8",
+      "B": "10",
+      "C": "12",
+      "D": "9"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 92,
+    "grade": 7,
+    "topic": "Data Analysis",
+    "difficulty": "High",
+    "question": "A bag contains 3 red balls and 7 blue balls. What is probability of drawing a red ball?",
+    "options": {
+      "A": "3/7",
+      "B": "3/10",
+      "C": "7/10",
+      "D": "1/3"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 93,
+    "grade": 7,
+    "topic": "Data Analysis",
+    "difficulty": "High",
+    "question": "In a pie chart, what central angle represents 25% of data?",
+    "options": {
+      "A": "45°",
+      "B": "90°",
+      "C": "120°",
+      "D": "180°"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 94,
+    "grade": 7,
+    "topic": "Data Analysis",
+    "difficulty": "Low",
+    "question": "Find the mode of: 11, 14, 11, 16, 19, 14, 11, 22.",
+    "options": {
+      "A": "11",
+      "B": "14",
+      "C": "16",
+      "D": "22"
+    },
+    "answer": "A"
+  },
+  {
+    "id": 95,
+    "grade": 8,
+    "topic": "Data Analysis",
+    "difficulty": "High",
+    "question": "Two fair coins are tossed. What is the probability of getting two heads?",
+    "options": {
+      "A": "1/2",
+      "B": "1/4",
+      "C": "3/4",
+      "D": "1/8"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 96,
+    "grade": 8,
+    "topic": "Data Analysis",
+    "difficulty": "High",
+    "question": "A box has 5 red, 3 green, and 2 yellow balls. Probability of NOT picking a green ball is:",
+    "options": {
+      "A": "3/10",
+      "B": "7/10",
+      "C": "1/2",
+      "D": "4/5"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 97,
+    "grade": 8,
+    "topic": "Data Analysis",
+    "difficulty": "High",
+    "question": "The mean of 5 numbers is 12. What is the sum of these numbers?",
+    "options": {
+      "A": "50",
+      "B": "60",
+      "C": "70",
+      "D": "120"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 98,
+    "grade": 8,
+    "topic": "Data Analysis",
+    "difficulty": "Low",
+    "question": "A scatter plot showing points going upwards from left to right indicates:",
+    "options": {
+      "A": "Negative correlation",
+      "B": "Positive correlation",
+      "C": "No correlation",
+      "D": "Zero slope"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 99,
+    "grade": 8,
+    "topic": "Data Analysis",
+    "difficulty": "High",
+    "question": "If probability of event A happening is 0.35, what is probability of A NOT happening?",
+    "options": {
+      "A": "0.35",
+      "B": "0.65",
+      "C": "0.75",
+      "D": "1.00"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 100,
+    "grade": 8,
+    "topic": "Data Analysis",
+    "difficulty": "High",
+    "question": "Find range of data: -5, 2, 8, 14, -1.",
+    "options": {
+      "A": "14",
+      "B": "19",
+      "C": "9",
+      "D": "15"
+    },
+    "answer": "B"
+  }
+]

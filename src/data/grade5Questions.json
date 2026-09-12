@@ -1,0 +1,4506 @@
+{
+  "title": "Grade 5 Math - 300 MCQs mapped to Topic/Subtopic hierarchy (English)",
+  "total": 300,
+  "questions": [
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Numerical Expressions",
+      "leaf_topic": "Parentheses, Brackets & Braces",
+      "question": "Bilal writes: 6 × (9 + 7). What is its value?",
+      "options": {
+        "A": "97",
+        "B": "61",
+        "C": "96",
+        "D": "51"
+      },
+      "answer_letter": "C",
+      "answer_text": "96",
+      "explanation": "First the brackets: (9+7)=16, then 6×16=96."
+    },
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Numerical Expressions",
+      "leaf_topic": "Parentheses, Brackets & Braces",
+      "question": "Sara writes: 7 × (6 + 9). What is its value?",
+      "options": {
+        "A": "51",
+        "B": "105",
+        "C": "69",
+        "D": "106"
+      },
+      "answer_letter": "B",
+      "answer_text": "105",
+      "explanation": "First the brackets: (6+9)=15, then 7×15=105."
+    },
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Numerical Expressions",
+      "leaf_topic": "Parentheses, Brackets & Braces",
+      "question": "Ayesha writes: 7 × (8 + 4). What is its value?",
+      "options": {
+        "A": "84",
+        "B": "60",
+        "C": "85",
+        "D": "36"
+      },
+      "answer_letter": "A",
+      "answer_text": "84",
+      "explanation": "First the brackets: (8+4)=12, then 7×12=84."
+    },
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Numerical Expressions",
+      "leaf_topic": "Parentheses, Brackets & Braces",
+      "question": "Omar writes: 7 × (3 + 7). What is its value?",
+      "options": {
+        "A": "70",
+        "B": "52",
+        "C": "71",
+        "D": "28"
+      },
+      "answer_letter": "A",
+      "answer_text": "70",
+      "explanation": "First the brackets: (3+7)=10, then 7×10=70."
+    },
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Numerical Expressions",
+      "leaf_topic": "Parentheses, Brackets & Braces",
+      "question": "Ayesha writes: 3 × (9 + 3). What is its value?",
+      "options": {
+        "A": "37",
+        "B": "36",
+        "C": "18",
+        "D": "30"
+      },
+      "answer_letter": "B",
+      "answer_text": "36",
+      "explanation": "First the brackets: (9+3)=12, then 3×12=36."
+    },
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Numerical Expressions",
+      "leaf_topic": "Evaluate Numerical Expressions",
+      "question": "Find the value of the expression 6 + 9 × 4.",
+      "options": {
+        "A": "42",
+        "B": "60",
+        "C": "58",
+        "D": "44"
+      },
+      "answer_letter": "A",
+      "answer_text": "42",
+      "explanation": "Multiplication first: 9×4=36, then 6+36=42 (order of operations)."
+    },
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Numerical Expressions",
+      "leaf_topic": "Evaluate Numerical Expressions",
+      "question": "Find the value of the expression 2 + 9 × 4.",
+      "options": {
+        "A": "40",
+        "B": "38",
+        "C": "22",
+        "D": "44"
+      },
+      "answer_letter": "B",
+      "answer_text": "38",
+      "explanation": "Multiplication first: 9×4=36, then 2+36=38 (order of operations)."
+    },
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Numerical Expressions",
+      "leaf_topic": "Evaluate Numerical Expressions",
+      "question": "Find the value of the expression 9 + 2 × 3.",
+      "options": {
+        "A": "33",
+        "B": "17",
+        "C": "15",
+        "D": "21"
+      },
+      "answer_letter": "C",
+      "answer_text": "15",
+      "explanation": "Multiplication first: 2×3=6, then 9+6=15 (order of operations)."
+    },
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Numerical Expressions",
+      "leaf_topic": "Evaluate Numerical Expressions",
+      "question": "Find the value of the expression 8 + 8 × 5.",
+      "options": {
+        "A": "69",
+        "B": "80",
+        "C": "50",
+        "D": "48"
+      },
+      "answer_letter": "D",
+      "answer_text": "48",
+      "explanation": "Multiplication first: 8×5=40, then 8+40=48 (order of operations)."
+    },
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Numerical Expressions",
+      "leaf_topic": "Evaluate Numerical Expressions",
+      "question": "Find the value of the expression 8 + 6 × 3.",
+      "options": {
+        "A": "26",
+        "B": "42",
+        "C": "51",
+        "D": "28"
+      },
+      "answer_letter": "A",
+      "answer_text": "26",
+      "explanation": "Multiplication first: 6×3=18, then 8+18=26 (order of operations)."
+    },
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Numerical Expressions",
+      "leaf_topic": "Write Expressions from Verbal Statements",
+      "question": "Write the sentence 'Subtract 3 from 15, then multiply by 7' as an expression.",
+      "options": {
+        "A": "7 × 15 - 3",
+        "B": "(15-3) + 7",
+        "C": "7 × (15 - 3)",
+        "D": "15 - 3 × 7"
+      },
+      "answer_letter": "C",
+      "answer_text": "7 × (15 - 3)",
+      "explanation": "'Subtract then multiply' means brackets first: 7 × (15 - 3)."
+    },
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Numerical Expressions",
+      "leaf_topic": "Write Expressions from Verbal Statements",
+      "question": "Write the sentence 'Subtract 3 from 4, then multiply by 4' as an expression.",
+      "options": {
+        "A": "4 - 3 × 4",
+        "B": "(4-3) + 4",
+        "C": "4 × (4 - 3)",
+        "D": "4 × 4 - 3"
+      },
+      "answer_letter": "C",
+      "answer_text": "4 × (4 - 3)",
+      "explanation": "'Subtract then multiply' means brackets first: 4 × (4 - 3)."
+    },
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Numerical Expressions",
+      "leaf_topic": "Write Expressions from Verbal Statements",
+      "question": "Write the sentence 'Subtract 3 from 2, then multiply by 9' as an expression.",
+      "options": {
+        "A": "9 × (2 - 3)",
+        "B": "(2-3) + 9",
+        "C": "2 - 3 × 9",
+        "D": "9 × 2 - 3"
+      },
+      "answer_letter": "A",
+      "answer_text": "9 × (2 - 3)",
+      "explanation": "'Subtract then multiply' means brackets first: 9 × (2 - 3)."
+    },
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Numerical Expressions",
+      "leaf_topic": "Write Expressions from Verbal Statements",
+      "question": "Write the sentence 'Subtract 3 from 2, then multiply by 4' as an expression.",
+      "options": {
+        "A": "4 × (2 - 3)",
+        "B": "4 × 2 - 3",
+        "C": "(2-3) + 4",
+        "D": "2 - 3 × 4"
+      },
+      "answer_letter": "A",
+      "answer_text": "4 × (2 - 3)",
+      "explanation": "'Subtract then multiply' means brackets first: 4 × (2 - 3)."
+    },
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Numerical Expressions",
+      "leaf_topic": "Write Expressions from Verbal Statements",
+      "question": "Write the sentence 'Subtract 3 from 20, then multiply by 7' as an expression.",
+      "options": {
+        "A": "20 - 3 × 7",
+        "B": "7 × (20 - 3)",
+        "C": "(20-3) + 7",
+        "D": "7 × 20 - 3"
+      },
+      "answer_letter": "B",
+      "answer_text": "7 × (20 - 3)",
+      "explanation": "'Subtract then multiply' means brackets first: 7 × (20 - 3)."
+    },
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Numerical Expressions",
+      "leaf_topic": "Interpret Expressions Without Evaluating",
+      "question": "Without calculating, tell: how will the result of 8 × (567 + 991) compare to (567+991)?",
+      "options": {
+        "A": "It is 8 times larger than (567 + 991)",
+        "B": "It is equal to (567+991)",
+        "C": "It is 8 times smaller than (567+991)",
+        "D": "It is 8 times larger than only 567"
+      },
+      "answer_letter": "A",
+      "answer_text": "It is 8 times larger than (567 + 991)",
+      "explanation": "8 × (567+991) is always 8 times (567+991) — no need for calculation."
+    },
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Numerical Expressions",
+      "leaf_topic": "Interpret Expressions Without Evaluating",
+      "question": "Without calculating, tell: how will the result of 8 × (206 + 593) compare to (206+593)?",
+      "options": {
+        "A": "It is 8 times smaller than (206+593)",
+        "B": "It is equal to (206+593)",
+        "C": "It is 8 times larger than only 206",
+        "D": "It is 8 times larger than (206 + 593)"
+      },
+      "answer_letter": "D",
+      "answer_text": "It is 8 times larger than (206 + 593)",
+      "explanation": "8 × (206+593) is always 8 times (206+593) — no need for calculation."
+    },
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Numerical Expressions",
+      "leaf_topic": "Interpret Expressions Without Evaluating",
+      "question": "Without calculating, tell: how will the result of 4 × (313 + 551) compare to (313+551)?",
+      "options": {
+        "A": "It is equal to (313+551)",
+        "B": "It is 4 times larger than only 313",
+        "C": "It is 4 times smaller than (313+551)",
+        "D": "It is 4 times larger than (313 + 551)"
+      },
+      "answer_letter": "D",
+      "answer_text": "It is 4 times larger than (313 + 551)",
+      "explanation": "4 × (313+551) is always 4 times (313+551) — no need for calculation."
+    },
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Numerical Expressions",
+      "leaf_topic": "Interpret Expressions Without Evaluating",
+      "question": "Without calculating, tell: how will the result of 4 × (204 + 100) compare to (204+100)?",
+      "options": {
+        "A": "It is equal to (204+100)",
+        "B": "It is 4 times larger than only 204",
+        "C": "It is 4 times smaller than (204+100)",
+        "D": "It is 4 times larger than (204 + 100)"
+      },
+      "answer_letter": "D",
+      "answer_text": "It is 4 times larger than (204 + 100)",
+      "explanation": "4 × (204+100) is always 4 times (204+100) — no need for calculation."
+    },
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Patterns & Relationships",
+      "leaf_topic": "Generate Numerical Patterns",
+      "question": "The rule is 'Add 2', starting from 0. First 4 terms: [0, 2, 4, 6]. What will be the 5th term?",
+      "options": {
+        "A": "7",
+        "B": "9",
+        "C": "8",
+        "D": "10"
+      },
+      "answer_letter": "C",
+      "answer_text": "8",
+      "explanation": "Each time 2 is added: 6 + 2 = 8."
+    },
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Patterns & Relationships",
+      "leaf_topic": "Generate Numerical Patterns",
+      "question": "The rule is 'Add 4', starting from 2. First 4 terms: [2, 6, 10, 14]. What will be the 5th term?",
+      "options": {
+        "A": "20",
+        "B": "18",
+        "C": "21",
+        "D": "17"
+      },
+      "answer_letter": "B",
+      "answer_text": "18",
+      "explanation": "Each time 4 is added: 14 + 4 = 18."
+    },
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Patterns & Relationships",
+      "leaf_topic": "Generate Numerical Patterns",
+      "question": "The rule is 'Add 2', starting from 1. First 4 terms: [1, 3, 5, 7]. What will be the 5th term?",
+      "options": {
+        "A": "9",
+        "B": "8",
+        "C": "10",
+        "D": "11"
+      },
+      "answer_letter": "A",
+      "answer_text": "9",
+      "explanation": "Each time 2 is added: 7 + 2 = 9."
+    },
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Patterns & Relationships",
+      "leaf_topic": "Generate Numerical Patterns",
+      "question": "The rule is 'Add 4', starting from 0. First 4 terms: [0, 4, 8, 12]. What will be the 5th term?",
+      "options": {
+        "A": "15",
+        "B": "18",
+        "C": "16",
+        "D": "19"
+      },
+      "answer_letter": "C",
+      "answer_text": "16",
+      "explanation": "Each time 4 is added: 12 + 4 = 16."
+    },
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Patterns & Relationships",
+      "leaf_topic": "Pattern Rules",
+      "question": "Look at the sequence [3, 8, 13, 18] and identify the rule.",
+      "options": {
+        "A": "Multiply by 5",
+        "B": "Add 5",
+        "C": "Add 4",
+        "D": "Add 6"
+      },
+      "answer_letter": "B",
+      "answer_text": "Add 5",
+      "explanation": "In each term 5 is being added, therefore the rule is 'Add 5' is."
+    },
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Patterns & Relationships",
+      "leaf_topic": "Pattern Rules",
+      "question": "Look at the sequence [2, 5, 8, 11] and identify the rule.",
+      "options": {
+        "A": "Multiply by 3",
+        "B": "Add 3",
+        "C": "Add 2",
+        "D": "Add 4"
+      },
+      "answer_letter": "B",
+      "answer_text": "Add 3",
+      "explanation": "In each term 3 is being added, therefore the rule is 'Add 3' is."
+    },
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Patterns & Relationships",
+      "leaf_topic": "Pattern Rules",
+      "question": "Look at the sequence [2, 9, 16, 23] and identify the rule.",
+      "options": {
+        "A": "Multiply by 7",
+        "B": "Add 8",
+        "C": "Add 6",
+        "D": "Add 7"
+      },
+      "answer_letter": "D",
+      "answer_text": "Add 7",
+      "explanation": "In each term 7 is being added, therefore the rule is 'Add 7' is."
+    },
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Patterns & Relationships",
+      "leaf_topic": "Pattern Rules",
+      "question": "Look at the sequence [2, 9, 16, 23] and identify the rule.",
+      "options": {
+        "A": "Add 6",
+        "B": "Add 7",
+        "C": "Multiply by 7",
+        "D": "Add 8"
+      },
+      "answer_letter": "B",
+      "answer_text": "Add 7",
+      "explanation": "In each term 7 is being added, therefore the rule is 'Add 7' is."
+    },
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Patterns & Relationships",
+      "leaf_topic": "Pattern Rules",
+      "question": "Look at the sequence [2, 9, 16, 23] and identify the rule.",
+      "options": {
+        "A": "Multiply by 7",
+        "B": "Add 7",
+        "C": "Add 6",
+        "D": "Add 8"
+      },
+      "answer_letter": "B",
+      "answer_text": "Add 7",
+      "explanation": "In each term 7 is being added, therefore the rule is 'Add 7' is."
+    },
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Patterns & Relationships",
+      "leaf_topic": "Compare Corresponding Terms",
+      "question": "Rule 'Add 2' and Rule 'Add 6' both start from 0. What is the relationship between corresponding terms?",
+      "options": {
+        "A": "Both will be equal",
+        "B": "The first sequence will be 3 times larger",
+        "C": "The second sequence will always be 3 times larger",
+        "D": "The second sequence will always be 4 times larger"
+      },
+      "answer_letter": "C",
+      "answer_text": "The second sequence will always be 3 times larger",
+      "explanation": "6 = 3 × 2, therefore the terms of the second sequence are always 3 times larger."
+    },
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Patterns & Relationships",
+      "leaf_topic": "Compare Corresponding Terms",
+      "question": "Rule 'Add 3' and Rule 'Add 6' both start from 0. What is the relationship between corresponding terms?",
+      "options": {
+        "A": "The second sequence will always be 2 times larger",
+        "B": "The first sequence will be 2 times larger",
+        "C": "Both will be equal",
+        "D": "The second sequence will always be 3 times larger"
+      },
+      "answer_letter": "A",
+      "answer_text": "The second sequence will always be 2 times larger",
+      "explanation": "6 = 2 × 3, therefore the terms of the second sequence are always 2 times larger."
+    },
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Patterns & Relationships",
+      "leaf_topic": "Compare Corresponding Terms",
+      "question": "Rule 'Add 3' and Rule 'Add 6' both start from 0. What is the relationship between corresponding terms?",
+      "options": {
+        "A": "The first sequence will be 2 times larger",
+        "B": "Both will be equal",
+        "C": "The second sequence will always be 3 times larger",
+        "D": "The second sequence will always be 2 times larger"
+      },
+      "answer_letter": "D",
+      "answer_text": "The second sequence will always be 2 times larger",
+      "explanation": "6 = 2 × 3, therefore the terms of the second sequence are always 2 times larger."
+    },
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Patterns & Relationships",
+      "leaf_topic": "Compare Corresponding Terms",
+      "question": "Rule 'Add 3' and Rule 'Add 6' both start from 0. What is the relationship between corresponding terms?",
+      "options": {
+        "A": "The second sequence will always be 2 times larger",
+        "B": "The first sequence will be 2 times larger",
+        "C": "Both will be equal",
+        "D": "The second sequence will always be 3 times larger"
+      },
+      "answer_letter": "A",
+      "answer_text": "The second sequence will always be 2 times larger",
+      "explanation": "6 = 2 × 3, therefore the terms of the second sequence are always 2 times larger."
+    },
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Patterns & Relationships",
+      "leaf_topic": "Ordered Pairs",
+      "question": "Sequence 1 (Add 3) and Sequence 2 (Add 6), both start from 0. What is the ordered pair for the 2nd term?",
+      "options": {
+        "A": "(6, 13)",
+        "B": "(12, 6)",
+        "C": "(6, 12)",
+        "D": "(7, 12)"
+      },
+      "answer_letter": "C",
+      "answer_text": "(6, 12)",
+      "explanation": "Sequence 1 's 2nd term = 6, Sequence 2 's 2nd term = 12. Ordered pair: (6, 12)."
+    },
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Patterns & Relationships",
+      "leaf_topic": "Ordered Pairs",
+      "question": "Sequence 1 (Add 2) and Sequence 2 (Add 6), both start from 0. What is the ordered pair for the 1st term?",
+      "options": {
+        "A": "(2, 6)",
+        "B": "(6, 2)",
+        "C": "(3, 6)",
+        "D": "(2, 7)"
+      },
+      "answer_letter": "A",
+      "answer_text": "(2, 6)",
+      "explanation": "Sequence 1 's 1st term = 2, Sequence 2 's 1st term = 6. Ordered pair: (2, 6)."
+    },
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Patterns & Relationships",
+      "leaf_topic": "Ordered Pairs",
+      "question": "Sequence 1 (Add 2) and Sequence 2 (Add 6), both start from 0. What is the ordered pair for the 1st term?",
+      "options": {
+        "A": "(3, 6)",
+        "B": "(2, 7)",
+        "C": "(6, 2)",
+        "D": "(2, 6)"
+      },
+      "answer_letter": "D",
+      "answer_text": "(2, 6)",
+      "explanation": "Sequence 1 's 1st term = 2, Sequence 2 's 1st term = 6. Ordered pair: (2, 6)."
+    },
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Patterns & Relationships",
+      "leaf_topic": "Ordered Pairs",
+      "question": "Sequence 1 (Add 3) and Sequence 2 (Add 6), both start from 0. What is the ordered pair for the 2nd term?",
+      "options": {
+        "A": "(6, 12)",
+        "B": "(12, 6)",
+        "C": "(7, 12)",
+        "D": "(6, 13)"
+      },
+      "answer_letter": "A",
+      "answer_text": "(6, 12)",
+      "explanation": "Sequence 1 's 2nd term = 6, Sequence 2 's 2nd term = 12. Ordered pair: (6, 12)."
+    },
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Patterns & Relationships",
+      "leaf_topic": "Ordered Pairs",
+      "question": "Sequence 1 (Add 2) and Sequence 2 (Add 4), both start from 0. What is the ordered pair for the 4th term?",
+      "options": {
+        "A": "(9, 16)",
+        "B": "(8, 16)",
+        "C": "(16, 8)",
+        "D": "(8, 17)"
+      },
+      "answer_letter": "B",
+      "answer_text": "(8, 16)",
+      "explanation": "Sequence 1 's 4th term = 8, Sequence 2 's 4th term = 16. Ordered pair: (8, 16)."
+    },
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Patterns & Relationships",
+      "leaf_topic": "Graph Patterns on Coordinate Plane",
+      "question": "If we graph the ordered pairs formed by Rule 'Add 3' and Rule 'Add 6', what shape will it form?",
+      "options": {
+        "A": "The line does not pass through the origin",
+        "B": "Points are in random places, no pattern",
+        "C": "A straight line is formed that passes through the origin",
+        "D": "A curve is formed"
+      },
+      "answer_letter": "C",
+      "answer_text": "A straight line is formed that passes through the origin",
+      "explanation": "When both patterns are proportional (one is a multiple of the other), the points form a straight line that passes through the origin."
+    },
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Patterns & Relationships",
+      "leaf_topic": "Graph Patterns on Coordinate Plane",
+      "question": "If we graph the ordered pairs formed by Rule 'Add 1' and Rule 'Add 2', what shape will it form?",
+      "options": {
+        "A": "A straight line is formed that passes through the origin",
+        "B": "The line does not pass through the origin",
+        "C": "Points are in random places, no pattern",
+        "D": "A curve is formed"
+      },
+      "answer_letter": "A",
+      "answer_text": "A straight line is formed that passes through the origin",
+      "explanation": "When both patterns are proportional (one is a multiple of the other), the points form a straight line that passes through the origin."
+    },
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Patterns & Relationships",
+      "leaf_topic": "Graph Patterns on Coordinate Plane",
+      "question": "If we graph the ordered pairs formed by Rule 'Add 3' and Rule 'Add 6', what shape will it form?",
+      "options": {
+        "A": "A straight line is formed that passes through the origin",
+        "B": "The line does not pass through the origin",
+        "C": "Points are in random places, no pattern",
+        "D": "A curve is formed"
+      },
+      "answer_letter": "A",
+      "answer_text": "A straight line is formed that passes through the origin",
+      "explanation": "When both patterns are proportional (one is a multiple of the other), the points form a straight line that passes through the origin."
+    },
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Patterns & Relationships",
+      "leaf_topic": "Graph Patterns on Coordinate Plane",
+      "question": "If we graph the ordered pairs formed by Rule 'Add 3' and Rule 'Add 6', what shape will it form?",
+      "options": {
+        "A": "A curve is formed",
+        "B": "The line does not pass through the origin",
+        "C": "A straight line is formed that passes through the origin",
+        "D": "Points are in random places, no pattern"
+      },
+      "answer_letter": "C",
+      "answer_text": "A straight line is formed that passes through the origin",
+      "explanation": "When both patterns are proportional (one is a multiple of the other), the points form a straight line that passes through the origin."
+    },
+    {
+      "domain": "Operations & Algebraic Thinking",
+      "subdomain": "Patterns & Relationships",
+      "leaf_topic": "Graph Patterns on Coordinate Plane",
+      "question": "If we graph the ordered pairs formed by Rule 'Add 1' and Rule 'Add 2', what shape will it form?",
+      "options": {
+        "A": "A curve is formed",
+        "B": "The line does not pass through the origin",
+        "C": "Points are in random places, no pattern",
+        "D": "A straight line is formed that passes through the origin"
+      },
+      "answer_letter": "D",
+      "answer_text": "A straight line is formed that passes through the origin",
+      "explanation": "When both patterns are proportional (one is a multiple of the other), the points form a straight line that passes through the origin."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Place Value System",
+      "leaf_topic": "Relationship Between Place Values",
+      "question": "In a multi-digit number, how much is the ones digit compared to the tenths digit?",
+      "options": {
+        "A": "100 times larger",
+        "B": "10 times larger",
+        "C": "Equal",
+        "D": "10 times smaller"
+      },
+      "answer_letter": "B",
+      "answer_text": "10 times larger",
+      "explanation": "Each digit is 10 times larger than the place to its right and 1/10 of the place to its left."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Place Value System",
+      "leaf_topic": "Relationship Between Place Values",
+      "question": "In a multi-digit number, how much is the hundreds digit compared to the tens digit?",
+      "options": {
+        "A": "100 times larger",
+        "B": "Equal",
+        "C": "10 times smaller",
+        "D": "10 times larger"
+      },
+      "answer_letter": "D",
+      "answer_text": "10 times larger",
+      "explanation": "Each digit is 10 times larger than the place to its right and 1/10 of the place to its left."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Place Value System",
+      "leaf_topic": "Relationship Between Place Values",
+      "question": "In a multi-digit number, how much is the tens digit compared to the ones digit?",
+      "options": {
+        "A": "10 times larger",
+        "B": "Equal",
+        "C": "100 times larger",
+        "D": "10 times smaller"
+      },
+      "answer_letter": "A",
+      "answer_text": "10 times larger",
+      "explanation": "Each digit is 10 times larger than the place to its right and 1/10 of the place to its left."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Place Value System",
+      "leaf_topic": "Relationship Between Place Values",
+      "question": "In a multi-digit number, how much is the tens digit compared to the ones digit?",
+      "options": {
+        "A": "10 times smaller",
+        "B": "100 times larger",
+        "C": "10 times larger",
+        "D": "Equal"
+      },
+      "answer_letter": "C",
+      "answer_text": "10 times larger",
+      "explanation": "Each digit is 10 times larger than the place to its right and 1/10 of the place to its left."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Place Value System",
+      "leaf_topic": "Powers of 10",
+      "question": "What is the value of 10 to the power 3, that is 10^3?",
+      "options": {
+        "A": "1000",
+        "B": "30",
+        "C": "59049",
+        "D": "100"
+      },
+      "answer_letter": "A",
+      "answer_text": "1000",
+      "explanation": "10^3 = 1000."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Place Value System",
+      "leaf_topic": "Powers of 10",
+      "question": "What is the value of 10 to the power 2, that is 10^2?",
+      "options": {
+        "A": "10",
+        "B": "100",
+        "C": "1024",
+        "D": "20"
+      },
+      "answer_letter": "B",
+      "answer_text": "100",
+      "explanation": "10^2 = 100."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Place Value System",
+      "leaf_topic": "Powers of 10",
+      "question": "What is the value of 10 to the power 4, that is 10^4?",
+      "options": {
+        "A": "1000",
+        "B": "10000",
+        "C": "100000",
+        "D": "40"
+      },
+      "answer_letter": "B",
+      "answer_text": "10000",
+      "explanation": "10^4 = 10000."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Place Value System",
+      "leaf_topic": "Powers of 10",
+      "question": "What is the value of 10 to the power 2, that is 10^2?",
+      "options": {
+        "A": "1024",
+        "B": "10",
+        "C": "100",
+        "D": "20"
+      },
+      "answer_letter": "C",
+      "answer_text": "100",
+      "explanation": "10^2 = 100."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Place Value System",
+      "leaf_topic": "Powers of 10",
+      "question": "What is the value of 10 to the power 1, that is 10^1?",
+      "options": {
+        "A": "11",
+        "B": "1000",
+        "C": "1",
+        "D": "10"
+      },
+      "answer_letter": "D",
+      "answer_text": "10",
+      "explanation": "10^1 = 10."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Place Value System",
+      "leaf_topic": "Multiplying by Powers of 10",
+      "question": "What is 77.86 × 10^1?",
+      "options": {
+        "A": "7786.0",
+        "B": "7.79",
+        "C": "87.86",
+        "D": "778.6"
+      },
+      "answer_letter": "D",
+      "answer_text": "778.6",
+      "explanation": "Multiply by 10^1 = decimal point moves 1 places to the right: 778.6."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Place Value System",
+      "leaf_topic": "Multiplying by Powers of 10",
+      "question": "What is 28.14 × 10^1?",
+      "options": {
+        "A": "2814.0",
+        "B": "281.4",
+        "C": "2.81",
+        "D": "38.14"
+      },
+      "answer_letter": "B",
+      "answer_text": "281.4",
+      "explanation": "Multiply by 10^1 = decimal point moves 1 places to the right: 281.4."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Place Value System",
+      "leaf_topic": "Multiplying by Powers of 10",
+      "question": "What is 75.48 × 10^1?",
+      "options": {
+        "A": "7.55",
+        "B": "754.8",
+        "C": "7548.0",
+        "D": "85.48"
+      },
+      "answer_letter": "B",
+      "answer_text": "754.8",
+      "explanation": "Multiply by 10^1 = decimal point moves 1 places to the right: 754.8."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Place Value System",
+      "leaf_topic": "Multiplying by Powers of 10",
+      "question": "What is 68.89 × 10^2?",
+      "options": {
+        "A": "688.9",
+        "B": "6889.0",
+        "C": "0.69",
+        "D": "88.89"
+      },
+      "answer_letter": "B",
+      "answer_text": "6889.0",
+      "explanation": "Multiply by 10^2 = decimal point moves 2 places to the right: 6889.0."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Place Value System",
+      "leaf_topic": "Multiplying by Powers of 10",
+      "question": "What is 69.52 × 10^2?",
+      "options": {
+        "A": "0.7",
+        "B": "6952.0",
+        "C": "89.52",
+        "D": "695.2"
+      },
+      "answer_letter": "B",
+      "answer_text": "6952.0",
+      "explanation": "Multiply by 10^2 = decimal point moves 2 places to the right: 6952.0."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Place Value System",
+      "leaf_topic": "Dividing by Powers of 10",
+      "question": "What is 422.05 ÷ 10^2?",
+      "options": {
+        "A": "42.205",
+        "B": "4.221",
+        "C": "42205.0",
+        "D": "402.05"
+      },
+      "answer_letter": "B",
+      "answer_text": "4.221",
+      "explanation": "Divide by 10^2 = decimal point moves 2 places to the left: 4.221."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Place Value System",
+      "leaf_topic": "Dividing by Powers of 10",
+      "question": "What is 673.77 ÷ 10^2?",
+      "options": {
+        "A": "67.377",
+        "B": "67377.0",
+        "C": "653.77",
+        "D": "6.738"
+      },
+      "answer_letter": "D",
+      "answer_text": "6.738",
+      "explanation": "Divide by 10^2 = decimal point moves 2 places to the left: 6.738."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Place Value System",
+      "leaf_topic": "Dividing by Powers of 10",
+      "question": "What is 785.31 ÷ 10^1?",
+      "options": {
+        "A": "775.31",
+        "B": "7853.1",
+        "C": "78.531",
+        "D": "785.31"
+      },
+      "answer_letter": "C",
+      "answer_text": "78.531",
+      "explanation": "Divide by 10^1 = decimal point moves 1 places to the left: 78.531."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Place Value System",
+      "leaf_topic": "Dividing by Powers of 10",
+      "question": "What is 883.12 ÷ 10^2?",
+      "options": {
+        "A": "863.12",
+        "B": "8.831",
+        "C": "88.312",
+        "D": "88312.0"
+      },
+      "answer_letter": "B",
+      "answer_text": "8.831",
+      "explanation": "Divide by 10^2 = decimal point moves 2 places to the left: 8.831."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Place Value System",
+      "leaf_topic": "Dividing by Powers of 10",
+      "question": "What is 403.88 ÷ 10^2?",
+      "options": {
+        "A": "383.88",
+        "B": "4.039",
+        "C": "40.388",
+        "D": "40388.0"
+      },
+      "answer_letter": "B",
+      "answer_text": "4.039",
+      "explanation": "Divide by 10^2 = decimal point moves 2 places to the left: 4.039."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Place Value System",
+      "leaf_topic": "Read & Write Decimals to Thousandths",
+      "question": "Write the decimal 2.686 in expanded form.",
+      "options": {
+        "A": "2 + 6×(1/10) + 8×(1/1000) + 6×(1/100)",
+        "B": "2 + 6×(1/10) + 8×(1/100) + 6×(1/1000)",
+        "C": "2 + 6×(1/100) + 8×(1/10) + 6×(1/1000)",
+        "D": "2×100 + 6×10 + 8 + 6"
+      },
+      "answer_letter": "B",
+      "answer_text": "2 + 6×(1/10) + 8×(1/100) + 6×(1/1000)",
+      "explanation": "2.686 = 2 + 6/10 + 8/100 + 6/1000 — each digit with its place value."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Place Value System",
+      "leaf_topic": "Read & Write Decimals to Thousandths",
+      "question": "Write the decimal 5.515 in expanded form.",
+      "options": {
+        "A": "5 + 5×(1/10) + 1×(1/1000) + 5×(1/100)",
+        "B": "5×100 + 5×10 + 1 + 5",
+        "C": "5 + 5×(1/100) + 1×(1/10) + 5×(1/1000)",
+        "D": "5 + 5×(1/10) + 1×(1/100) + 5×(1/1000)"
+      },
+      "answer_letter": "D",
+      "answer_text": "5 + 5×(1/10) + 1×(1/100) + 5×(1/1000)",
+      "explanation": "5.515 = 5 + 5/10 + 1/100 + 5/1000 — each digit with its place value."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Place Value System",
+      "leaf_topic": "Read & Write Decimals to Thousandths",
+      "question": "Write the decimal 7.065 in expanded form.",
+      "options": {
+        "A": "7 + 0×(1/100) + 6×(1/10) + 5×(1/1000)",
+        "B": "7 + 0×(1/10) + 6×(1/100) + 5×(1/1000)",
+        "C": "7 + 0×(1/10) + 6×(1/1000) + 5×(1/100)",
+        "D": "7×100 + 0×10 + 6 + 5"
+      },
+      "answer_letter": "B",
+      "answer_text": "7 + 0×(1/10) + 6×(1/100) + 5×(1/1000)",
+      "explanation": "7.065 = 7 + 0/10 + 6/100 + 5/1000 — each digit with its place value."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Place Value System",
+      "leaf_topic": "Read & Write Decimals to Thousandths",
+      "question": "Write the decimal 1.311 in expanded form.",
+      "options": {
+        "A": "1 + 3×(1/10) + 1×(1/1000) + 1×(1/100)",
+        "B": "1 + 3×(1/10) + 1×(1/100) + 1×(1/1000)",
+        "C": "1 + 3×(1/100) + 1×(1/10) + 1×(1/1000)",
+        "D": "1×100 + 3×10 + 1 + 1"
+      },
+      "answer_letter": "B",
+      "answer_text": "1 + 3×(1/10) + 1×(1/100) + 1×(1/1000)",
+      "explanation": "1.311 = 1 + 3/10 + 1/100 + 1/1000 — each digit with its place value."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Place Value System",
+      "leaf_topic": "Read & Write Decimals to Thousandths",
+      "question": "Write the decimal 2.426 in expanded form.",
+      "options": {
+        "A": "2 + 4×(1/10) + 2×(1/1000) + 6×(1/100)",
+        "B": "2 + 4×(1/10) + 2×(1/100) + 6×(1/1000)",
+        "C": "2 + 4×(1/100) + 2×(1/10) + 6×(1/1000)",
+        "D": "2×100 + 4×10 + 2 + 6"
+      },
+      "answer_letter": "B",
+      "answer_text": "2 + 4×(1/10) + 2×(1/100) + 6×(1/1000)",
+      "explanation": "2.426 = 2 + 4/10 + 2/100 + 6/1000 — each digit with its place value."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Place Value System",
+      "leaf_topic": "Expanded Form of Decimals",
+      "question": "What will be the expanded form of 9.89?",
+      "options": {
+        "A": "9 + 8/10 + 9/100",
+        "B": "9 + 8/100 + 9/10",
+        "C": "90 + 8 + 9",
+        "D": "9 + 8 + 9"
+      },
+      "answer_letter": "A",
+      "answer_text": "9 + 8/10 + 9/100",
+      "explanation": "9.89 = 9 (ones) + 8/10 (tenths) + 9/100 (hundredths)."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Place Value System",
+      "leaf_topic": "Expanded Form of Decimals",
+      "question": "What will be the expanded form of 2.40?",
+      "options": {
+        "A": "20 + 4 + 0",
+        "B": "2 + 4/10 + 0/100",
+        "C": "2 + 4 + 0",
+        "D": "2 + 4/100 + 0/10"
+      },
+      "answer_letter": "B",
+      "answer_text": "2 + 4/10 + 0/100",
+      "explanation": "2.40 = 2 (ones) + 4/10 (tenths) + 0/100 (hundredths)."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Place Value System",
+      "leaf_topic": "Expanded Form of Decimals",
+      "question": "What will be the expanded form of 5.01?",
+      "options": {
+        "A": "5 + 0/100 + 1/10",
+        "B": "5 + 0 + 1",
+        "C": "5 + 0/10 + 1/100",
+        "D": "50 + 0 + 1"
+      },
+      "answer_letter": "C",
+      "answer_text": "5 + 0/10 + 1/100",
+      "explanation": "5.01 = 5 (ones) + 0/10 (tenths) + 1/100 (hundredths)."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Place Value System",
+      "leaf_topic": "Expanded Form of Decimals",
+      "question": "What will be the expanded form of 2.41?",
+      "options": {
+        "A": "20 + 4 + 1",
+        "B": "2 + 4/100 + 1/10",
+        "C": "2 + 4/10 + 1/100",
+        "D": "2 + 4 + 1"
+      },
+      "answer_letter": "C",
+      "answer_text": "2 + 4/10 + 1/100",
+      "explanation": "2.41 = 2 (ones) + 4/10 (tenths) + 1/100 (hundredths)."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Place Value System",
+      "leaf_topic": "Expanded Form of Decimals",
+      "question": "What will be the expanded form of 9.64?",
+      "options": {
+        "A": "9 + 6 + 4",
+        "B": "90 + 6 + 4",
+        "C": "9 + 6/10 + 4/100",
+        "D": "9 + 6/100 + 4/10"
+      },
+      "answer_letter": "C",
+      "answer_text": "9 + 6/10 + 4/100",
+      "explanation": "9.64 = 9 (ones) + 6/10 (tenths) + 4/100 (hundredths)."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Place Value System",
+      "leaf_topic": "Compare Decimals to Thousandths",
+      "question": "92.936 ___ 95.983 — choose the correct symbol (>, <, =).",
+      "options": {
+        "A": "=",
+        "B": "Cannot be compared",
+        "C": "<",
+        "D": ">"
+      },
+      "answer_letter": "C",
+      "answer_text": "<",
+      "explanation": "By comparing place by place: 92.936 < 95.983."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Place Value System",
+      "leaf_topic": "Compare Decimals to Thousandths",
+      "question": "20.773 ___ 31.575 — choose the correct symbol (>, <, =).",
+      "options": {
+        "A": "=",
+        "B": "<",
+        "C": "Cannot be compared",
+        "D": ">"
+      },
+      "answer_letter": "B",
+      "answer_text": "<",
+      "explanation": "By comparing place by place: 20.773 < 31.575."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Place Value System",
+      "leaf_topic": "Compare Decimals to Thousandths",
+      "question": "29.416 ___ 50.009 — choose the correct symbol (>, <, =).",
+      "options": {
+        "A": "<",
+        "B": ">",
+        "C": "Cannot be compared",
+        "D": "="
+      },
+      "answer_letter": "A",
+      "answer_text": "<",
+      "explanation": "By comparing place by place: 29.416 < 50.009."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Place Value System",
+      "leaf_topic": "Compare Decimals to Thousandths",
+      "question": "79.761 ___ 98.461 — choose the correct symbol (>, <, =).",
+      "options": {
+        "A": "=",
+        "B": ">",
+        "C": "Cannot be compared",
+        "D": "<"
+      },
+      "answer_letter": "D",
+      "answer_text": "<",
+      "explanation": "By comparing place by place: 79.761 < 98.461."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Place Value System",
+      "leaf_topic": "Compare Decimals to Thousandths",
+      "question": "72.842 ___ 55.003 — choose the correct symbol (>, <, =).",
+      "options": {
+        "A": ">",
+        "B": "Cannot be compared",
+        "C": "<",
+        "D": "="
+      },
+      "answer_letter": "A",
+      "answer_text": ">",
+      "explanation": "By comparing place by place: 72.842 > 55.003."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Place Value System",
+      "leaf_topic": "Round Decimals",
+      "question": "Round 246.43 to the nearest tenth.",
+      "options": {
+        "A": "246.0",
+        "B": "247.4",
+        "C": "246.3",
+        "D": "246.4"
+      },
+      "answer_letter": "D",
+      "answer_text": "246.4",
+      "explanation": "246.43 when rounded to the nearest tenth 246.4 milta is."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Place Value System",
+      "leaf_topic": "Round Decimals",
+      "question": "Round 656.85 to the nearest tenth.",
+      "options": {
+        "A": "657.9",
+        "B": "656.9",
+        "C": "657.0",
+        "D": "656.8"
+      },
+      "answer_letter": "B",
+      "answer_text": "656.9",
+      "explanation": "656.85 when rounded to the nearest tenth 656.9 milta is."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Place Value System",
+      "leaf_topic": "Round Decimals",
+      "question": "Round 982.45 to the nearest tenth.",
+      "options": {
+        "A": "982.0",
+        "B": "982.5",
+        "C": "982.4",
+        "D": "983.5"
+      },
+      "answer_letter": "B",
+      "answer_text": "982.5",
+      "explanation": "982.45 when rounded to the nearest tenth 982.5 milta is."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Place Value System",
+      "leaf_topic": "Round Decimals",
+      "question": "Round 405.29 to the nearest tenth.",
+      "options": {
+        "A": "406.3",
+        "B": "405.2",
+        "C": "405.0",
+        "D": "405.3"
+      },
+      "answer_letter": "D",
+      "answer_text": "405.3",
+      "explanation": "405.29 when rounded to the nearest tenth 405.3 milta is."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Place Value System",
+      "leaf_topic": "Round Decimals",
+      "question": "Round 71.65 to the nearest tenth.",
+      "options": {
+        "A": "72.7",
+        "B": "71.6",
+        "C": "71.7",
+        "D": "72.0"
+      },
+      "answer_letter": "C",
+      "answer_text": "71.7",
+      "explanation": "71.65 when rounded to the nearest tenth 71.7 milta is."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Multi-Digit & Decimal Operations",
+      "leaf_topic": "Multi-Digit Multiplication",
+      "question": "Mariam has to calculate 186 × 95 (using standard algorithm). Answer?",
+      "options": {
+        "A": "17683",
+        "B": "17670",
+        "C": "281",
+        "D": "17653"
+      },
+      "answer_letter": "B",
+      "answer_text": "17670",
+      "explanation": "186 × 95 = 17670."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Multi-Digit & Decimal Operations",
+      "leaf_topic": "Multi-Digit Multiplication",
+      "question": "Hassan has to calculate 146 × 68 (using standard algorithm). Answer?",
+      "options": {
+        "A": "214",
+        "B": "9928",
+        "C": "9934",
+        "D": "9922"
+      },
+      "answer_letter": "B",
+      "answer_text": "9928",
+      "explanation": "146 × 68 = 9928."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Multi-Digit & Decimal Operations",
+      "leaf_topic": "Multi-Digit Multiplication",
+      "question": "Usman has to calculate 472 × 52 (using standard algorithm). Answer?",
+      "options": {
+        "A": "24533",
+        "B": "524",
+        "C": "24544",
+        "D": "24562"
+      },
+      "answer_letter": "C",
+      "answer_text": "24544",
+      "explanation": "472 × 52 = 24544."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Multi-Digit & Decimal Operations",
+      "leaf_topic": "Multi-Digit Multiplication",
+      "question": "Hassan has to calculate 465 × 33 (using standard algorithm). Answer?",
+      "options": {
+        "A": "15334",
+        "B": "15346",
+        "C": "15345",
+        "D": "498"
+      },
+      "answer_letter": "C",
+      "answer_text": "15345",
+      "explanation": "465 × 33 = 15345."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Multi-Digit & Decimal Operations",
+      "leaf_topic": "Multi-Digit Multiplication",
+      "question": "Bilal has to calculate 614 × 93 (using standard algorithm). Answer?",
+      "options": {
+        "A": "57094",
+        "B": "57109",
+        "C": "707",
+        "D": "57102"
+      },
+      "answer_letter": "D",
+      "answer_text": "57102",
+      "explanation": "614 × 93 = 57102."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Multi-Digit & Decimal Operations",
+      "leaf_topic": "Multi-Digit Division",
+      "question": "1769 ÷ 29 = ?",
+      "options": {
+        "A": "60",
+        "B": "63",
+        "C": "62",
+        "D": "61"
+      },
+      "answer_letter": "D",
+      "answer_text": "61",
+      "explanation": "1769 ÷ 29 = 61 (with a 2-digit divisor)."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Multi-Digit & Decimal Operations",
+      "leaf_topic": "Multi-Digit Division",
+      "question": "2352 ÷ 49 = ?",
+      "options": {
+        "A": "50",
+        "B": "47",
+        "C": "48",
+        "D": "49"
+      },
+      "answer_letter": "C",
+      "answer_text": "48",
+      "explanation": "2352 ÷ 49 = 48 (with a 2-digit divisor)."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Multi-Digit & Decimal Operations",
+      "leaf_topic": "Multi-Digit Division",
+      "question": "8170 ÷ 95 = ?",
+      "options": {
+        "A": "86",
+        "B": "85",
+        "C": "87",
+        "D": "88"
+      },
+      "answer_letter": "A",
+      "answer_text": "86",
+      "explanation": "8170 ÷ 95 = 86 (with a 2-digit divisor)."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Multi-Digit & Decimal Operations",
+      "leaf_topic": "Multi-Digit Division",
+      "question": "1380 ÷ 30 = ?",
+      "options": {
+        "A": "45",
+        "B": "48",
+        "C": "46",
+        "D": "47"
+      },
+      "answer_letter": "C",
+      "answer_text": "46",
+      "explanation": "1380 ÷ 30 = 46 (with a 2-digit divisor)."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Multi-Digit & Decimal Operations",
+      "leaf_topic": "Multi-Digit Division",
+      "question": "2025 ÷ 75 = ?",
+      "options": {
+        "A": "28",
+        "B": "29",
+        "C": "26",
+        "D": "27"
+      },
+      "answer_letter": "D",
+      "answer_text": "27",
+      "explanation": "2025 ÷ 75 = 27 (with a 2-digit divisor)."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Multi-Digit & Decimal Operations",
+      "leaf_topic": "Decimal Addition",
+      "question": "5.17 + 3.05 = ?",
+      "options": {
+        "A": "2.12",
+        "B": "9.22",
+        "C": "8.22",
+        "D": "7.22"
+      },
+      "answer_letter": "C",
+      "answer_text": "8.22",
+      "explanation": "5.17 + 3.05 = 8.22."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Multi-Digit & Decimal Operations",
+      "leaf_topic": "Decimal Addition",
+      "question": "41.96 + 28.37 = ?",
+      "options": {
+        "A": "71.33",
+        "B": "13.59",
+        "C": "69.33",
+        "D": "70.33"
+      },
+      "answer_letter": "D",
+      "answer_text": "70.33",
+      "explanation": "41.96 + 28.37 = 70.33."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Multi-Digit & Decimal Operations",
+      "leaf_topic": "Decimal Addition",
+      "question": "24.98 + 1.16 = ?",
+      "options": {
+        "A": "27.14",
+        "B": "23.82",
+        "C": "25.14",
+        "D": "26.14"
+      },
+      "answer_letter": "D",
+      "answer_text": "26.14",
+      "explanation": "24.98 + 1.16 = 26.14."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Multi-Digit & Decimal Operations",
+      "leaf_topic": "Decimal Addition",
+      "question": "33.31 + 4.24 = ?",
+      "options": {
+        "A": "36.55",
+        "B": "37.55",
+        "C": "38.55",
+        "D": "29.07"
+      },
+      "answer_letter": "B",
+      "answer_text": "37.55",
+      "explanation": "33.31 + 4.24 = 37.55."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Multi-Digit & Decimal Operations",
+      "leaf_topic": "Decimal Addition",
+      "question": "42.46 + 12.5 = ?",
+      "options": {
+        "A": "53.96",
+        "B": "29.96",
+        "C": "54.96",
+        "D": "55.96"
+      },
+      "answer_letter": "C",
+      "answer_text": "54.96",
+      "explanation": "42.46 + 12.5 = 54.96."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Multi-Digit & Decimal Operations",
+      "leaf_topic": "Decimal Subtraction",
+      "question": "59.02 - 7.89 = ?",
+      "options": {
+        "A": "51.13",
+        "B": "52.13",
+        "C": "50.13",
+        "D": "66.91"
+      },
+      "answer_letter": "A",
+      "answer_text": "51.13",
+      "explanation": "59.02 - 7.89 = 51.13."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Multi-Digit & Decimal Operations",
+      "leaf_topic": "Decimal Subtraction",
+      "question": "80.59 - 12.11 = ?",
+      "options": {
+        "A": "92.7",
+        "B": "67.48",
+        "C": "68.48",
+        "D": "69.48"
+      },
+      "answer_letter": "C",
+      "answer_text": "68.48",
+      "explanation": "80.59 - 12.11 = 68.48."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Multi-Digit & Decimal Operations",
+      "leaf_topic": "Decimal Subtraction",
+      "question": "46.21 - 12.73 = ?",
+      "options": {
+        "A": "34.48",
+        "B": "33.48",
+        "C": "58.94",
+        "D": "32.48"
+      },
+      "answer_letter": "B",
+      "answer_text": "33.48",
+      "explanation": "46.21 - 12.73 = 33.48."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Multi-Digit & Decimal Operations",
+      "leaf_topic": "Decimal Subtraction",
+      "question": "20.99 - 2.09 = ?",
+      "options": {
+        "A": "19.9",
+        "B": "18.9",
+        "C": "23.08",
+        "D": "17.9"
+      },
+      "answer_letter": "B",
+      "answer_text": "18.9",
+      "explanation": "20.99 - 2.09 = 18.9."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Multi-Digit & Decimal Operations",
+      "leaf_topic": "Decimal Multiplication",
+      "question": "14.15 × 7.08 = ?",
+      "options": {
+        "A": "100.18",
+        "B": "101.18",
+        "C": "21.23",
+        "D": "99.18"
+      },
+      "answer_letter": "A",
+      "answer_text": "100.18",
+      "explanation": "14.15 × 7.08 = 100.18."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Multi-Digit & Decimal Operations",
+      "leaf_topic": "Decimal Multiplication",
+      "question": "9.83 × 5.2 = ?",
+      "options": {
+        "A": "52.12",
+        "B": "15.03",
+        "C": "50.12",
+        "D": "51.12"
+      },
+      "answer_letter": "D",
+      "answer_text": "51.12",
+      "explanation": "9.83 × 5.2 = 51.12."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Multi-Digit & Decimal Operations",
+      "leaf_topic": "Decimal Multiplication",
+      "question": "6.92 × 1.77 = ?",
+      "options": {
+        "A": "11.25",
+        "B": "13.25",
+        "C": "12.25",
+        "D": "8.69"
+      },
+      "answer_letter": "C",
+      "answer_text": "12.25",
+      "explanation": "6.92 × 1.77 = 12.25."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Multi-Digit & Decimal Operations",
+      "leaf_topic": "Decimal Multiplication",
+      "question": "9.72 × 8.38 = ?",
+      "options": {
+        "A": "81.45",
+        "B": "80.45",
+        "C": "82.45",
+        "D": "18.1"
+      },
+      "answer_letter": "A",
+      "answer_text": "81.45",
+      "explanation": "9.72 × 8.38 = 81.45."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Multi-Digit & Decimal Operations",
+      "leaf_topic": "Decimal Multiplication",
+      "question": "4.99 × 9.51 = ?",
+      "options": {
+        "A": "14.5",
+        "B": "46.45",
+        "C": "47.45",
+        "D": "48.45"
+      },
+      "answer_letter": "C",
+      "answer_text": "47.45",
+      "explanation": "4.99 × 9.51 = 47.45."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Multi-Digit & Decimal Operations",
+      "leaf_topic": "Decimal Division",
+      "question": "24.99 ÷ 2.28 = ? (to the nearest hundredth)",
+      "options": {
+        "A": "22.71",
+        "B": "11.96",
+        "C": "10.96",
+        "D": "9.96"
+      },
+      "answer_letter": "C",
+      "answer_text": "10.96",
+      "explanation": "24.99 ÷ 2.28 ≈ 10.96."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Multi-Digit & Decimal Operations",
+      "leaf_topic": "Decimal Division",
+      "question": "128.95 ÷ 8.98 = ? (to the nearest hundredth)",
+      "options": {
+        "A": "14.36",
+        "B": "13.36",
+        "C": "119.97",
+        "D": "15.36"
+      },
+      "answer_letter": "A",
+      "answer_text": "14.36",
+      "explanation": "128.95 ÷ 8.98 ≈ 14.36."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Multi-Digit & Decimal Operations",
+      "leaf_topic": "Decimal Division",
+      "question": "18.29 ÷ 4.55 = ? (to the nearest hundredth)",
+      "options": {
+        "A": "4.02",
+        "B": "5.02",
+        "C": "3.02",
+        "D": "13.74"
+      },
+      "answer_letter": "A",
+      "answer_text": "4.02",
+      "explanation": "18.29 ÷ 4.55 ≈ 4.02."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Multi-Digit & Decimal Operations",
+      "leaf_topic": "Decimal Division",
+      "question": "68.91 ÷ 4.65 = ? (to the nearest hundredth)",
+      "options": {
+        "A": "14.82",
+        "B": "13.82",
+        "C": "15.82",
+        "D": "64.26"
+      },
+      "answer_letter": "A",
+      "answer_text": "14.82",
+      "explanation": "68.91 ÷ 4.65 ≈ 14.82."
+    },
+    {
+      "domain": "Number & Operations in Base Ten",
+      "subdomain": "Multi-Digit & Decimal Operations",
+      "leaf_topic": "Decimal Division",
+      "question": "65.13 ÷ 3.84 = ? (to the nearest hundredth)",
+      "options": {
+        "A": "61.29",
+        "B": "15.96",
+        "C": "17.96",
+        "D": "16.96"
+      },
+      "answer_letter": "D",
+      "answer_text": "16.96",
+      "explanation": "65.13 ÷ 3.84 ≈ 16.96."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Addition & Subtraction",
+      "leaf_topic": "Equivalent Fractions",
+      "question": "Choose the equivalent fraction of 4/2 (by multiplying numerator and denominator by 3).",
+      "options": {
+        "A": "7/5",
+        "B": "12/2",
+        "C": "4/6",
+        "D": "12/6"
+      },
+      "answer_letter": "D",
+      "answer_text": "12/6",
+      "explanation": "4/2 = (4×3)/(2×3) = 12/6."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Addition & Subtraction",
+      "leaf_topic": "Equivalent Fractions",
+      "question": "Choose the equivalent fraction of 3/4 (by multiplying numerator and denominator by 2).",
+      "options": {
+        "A": "3/8",
+        "B": "6/8",
+        "C": "6/4",
+        "D": "5/6"
+      },
+      "answer_letter": "B",
+      "answer_text": "6/8",
+      "explanation": "3/4 = (3×2)/(4×2) = 6/8."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Addition & Subtraction",
+      "leaf_topic": "Equivalent Fractions",
+      "question": "Choose the equivalent fraction of 3/5 (by multiplying numerator and denominator by 4).",
+      "options": {
+        "A": "3/20",
+        "B": "7/9",
+        "C": "12/5",
+        "D": "12/20"
+      },
+      "answer_letter": "D",
+      "answer_text": "12/20",
+      "explanation": "3/5 = (3×4)/(5×4) = 12/20."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Addition & Subtraction",
+      "leaf_topic": "Equivalent Fractions",
+      "question": "Choose the equivalent fraction of 1/4 (by multiplying numerator and denominator by 3).",
+      "options": {
+        "A": "3/12",
+        "B": "1/12",
+        "C": "4/7",
+        "D": "3/4"
+      },
+      "answer_letter": "A",
+      "answer_text": "3/12",
+      "explanation": "1/4 = (1×3)/(4×3) = 3/12."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Addition & Subtraction",
+      "leaf_topic": "Equivalent Fractions",
+      "question": "Choose the equivalent fraction of 5/4 (by multiplying numerator and denominator by 3).",
+      "options": {
+        "A": "8/7",
+        "B": "15/12",
+        "C": "15/4",
+        "D": "5/12"
+      },
+      "answer_letter": "B",
+      "answer_text": "15/12",
+      "explanation": "5/4 = (5×3)/(4×3) = 15/12."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Addition & Subtraction",
+      "leaf_topic": "Unlike Denominators",
+      "question": "4/6 + 5/3 = ? (unlike denominators)",
+      "options": {
+        "A": "31/12",
+        "B": "32/15",
+        "C": "1/1",
+        "D": "7/3"
+      },
+      "answer_letter": "D",
+      "answer_text": "7/3",
+      "explanation": "By finding a common denominator: 4/6 + 5/3 = 7/3."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Addition & Subtraction",
+      "leaf_topic": "Unlike Denominators",
+      "question": "4/6 - 2/7 = ? (unlike denominators)",
+      "options": {
+        "A": "6/13",
+        "B": "19/105",
+        "C": "8/21",
+        "D": "53/84"
+      },
+      "answer_letter": "C",
+      "answer_text": "8/21",
+      "explanation": "By finding a common denominator: 4/6 - 2/7 = 8/21."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Addition & Subtraction",
+      "leaf_topic": "Unlike Denominators",
+      "question": "2/5 - 4/4 = ? (unlike denominators)",
+      "options": {
+        "A": "3/5",
+        "B": "2/3",
+        "C": "17/20",
+        "D": "2/5"
+      },
+      "answer_letter": "A",
+      "answer_text": "3/5",
+      "explanation": "By finding a common denominator: 2/5 - 4/4 = 3/5."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Addition & Subtraction",
+      "leaf_topic": "Unlike Denominators",
+      "question": "4/7 - 2/4 = ? (unlike denominators)",
+      "options": {
+        "A": "6/11",
+        "B": "-9/70",
+        "C": "1/14",
+        "D": "9/28"
+      },
+      "answer_letter": "C",
+      "answer_text": "1/14",
+      "explanation": "By finding a common denominator: 4/7 - 2/4 = 1/14."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Addition & Subtraction",
+      "leaf_topic": "Unlike Denominators",
+      "question": "2/2 - 2/6 = ? (unlike denominators)",
+      "options": {
+        "A": "2/3",
+        "B": "7/15",
+        "C": "11/12",
+        "D": "1/2"
+      },
+      "answer_letter": "A",
+      "answer_text": "2/3",
+      "explanation": "By finding a common denominator: 2/2 - 2/6 = 2/3."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Addition & Subtraction",
+      "leaf_topic": "Mixed Numbers",
+      "question": "4 4/6 + 2 2/5 = ? (mixed numbers)",
+      "options": {
+        "A": "7 2/15",
+        "B": "7 1/15",
+        "C": "6 6/11",
+        "D": "8 1/15"
+      },
+      "answer_letter": "B",
+      "answer_text": "7 1/15",
+      "explanation": "Add whole numbers and fractions separately: total = 7 1/15."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Addition & Subtraction",
+      "leaf_topic": "Mixed Numbers",
+      "question": "3 2/7 + 3 2/5 = ? (mixed numbers)",
+      "options": {
+        "A": "6 24/35",
+        "B": "6 25/35",
+        "C": "7 24/35",
+        "D": "6 4/12"
+      },
+      "answer_letter": "A",
+      "answer_text": "6 24/35",
+      "explanation": "Add whole numbers and fractions separately: total = 6 24/35."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Addition & Subtraction",
+      "leaf_topic": "Mixed Numbers",
+      "question": "2 4/7 + 3 1/8 = ? (mixed numbers)",
+      "options": {
+        "A": "5 39/56",
+        "B": "6 39/56",
+        "C": "5 5/15",
+        "D": "5 40/56"
+      },
+      "answer_letter": "A",
+      "answer_text": "5 39/56",
+      "explanation": "Add whole numbers and fractions separately: total = 5 39/56."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Addition & Subtraction",
+      "leaf_topic": "Mixed Numbers",
+      "question": "2 2/5 + 3 2/8 = ? (mixed numbers)",
+      "options": {
+        "A": "5 13/20",
+        "B": "6 13/20",
+        "C": "5 14/20",
+        "D": "5 4/13"
+      },
+      "answer_letter": "A",
+      "answer_text": "5 13/20",
+      "explanation": "Add whole numbers and fractions separately: total = 5 13/20."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Addition & Subtraction",
+      "leaf_topic": "Fraction Word Problems",
+      "question": "Ayesha bought 4/5 kilo of bananas, then bought another 1/5 kilo. What is the total bananas?",
+      "options": {
+        "A": "1/1",
+        "B": "4/5",
+        "C": "1/2",
+        "D": "6/5"
+      },
+      "answer_letter": "A",
+      "answer_text": "1/1",
+      "explanation": "4/5 + 1/5 = 1/1 kilo."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Addition & Subtraction",
+      "leaf_topic": "Fraction Word Problems",
+      "question": "Tariq bought 4/3 kilo of flour, then bought another 1/3 kilo. What is the total flour?",
+      "options": {
+        "A": "2/1",
+        "B": "5/3",
+        "C": "4/3",
+        "D": "5/6"
+      },
+      "answer_letter": "B",
+      "answer_text": "5/3",
+      "explanation": "4/3 + 1/3 = 5/3 kilo."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Addition & Subtraction",
+      "leaf_topic": "Fraction Word Problems",
+      "question": "Tariq bought 1/4 kilo of bananas, then bought another 1/4 kilo. What is the total bananas?",
+      "options": {
+        "A": "N/A",
+        "B": "3/4",
+        "C": "1/4",
+        "D": "1/2"
+      },
+      "answer_letter": "D",
+      "answer_text": "1/2",
+      "explanation": "1/4 + 1/4 = 1/2 kilo."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Addition & Subtraction",
+      "leaf_topic": "Fraction Word Problems",
+      "question": "Hamza bought 1/7 kilo of mangoes, then bought another 1/7 kilo. What is the total mangoes?",
+      "options": {
+        "A": "N/A",
+        "B": "2/7",
+        "C": "3/7",
+        "D": "1/7"
+      },
+      "answer_letter": "B",
+      "answer_text": "2/7",
+      "explanation": "1/7 + 1/7 = 2/7 kilo."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Addition & Subtraction",
+      "leaf_topic": "Fraction Word Problems",
+      "question": "Tariq bought 3/4 kilo of samosas, then bought another 3/4 kilo. What is the total samosas?",
+      "options": {
+        "A": "7/4",
+        "B": "3/2",
+        "C": "3/4",
+        "D": "5/4"
+      },
+      "answer_letter": "B",
+      "answer_text": "3/2",
+      "explanation": "3/4 + 3/4 = 3/2 kilo."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Addition & Subtraction",
+      "leaf_topic": "Estimate & Check Reasonableness",
+      "question": "Is 2/5 + 1/2 = 3/7 correct? Check using benchmark fractions (like 1/2).",
+      "options": {
+        "A": "Only the denominator is wrong",
+        "B": "Yes, this is correct",
+        "C": "Only the numerator is wrong",
+        "D": "No, because the sum of 2/5 and 1/2 should be greater than 1/2, but 3/7 is less than 1/2"
+      },
+      "answer_letter": "D",
+      "answer_text": "No, because the sum of 2/5 and 1/2 should be greater than 1/2, but 3/7 is less than 1/2",
+      "explanation": "The sum of 2/5 and 1/2 should be greater than 1/2, but 3/7 < 1/2 — therefore the result is incorrect."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Addition & Subtraction",
+      "leaf_topic": "Estimate & Check Reasonableness",
+      "question": "Is 2/5 + 1/2 = 3/7 correct? Check using benchmark fractions (like 1/2).",
+      "options": {
+        "A": "No, because the sum of 2/5 and 1/2 should be greater than 1/2, but 3/7 is less than 1/2",
+        "B": "Only the denominator is wrong",
+        "C": "Yes, this is correct",
+        "D": "Only the numerator is wrong"
+      },
+      "answer_letter": "A",
+      "answer_text": "No, because the sum of 2/5 and 1/2 should be greater than 1/2, but 3/7 is less than 1/2",
+      "explanation": "The sum of 2/5 and 1/2 should be greater than 1/2, but 3/7 < 1/2 — therefore the result is incorrect."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Addition & Subtraction",
+      "leaf_topic": "Estimate & Check Reasonableness",
+      "question": "Is 2/5 + 1/2 = 3/7 correct? Check using benchmark fractions (like 1/2).",
+      "options": {
+        "A": "Only the denominator is wrong",
+        "B": "No, because the sum of 2/5 and 1/2 should be greater than 1/2, but 3/7 is less than 1/2",
+        "C": "Yes, this is correct",
+        "D": "Only the numerator is wrong"
+      },
+      "answer_letter": "B",
+      "answer_text": "No, because the sum of 2/5 and 1/2 should be greater than 1/2, but 3/7 is less than 1/2",
+      "explanation": "The sum of 2/5 and 1/2 should be greater than 1/2, but 3/7 < 1/2 — therefore the result is incorrect."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Addition & Subtraction",
+      "leaf_topic": "Estimate & Check Reasonableness",
+      "question": "Is 2/5 + 1/2 = 3/7 correct? Check using benchmark fractions (like 1/2).",
+      "options": {
+        "A": "Only the denominator is wrong",
+        "B": "Yes, this is correct",
+        "C": "Only the numerator is wrong",
+        "D": "No, because the sum of 2/5 and 1/2 should be greater than 1/2, but 3/7 is less than 1/2"
+      },
+      "answer_letter": "D",
+      "answer_text": "No, because the sum of 2/5 and 1/2 should be greater than 1/2, but 3/7 is less than 1/2",
+      "explanation": "The sum of 2/5 and 1/2 should be greater than 1/2, but 3/7 < 1/2 — therefore the result is incorrect."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Addition & Subtraction",
+      "leaf_topic": "Estimate & Check Reasonableness",
+      "question": "Is 2/5 + 1/2 = 3/7 correct? Check using benchmark fractions (like 1/2).",
+      "options": {
+        "A": "No, because the sum of 2/5 and 1/2 should be greater than 1/2, but 3/7 is less than 1/2",
+        "B": "Only the denominator is wrong",
+        "C": "Yes, this is correct",
+        "D": "Only the numerator is wrong"
+      },
+      "answer_letter": "A",
+      "answer_text": "No, because the sum of 2/5 and 1/2 should be greater than 1/2, but 3/7 is less than 1/2",
+      "explanation": "The sum of 2/5 and 1/2 should be greater than 1/2, but 3/7 < 1/2 — therefore the result is incorrect."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Multiplication & Division",
+      "leaf_topic": "Fraction as Division",
+      "question": "How would you write the fraction 10/9 as a division?",
+      "options": {
+        "A": "10 + 9",
+        "B": "10 ÷ 9",
+        "C": "10 × 9",
+        "D": "9 ÷ 10"
+      },
+      "answer_letter": "B",
+      "answer_text": "10 ÷ 9",
+      "explanation": "a/b means a ÷ b, therefore 10/9 = 10 ÷ 9."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Multiplication & Division",
+      "leaf_topic": "Fraction as Division",
+      "question": "How would you write the fraction 3/8 as a division?",
+      "options": {
+        "A": "8 ÷ 3",
+        "B": "3 + 8",
+        "C": "3 ÷ 8",
+        "D": "3 × 8"
+      },
+      "answer_letter": "C",
+      "answer_text": "3 ÷ 8",
+      "explanation": "a/b means a ÷ b, therefore 3/8 = 3 ÷ 8."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Multiplication & Division",
+      "leaf_topic": "Fraction as Division",
+      "question": "How would you write the fraction 9/9 as a division?",
+      "options": {
+        "A": "9 × 9",
+        "B": "9 ÷ 9",
+        "C": "9 ÷ 9",
+        "D": "9 + 9"
+      },
+      "answer_letter": "B",
+      "answer_text": "9 ÷ 9",
+      "explanation": "a/b means a ÷ b, therefore 9/9 = 9 ÷ 9."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Multiplication & Division",
+      "leaf_topic": "Fraction as Division",
+      "question": "How would you write the fraction 10/8 as a division?",
+      "options": {
+        "A": "10 + 8",
+        "B": "8 ÷ 10",
+        "C": "10 ÷ 8",
+        "D": "10 × 8"
+      },
+      "answer_letter": "C",
+      "answer_text": "10 ÷ 8",
+      "explanation": "a/b means a ÷ b, therefore 10/8 = 10 ÷ 8."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Multiplication & Division",
+      "leaf_topic": "Fraction as Division",
+      "question": "How would you write the fraction 4/7 as a division?",
+      "options": {
+        "A": "4 ÷ 7",
+        "B": "4 × 7",
+        "C": "7 ÷ 4",
+        "D": "4 + 7"
+      },
+      "answer_letter": "A",
+      "answer_text": "4 ÷ 7",
+      "explanation": "a/b means a ÷ b, therefore 4/7 = 4 ÷ 7."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Multiplication & Division",
+      "leaf_topic": "Multiply Fraction by Whole Number",
+      "question": "(1/8) × 5 = ?",
+      "options": {
+        "A": "5/13",
+        "B": "5/8",
+        "C": "1/40",
+        "D": "41/8"
+      },
+      "answer_letter": "B",
+      "answer_text": "5/8",
+      "explanation": "(1/8) × 5 = 5/8."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Multiplication & Division",
+      "leaf_topic": "Multiply Fraction by Whole Number",
+      "question": "(4/3) × 5 = ?",
+      "options": {
+        "A": "19/3",
+        "B": "4/15",
+        "C": "20/3",
+        "D": "5/2"
+      },
+      "answer_letter": "C",
+      "answer_text": "20/3",
+      "explanation": "(4/3) × 5 = 20/3."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Multiplication & Division",
+      "leaf_topic": "Multiply Fraction by Whole Number",
+      "question": "(2/4) × 9 = ?",
+      "options": {
+        "A": "19/2",
+        "B": "1/18",
+        "C": "9/2",
+        "D": "18/13"
+      },
+      "answer_letter": "C",
+      "answer_text": "9/2",
+      "explanation": "(2/4) × 9 = 9/2."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Multiplication & Division",
+      "leaf_topic": "Multiply Fraction by Whole Number",
+      "question": "(2/3) × 11 = ?",
+      "options": {
+        "A": "2/33",
+        "B": "22/3",
+        "C": "11/7",
+        "D": "35/3"
+      },
+      "answer_letter": "B",
+      "answer_text": "22/3",
+      "explanation": "(2/3) × 11 = 22/3."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Multiplication & Division",
+      "leaf_topic": "Multiply Fraction by Whole Number",
+      "question": "(2/5) × 11 = ?",
+      "options": {
+        "A": "57/5",
+        "B": "2/55",
+        "C": "11/8",
+        "D": "22/5"
+      },
+      "answer_letter": "D",
+      "answer_text": "22/5",
+      "explanation": "(2/5) × 11 = 22/5."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Multiplication & Division",
+      "leaf_topic": "Multiply Fraction by Fraction",
+      "question": "(5/3) × (4/2) = ?",
+      "options": {
+        "A": "7/2",
+        "B": "9/5",
+        "C": "5/6",
+        "D": "10/3"
+      },
+      "answer_letter": "D",
+      "answer_text": "10/3",
+      "explanation": "(5/3) × (4/2) = (5×4)/(3×2) = 10/3."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Multiplication & Division",
+      "leaf_topic": "Multiply Fraction by Fraction",
+      "question": "(4/7) × (3/7) = ?",
+      "options": {
+        "A": "1/2",
+        "B": "4/3",
+        "C": "121/294",
+        "D": "12/49"
+      },
+      "answer_letter": "D",
+      "answer_text": "12/49",
+      "explanation": "(4/7) × (3/7) = (4×3)/(7×7) = 12/49."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Multiplication & Division",
+      "leaf_topic": "Multiply Fraction by Fraction",
+      "question": "(3/3) × (2/7) = ?",
+      "options": {
+        "A": "19/42",
+        "B": "1/2",
+        "C": "2/7",
+        "D": "7/2"
+      },
+      "answer_letter": "C",
+      "answer_text": "2/7",
+      "explanation": "(3/3) × (2/7) = (3×2)/(3×7) = 2/7."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Multiplication & Division",
+      "leaf_topic": "Multiply Fraction by Fraction",
+      "question": "(4/8) × (3/4) = ?",
+      "options": {
+        "A": "13/24",
+        "B": "7/12",
+        "C": "3/8",
+        "D": "2/3"
+      },
+      "answer_letter": "C",
+      "answer_text": "3/8",
+      "explanation": "(4/8) × (3/4) = (4×3)/(8×4) = 3/8."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Multiplication & Division",
+      "leaf_topic": "Multiply Fraction by Fraction",
+      "question": "(1/2) × (3/2) = ?",
+      "options": {
+        "A": "11/12",
+        "B": "3/4",
+        "C": "1/3",
+        "D": "1/1"
+      },
+      "answer_letter": "B",
+      "answer_text": "3/4",
+      "explanation": "(1/2) × (3/2) = (1×3)/(2×2) = 3/4."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Multiplication & Division",
+      "leaf_topic": "Fraction Scaling",
+      "question": "If we multiply 11 by a fraction less than 1 (like 2/3), what will the result be like?",
+      "options": {
+        "A": "A result smaller than 11 will be obtained",
+        "B": "The result will be negative",
+        "C": "A result equal to 11 will be obtained",
+        "D": "A result larger than 11 will be obtained"
+      },
+      "answer_letter": "A",
+      "answer_text": "A result smaller than 11 will be obtained",
+      "explanation": "Multiplying by a fraction greater than 1 makes the number larger; multiplying by a fraction less than 1 makes it smaller."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Multiplication & Division",
+      "leaf_topic": "Fraction Scaling",
+      "question": "If we multiply 7 by a fraction greater than 1 (like 5/4), what will the result be like?",
+      "options": {
+        "A": "A result smaller than 7 will be obtained",
+        "B": "A result equal to 7 will be obtained",
+        "C": "A result larger than 7 will be obtained",
+        "D": "The result will be negative"
+      },
+      "answer_letter": "C",
+      "answer_text": "A result larger than 7 will be obtained",
+      "explanation": "Multiplying by a fraction greater than 1 makes the number larger; multiplying by a fraction less than 1 makes it smaller."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Multiplication & Division",
+      "leaf_topic": "Fraction Scaling",
+      "question": "If we multiply 19 by a fraction greater than 1 (like 5/4), what will the result be like?",
+      "options": {
+        "A": "A result smaller than 19 will be obtained",
+        "B": "A result equal to 19 will be obtained",
+        "C": "A result larger than 19 will be obtained",
+        "D": "The result will be negative"
+      },
+      "answer_letter": "C",
+      "answer_text": "A result larger than 19 will be obtained",
+      "explanation": "Multiplying by a fraction greater than 1 makes the number larger; multiplying by a fraction less than 1 makes it smaller."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Multiplication & Division",
+      "leaf_topic": "Fraction Scaling",
+      "question": "If we multiply 5 by a fraction less than 1 (like 2/3), what will the result be like?",
+      "options": {
+        "A": "A result smaller than 5 will be obtained",
+        "B": "The result will be negative",
+        "C": "A result equal to 5 will be obtained",
+        "D": "A result larger than 5 will be obtained"
+      },
+      "answer_letter": "A",
+      "answer_text": "A result smaller than 5 will be obtained",
+      "explanation": "Multiplying by a fraction greater than 1 makes the number larger; multiplying by a fraction less than 1 makes it smaller."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Multiplication & Division",
+      "leaf_topic": "Fraction Scaling",
+      "question": "If we multiply 6 by a fraction less than 1 (like 2/3), what will the result be like?",
+      "options": {
+        "A": "A result smaller than 6 will be obtained",
+        "B": "The result will be negative",
+        "C": "A result equal to 6 will be obtained",
+        "D": "A result larger than 6 will be obtained"
+      },
+      "answer_letter": "A",
+      "answer_text": "A result smaller than 6 will be obtained",
+      "explanation": "Multiplying by a fraction greater than 1 makes the number larger; multiplying by a fraction less than 1 makes it smaller."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Multiplication & Division",
+      "leaf_topic": "Fraction Multiplication Word Problems",
+      "question": "Bilal has 2 plates, each plate has 3/3 rice. What is the total rice?",
+      "options": {
+        "A": "2",
+        "B": "7/4",
+        "C": "3",
+        "D": "7/3"
+      },
+      "answer_letter": "A",
+      "answer_text": "2",
+      "explanation": "(3/3) × 2 = 2."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Multiplication & Division",
+      "leaf_topic": "Fraction Multiplication Word Problems",
+      "question": "Danish has 7 plates, each plate has 1/4 samosas. What is the total samosas?",
+      "options": {
+        "A": "3/2",
+        "B": "29/4",
+        "C": "7/4",
+        "D": "25/12"
+      },
+      "answer_letter": "C",
+      "answer_text": "7/4",
+      "explanation": "(1/4) × 7 = 7/4."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Multiplication & Division",
+      "leaf_topic": "Fraction Multiplication Word Problems",
+      "question": "Sana has 2 plates, each plate has 2/2 sugar. What is the total sugar?",
+      "options": {
+        "A": "2",
+        "B": "7/3",
+        "C": "3",
+        "D": "7/4"
+      },
+      "answer_letter": "A",
+      "answer_text": "2",
+      "explanation": "(2/2) × 2 = 2."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Multiplication & Division",
+      "leaf_topic": "Fraction Multiplication Word Problems",
+      "question": "Zainab has 9 plates, each plate has 2/5 mangoes. What is the total mangoes?",
+      "options": {
+        "A": "59/15",
+        "B": "18/5",
+        "C": "47/5",
+        "D": "67/20"
+      },
+      "answer_letter": "B",
+      "answer_text": "18/5",
+      "explanation": "(2/5) × 9 = 18/5."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Multiplication & Division",
+      "leaf_topic": "Fraction Multiplication Word Problems",
+      "question": "Faisal has 5 plates, each plate has 3/4 tea. What is the total tea?",
+      "options": {
+        "A": "23/4",
+        "B": "49/12",
+        "C": "7/2",
+        "D": "15/4"
+      },
+      "answer_letter": "D",
+      "answer_text": "15/4",
+      "explanation": "(3/4) × 5 = 15/4."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Multiplication & Division",
+      "leaf_topic": "Divide Unit Fraction by Whole Number",
+      "question": "(1/8) ÷ 4 = ?",
+      "options": {
+        "A": "4/8",
+        "B": "1/32",
+        "C": "1/7",
+        "D": "1/12"
+      },
+      "answer_letter": "B",
+      "answer_text": "1/32",
+      "explanation": "(1/8) ÷ 4 = 1/(8×4) = 1/32."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Multiplication & Division",
+      "leaf_topic": "Divide Unit Fraction by Whole Number",
+      "question": "(1/2) ÷ 9 = ?",
+      "options": {
+        "A": "1/10",
+        "B": "1/11",
+        "C": "1/18",
+        "D": "9/2"
+      },
+      "answer_letter": "C",
+      "answer_text": "1/18",
+      "explanation": "(1/2) ÷ 9 = 1/(2×9) = 1/18."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Multiplication & Division",
+      "leaf_topic": "Divide Unit Fraction by Whole Number",
+      "question": "(1/3) ÷ 3 = ?",
+      "options": {
+        "A": "1/6",
+        "B": "1/9",
+        "C": "1/2",
+        "D": "3/3"
+      },
+      "answer_letter": "B",
+      "answer_text": "1/9",
+      "explanation": "(1/3) ÷ 3 = 1/(3×3) = 1/9."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Multiplication & Division",
+      "leaf_topic": "Divide Unit Fraction by Whole Number",
+      "question": "(1/5) ÷ 3 = ?",
+      "options": {
+        "A": "1/15",
+        "B": "3/5",
+        "C": "1/8",
+        "D": "1/4"
+      },
+      "answer_letter": "A",
+      "answer_text": "1/15",
+      "explanation": "(1/5) ÷ 3 = 1/(5×3) = 1/15."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Multiplication & Division",
+      "leaf_topic": "Divide Unit Fraction by Whole Number",
+      "question": "(1/4) ÷ 5 = ?",
+      "options": {
+        "A": "1/20",
+        "B": "5/4",
+        "C": "1/3",
+        "D": "1/9"
+      },
+      "answer_letter": "A",
+      "answer_text": "1/20",
+      "explanation": "(1/4) ÷ 5 = 1/(4×5) = 1/20."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Multiplication & Division",
+      "leaf_topic": "Divide Whole Number by Unit Fraction",
+      "question": "5 ÷ (1/3) = ?",
+      "options": {
+        "A": "15",
+        "B": "8",
+        "C": "16",
+        "D": "14"
+      },
+      "answer_letter": "A",
+      "answer_text": "15",
+      "explanation": "5 ÷ (1/3) = 5 × 3 = 15."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Multiplication & Division",
+      "leaf_topic": "Divide Whole Number by Unit Fraction",
+      "question": "6 ÷ (1/7) = ?",
+      "options": {
+        "A": "42",
+        "B": "43",
+        "C": "13",
+        "D": "41"
+      },
+      "answer_letter": "A",
+      "answer_text": "42",
+      "explanation": "6 ÷ (1/7) = 6 × 7 = 42."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Multiplication & Division",
+      "leaf_topic": "Divide Whole Number by Unit Fraction",
+      "question": "5 ÷ (1/9) = ?",
+      "options": {
+        "A": "14",
+        "B": "44",
+        "C": "45",
+        "D": "46"
+      },
+      "answer_letter": "C",
+      "answer_text": "45",
+      "explanation": "5 ÷ (1/9) = 5 × 9 = 45."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Multiplication & Division",
+      "leaf_topic": "Divide Whole Number by Unit Fraction",
+      "question": "5 ÷ (1/4) = ?",
+      "options": {
+        "A": "21",
+        "B": "20",
+        "C": "9",
+        "D": "19"
+      },
+      "answer_letter": "B",
+      "answer_text": "20",
+      "explanation": "5 ÷ (1/4) = 5 × 4 = 20."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Multiplication & Division",
+      "leaf_topic": "Fraction Division Word Problems",
+      "question": "If 1/2 kg of chocolate is equally divided among people, and each person gets 4/1 kg, how many people are there?",
+      "options": {
+        "A": "3 people",
+        "B": "4 people",
+        "C": "5 people",
+        "D": "8 people"
+      },
+      "answer_letter": "B",
+      "answer_text": "4 people",
+      "explanation": "1/2 ÷ (1/8) = 4, therefore there are 4 people."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Multiplication & Division",
+      "leaf_topic": "Fraction Division Word Problems",
+      "question": "If 1/2 kg of chocolate is equally divided among people, and each person gets 6/1 kg, how many people are there?",
+      "options": {
+        "A": "12 people",
+        "B": "6 people",
+        "C": "5 people",
+        "D": "7 people"
+      },
+      "answer_letter": "B",
+      "answer_text": "6 people",
+      "explanation": "1/2 ÷ (1/12) = 6, is liye 6 people hain."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Multiplication & Division",
+      "leaf_topic": "Fraction Division Word Problems",
+      "question": "If 1/2 kg of chocolate is equally divided among people, and each person gets 5/1 kg, how many people are there?",
+      "options": {
+        "A": "4 people",
+        "B": "6 people",
+        "C": "10 log",
+        "D": "5 people"
+      },
+      "answer_letter": "D",
+      "answer_text": "5 people",
+      "explanation": "1/2 ÷ (1/10) = 5, is liye 5 people hain."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Multiplication & Division",
+      "leaf_topic": "Fraction Division Word Problems",
+      "question": "If 1/2 kg of chocolate is equally divided among people, and each person gets 3/1 kg, how many people are there?",
+      "options": {
+        "A": "6 people",
+        "B": "4 people",
+        "C": "3 people",
+        "D": "2 people"
+      },
+      "answer_letter": "C",
+      "answer_text": "3 people",
+      "explanation": "1/2 ÷ (1/6) = 3, is liye 3 people hain."
+    },
+    {
+      "domain": "Number & Operations – Fractions",
+      "subdomain": "Fraction Multiplication & Division",
+      "leaf_topic": "Fraction Division Word Problems",
+      "question": "If 1/2 kg of chocolate is equally divided among people, and each person gets 3/1 kg, how many people are there?",
+      "options": {
+        "A": "4 people",
+        "B": "2 people",
+        "C": "6 people",
+        "D": "3 people"
+      },
+      "answer_letter": "D",
+      "answer_text": "3 people",
+      "explanation": "1/2 ÷ (1/6) = 3, is liye 3 people hain."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Measurement Unit Conversion",
+      "leaf_topic": "Convert Like Measurement Units",
+      "question": "Convert 126 cm to meters.",
+      "options": {
+        "A": "12600",
+        "B": "1.26",
+        "C": "226",
+        "D": "12.6"
+      },
+      "answer_letter": "B",
+      "answer_text": "1.26",
+      "explanation": "100 cm = 1 m, therefore 126 cm = 1.26 m."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Measurement Unit Conversion",
+      "leaf_topic": "Convert Like Measurement Units",
+      "question": "Convert 509 cm to meters.",
+      "options": {
+        "A": "50900",
+        "B": "5.09",
+        "C": "609",
+        "D": "50.9"
+      },
+      "answer_letter": "B",
+      "answer_text": "5.09",
+      "explanation": "100 cm = 1 m, therefore 509 cm = 5.09 m."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Measurement Unit Conversion",
+      "leaf_topic": "Convert Like Measurement Units",
+      "question": "Convert 158 cm to meters.",
+      "options": {
+        "A": "15800",
+        "B": "258",
+        "C": "1.58",
+        "D": "15.8"
+      },
+      "answer_letter": "C",
+      "answer_text": "1.58",
+      "explanation": "100 cm = 1 m, therefore 158 cm = 1.58 m."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Measurement Unit Conversion",
+      "leaf_topic": "Convert Like Measurement Units",
+      "question": "Convert 427 cm to meters.",
+      "options": {
+        "A": "42700",
+        "B": "527",
+        "C": "4.27",
+        "D": "42.7"
+      },
+      "answer_letter": "C",
+      "answer_text": "4.27",
+      "explanation": "100 cm = 1 m, therefore 427 cm = 4.27 m."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Measurement Unit Conversion",
+      "leaf_topic": "Convert Like Measurement Units",
+      "question": "Convert 258 cm to meters.",
+      "options": {
+        "A": "25800",
+        "B": "358",
+        "C": "2.58",
+        "D": "25.8"
+      },
+      "answer_letter": "C",
+      "answer_text": "2.58",
+      "explanation": "100 cm = 1 m, therefore 258 cm = 2.58 m."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Data Representation & Interpretation",
+      "leaf_topic": "Line Plots",
+      "question": "What do the 'X' marks mean on a line plot?",
+      "options": {
+        "A": "Only whole numbers appear on a line plot",
+        "B": "X only represents zero",
+        "C": "A line plot is just a bar chart",
+        "D": "Each X represents one data point on the number line"
+      },
+      "answer_letter": "D",
+      "answer_text": "Each X represents one data point on the number line",
+      "explanation": "Line plot mein har X ek measurement/data point ko number line par dikhata is."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Data Representation & Interpretation",
+      "leaf_topic": "Line Plots",
+      "question": "What do the 'X' marks mean on a line plot?",
+      "options": {
+        "A": "Only whole numbers appear on a line plot",
+        "B": "A line plot is just a bar chart",
+        "C": "Each X represents one data point on the number line",
+        "D": "X only represents zero"
+      },
+      "answer_letter": "C",
+      "answer_text": "Each X represents one data point on the number line",
+      "explanation": "Line plot mein har X ek measurement/data point ko number line par dikhata is."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Data Representation & Interpretation",
+      "leaf_topic": "Line Plots",
+      "question": "What do the 'X' marks mean on a line plot?",
+      "options": {
+        "A": "A line plot is just a bar chart",
+        "B": "X only represents zero",
+        "C": "Only whole numbers appear on a line plot",
+        "D": "Each X represents one data point on the number line"
+      },
+      "answer_letter": "D",
+      "answer_text": "Each X represents one data point on the number line",
+      "explanation": "Line plot mein har X ek measurement/data point ko number line par dikhata is."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Data Representation & Interpretation",
+      "leaf_topic": "Line Plots",
+      "question": "What do the 'X' marks mean on a line plot?",
+      "options": {
+        "A": "Each X represents one data point on the number line",
+        "B": "A line plot is just a bar chart",
+        "C": "X only represents zero",
+        "D": "Only whole numbers appear on a line plot"
+      },
+      "answer_letter": "A",
+      "answer_text": "Each X represents one data point on the number line",
+      "explanation": "Line plot mein har X ek measurement/data point ko number line par dikhata is."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Data Representation & Interpretation",
+      "leaf_topic": "Line Plots",
+      "question": "What do the 'X' marks mean on a line plot?",
+      "options": {
+        "A": "X only represents zero",
+        "B": "Only whole numbers appear on a line plot",
+        "C": "A line plot is just a bar chart",
+        "D": "Each X represents one data point on the number line"
+      },
+      "answer_letter": "D",
+      "answer_text": "Each X represents one data point on the number line",
+      "explanation": "Line plot mein har X ek measurement/data point ko number line par dikhata is."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Data Representation & Interpretation",
+      "leaf_topic": "Fraction Measurements on Line Plots",
+      "question": "On the line plot, the beaker measurements are: 1/2, 1/4, 1/4, 1/8 litre. What is the total liquid?",
+      "options": {
+        "A": "1/2",
+        "B": "9/8",
+        "C": "2/8",
+        "D": "5/4"
+      },
+      "answer_letter": "B",
+      "answer_text": "9/8",
+      "explanation": "1/2 + 1/4 + 1/4 + 1/8 = 9/8 litre (using common denominator)."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Data Representation & Interpretation",
+      "leaf_topic": "Fraction Measurements on Line Plots",
+      "question": "On the line plot, the beaker measurements are: 1/2, 1/4, 1/4, 1/8 litre. What is the total liquid?",
+      "options": {
+        "A": "1/2",
+        "B": "5/4",
+        "C": "2/8",
+        "D": "9/8"
+      },
+      "answer_letter": "D",
+      "answer_text": "9/8",
+      "explanation": "1/2 + 1/4 + 1/4 + 1/8 = 9/8 litre (using common denominator)."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Data Representation & Interpretation",
+      "leaf_topic": "Fraction Measurements on Line Plots",
+      "question": "On the line plot, the beaker measurements are: 1/2, 1/4, 1/4, 1/8 litre. What is the total liquid?",
+      "options": {
+        "A": "9/8",
+        "B": "1/2",
+        "C": "2/8",
+        "D": "5/4"
+      },
+      "answer_letter": "A",
+      "answer_text": "9/8",
+      "explanation": "1/2 + 1/4 + 1/4 + 1/8 = 9/8 litre (using common denominator)."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Data Representation & Interpretation",
+      "leaf_topic": "Fraction Measurements on Line Plots",
+      "question": "On the line plot, the beaker measurements are: 1/2, 1/4, 1/4, 1/8 litre. What is the total liquid?",
+      "options": {
+        "A": "9/8",
+        "B": "2/8",
+        "C": "1/2",
+        "D": "5/4"
+      },
+      "answer_letter": "A",
+      "answer_text": "9/8",
+      "explanation": "1/2 + 1/4 + 1/4 + 1/8 = 9/8 litre (using common denominator)."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Data Representation & Interpretation",
+      "leaf_topic": "Fraction Measurements on Line Plots",
+      "question": "On the line plot, the beaker measurements are: 1/2, 1/4, 1/4, 1/8 litre. What is the total liquid?",
+      "options": {
+        "A": "2/8",
+        "B": "1/2",
+        "C": "9/8",
+        "D": "5/4"
+      },
+      "answer_letter": "C",
+      "answer_text": "9/8",
+      "explanation": "1/2 + 1/4 + 1/4 + 1/8 = 9/8 litre (using common denominator)."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Data Representation & Interpretation",
+      "leaf_topic": "Solve Problems Using Line Plot Data",
+      "question": "According to the line plot, the total liquid is 3/2 litre, which needs to be redistributed equally into 3 beakers. How much will each beaker get?",
+      "options": {
+        "A": "1/2",
+        "B": "9/9",
+        "C": "2/3",
+        "D": "3/4"
+      },
+      "answer_letter": "A",
+      "answer_text": "1/2",
+      "explanation": "3/2 ÷ 3 = 1/2 litre."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Data Representation & Interpretation",
+      "leaf_topic": "Solve Problems Using Line Plot Data",
+      "question": "According to the line plot, the total liquid is 3/2 litre, which needs to be redistributed equally into 3 beakers. How much will each beaker get?",
+      "options": {
+        "A": "3/4",
+        "B": "9/9",
+        "C": "2/3",
+        "D": "1/2"
+      },
+      "answer_letter": "D",
+      "answer_text": "1/2",
+      "explanation": "3/2 ÷ 3 = 1/2 litre."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Data Representation & Interpretation",
+      "leaf_topic": "Solve Problems Using Line Plot Data",
+      "question": "According to the line plot, the total liquid is 3/2 litre, which needs to be redistributed equally into 3 beakers. How much will each beaker get?",
+      "options": {
+        "A": "1/2",
+        "B": "2/3",
+        "C": "3/4",
+        "D": "9/9"
+      },
+      "answer_letter": "A",
+      "answer_text": "1/2",
+      "explanation": "3/2 ÷ 3 = 1/2 litre."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Data Representation & Interpretation",
+      "leaf_topic": "Solve Problems Using Line Plot Data",
+      "question": "According to the line plot, the total liquid is 3/2 litre, which needs to be redistributed equally into 3 beakers. How much will each beaker get?",
+      "options": {
+        "A": "3/4",
+        "B": "9/9",
+        "C": "1/2",
+        "D": "2/3"
+      },
+      "answer_letter": "C",
+      "answer_text": "1/2",
+      "explanation": "3/2 ÷ 3 = 1/2 litre."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Data Representation & Interpretation",
+      "leaf_topic": "Solve Problems Using Line Plot Data",
+      "question": "According to the line plot, the total liquid is 3/2 litre, which needs to be redistributed equally into 3 beakers. How much will each beaker get?",
+      "options": {
+        "A": "3/4",
+        "B": "1/2",
+        "C": "9/9",
+        "D": "2/3"
+      },
+      "answer_letter": "B",
+      "answer_text": "1/2",
+      "explanation": "3/2 ÷ 3 = 1/2 litre."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "Concept of Volume",
+      "question": "What is volume?",
+      "options": {
+        "A": "Volume is only used for liquids",
+        "B": "Volume and area are the same thing",
+        "C": "Volume is only for 2D shapes",
+        "D": "Volume is an attribute of 3D space that tells how much space it occupies"
+      },
+      "answer_letter": "D",
+      "answer_text": "Volume is an attribute of 3D space that tells how much space it occupies",
+      "explanation": "Volume is an attribute of 3-dimensional space — it tells how much space a solid figure occupies."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "Concept of Volume",
+      "question": "What is volume?",
+      "options": {
+        "A": "Volume is only for 2D shapes",
+        "B": "Volume and area are the same thing",
+        "C": "Volume is an attribute of 3D space that tells how much space it occupies",
+        "D": "Volume is only used for liquids"
+      },
+      "answer_letter": "C",
+      "answer_text": "Volume is an attribute of 3D space that tells how much space it occupies",
+      "explanation": "Volume is an attribute of 3-dimensional space — it tells how much space a solid figure occupies."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "Concept of Volume",
+      "question": "What is volume?",
+      "options": {
+        "A": "Volume is only for 2D shapes",
+        "B": "Volume and area are the same thing",
+        "C": "Volume is only used for liquids",
+        "D": "Volume is an attribute of 3D space that tells how much space it occupies"
+      },
+      "answer_letter": "D",
+      "answer_text": "Volume is an attribute of 3D space that tells how much space it occupies",
+      "explanation": "Volume is an attribute of 3-dimensional space — it tells how much space a solid figure occupies."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "Concept of Volume",
+      "question": "What is volume?",
+      "options": {
+        "A": "Volume and area are the same thing",
+        "B": "Volume is only for 2D shapes",
+        "C": "Volume is an attribute of 3D space that tells how much space it occupies",
+        "D": "Volume is only used for liquids"
+      },
+      "answer_letter": "C",
+      "answer_text": "Volume is an attribute of 3D space that tells how much space it occupies",
+      "explanation": "Volume is an attribute of 3-dimensional space — it tells how much space a solid figure occupies."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "Concept of Volume",
+      "question": "What is volume?",
+      "options": {
+        "A": "Volume and area are the same thing",
+        "B": "Volume is only used for liquids",
+        "C": "Volume is an attribute of 3D space that tells how much space it occupies",
+        "D": "Volume is only for 2D shapes"
+      },
+      "answer_letter": "C",
+      "answer_text": "Volume is an attribute of 3D space that tells how much space it occupies",
+      "explanation": "Volume is an attribute of 3-dimensional space — it tells how much space a solid figure occupies."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "Unit Cubes",
+      "question": "What is a 'unit cube' for measuring volume?",
+      "options": {
+        "A": "a cube of 2 unit × 2 unit × 2 unit",
+        "B": "a square of 1 unit × 1 unit",
+        "C": "a cube of 1 unit × 1 unit × 1 unit",
+        "D": "a cube of any size"
+      },
+      "answer_letter": "C",
+      "answer_text": "a cube of 1 unit × 1 unit × 1 unit",
+      "explanation": "A unit cube is a 1×1×1 unit cube which is called one cubic unit of volume."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "Unit Cubes",
+      "question": "What is a 'unit cube' for measuring volume?",
+      "options": {
+        "A": "a cube of any size",
+        "B": "a cube of 2 unit × 2 unit × 2 unit",
+        "C": "a square of 1 unit × 1 unit",
+        "D": "a cube of 1 unit × 1 unit × 1 unit"
+      },
+      "answer_letter": "D",
+      "answer_text": "a cube of 1 unit × 1 unit × 1 unit",
+      "explanation": "A unit cube is a 1×1×1 unit cube which is called one cubic unit of volume."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "Unit Cubes",
+      "question": "What is a 'unit cube' for measuring volume?",
+      "options": {
+        "A": "a cube of any size",
+        "B": "a cube of 2 unit × 2 unit × 2 unit",
+        "C": "a cube of 1 unit × 1 unit × 1 unit",
+        "D": "a square of 1 unit × 1 unit"
+      },
+      "answer_letter": "C",
+      "answer_text": "a cube of 1 unit × 1 unit × 1 unit",
+      "explanation": "A unit cube is a 1×1×1 unit cube which is called one cubic unit of volume."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "Unit Cubes",
+      "question": "What is a 'unit cube' for measuring volume?",
+      "options": {
+        "A": "a cube of any size",
+        "B": "a square of 1 unit × 1 unit",
+        "C": "a cube of 1 unit × 1 unit × 1 unit",
+        "D": "a cube of 2 unit × 2 unit × 2 unit"
+      },
+      "answer_letter": "C",
+      "answer_text": "a cube of 1 unit × 1 unit × 1 unit",
+      "explanation": "A unit cube is a 1×1×1 unit cube which is called one cubic unit of volume."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "Cubic Units",
+      "question": "If a solid figure is packed with 25 unit cubes without gaps, what will its volume be?",
+      "options": {
+        "A": "50 cubic units",
+        "B": "26 cubic units",
+        "C": "25 square units",
+        "D": "25 cubic units"
+      },
+      "answer_letter": "D",
+      "answer_text": "25 cubic units",
+      "explanation": "25 unit cubes form a solid with volume of 25 cubic units."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "Cubic Units",
+      "question": "If a solid figure is packed with 10 unit cubes without gaps, what will its volume be?",
+      "options": {
+        "A": "20 cubic units",
+        "B": "10 cubic units",
+        "C": "10 square units",
+        "D": "11 cubic units"
+      },
+      "answer_letter": "B",
+      "answer_text": "10 cubic units",
+      "explanation": "10 unit cubes form a solid with volume of 10 cubic units."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "Cubic Units",
+      "question": "If a solid figure is packed with 44 unit cubes without gaps, what will its volume be?",
+      "options": {
+        "A": "45 cubic units",
+        "B": "44 cubic units",
+        "C": "44 square units",
+        "D": "88 cubic units"
+      },
+      "answer_letter": "B",
+      "answer_text": "44 cubic units",
+      "explanation": "44 unit cubes form a solid with volume of 44 cubic units."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "Cubic Units",
+      "question": "If a solid figure is packed with 35 unit cubes without gaps, what will its volume be?",
+      "options": {
+        "A": "70 cubic units",
+        "B": "35 cubic units",
+        "C": "35 square units",
+        "D": "36 cubic units"
+      },
+      "answer_letter": "B",
+      "answer_text": "35 cubic units",
+      "explanation": "35 unit cubes form a solid with volume of 35 cubic units."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "Cubic Units",
+      "question": "If a solid figure is packed with 7 unit cubes without gaps, what will its volume be?",
+      "options": {
+        "A": "8 cubic units",
+        "B": "7 cubic units",
+        "C": "7 square units",
+        "D": "14 cubic units"
+      },
+      "answer_letter": "B",
+      "answer_text": "7 cubic units",
+      "explanation": "7 unit cubes form a solid with volume of 7 cubic units."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "Measure Volume by Counting Cubes",
+      "question": "A box has 5 layers, each layer has 4×2 cubes. How many total cubes (volume) are there?",
+      "options": {
+        "A": "11",
+        "B": "38",
+        "C": "40",
+        "D": "42"
+      },
+      "answer_letter": "C",
+      "answer_text": "40",
+      "explanation": "5 × 4 × 2 = 40 unit cubes."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "Measure Volume by Counting Cubes",
+      "question": "A box has 2 layers, each layer has 2×4 cubes. How many total cubes (volume) are there?",
+      "options": {
+        "A": "8",
+        "B": "14",
+        "C": "18",
+        "D": "16"
+      },
+      "answer_letter": "D",
+      "answer_text": "16",
+      "explanation": "2 × 2 × 4 = 16 unit cubes."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "Measure Volume by Counting Cubes",
+      "question": "A box has 4 layers, each layer has 5×4 cubes. How many total cubes (volume) are there?",
+      "options": {
+        "A": "80",
+        "B": "78",
+        "C": "13",
+        "D": "82"
+      },
+      "answer_letter": "A",
+      "answer_text": "80",
+      "explanation": "4 × 5 × 4 = 80 unit cubes."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "Measure Volume by Counting Cubes",
+      "question": "A box has 4 layers, each layer has 5×5 cubes. How many total cubes (volume) are there?",
+      "options": {
+        "A": "14",
+        "B": "98",
+        "C": "100",
+        "D": "102"
+      },
+      "answer_letter": "C",
+      "answer_text": "100",
+      "explanation": "4 × 5 × 5 = 100 unit cubes."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "Measure Volume by Counting Cubes",
+      "question": "A box has 5 layers, each layer has 5×3 cubes. How many total cubes (volume) are there?",
+      "options": {
+        "A": "75",
+        "B": "77",
+        "C": "73",
+        "D": "13"
+      },
+      "answer_letter": "A",
+      "answer_text": "75",
+      "explanation": "5 × 5 × 3 = 75 unit cubes."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "Volume Using Multiplication",
+      "question": "Rectangular prism: length 8, width 3, height 8. Find the volume using multiplication.",
+      "options": {
+        "A": "32",
+        "B": "192",
+        "C": "19",
+        "D": "195"
+      },
+      "answer_letter": "B",
+      "answer_text": "192",
+      "explanation": "Volume = 8 × 3 × 8 = 192 cubic units."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "Volume Using Multiplication",
+      "question": "Rectangular prism: length 2, width 3, height 4. Find the volume using multiplication.",
+      "options": {
+        "A": "10",
+        "B": "24",
+        "C": "9",
+        "D": "27"
+      },
+      "answer_letter": "B",
+      "answer_text": "24",
+      "explanation": "Volume = 2 × 3 × 4 = 24 cubic units."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "Volume Using Multiplication",
+      "question": "Rectangular prism: length 8, width 5, height 6. Find the volume using multiplication.",
+      "options": {
+        "A": "19",
+        "B": "46",
+        "C": "243",
+        "D": "240"
+      },
+      "answer_letter": "D",
+      "answer_text": "240",
+      "explanation": "Volume = 8 × 5 × 6 = 240 cubic units."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "Volume Using Multiplication",
+      "question": "Rectangular prism: length 2, width 7, height 4. Find the volume using multiplication.",
+      "options": {
+        "A": "18",
+        "B": "13",
+        "C": "59",
+        "D": "56"
+      },
+      "answer_letter": "D",
+      "answer_text": "56",
+      "explanation": "Volume = 2 × 7 × 4 = 56 cubic units."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "Volume Using Multiplication",
+      "question": "Rectangular prism: length 7, width 8, height 3. Find the volume using multiplication.",
+      "options": {
+        "A": "18",
+        "B": "59",
+        "C": "171",
+        "D": "168"
+      },
+      "answer_letter": "D",
+      "answer_text": "168",
+      "explanation": "Volume = 7 × 8 × 3 = 168 cubic units."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "Volume Using Addition",
+      "question": "Two non-overlapping boxes have volumes of 22 and 18 cubic units. What is the total volume by adding them?",
+      "options": {
+        "A": "38",
+        "B": "40",
+        "C": "42",
+        "D": "39"
+      },
+      "answer_letter": "B",
+      "answer_text": "40",
+      "explanation": "Volume is additive: 22 + 18 = 40 cubic units."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "Volume Using Addition",
+      "question": "Two non-overlapping boxes have volumes of 24 and 14 cubic units. What is the total volume by adding them?",
+      "options": {
+        "A": "38",
+        "B": "40",
+        "C": "33",
+        "D": "36"
+      },
+      "answer_letter": "A",
+      "answer_text": "38",
+      "explanation": "Volume is additive: 24 + 14 = 38 cubic units."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "Volume Using Addition",
+      "question": "Two non-overlapping boxes have volumes of 20 and 30 cubic units. What is the total volume by adding them?",
+      "options": {
+        "A": "60",
+        "B": "50",
+        "C": "52",
+        "D": "48"
+      },
+      "answer_letter": "B",
+      "answer_text": "50",
+      "explanation": "Volume is additive: 20 + 30 = 50 cubic units."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "Volume Using Addition",
+      "question": "Two non-overlapping boxes have volumes of 26 and 42 cubic units. What is the total volume by adding them?",
+      "options": {
+        "A": "66",
+        "B": "70",
+        "C": "68",
+        "D": "109"
+      },
+      "answer_letter": "C",
+      "answer_text": "68",
+      "explanation": "Volume is additive: 26 + 42 = 68 cubic units."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "Volume Using Addition",
+      "question": "Two non-overlapping boxes have volumes of 49 and 42 cubic units. What is the total volume by adding them?",
+      "options": {
+        "A": "91",
+        "B": "89",
+        "C": "205",
+        "D": "93"
+      },
+      "answer_letter": "A",
+      "answer_text": "91",
+      "explanation": "Volume is additive: 49 + 42 = 91 cubic units."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "Volume of Rectangular Prisms",
+      "question": "A rectangular prism has dimensions 3×6×5 units. What is the volume?",
+      "options": {
+        "A": "85",
+        "B": "95",
+        "C": "90",
+        "D": "45"
+      },
+      "answer_letter": "C",
+      "answer_text": "90",
+      "explanation": "V = 3×6×5 = 90 cubic units."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "Volume of Rectangular Prisms",
+      "question": "A rectangular prism has dimensions 8×9×5 units. What is the volume?",
+      "options": {
+        "A": "365",
+        "B": "180",
+        "C": "360",
+        "D": "355"
+      },
+      "answer_letter": "C",
+      "answer_text": "360",
+      "explanation": "V = 8×9×5 = 360 cubic units."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "Volume of Rectangular Prisms",
+      "question": "A rectangular prism has dimensions 8×10×4 units. What is the volume?",
+      "options": {
+        "A": "320",
+        "B": "325",
+        "C": "160",
+        "D": "315"
+      },
+      "answer_letter": "A",
+      "answer_text": "320",
+      "explanation": "V = 8×10×4 = 320 cubic units."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "Volume of Rectangular Prisms",
+      "question": "A rectangular prism has dimensions 8×7×9 units. What is the volume?",
+      "options": {
+        "A": "509",
+        "B": "504",
+        "C": "252",
+        "D": "499"
+      },
+      "answer_letter": "B",
+      "answer_text": "504",
+      "explanation": "V = 8×7×9 = 504 cubic units."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "Volume of Rectangular Prisms",
+      "question": "A rectangular prism has dimensions 8×8×4 units. What is the volume?",
+      "options": {
+        "A": "261",
+        "B": "251",
+        "C": "256",
+        "D": "128"
+      },
+      "answer_letter": "C",
+      "answer_text": "256",
+      "explanation": "V = 8×8×4 = 256 cubic units."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "V = l × w × h",
+      "question": "Using the formula V = l × w × h: find the volume for l=2, w=6, h=6.",
+      "options": {
+        "A": "72",
+        "B": "14",
+        "C": "76",
+        "D": "18"
+      },
+      "answer_letter": "A",
+      "answer_text": "72",
+      "explanation": "V = 2 × 6 × 6 = 72."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "V = l × w × h",
+      "question": "Using the formula V = l × w × h: find the volume for l=2, w=2, h=5.",
+      "options": {
+        "A": "20",
+        "B": "9",
+        "C": "24",
+        "D": "9"
+      },
+      "answer_letter": "A",
+      "answer_text": "20",
+      "explanation": "V = 2 × 2 × 5 = 20."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "V = l × w × h",
+      "question": "Using the formula V = l × w × h: find the volume for l=8, w=7, h=2.",
+      "options": {
+        "A": "58",
+        "B": "112",
+        "C": "116",
+        "D": "17"
+      },
+      "answer_letter": "B",
+      "answer_text": "112",
+      "explanation": "V = 8 × 7 × 2 = 112."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "V = l × w × h",
+      "question": "Using the formula V = l × w × h: find the volume for l=2, w=2, h=2.",
+      "options": {
+        "A": "12",
+        "B": "6",
+        "C": "6",
+        "D": "8"
+      },
+      "answer_letter": "D",
+      "answer_text": "8",
+      "explanation": "V = 2 × 2 × 2 = 8."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "V = l × w × h",
+      "question": "Using the formula V = l × w × h: find the volume for l=6, w=3, h=7.",
+      "options": {
+        "A": "126",
+        "B": "25",
+        "C": "130",
+        "D": "16"
+      },
+      "answer_letter": "A",
+      "answer_text": "126",
+      "explanation": "V = 6 × 3 × 7 = 126."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "V = b × h",
+      "question": "A rectangular prism has a base area of 23 sq units and height of 5 units. Find the volume using the formula V = b × h.",
+      "options": {
+        "A": "115",
+        "B": "28",
+        "C": "110",
+        "D": "120"
+      },
+      "answer_letter": "A",
+      "answer_text": "115",
+      "explanation": "V = b × h = 23 × 5 = 115 cubic units."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "V = b × h",
+      "question": "A rectangular prism has a base area of 26 sq units and height of 4 units. Find the volume using the formula V = b × h.",
+      "options": {
+        "A": "30",
+        "B": "109",
+        "C": "99",
+        "D": "104"
+      },
+      "answer_letter": "D",
+      "answer_text": "104",
+      "explanation": "V = b × h = 26 × 4 = 104 cubic units."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "V = b × h",
+      "question": "A rectangular prism has a base area of 63 sq units and height of 3 units. Find the volume using the formula V = b × h.",
+      "options": {
+        "A": "66",
+        "B": "184",
+        "C": "194",
+        "D": "189"
+      },
+      "answer_letter": "D",
+      "answer_text": "189",
+      "explanation": "V = b × h = 63 × 3 = 189 cubic units."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "V = b × h",
+      "question": "A rectangular prism has a base area of 40 sq units and height of 8 units. Find the volume using the formula V = b × h.",
+      "options": {
+        "A": "48",
+        "B": "315",
+        "C": "320",
+        "D": "325"
+      },
+      "answer_letter": "C",
+      "answer_text": "320",
+      "explanation": "V = b × h = 40 × 8 = 320 cubic units."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "V = b × h",
+      "question": "A rectangular prism has a base area of 77 sq units and height of 7 units. Find the volume using the formula V = b × h.",
+      "options": {
+        "A": "539",
+        "B": "84",
+        "C": "544",
+        "D": "534"
+      },
+      "answer_letter": "A",
+      "answer_text": "539",
+      "explanation": "V = b × h = 77 × 7 = 539 cubic units."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "Volume of Composite Figures",
+      "question": "A composite figure is made of two rectangular prisms: 3×3×2 and 2×2×2. What is the total volume?",
+      "options": {
+        "A": "144",
+        "B": "10",
+        "C": "26",
+        "D": "29"
+      },
+      "answer_letter": "C",
+      "answer_text": "26",
+      "explanation": "V1=18, V2=8, total = 18+8 = 26 cubic units."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "Volume of Composite Figures",
+      "question": "A composite figure is made of two rectangular prisms: 3×2×2 and 2×3×3. What is the total volume?",
+      "options": {
+        "A": "6",
+        "B": "216",
+        "C": "30",
+        "D": "33"
+      },
+      "answer_letter": "C",
+      "answer_text": "30",
+      "explanation": "V1=12, V2=18, total = 12+18 = 30 cubic units."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "Volume of Composite Figures",
+      "question": "A composite figure is made of two rectangular prisms: 3×4×2 and 4×2×5. What is the total volume?",
+      "options": {
+        "A": "67",
+        "B": "16",
+        "C": "960",
+        "D": "64"
+      },
+      "answer_letter": "D",
+      "answer_text": "64",
+      "explanation": "V1=24, V2=40, total = 24+40 = 64 cubic units."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "Volume of Composite Figures",
+      "question": "A composite figure is made of two rectangular prisms: 5×2×5 and 3×3×2. What is the total volume?",
+      "options": {
+        "A": "900",
+        "B": "71",
+        "C": "68",
+        "D": "32"
+      },
+      "answer_letter": "C",
+      "answer_text": "68",
+      "explanation": "V1=50, V2=18, total = 50+18 = 68 cubic units."
+    },
+    {
+      "domain": "Measurement & Data",
+      "subdomain": "Volume",
+      "leaf_topic": "Volume of Composite Figures",
+      "question": "A composite figure is made of two rectangular prisms: 2×4×4 and 2×4×5. What is the total volume?",
+      "options": {
+        "A": "75",
+        "B": "72",
+        "C": "1280",
+        "D": "8"
+      },
+      "answer_letter": "B",
+      "answer_text": "72",
+      "explanation": "V1=32, V2=40, total = 32+40 = 72 cubic units."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Coordinate Plane",
+      "leaf_topic": "Coordinate System",
+      "question": "What is a coordinate system?",
+      "options": {
+        "A": "A single number line",
+        "B": "A circle that has points",
+        "C": "Two parallel lines that never intersect",
+        "D": "Two perpendicular number lines that intersect at a point (the origin)"
+      },
+      "answer_letter": "D",
+      "answer_text": "Two perpendicular number lines that intersect at a point (the origin)",
+      "explanation": "A coordinate system is made of two perpendicular number lines (axes) that intersect at the origin."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Coordinate Plane",
+      "leaf_topic": "Coordinate System",
+      "question": "What is a coordinate system?",
+      "options": {
+        "A": "Two parallel lines that never intersect",
+        "B": "Two perpendicular number lines that intersect at a point (the origin)",
+        "C": "A circle that has points",
+        "D": "A single number line"
+      },
+      "answer_letter": "B",
+      "answer_text": "Two perpendicular number lines that intersect at a point (the origin)",
+      "explanation": "A coordinate system is made of two perpendicular number lines (axes) that intersect at the origin."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Coordinate Plane",
+      "leaf_topic": "Coordinate System",
+      "question": "What is a coordinate system?",
+      "options": {
+        "A": "Two parallel lines that never intersect",
+        "B": "A circle that has points",
+        "C": "Two perpendicular number lines that intersect at a point (the origin)",
+        "D": "A single number line"
+      },
+      "answer_letter": "C",
+      "answer_text": "Two perpendicular number lines that intersect at a point (the origin)",
+      "explanation": "A coordinate system is made of two perpendicular number lines (axes) that intersect at the origin."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Coordinate Plane",
+      "leaf_topic": "Coordinate System",
+      "question": "What is a coordinate system?",
+      "options": {
+        "A": "Two perpendicular number lines that intersect at a point (the origin)",
+        "B": "Two parallel lines that never intersect",
+        "C": "A circle that has points",
+        "D": "A single number line"
+      },
+      "answer_letter": "A",
+      "answer_text": "Two perpendicular number lines that intersect at a point (the origin)",
+      "explanation": "A coordinate system is made of two perpendicular number lines (axes) that intersect at the origin."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Coordinate Plane",
+      "leaf_topic": "Coordinate System",
+      "question": "What is a coordinate system?",
+      "options": {
+        "A": "Two perpendicular number lines that intersect at a point (the origin)",
+        "B": "Two parallel lines that never intersect",
+        "C": "A circle that has points",
+        "D": "A single number line"
+      },
+      "answer_letter": "A",
+      "answer_text": "Two perpendicular number lines that intersect at a point (the origin)",
+      "explanation": "A coordinate system is made of two perpendicular number lines (axes) that intersect at the origin."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Coordinate Plane",
+      "leaf_topic": "X-Axis & Y-Axis",
+      "question": "What are the directions of the X-axis and Y-axis on the coordinate plane?",
+      "options": {
+        "A": "X-axis is vertical and Y-axis is horizontal",
+        "B": "X-axis is horizontal and Y-axis is vertical",
+        "C": "Both axes are horizontal",
+        "D": "Both axes are vertical"
+      },
+      "answer_letter": "B",
+      "answer_text": "X-axis is horizontal and Y-axis is vertical",
+      "explanation": "The X-axis is always horizontal (left-right) and the Y-axis is vertical (up-down)."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Coordinate Plane",
+      "leaf_topic": "X-Axis & Y-Axis",
+      "question": "What are the directions of the X-axis and Y-axis on the coordinate plane?",
+      "options": {
+        "A": "Both axes are horizontal",
+        "B": "Both axes are vertical",
+        "C": "X-axis is vertical and Y-axis is horizontal",
+        "D": "X-axis is horizontal and Y-axis is vertical"
+      },
+      "answer_letter": "D",
+      "answer_text": "X-axis is horizontal and Y-axis is vertical",
+      "explanation": "The X-axis is always horizontal (left-right) and the Y-axis is vertical (up-down)."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Coordinate Plane",
+      "leaf_topic": "X-Axis & Y-Axis",
+      "question": "What are the directions of the X-axis and Y-axis on the coordinate plane?",
+      "options": {
+        "A": "Both axes are vertical",
+        "B": "X-axis is vertical and Y-axis is horizontal",
+        "C": "X-axis is horizontal and Y-axis is vertical",
+        "D": "Both axes are horizontal"
+      },
+      "answer_letter": "C",
+      "answer_text": "X-axis is horizontal and Y-axis is vertical",
+      "explanation": "The X-axis is always horizontal (left-right) and the Y-axis is vertical (up-down)."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Coordinate Plane",
+      "leaf_topic": "X-Axis & Y-Axis",
+      "question": "What are the directions of the X-axis and Y-axis on the coordinate plane?",
+      "options": {
+        "A": "X-axis is vertical and Y-axis is horizontal",
+        "B": "Both axes are vertical",
+        "C": "Both axes are horizontal",
+        "D": "X-axis is horizontal and Y-axis is vertical"
+      },
+      "answer_letter": "D",
+      "answer_text": "X-axis is horizontal and Y-axis is vertical",
+      "explanation": "The X-axis is always horizontal (left-right) and the Y-axis is vertical (up-down)."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Coordinate Plane",
+      "leaf_topic": "X-Axis & Y-Axis",
+      "question": "What are the directions of the X-axis and Y-axis on the coordinate plane?",
+      "options": {
+        "A": "Both axes are vertical",
+        "B": "Both axes are horizontal",
+        "C": "X-axis is horizontal and Y-axis is vertical",
+        "D": "X-axis is vertical and Y-axis is horizontal"
+      },
+      "answer_letter": "C",
+      "answer_text": "X-axis is horizontal and Y-axis is vertical",
+      "explanation": "The X-axis is always horizontal (left-right) and the Y-axis is vertical (up-down)."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Coordinate Plane",
+      "leaf_topic": "Origin",
+      "question": "At which point is the 'origin' of the coordinate plane?",
+      "options": {
+        "A": "(1, 1)",
+        "B": "(0, 1)",
+        "C": "(1, 0)",
+        "D": "(0, 0)"
+      },
+      "answer_letter": "D",
+      "answer_text": "(0, 0)",
+      "explanation": "Origin woh point hai jahan dono axes intersect karti hain, jiski value (0, 0) hoti is."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Coordinate Plane",
+      "leaf_topic": "Origin",
+      "question": "At which point is the 'origin' of the coordinate plane?",
+      "options": {
+        "A": "(1, 1)",
+        "B": "(1, 0)",
+        "C": "(0, 0)",
+        "D": "(0, 1)"
+      },
+      "answer_letter": "C",
+      "answer_text": "(0, 0)",
+      "explanation": "Origin woh point hai jahan dono axes intersect karti hain, jiski value (0, 0) hoti is."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Coordinate Plane",
+      "leaf_topic": "Origin",
+      "question": "At which point is the 'origin' of the coordinate plane?",
+      "options": {
+        "A": "(1, 1)",
+        "B": "(0, 1)",
+        "C": "(1, 0)",
+        "D": "(0, 0)"
+      },
+      "answer_letter": "D",
+      "answer_text": "(0, 0)",
+      "explanation": "Origin woh point hai jahan dono axes intersect karti hain, jiski value (0, 0) hoti is."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Coordinate Plane",
+      "leaf_topic": "Origin",
+      "question": "At which point is the 'origin' of the coordinate plane?",
+      "options": {
+        "A": "(1, 1)",
+        "B": "(1, 0)",
+        "C": "(0, 1)",
+        "D": "(0, 0)"
+      },
+      "answer_letter": "D",
+      "answer_text": "(0, 0)",
+      "explanation": "Origin woh point hai jahan dono axes intersect karti hain, jiski value (0, 0) hoti is."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Coordinate Plane",
+      "leaf_topic": "Ordered Pairs",
+      "question": "What does the ordered pair (1, 2) mean?",
+      "options": {
+        "A": "First 2 units right, then 1 units upar",
+        "B": "Order does not matter",
+        "C": "First 1 units right (x-coordinate), then 2 units up (y-coordinate)",
+        "D": "First 1 units upar, then 2 units right"
+      },
+      "answer_letter": "C",
+      "answer_text": "First 1 units right (x-coordinate), then 2 units up (y-coordinate)",
+      "explanation": "Pehla number x-direction (horizontal) batata hai, dusra number y-direction (vertical) batata is."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Coordinate Plane",
+      "leaf_topic": "Ordered Pairs",
+      "question": "What does the ordered pair (7, 2) mean?",
+      "options": {
+        "A": "Order does not matter",
+        "B": "First 7 units upar, then 2 units right",
+        "C": "First 7 units right (x-coordinate), then 2 units up (y-coordinate)",
+        "D": "First 2 units right, then 7 units upar"
+      },
+      "answer_letter": "C",
+      "answer_text": "First 7 units right (x-coordinate), then 2 units up (y-coordinate)",
+      "explanation": "Pehla number x-direction (horizontal) batata hai, dusra number y-direction (vertical) batata is."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Coordinate Plane",
+      "leaf_topic": "Ordered Pairs",
+      "question": "What does the ordered pair (2, 1) mean?",
+      "options": {
+        "A": "First 1 units right, then 2 units upar",
+        "B": "Order does not matter",
+        "C": "First 2 units upar, then 1 units right",
+        "D": "First 2 units right (x-coordinate), then 1 units up (y-coordinate)"
+      },
+      "answer_letter": "D",
+      "answer_text": "First 2 units right (x-coordinate), then 1 units up (y-coordinate)",
+      "explanation": "Pehla number x-direction (horizontal) batata hai, dusra number y-direction (vertical) batata is."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Coordinate Plane",
+      "leaf_topic": "Ordered Pairs",
+      "question": "What does the ordered pair (5, 8) mean?",
+      "options": {
+        "A": "First 8 units right, then 5 units upar",
+        "B": "First 5 units upar, then 8 units right",
+        "C": "Order does not matter",
+        "D": "First 5 units right (x-coordinate), then 8 units up (y-coordinate)"
+      },
+      "answer_letter": "D",
+      "answer_text": "First 5 units right (x-coordinate), then 8 units up (y-coordinate)",
+      "explanation": "Pehla number x-direction (horizontal) batata hai, dusra number y-direction (vertical) batata is."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Coordinate Plane",
+      "leaf_topic": "Ordered Pairs",
+      "question": "What does the ordered pair (4, 5) mean?",
+      "options": {
+        "A": "First 4 units right (x-coordinate), then 5 units up (y-coordinate)",
+        "B": "Order does not matter",
+        "C": "First 5 units right, then 4 units upar",
+        "D": "First 4 units upar, then 5 units right"
+      },
+      "answer_letter": "A",
+      "answer_text": "First 4 units right (x-coordinate), then 5 units up (y-coordinate)",
+      "explanation": "Pehla number x-direction (horizontal) batata hai, dusra number y-direction (vertical) batata is."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Coordinate Plane",
+      "leaf_topic": "Plot Points",
+      "question": "What is the correct way to plot the point (5, 1)?",
+      "options": {
+        "A": "The point at (5, 1) will be 5 right and 1 up from the origin",
+        "B": "This point cannot be plotted",
+        "C": "The point at (5, 1) will be 1 right and 5 up from the origin",
+        "D": "(5,1) will be to the left of the origin"
+      },
+      "answer_letter": "A",
+      "answer_text": "The point at (5, 1) will be 5 right and 1 up from the origin",
+      "explanation": "(5, 1) to plot, from the origin go 5 units right and 1 units up."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Coordinate Plane",
+      "leaf_topic": "Plot Points",
+      "question": "What is the correct way to plot the point (1, 6)?",
+      "options": {
+        "A": "The point at (1, 6) will be 1 right and 6 up from the origin",
+        "B": "The point at (1, 6) will be 6 right and 1 up from the origin",
+        "C": "This point cannot be plotted",
+        "D": "(1,6) will be to the left of the origin"
+      },
+      "answer_letter": "A",
+      "answer_text": "The point at (1, 6) will be 1 right and 6 up from the origin",
+      "explanation": "(1, 6) to plot, from the origin go 1 units right and 6 units up."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Coordinate Plane",
+      "leaf_topic": "Plot Points",
+      "question": "What is the correct way to plot the point (5, 1)?",
+      "options": {
+        "A": "(5,1) will be to the left of the origin",
+        "B": "The point at (5, 1) will be 1 right and 5 up from the origin",
+        "C": "The point at (5, 1) will be 5 right and 1 up from the origin",
+        "D": "This point cannot be plotted"
+      },
+      "answer_letter": "C",
+      "answer_text": "The point at (5, 1) will be 5 right and 1 up from the origin",
+      "explanation": "(5, 1) to plot, from the origin go 5 units right and 1 units up."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Coordinate Plane",
+      "leaf_topic": "Plot Points",
+      "question": "What is the correct way to plot the point (2, 6)?",
+      "options": {
+        "A": "The point at (2, 6) will be 6 right and 2 up from the origin",
+        "B": "The point at (2, 6) will be 2 right and 6 up from the origin",
+        "C": "(2,6) will be to the left of the origin",
+        "D": "This point cannot be plotted"
+      },
+      "answer_letter": "B",
+      "answer_text": "The point at (2, 6) will be 2 right and 6 up from the origin",
+      "explanation": "(2, 6) to plot, from the origin go 2 units right and 6 units up."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Coordinate Plane",
+      "leaf_topic": "Plot Points",
+      "question": "What is the correct way to plot the point (4, 2)?",
+      "options": {
+        "A": "This point cannot be plotted",
+        "B": "The point at (4, 2) will be 2 right and 4 up from the origin",
+        "C": "The point at (4, 2) will be 4 right and 2 up from the origin",
+        "D": "(4,2) will be to the left of the origin"
+      },
+      "answer_letter": "C",
+      "answer_text": "The point at (4, 2) will be 4 right and 2 up from the origin",
+      "explanation": "(4, 2) to plot, from the origin go 4 units right and 2 units up."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Coordinate Plane",
+      "leaf_topic": "Interpret Coordinates in Real-World Problems",
+      "question": "On a map, Usman's location is (1, 9) where the origin is their home. What does this mean?",
+      "options": {
+        "A": "Usman from their home 9 km east and 1 km north",
+        "B": "Usman stayed in his place",
+        "C": "Usman from their home 1 km east and 9 km north",
+        "D": "Usman from their home 1 km west gaya"
+      },
+      "answer_letter": "C",
+      "answer_text": "Usman from their home 1 km east and 9 km north",
+      "explanation": "(1, 9) means 1 units in one direction (x-axis) and 9 units in the other direction (y-axis)."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Coordinate Plane",
+      "leaf_topic": "Interpret Coordinates in Real-World Problems",
+      "question": "On a map, Sara's location is (6, 8) where the origin is their home. What does this mean?",
+      "options": {
+        "A": "Sara from their home 8 km east and 6 km north",
+        "B": "Sara from their home 6 km east and 8 km north",
+        "C": "Sara from their home 6 km west gaya",
+        "D": "Sara stayed in her place"
+      },
+      "answer_letter": "B",
+      "answer_text": "Sara from their home 6 km east and 8 km north",
+      "explanation": "(6, 8) means 6 units in one direction (x-axis) and 8 units in the other direction (y-axis)."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Coordinate Plane",
+      "leaf_topic": "Interpret Coordinates in Real-World Problems",
+      "question": "On a map, Iqra's location is (8, 10) where the origin is their home. What does this mean?",
+      "options": {
+        "A": "Iqra from their home 10 km east and 8 km north",
+        "B": "Iqra from their home 8 km east and 10 km north",
+        "C": "Iqra stayed in her place",
+        "D": "Iqra from their home 8 km west gaya"
+      },
+      "answer_letter": "B",
+      "answer_text": "Iqra from their home 8 km east and 10 km north",
+      "explanation": "(8, 10) means 8 units in one direction (x-axis) and 10 units in the other direction (y-axis)."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Coordinate Plane",
+      "leaf_topic": "Interpret Coordinates in Real-World Problems",
+      "question": "On a map, Fatima's location is (5, 4) where the origin is their home. What does this mean?",
+      "options": {
+        "A": "Fatima from their home 4 km east and 5 km north",
+        "B": "Fatima from their home 5 km west gaya",
+        "C": "Fatima from their home 5 km east and 4 km north",
+        "D": "Fatima stayed in her place"
+      },
+      "answer_letter": "C",
+      "answer_text": "Fatima from their home 5 km east and 4 km north",
+      "explanation": "(5, 4) means 5 units in one direction (x-axis) and 4 units in the other direction (y-axis)."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Coordinate Plane",
+      "leaf_topic": "Interpret Coordinates in Real-World Problems",
+      "question": "On a map, Hira's location is (2, 8) where the origin is their home. What does this mean?",
+      "options": {
+        "A": "Hira stayed in her place",
+        "B": "Hira from their home 8 km east and 2 km north",
+        "C": "Hira from their home 2 km west gaya",
+        "D": "Hira from their home 2 km east and 8 km north"
+      },
+      "answer_letter": "D",
+      "answer_text": "Hira from their home 2 km east and 8 km north",
+      "explanation": "(2, 8) means 2 units in one direction (x-axis) and 8 units in the other direction (y-axis)."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Classify 2D Figures",
+      "leaf_topic": "Properties of 2D Figures",
+      "question": "If a shape is a subcategory of a category, what properties should that shape have?",
+      "options": {
+        "A": "Only the properties of angles matter",
+        "B": "It should only have its unique properties",
+        "C": "It should also have the properties that its category has",
+        "D": "No property is necessary"
+      },
+      "answer_letter": "C",
+      "answer_text": "It should also have the properties that its category has",
+      "explanation": "All properties of the category must also be present in its subcategories (for example, the properties of a rectangle are also in a square)."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Classify 2D Figures",
+      "leaf_topic": "Properties of 2D Figures",
+      "question": "If a shape is a subcategory of a category, what properties should that shape have?",
+      "options": {
+        "A": "It should only have its unique properties",
+        "B": "It should also have the properties that its category has",
+        "C": "No property is necessary",
+        "D": "Only the properties of angles matter"
+      },
+      "answer_letter": "B",
+      "answer_text": "It should also have the properties that its category has",
+      "explanation": "All properties of the category must also be present in its subcategories (for example, the properties of a rectangle are also in a square)."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Classify 2D Figures",
+      "leaf_topic": "Properties of 2D Figures",
+      "question": "If a shape is a subcategory of a category, what properties should that shape have?",
+      "options": {
+        "A": "It should only have its unique properties",
+        "B": "It should also have the properties that its category has",
+        "C": "No property is necessary",
+        "D": "Only the properties of angles matter"
+      },
+      "answer_letter": "B",
+      "answer_text": "It should also have the properties that its category has",
+      "explanation": "All properties of the category must also be present in its subcategories (for example, the properties of a rectangle are also in a square)."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Classify 2D Figures",
+      "leaf_topic": "Properties of 2D Figures",
+      "question": "If a shape is a subcategory of a category, what properties should that shape have?",
+      "options": {
+        "A": "Only the properties of angles matter",
+        "B": "It should only have its unique properties",
+        "C": "It should also have the properties that its category has",
+        "D": "No property is necessary"
+      },
+      "answer_letter": "C",
+      "answer_text": "It should also have the properties that its category has",
+      "explanation": "All properties of the category must also be present in its subcategories (for example, the properties of a rectangle are also in a square)."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Classify 2D Figures",
+      "leaf_topic": "Properties of 2D Figures",
+      "question": "If a shape is a subcategory of a category, what properties should that shape have?",
+      "options": {
+        "A": "Only the properties of angles matter",
+        "B": "It should also have the properties that its category has",
+        "C": "It should only have its unique properties",
+        "D": "No property is necessary"
+      },
+      "answer_letter": "B",
+      "answer_text": "It should also have the properties that its category has",
+      "explanation": "All properties of the category must also be present in its subcategories (for example, the properties of a rectangle are also in a square)."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Classify 2D Figures",
+      "leaf_topic": "Categories of Figures",
+      "question": "Shapes with 4 sides (like square, rectangle, rhombus) belong to which general category?",
+      "options": {
+        "A": "Triangles",
+        "B": "Quadrilaterals",
+        "C": "Circles",
+        "D": "Lines"
+      },
+      "answer_letter": "B",
+      "answer_text": "Quadrilaterals",
+      "explanation": "4-sided shapes belong to the 'Quadrilaterals' category."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Classify 2D Figures",
+      "leaf_topic": "Categories of Figures",
+      "question": "Shapes with 4 sides (like square, rectangle, rhombus) belong to which general category?",
+      "options": {
+        "A": "Triangles",
+        "B": "Circles",
+        "C": "Quadrilaterals",
+        "D": "Lines"
+      },
+      "answer_letter": "C",
+      "answer_text": "Quadrilaterals",
+      "explanation": "4-sided shapes belong to the 'Quadrilaterals' category."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Classify 2D Figures",
+      "leaf_topic": "Categories of Figures",
+      "question": "Shapes with 4 sides (like square, rectangle, rhombus) belong to which general category?",
+      "options": {
+        "A": "Quadrilaterals",
+        "B": "Triangles",
+        "C": "Lines",
+        "D": "Circles"
+      },
+      "answer_letter": "A",
+      "answer_text": "Quadrilaterals",
+      "explanation": "4-sided shapes belong to the 'Quadrilaterals' category."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Classify 2D Figures",
+      "leaf_topic": "Categories of Figures",
+      "question": "Shapes with 4 sides (like square, rectangle, rhombus) belong to which general category?",
+      "options": {
+        "A": "Quadrilaterals",
+        "B": "Circles",
+        "C": "Lines",
+        "D": "Triangles"
+      },
+      "answer_letter": "A",
+      "answer_text": "Quadrilaterals",
+      "explanation": "4-sided shapes belong to the 'Quadrilaterals' category."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Classify 2D Figures",
+      "leaf_topic": "Categories of Figures",
+      "question": "Shapes with 4 sides (like square, rectangle, rhombus) belong to which general category?",
+      "options": {
+        "A": "Quadrilaterals",
+        "B": "Circles",
+        "C": "Lines",
+        "D": "Triangles"
+      },
+      "answer_letter": "A",
+      "answer_text": "Quadrilaterals",
+      "explanation": "4-sided shapes belong to the 'Quadrilaterals' category."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Classify 2D Figures",
+      "leaf_topic": "Subcategories",
+      "question": "What is the subcategory relationship between Square and Rectangle?",
+      "options": {
+        "A": "Rectangle is a subcategory of Square",
+        "B": "Square is a subcategory of Rectangle",
+        "C": "Triangle is a subcategory of Rectangle",
+        "D": "Neither is a subcategory of the other"
+      },
+      "answer_letter": "B",
+      "answer_text": "Square is a subcategory of Rectangle",
+      "explanation": "Har square rectangle ki properties rakhta hai (4 right angles), is liye Square, Rectangle ki subcategory is."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Classify 2D Figures",
+      "leaf_topic": "Subcategories",
+      "question": "What is the subcategory relationship between Square and Rectangle?",
+      "options": {
+        "A": "Square is a subcategory of Rectangle",
+        "B": "Neither is a subcategory of the other",
+        "C": "Triangle is a subcategory of Rectangle",
+        "D": "Rectangle is a subcategory of Square"
+      },
+      "answer_letter": "A",
+      "answer_text": "Square is a subcategory of Rectangle",
+      "explanation": "Har square rectangle ki properties rakhta hai (4 right angles), is liye Square, Rectangle ki subcategory is."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Classify 2D Figures",
+      "leaf_topic": "Subcategories",
+      "question": "What is the subcategory relationship between Square and Rectangle?",
+      "options": {
+        "A": "Triangle is a subcategory of Rectangle",
+        "B": "Square is a subcategory of Rectangle",
+        "C": "Neither is a subcategory of the other",
+        "D": "Rectangle is a subcategory of Square"
+      },
+      "answer_letter": "B",
+      "answer_text": "Square is a subcategory of Rectangle",
+      "explanation": "Har square rectangle ki properties rakhta hai (4 right angles), is liye Square, Rectangle ki subcategory is."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Classify 2D Figures",
+      "leaf_topic": "Subcategories",
+      "question": "What is the subcategory relationship between Square and Rectangle?",
+      "options": {
+        "A": "Triangle is a subcategory of Rectangle",
+        "B": "Square is a subcategory of Rectangle",
+        "C": "Rectangle is a subcategory of Square",
+        "D": "Neither is a subcategory of the other"
+      },
+      "answer_letter": "B",
+      "answer_text": "Square is a subcategory of Rectangle",
+      "explanation": "Har square rectangle ki properties rakhta hai (4 right angles), is liye Square, Rectangle ki subcategory is."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Classify 2D Figures",
+      "leaf_topic": "Subcategories",
+      "question": "What is the subcategory relationship between Square and Rectangle?",
+      "options": {
+        "A": "Neither is a subcategory of the other",
+        "B": "Triangle is a subcategory of Rectangle",
+        "C": "Square is a subcategory of Rectangle",
+        "D": "Rectangle is a subcategory of Square"
+      },
+      "answer_letter": "C",
+      "answer_text": "Square is a subcategory of Rectangle",
+      "explanation": "Har square rectangle ki properties rakhta hai (4 right angles), is liye Square, Rectangle ki subcategory is."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Classify 2D Figures",
+      "leaf_topic": "Quadrilaterals",
+      "question": "How many sides does a quadrilateral have?",
+      "options": {
+        "A": "3 sides",
+        "B": "6 sides",
+        "C": "4 sides",
+        "D": "5 sides"
+      },
+      "answer_letter": "C",
+      "answer_text": "4 sides",
+      "explanation": "Quadrilateral means a shape with 4 sides."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Classify 2D Figures",
+      "leaf_topic": "Quadrilaterals",
+      "question": "How many sides does a quadrilateral have?",
+      "options": {
+        "A": "6 sides",
+        "B": "3 sides",
+        "C": "4 sides",
+        "D": "5 sides"
+      },
+      "answer_letter": "C",
+      "answer_text": "4 sides",
+      "explanation": "Quadrilateral means a shape with 4 sides."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Classify 2D Figures",
+      "leaf_topic": "Quadrilaterals",
+      "question": "How many sides does a quadrilateral have?",
+      "options": {
+        "A": "3 sides",
+        "B": "5 sides",
+        "C": "6 sides",
+        "D": "4 sides"
+      },
+      "answer_letter": "D",
+      "answer_text": "4 sides",
+      "explanation": "Quadrilateral means a shape with 4 sides."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Classify 2D Figures",
+      "leaf_topic": "Quadrilaterals",
+      "question": "How many sides does a quadrilateral have?",
+      "options": {
+        "A": "5 sides",
+        "B": "4 sides",
+        "C": "6 sides",
+        "D": "3 sides"
+      },
+      "answer_letter": "B",
+      "answer_text": "4 sides",
+      "explanation": "Quadrilateral means a shape with 4 sides."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Classify 2D Figures",
+      "leaf_topic": "Quadrilaterals",
+      "question": "How many sides does a quadrilateral have?",
+      "options": {
+        "A": "4 sides",
+        "B": "5 sides",
+        "C": "6 sides",
+        "D": "3 sides"
+      },
+      "answer_letter": "A",
+      "answer_text": "4 sides",
+      "explanation": "Quadrilateral means a shape with 4 sides."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Classify 2D Figures",
+      "leaf_topic": "Rectangles",
+      "question": "What is a property of a rectangle?",
+      "options": {
+        "A": "None of the angles are right angles",
+        "B": "has 4 right angles",
+        "C": "All sides are equal",
+        "D": "It has only 2 sides"
+      },
+      "answer_letter": "B",
+      "answer_text": "has 4 right angles",
+      "explanation": "Rectangle mein always 4 right angles (90°) are."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Classify 2D Figures",
+      "leaf_topic": "Rectangles",
+      "question": "What is a property of a rectangle?",
+      "options": {
+        "A": "All sides are equal",
+        "B": "It has only 2 sides",
+        "C": "None of the angles are right angles",
+        "D": "has 4 right angles"
+      },
+      "answer_letter": "D",
+      "answer_text": "has 4 right angles",
+      "explanation": "Rectangle mein always 4 right angles (90°) are."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Classify 2D Figures",
+      "leaf_topic": "Rectangles",
+      "question": "What is a property of a rectangle?",
+      "options": {
+        "A": "It has only 2 sides",
+        "B": "All sides are equal",
+        "C": "has 4 right angles",
+        "D": "None of the angles are right angles"
+      },
+      "answer_letter": "C",
+      "answer_text": "has 4 right angles",
+      "explanation": "Rectangle mein always 4 right angles (90°) are."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Classify 2D Figures",
+      "leaf_topic": "Rectangles",
+      "question": "What is a property of a rectangle?",
+      "options": {
+        "A": "All sides are equal",
+        "B": "None of the angles are right angles",
+        "C": "has 4 right angles",
+        "D": "It has only 2 sides"
+      },
+      "answer_letter": "C",
+      "answer_text": "has 4 right angles",
+      "explanation": "Rectangle mein always 4 right angles (90°) are."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Classify 2D Figures",
+      "leaf_topic": "Squares",
+      "question": "What are the properties of a square?",
+      "options": {
+        "A": "4 equal sides but no right angles",
+        "B": "4 equal sides and 4 right angles",
+        "C": "4 different sides and 4 right angles",
+        "D": "3 sides and 1 right angle"
+      },
+      "answer_letter": "B",
+      "answer_text": "4 equal sides and 4 right angles",
+      "explanation": "A square has 4 equal sides and also 4 right angles — therefore it is a subcategory of rectangle."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Classify 2D Figures",
+      "leaf_topic": "Squares",
+      "question": "What are the properties of a square?",
+      "options": {
+        "A": "4 equal sides but no right angles",
+        "B": "4 equal sides and 4 right angles",
+        "C": "4 different sides and 4 right angles",
+        "D": "3 sides and 1 right angle"
+      },
+      "answer_letter": "B",
+      "answer_text": "4 equal sides and 4 right angles",
+      "explanation": "A square has 4 equal sides and also 4 right angles — therefore it is a subcategory of rectangle."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Classify 2D Figures",
+      "leaf_topic": "Squares",
+      "question": "What are the properties of a square?",
+      "options": {
+        "A": "4 equal sides and 4 right angles",
+        "B": "4 equal sides but no right angles",
+        "C": "4 different sides and 4 right angles",
+        "D": "3 sides and 1 right angle"
+      },
+      "answer_letter": "A",
+      "answer_text": "4 equal sides and 4 right angles",
+      "explanation": "A square has 4 equal sides and also 4 right angles — therefore it is a subcategory of rectangle."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Classify 2D Figures",
+      "leaf_topic": "Squares",
+      "question": "What are the properties of a square?",
+      "options": {
+        "A": "4 equal sides but no right angles",
+        "B": "4 different sides and 4 right angles",
+        "C": "3 sides and 1 right angle",
+        "D": "4 equal sides and 4 right angles"
+      },
+      "answer_letter": "D",
+      "answer_text": "4 equal sides and 4 right angles",
+      "explanation": "A square has 4 equal sides and also 4 right angles — therefore it is a subcategory of rectangle."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Classify 2D Figures",
+      "leaf_topic": "Squares",
+      "question": "What are the properties of a square?",
+      "options": {
+        "A": "4 equal sides and 4 right angles",
+        "B": "4 equal sides but no right angles",
+        "C": "4 different sides and 4 right angles",
+        "D": "3 sides and 1 right angle"
+      },
+      "answer_letter": "A",
+      "answer_text": "4 equal sides and 4 right angles",
+      "explanation": "A square has 4 equal sides and also 4 right angles — therefore it is a subcategory of rectangle."
+    }
+  ]
+}

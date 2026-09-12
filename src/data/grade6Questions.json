@@ -1,0 +1,4506 @@
+{
+  "title": "Grade 6 Math - 300 MCQs mapped to Topic/Subtopic hierarchy (Common Core)",
+  "total": 300,
+  "questions": [
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Concept of a ratio and ratio language",
+      "question": "The ratio of wings to beaks in a bird house is 7:1. What does this mean?",
+      "options": {
+        "A": "For every 7 wings there are 1 beak",
+        "B": "For every 1 wings there are 7 beaks",
+        "C": "There are 8 total birds",
+        "D": "Wings and beaks are equal"
+      },
+      "answer_letter": "A",
+      "answer_text": "For every 7 wings there are 1 beak",
+      "explanation": "A ratio a:b means for every a of the first quantity there are b of the second."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Concept of a ratio and ratio language",
+      "question": "The ratio of wings to beaks in a bird house is 2:3. What does this mean?",
+      "options": {
+        "A": "For every 2 wings there are 3 beaks",
+        "B": "For every 3 wings there are 2 beaks",
+        "C": "There are 5 total birds",
+        "D": "Wings and beaks are equal"
+      },
+      "answer_letter": "A",
+      "answer_text": "For every 2 wings there are 3 beaks",
+      "explanation": "A ratio a:b means for every a of the first quantity there are b of the second."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Concept of a ratio and ratio language",
+      "question": "The ratio of wings to beaks in a bird house is 3:2. What does this mean?",
+      "options": {
+        "A": "For every 3 wings there are 2 beaks",
+        "B": "For every 2 wings there are 3 beaks",
+        "C": "There are 5 total birds",
+        "D": "Wings and beaks are equal"
+      },
+      "answer_letter": "A",
+      "answer_text": "For every 3 wings there are 2 beaks",
+      "explanation": "A ratio a:b means for every a of the first quantity there are b of the second."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Concept of a ratio and ratio language",
+      "question": "The ratio of wings to beaks in a bird house is 3:1. What does this mean?",
+      "options": {
+        "A": "For every 3 wings there are 1 beak",
+        "B": "For every 1 wings there are 3 beaks",
+        "C": "There are 4 total birds",
+        "D": "Wings and beaks are equal"
+      },
+      "answer_letter": "A",
+      "answer_text": "For every 3 wings there are 1 beak",
+      "explanation": "A ratio a:b means for every a of the first quantity there are b of the second."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Concept of a ratio and ratio language",
+      "question": "The ratio of wings to beaks in a bird house is 7:5. What does this mean?",
+      "options": {
+        "A": "For every 7 wings there are 5 beaks",
+        "B": "For every 5 wings there are 7 beaks",
+        "C": "There are 12 total birds",
+        "D": "Wings and beaks are equal"
+      },
+      "answer_letter": "A",
+      "answer_text": "For every 7 wings there are 5 beaks",
+      "explanation": "A ratio a:b means for every a of the first quantity there are b of the second."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Concept of a ratio and ratio language",
+      "question": "The ratio of wings to beaks in a bird house is 2:5. What does this mean?",
+      "options": {
+        "A": "For every 2 wings there are 5 beaks",
+        "B": "For every 5 wings there are 2 beaks",
+        "C": "There are 7 total birds",
+        "D": "Wings and beaks are equal"
+      },
+      "answer_letter": "A",
+      "answer_text": "For every 2 wings there are 5 beaks",
+      "explanation": "A ratio a:b means for every a of the first quantity there are b of the second."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Concept of a ratio and ratio language",
+      "question": "The ratio of wings to beaks in a bird house is 5:1. What does this mean?",
+      "options": {
+        "A": "For every 5 wings there are 1 beak",
+        "B": "For every 1 wings there are 5 beaks",
+        "C": "There are 6 total birds",
+        "D": "Wings and beaks are equal"
+      },
+      "answer_letter": "A",
+      "answer_text": "For every 5 wings there are 1 beak",
+      "explanation": "A ratio a:b means for every a of the first quantity there are b of the second."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Concept of a ratio and ratio language",
+      "question": "The ratio of wings to beaks in a bird house is 2:1. What does this mean?",
+      "options": {
+        "A": "For every 2 wings there are 1 beak",
+        "B": "For every 1 wings there are 2 beaks",
+        "C": "There are 3 total birds",
+        "D": "Wings and beaks are equal"
+      },
+      "answer_letter": "A",
+      "answer_text": "For every 2 wings there are 1 beak",
+      "explanation": "A ratio a:b means for every a of the first quantity there are b of the second."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Unit rate associated with a ratio",
+      "question": "A recipe has a ratio of 3 cups of flour to 4 cups of sugar. What is the unit rate of flour per cup of sugar?",
+      "options": {
+        "A": "3/4 cup of flour per cup of sugar",
+        "B": "4/3 cup of flour per cup of sugar",
+        "C": "7 cups total",
+        "D": "3 cups of flour only"
+      },
+      "answer_letter": "A",
+      "answer_text": "3/4 cup of flour per cup of sugar",
+      "explanation": "Unit rate a/b for ratio a:b is the amount of the first quantity for 1 unit of the second: 3/4 = 3/4."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Unit rate associated with a ratio",
+      "question": "A recipe has a ratio of 2 cups of flour to 4 cups of sugar. What is the unit rate of flour per cup of sugar?",
+      "options": {
+        "A": "1/2 cup of flour per cup of sugar",
+        "B": "2 cup of flour per cup of sugar",
+        "C": "6 cups total",
+        "D": "2 cups of flour only"
+      },
+      "answer_letter": "A",
+      "answer_text": "1/2 cup of flour per cup of sugar",
+      "explanation": "Unit rate a/b for ratio a:b is the amount of the first quantity for 1 unit of the second: 2/4 = 1/2."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Unit rate associated with a ratio",
+      "question": "A recipe has a ratio of 5 cups of flour to 4 cups of sugar. What is the unit rate of flour per cup of sugar?",
+      "options": {
+        "A": "5/4 cup of flour per cup of sugar",
+        "B": "4/5 cup of flour per cup of sugar",
+        "C": "9 cups total",
+        "D": "5 cups of flour only"
+      },
+      "answer_letter": "A",
+      "answer_text": "5/4 cup of flour per cup of sugar",
+      "explanation": "Unit rate a/b for ratio a:b is the amount of the first quantity for 1 unit of the second: 5/4 = 5/4."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Unit rate associated with a ratio",
+      "question": "A recipe has a ratio of 5 cups of flour to 5 cups of sugar. What is the unit rate of flour per cup of sugar?",
+      "options": {
+        "A": "1 cup of flour per cup of sugar",
+        "B": "1 cup of flour per cup of sugar",
+        "C": "10 cups total",
+        "D": "5 cups of flour only"
+      },
+      "answer_letter": "A",
+      "answer_text": "1 cup of flour per cup of sugar",
+      "explanation": "Unit rate a/b for ratio a:b is the amount of the first quantity for 1 unit of the second: 5/5 = 1."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Unit rate associated with a ratio",
+      "question": "A recipe has a ratio of 2 cups of flour to 4 cups of sugar. What is the unit rate of flour per cup of sugar?",
+      "options": {
+        "A": "1/2 cup of flour per cup of sugar",
+        "B": "2 cup of flour per cup of sugar",
+        "C": "6 cups total",
+        "D": "2 cups of flour only"
+      },
+      "answer_letter": "A",
+      "answer_text": "1/2 cup of flour per cup of sugar",
+      "explanation": "Unit rate a/b for ratio a:b is the amount of the first quantity for 1 unit of the second: 2/4 = 1/2."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Unit rate associated with a ratio",
+      "question": "A recipe has a ratio of 5 cups of flour to 5 cups of sugar. What is the unit rate of flour per cup of sugar?",
+      "options": {
+        "A": "1 cup of flour per cup of sugar",
+        "B": "1 cup of flour per cup of sugar",
+        "C": "10 cups total",
+        "D": "5 cups of flour only"
+      },
+      "answer_letter": "A",
+      "answer_text": "1 cup of flour per cup of sugar",
+      "explanation": "Unit rate a/b for ratio a:b is the amount of the first quantity for 1 unit of the second: 5/5 = 1."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Unit rate associated with a ratio",
+      "question": "A recipe has a ratio of 4 cups of flour to 4 cups of sugar. What is the unit rate of flour per cup of sugar?",
+      "options": {
+        "A": "1 cup of flour per cup of sugar",
+        "B": "1 cup of flour per cup of sugar",
+        "C": "8 cups total",
+        "D": "4 cups of flour only"
+      },
+      "answer_letter": "A",
+      "answer_text": "1 cup of flour per cup of sugar",
+      "explanation": "Unit rate a/b for ratio a:b is the amount of the first quantity for 1 unit of the second: 4/4 = 1."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Unit rate associated with a ratio",
+      "question": "A recipe has a ratio of 3 cups of flour to 5 cups of sugar. What is the unit rate of flour per cup of sugar?",
+      "options": {
+        "A": "3/5 cup of flour per cup of sugar",
+        "B": "5/3 cup of flour per cup of sugar",
+        "C": "8 cups total",
+        "D": "3 cups of flour only"
+      },
+      "answer_letter": "A",
+      "answer_text": "3/5 cup of flour per cup of sugar",
+      "explanation": "Unit rate a/b for ratio a:b is the amount of the first quantity for 1 unit of the second: 3/5 = 3/5."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Tables of equivalent ratios",
+      "question": "In a table of equivalent ratios for 2:3, one row is 4 : 6. What is the missing value in the row 10 : ?",
+      "options": {
+        "A": "15",
+        "B": "16",
+        "C": "10",
+        "D": "3"
+      },
+      "answer_letter": "A",
+      "answer_text": "15",
+      "explanation": "Equivalent ratios scale by the same factor. 2 × 5 = 10, so 3 × 5 = 15."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Tables of equivalent ratios",
+      "question": "In a table of equivalent ratios for 2:5, one row is 4 : 10. What is the missing value in the row 8 : ?",
+      "options": {
+        "A": "20",
+        "B": "21",
+        "C": "8",
+        "D": "5"
+      },
+      "answer_letter": "A",
+      "answer_text": "20",
+      "explanation": "Equivalent ratios scale by the same factor. 2 × 4 = 8, so 5 × 4 = 20."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Tables of equivalent ratios",
+      "question": "In a table of equivalent ratios for 4:3, one row is 8 : 6. What is the missing value in the row 20 : ?",
+      "options": {
+        "A": "15",
+        "B": "16",
+        "C": "20",
+        "D": "3"
+      },
+      "answer_letter": "A",
+      "answer_text": "15",
+      "explanation": "Equivalent ratios scale by the same factor. 4 × 5 = 20, so 3 × 5 = 15."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Tables of equivalent ratios",
+      "question": "In a table of equivalent ratios for 2:6, one row is 4 : 12. What is the missing value in the row 4 : ?",
+      "options": {
+        "A": "12",
+        "B": "13",
+        "C": "4",
+        "D": "6"
+      },
+      "answer_letter": "A",
+      "answer_text": "12",
+      "explanation": "Equivalent ratios scale by the same factor. 2 × 2 = 4, so 6 × 2 = 12."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Tables of equivalent ratios",
+      "question": "In a table of equivalent ratios for 4:7, one row is 8 : 14. What is the missing value in the row 16 : ?",
+      "options": {
+        "A": "28",
+        "B": "29",
+        "C": "16",
+        "D": "7"
+      },
+      "answer_letter": "A",
+      "answer_text": "28",
+      "explanation": "Equivalent ratios scale by the same factor. 4 × 4 = 16, so 7 × 4 = 28."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Tables of equivalent ratios",
+      "question": "In a table of equivalent ratios for 3:3, one row is 6 : 6. What is the missing value in the row 6 : ?",
+      "options": {
+        "A": "6",
+        "B": "7",
+        "C": "6",
+        "D": "3"
+      },
+      "answer_letter": "A",
+      "answer_text": "6",
+      "explanation": "Equivalent ratios scale by the same factor. 3 × 2 = 6, so 3 × 2 = 6."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Tables of equivalent ratios",
+      "question": "In a table of equivalent ratios for 3:5, one row is 6 : 10. What is the missing value in the row 6 : ?",
+      "options": {
+        "A": "10",
+        "B": "11",
+        "C": "6",
+        "D": "5"
+      },
+      "answer_letter": "A",
+      "answer_text": "10",
+      "explanation": "Equivalent ratios scale by the same factor. 3 × 2 = 6, so 5 × 2 = 10."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Tables of equivalent ratios",
+      "question": "In a table of equivalent ratios for 3:3, one row is 6 : 6. What is the missing value in the row 15 : ?",
+      "options": {
+        "A": "15",
+        "B": "16",
+        "C": "15",
+        "D": "3"
+      },
+      "answer_letter": "A",
+      "answer_text": "15",
+      "explanation": "Equivalent ratios scale by the same factor. 3 × 5 = 15, so 3 × 5 = 15."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Unit rate problems (pricing and constant speed)",
+      "question": "If it took 5 hours to mow 5 lawns, how many lawns could be mowed in 25 hours at the same rate?",
+      "options": {
+        "A": "25",
+        "B": "26",
+        "C": "10",
+        "D": "25"
+      },
+      "answer_letter": "A",
+      "answer_text": "25",
+      "explanation": "Unit rate = 5/5 lawns per hour. In 25 hours: (5/5) × 25 = 25."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Unit rate problems (pricing and constant speed)",
+      "question": "If it took 4 hours to mow 4 lawns, how many lawns could be mowed in 20 hours at the same rate?",
+      "options": {
+        "A": "20",
+        "B": "21",
+        "C": "8",
+        "D": "20"
+      },
+      "answer_letter": "A",
+      "answer_text": "20",
+      "explanation": "Unit rate = 4/4 lawns per hour. In 20 hours: (4/4) × 20 = 20."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Unit rate problems (pricing and constant speed)",
+      "question": "If it took 4 hours to mow 4 lawns, how many lawns could be mowed in 12 hours at the same rate?",
+      "options": {
+        "A": "12",
+        "B": "13",
+        "C": "8",
+        "D": "12"
+      },
+      "answer_letter": "A",
+      "answer_text": "12",
+      "explanation": "Unit rate = 4/4 lawns per hour. In 12 hours: (4/4) × 12 = 12."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Unit rate problems (pricing and constant speed)",
+      "question": "If it took 7 hours to mow 3 lawns, how many lawns could be mowed in 28 hours at the same rate?",
+      "options": {
+        "A": "12",
+        "B": "13",
+        "C": "6",
+        "D": "28"
+      },
+      "answer_letter": "A",
+      "answer_text": "12",
+      "explanation": "Unit rate = 3/7 lawns per hour. In 28 hours: (3/7) × 28 = 12."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Unit rate problems (pricing and constant speed)",
+      "question": "If it took 4 hours to mow 5 lawns, how many lawns could be mowed in 24 hours at the same rate?",
+      "options": {
+        "A": "30",
+        "B": "31",
+        "C": "10",
+        "D": "24"
+      },
+      "answer_letter": "A",
+      "answer_text": "30",
+      "explanation": "Unit rate = 5/4 lawns per hour. In 24 hours: (5/4) × 24 = 30."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Unit rate problems (pricing and constant speed)",
+      "question": "If it took 5 hours to mow 6 lawns, how many lawns could be mowed in 20 hours at the same rate?",
+      "options": {
+        "A": "24",
+        "B": "25",
+        "C": "12",
+        "D": "20"
+      },
+      "answer_letter": "A",
+      "answer_text": "24",
+      "explanation": "Unit rate = 6/5 lawns per hour. In 20 hours: (6/5) × 20 = 24."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Unit rate problems (pricing and constant speed)",
+      "question": "If it took 8 hours to mow 4 lawns, how many lawns could be mowed in 24 hours at the same rate?",
+      "options": {
+        "A": "12",
+        "B": "13",
+        "C": "8",
+        "D": "24"
+      },
+      "answer_letter": "A",
+      "answer_text": "12",
+      "explanation": "Unit rate = 4/8 lawns per hour. In 24 hours: (4/8) × 24 = 12."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Unit rate problems (pricing and constant speed)",
+      "question": "If it took 4 hours to mow 2 lawns, how many lawns could be mowed in 20 hours at the same rate?",
+      "options": {
+        "A": "10",
+        "B": "11",
+        "C": "4",
+        "D": "20"
+      },
+      "answer_letter": "A",
+      "answer_text": "10",
+      "explanation": "Unit rate = 2/4 lawns per hour. In 20 hours: (2/4) × 20 = 10."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Percent as a rate per 100",
+      "question": "What is 60% of 108?",
+      "options": {
+        "A": "64.8",
+        "B": "69.8",
+        "C": "60",
+        "D": "48"
+      },
+      "answer_letter": "A",
+      "answer_text": "64.8",
+      "explanation": "60% means 60/100. (60/100) × 108 = 64.8."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Percent as a rate per 100",
+      "question": "What is 20% of 94?",
+      "options": {
+        "A": "18.8",
+        "B": "23.8",
+        "C": "20",
+        "D": "74"
+      },
+      "answer_letter": "A",
+      "answer_text": "18.8",
+      "explanation": "20% means 20/100. (20/100) × 94 = 18.8."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Percent as a rate per 100",
+      "question": "What is 50% of 94?",
+      "options": {
+        "A": "47",
+        "B": "52",
+        "C": "50",
+        "D": "44"
+      },
+      "answer_letter": "A",
+      "answer_text": "47",
+      "explanation": "50% means 50/100. (50/100) × 94 = 47.0."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Percent as a rate per 100",
+      "question": "What is 75% of 141?",
+      "options": {
+        "A": "105.75",
+        "B": "110.75",
+        "C": "75",
+        "D": "66"
+      },
+      "answer_letter": "A",
+      "answer_text": "105.75",
+      "explanation": "75% means 75/100. (75/100) × 141 = 105.75."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Percent as a rate per 100",
+      "question": "What is 75% of 76?",
+      "options": {
+        "A": "57",
+        "B": "62",
+        "C": "75",
+        "D": "1"
+      },
+      "answer_letter": "A",
+      "answer_text": "57",
+      "explanation": "75% means 75/100. (75/100) × 76 = 57.0."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Percent as a rate per 100",
+      "question": "What is 40% of 75?",
+      "options": {
+        "A": "30",
+        "B": "35",
+        "C": "40",
+        "D": "35"
+      },
+      "answer_letter": "A",
+      "answer_text": "30",
+      "explanation": "40% means 40/100. (40/100) × 75 = 30.0."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Percent as a rate per 100",
+      "question": "What is 30% of 183?",
+      "options": {
+        "A": "54.9",
+        "B": "59.9",
+        "C": "30",
+        "D": "153"
+      },
+      "answer_letter": "A",
+      "answer_text": "54.9",
+      "explanation": "30% means 30/100. (30/100) × 183 = 54.9."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Percent as a rate per 100",
+      "question": "What is 40% of 189?",
+      "options": {
+        "A": "75.60000000000001",
+        "B": "80.60000000000001",
+        "C": "40",
+        "D": "149"
+      },
+      "answer_letter": "A",
+      "answer_text": "75.60000000000001",
+      "explanation": "40% means 40/100. (40/100) × 189 = 75.60000000000001."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Convert measurement units using ratios",
+      "question": "Convert 369 cm to meters using ratio reasoning (100 cm = 1 m).",
+      "options": {
+        "A": "3.69",
+        "B": "36900",
+        "C": "36.9",
+        "D": "469"
+      },
+      "answer_letter": "A",
+      "answer_text": "3.69",
+      "explanation": "100 cm = 1 m, so divide by 100: 369 ÷ 100 = 3.69 m."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Convert measurement units using ratios",
+      "question": "Convert 448 cm to meters using ratio reasoning (100 cm = 1 m).",
+      "options": {
+        "A": "4.48",
+        "B": "44800",
+        "C": "44.8",
+        "D": "548"
+      },
+      "answer_letter": "A",
+      "answer_text": "4.48",
+      "explanation": "100 cm = 1 m, so divide by 100: 448 ÷ 100 = 4.48 m."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Convert measurement units using ratios",
+      "question": "Convert 354 cm to meters using ratio reasoning (100 cm = 1 m).",
+      "options": {
+        "A": "3.54",
+        "B": "35400",
+        "C": "35.4",
+        "D": "454"
+      },
+      "answer_letter": "A",
+      "answer_text": "3.54",
+      "explanation": "100 cm = 1 m, so divide by 100: 354 ÷ 100 = 3.54 m."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Convert measurement units using ratios",
+      "question": "Convert 335 cm to meters using ratio reasoning (100 cm = 1 m).",
+      "options": {
+        "A": "3.35",
+        "B": "33500",
+        "C": "33.5",
+        "D": "435"
+      },
+      "answer_letter": "A",
+      "answer_text": "3.35",
+      "explanation": "100 cm = 1 m, so divide by 100: 335 ÷ 100 = 3.35 m."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Convert measurement units using ratios",
+      "question": "Convert 262 cm to meters using ratio reasoning (100 cm = 1 m).",
+      "options": {
+        "A": "2.62",
+        "B": "26200",
+        "C": "26.2",
+        "D": "362"
+      },
+      "answer_letter": "A",
+      "answer_text": "2.62",
+      "explanation": "100 cm = 1 m, so divide by 100: 262 ÷ 100 = 2.62 m."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Convert measurement units using ratios",
+      "question": "Convert 220 cm to meters using ratio reasoning (100 cm = 1 m).",
+      "options": {
+        "A": "2.2",
+        "B": "22000",
+        "C": "22.0",
+        "D": "320"
+      },
+      "answer_letter": "A",
+      "answer_text": "2.2",
+      "explanation": "100 cm = 1 m, so divide by 100: 220 ÷ 100 = 2.2 m."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Convert measurement units using ratios",
+      "question": "Convert 410 cm to meters using ratio reasoning (100 cm = 1 m).",
+      "options": {
+        "A": "4.1",
+        "B": "41000",
+        "C": "41.0",
+        "D": "510"
+      },
+      "answer_letter": "A",
+      "answer_text": "4.1",
+      "explanation": "100 cm = 1 m, so divide by 100: 410 ÷ 100 = 4.1 m."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Concept of a ratio and ratio language",
+      "question": "\"For every vote candidate A received, candidate C received nearly 3 votes.\" What is the approximate ratio of A's votes to C's votes?",
+      "options": {
+        "A": "1:3",
+        "B": "3:1",
+        "C": "1:1",
+        "D": "3:3"
+      },
+      "answer_letter": "A",
+      "answer_text": "1:3",
+      "explanation": "For every 1 vote for A there are about 3 for C, so the ratio is 1:3."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Concept of a ratio and ratio language",
+      "question": "\"For every vote candidate A received, candidate C received nearly 2 votes.\" What is the approximate ratio of A's votes to C's votes?",
+      "options": {
+        "A": "1:2",
+        "B": "2:1",
+        "C": "1:1",
+        "D": "2:2"
+      },
+      "answer_letter": "A",
+      "answer_text": "1:2",
+      "explanation": "For every 1 vote for A there are about 2 for C, so the ratio is 1:2."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Concept of a ratio and ratio language",
+      "question": "\"For every vote candidate A received, candidate C received nearly 2 votes.\" What is the approximate ratio of A's votes to C's votes?",
+      "options": {
+        "A": "1:2",
+        "B": "2:1",
+        "C": "1:1",
+        "D": "2:2"
+      },
+      "answer_letter": "A",
+      "answer_text": "1:2",
+      "explanation": "For every 1 vote for A there are about 2 for C, so the ratio is 1:2."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Concept of a ratio and ratio language",
+      "question": "\"For every vote candidate A received, candidate C received nearly 2 votes.\" What is the approximate ratio of A's votes to C's votes?",
+      "options": {
+        "A": "1:2",
+        "B": "2:1",
+        "C": "1:1",
+        "D": "2:2"
+      },
+      "answer_letter": "A",
+      "answer_text": "1:2",
+      "explanation": "For every 1 vote for A there are about 2 for C, so the ratio is 1:2."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Concept of a ratio and ratio language",
+      "question": "\"For every vote candidate A received, candidate C received nearly 2 votes.\" What is the approximate ratio of A's votes to C's votes?",
+      "options": {
+        "A": "1:2",
+        "B": "2:1",
+        "C": "1:1",
+        "D": "2:2"
+      },
+      "answer_letter": "A",
+      "answer_text": "1:2",
+      "explanation": "For every 1 vote for A there are about 2 for C, so the ratio is 1:2."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Concept of a ratio and ratio language",
+      "question": "\"For every vote candidate A received, candidate C received nearly 4 votes.\" What is the approximate ratio of A's votes to C's votes?",
+      "options": {
+        "A": "1:4",
+        "B": "4:1",
+        "C": "1:1",
+        "D": "4:4"
+      },
+      "answer_letter": "A",
+      "answer_text": "1:4",
+      "explanation": "For every 1 vote for A there are about 4 for C, so the ratio is 1:4."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Concept of a ratio and ratio language",
+      "question": "\"For every vote candidate A received, candidate C received nearly 2 votes.\" What is the approximate ratio of A's votes to C's votes?",
+      "options": {
+        "A": "1:2",
+        "B": "2:1",
+        "C": "1:1",
+        "D": "2:2"
+      },
+      "answer_letter": "A",
+      "answer_text": "1:2",
+      "explanation": "For every 1 vote for A there are about 2 for C, so the ratio is 1:2."
+    },
+    {
+      "domain": "Ratios and Proportional Relationships",
+      "subdomain": "Understand ratio concepts and use ratio reasoning to solve problems",
+      "leaf_topic": "Concept of a ratio and ratio language",
+      "question": "\"For every vote candidate A received, candidate C received nearly 4 votes.\" What is the approximate ratio of A's votes to C's votes?",
+      "options": {
+        "A": "1:4",
+        "B": "4:1",
+        "C": "1:1",
+        "D": "4:4"
+      },
+      "answer_letter": "A",
+      "answer_text": "1:4",
+      "explanation": "For every 1 vote for A there are about 4 for C, so the ratio is 1:4."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of multiplication and division to divide fractions by fractions",
+      "leaf_topic": "Interpret and compute quotients of fractions",
+      "question": "Compute (4/6) ÷ (1/5).",
+      "options": {
+        "A": "10/3",
+        "B": "2/15",
+        "C": "2/15",
+        "D": "3/10"
+      },
+      "answer_letter": "A",
+      "answer_text": "10/3",
+      "explanation": "(a/b) ÷ (c/d) = (a/b) × (d/c) = 20/6 = 10/3."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of multiplication and division to divide fractions by fractions",
+      "leaf_topic": "Interpret and compute quotients of fractions",
+      "question": "Compute (4/6) ÷ (4/4).",
+      "options": {
+        "A": "2/3",
+        "B": "2/3",
+        "C": "2/3",
+        "D": "3/2"
+      },
+      "answer_letter": "A",
+      "answer_text": "2/3",
+      "explanation": "(a/b) ÷ (c/d) = (a/b) × (d/c) = 16/24 = 2/3."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of multiplication and division to divide fractions by fractions",
+      "leaf_topic": "Interpret and compute quotients of fractions",
+      "question": "Compute (5/2) ÷ (1/4).",
+      "options": {
+        "A": "10",
+        "B": "5/8",
+        "C": "5/8",
+        "D": "1/10"
+      },
+      "answer_letter": "A",
+      "answer_text": "10",
+      "explanation": "(a/b) ÷ (c/d) = (a/b) × (d/c) = 20/2 = 10."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of multiplication and division to divide fractions by fractions",
+      "leaf_topic": "Interpret and compute quotients of fractions",
+      "question": "Compute (3/2) ÷ (3/5).",
+      "options": {
+        "A": "5/2",
+        "B": "9/10",
+        "C": "9/10",
+        "D": "2/5"
+      },
+      "answer_letter": "A",
+      "answer_text": "5/2",
+      "explanation": "(a/b) ÷ (c/d) = (a/b) × (d/c) = 15/6 = 5/2."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of multiplication and division to divide fractions by fractions",
+      "leaf_topic": "Interpret and compute quotients of fractions",
+      "question": "Compute (2/5) ÷ (1/4).",
+      "options": {
+        "A": "8/5",
+        "B": "1/10",
+        "C": "1/10",
+        "D": "5/8"
+      },
+      "answer_letter": "A",
+      "answer_text": "8/5",
+      "explanation": "(a/b) ÷ (c/d) = (a/b) × (d/c) = 8/5 = 8/5."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of multiplication and division to divide fractions by fractions",
+      "leaf_topic": "Interpret and compute quotients of fractions",
+      "question": "Compute (5/3) ÷ (1/4).",
+      "options": {
+        "A": "20/3",
+        "B": "5/12",
+        "C": "5/12",
+        "D": "3/20"
+      },
+      "answer_letter": "A",
+      "answer_text": "20/3",
+      "explanation": "(a/b) ÷ (c/d) = (a/b) × (d/c) = 20/3 = 20/3."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of multiplication and division to divide fractions by fractions",
+      "leaf_topic": "Interpret and compute quotients of fractions",
+      "question": "Compute (5/6) ÷ (2/3).",
+      "options": {
+        "A": "5/4",
+        "B": "5/9",
+        "C": "5/9",
+        "D": "4/5"
+      },
+      "answer_letter": "A",
+      "answer_text": "5/4",
+      "explanation": "(a/b) ÷ (c/d) = (a/b) × (d/c) = 15/12 = 5/4."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of multiplication and division to divide fractions by fractions",
+      "leaf_topic": "Interpret and compute quotients of fractions",
+      "question": "Compute (3/3) ÷ (1/4).",
+      "options": {
+        "A": "4",
+        "B": "1/4",
+        "C": "1/4",
+        "D": "1/4"
+      },
+      "answer_letter": "A",
+      "answer_text": "4",
+      "explanation": "(a/b) ÷ (c/d) = (a/b) × (d/c) = 12/3 = 4."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of multiplication and division to divide fractions by fractions",
+      "leaf_topic": "Interpret and compute quotients of fractions",
+      "question": "Compute (4/2) ÷ (1/4).",
+      "options": {
+        "A": "8",
+        "B": "1/2",
+        "C": "1/2",
+        "D": "1/8"
+      },
+      "answer_letter": "A",
+      "answer_text": "8",
+      "explanation": "(a/b) ÷ (c/d) = (a/b) × (d/c) = 16/2 = 8."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of multiplication and division to divide fractions by fractions",
+      "leaf_topic": "Interpret and compute quotients of fractions",
+      "question": "Compute (3/3) ÷ (1/3).",
+      "options": {
+        "A": "3",
+        "B": "1/3",
+        "C": "1/3",
+        "D": "1/3"
+      },
+      "answer_letter": "A",
+      "answer_text": "3",
+      "explanation": "(a/b) ÷ (c/d) = (a/b) × (d/c) = 9/3 = 3."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of multiplication and division to divide fractions by fractions",
+      "leaf_topic": "Word problems involving division of fractions",
+      "question": "How much chocolate will each person get if 2 people share 1/2 lb of chocolate equally?",
+      "options": {
+        "A": "1/4",
+        "B": "1",
+        "C": "4",
+        "D": "1/2"
+      },
+      "answer_letter": "A",
+      "answer_text": "1/4",
+      "explanation": "Divide the total by the number of people: 1/2 ÷ 2 = 1/4 lb each."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of multiplication and division to divide fractions by fractions",
+      "leaf_topic": "Word problems involving division of fractions",
+      "question": "How much chocolate will each person get if 5 people share 1/2 lb of chocolate equally?",
+      "options": {
+        "A": "1/10",
+        "B": "5/2",
+        "C": "10",
+        "D": "1/2"
+      },
+      "answer_letter": "A",
+      "answer_text": "1/10",
+      "explanation": "Divide the total by the number of people: 1/2 ÷ 5 = 1/10 lb each."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of multiplication and division to divide fractions by fractions",
+      "leaf_topic": "Word problems involving division of fractions",
+      "question": "How much chocolate will each person get if 3 people share 1/2 lb of chocolate equally?",
+      "options": {
+        "A": "1/6",
+        "B": "3/2",
+        "C": "6",
+        "D": "1/2"
+      },
+      "answer_letter": "A",
+      "answer_text": "1/6",
+      "explanation": "Divide the total by the number of people: 1/2 ÷ 3 = 1/6 lb each."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of multiplication and division to divide fractions by fractions",
+      "leaf_topic": "Word problems involving division of fractions",
+      "question": "How much chocolate will each person get if 5 people share 1/4 lb of chocolate equally?",
+      "options": {
+        "A": "1/20",
+        "B": "5/4",
+        "C": "20",
+        "D": "1/4"
+      },
+      "answer_letter": "A",
+      "answer_text": "1/20",
+      "explanation": "Divide the total by the number of people: 1/4 ÷ 5 = 1/20 lb each."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of multiplication and division to divide fractions by fractions",
+      "leaf_topic": "Word problems involving division of fractions",
+      "question": "How much chocolate will each person get if 3 people share 1/3 lb of chocolate equally?",
+      "options": {
+        "A": "1/9",
+        "B": "1",
+        "C": "9",
+        "D": "1/3"
+      },
+      "answer_letter": "A",
+      "answer_text": "1/9",
+      "explanation": "Divide the total by the number of people: 1/3 ÷ 3 = 1/9 lb each."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of multiplication and division to divide fractions by fractions",
+      "leaf_topic": "Word problems involving division of fractions",
+      "question": "How much chocolate will each person get if 5 people share 1/2 lb of chocolate equally?",
+      "options": {
+        "A": "1/10",
+        "B": "5/2",
+        "C": "10",
+        "D": "1/2"
+      },
+      "answer_letter": "A",
+      "answer_text": "1/10",
+      "explanation": "Divide the total by the number of people: 1/2 ÷ 5 = 1/10 lb each."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of multiplication and division to divide fractions by fractions",
+      "leaf_topic": "Word problems involving division of fractions",
+      "question": "How much chocolate will each person get if 3 people share 1/4 lb of chocolate equally?",
+      "options": {
+        "A": "1/12",
+        "B": "3/4",
+        "C": "12",
+        "D": "1/4"
+      },
+      "answer_letter": "A",
+      "answer_text": "1/12",
+      "explanation": "Divide the total by the number of people: 1/4 ÷ 3 = 1/12 lb each."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of multiplication and division to divide fractions by fractions",
+      "leaf_topic": "Word problems involving division of fractions",
+      "question": "How much chocolate will each person get if 4 people share 1/3 lb of chocolate equally?",
+      "options": {
+        "A": "1/12",
+        "B": "4/3",
+        "C": "12",
+        "D": "1/3"
+      },
+      "answer_letter": "A",
+      "answer_text": "1/12",
+      "explanation": "Divide the total by the number of people: 1/3 ÷ 4 = 1/12 lb each."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Compute fluently with multi-digit numbers and find common factors and multiples",
+      "leaf_topic": "Fluently divide multi-digit numbers",
+      "question": "1505 ÷ 35 = ?",
+      "options": {
+        "A": "43",
+        "B": "44",
+        "C": "42",
+        "D": "35"
+      },
+      "answer_letter": "A",
+      "answer_text": "43",
+      "explanation": "Using the standard algorithm, 1505 ÷ 35 = 43."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Compute fluently with multi-digit numbers and find common factors and multiples",
+      "leaf_topic": "Fluently divide multi-digit numbers",
+      "question": "1935 ÷ 45 = ?",
+      "options": {
+        "A": "43",
+        "B": "44",
+        "C": "42",
+        "D": "45"
+      },
+      "answer_letter": "A",
+      "answer_text": "43",
+      "explanation": "Using the standard algorithm, 1935 ÷ 45 = 43."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Compute fluently with multi-digit numbers and find common factors and multiples",
+      "leaf_topic": "Fluently divide multi-digit numbers",
+      "question": "570 ÷ 19 = ?",
+      "options": {
+        "A": "30",
+        "B": "31",
+        "C": "29",
+        "D": "19"
+      },
+      "answer_letter": "A",
+      "answer_text": "30",
+      "explanation": "Using the standard algorithm, 570 ÷ 19 = 30."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Compute fluently with multi-digit numbers and find common factors and multiples",
+      "leaf_topic": "Fluently divide multi-digit numbers",
+      "question": "494 ÷ 26 = ?",
+      "options": {
+        "A": "19",
+        "B": "20",
+        "C": "18",
+        "D": "26"
+      },
+      "answer_letter": "A",
+      "answer_text": "19",
+      "explanation": "Using the standard algorithm, 494 ÷ 26 = 19."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Compute fluently with multi-digit numbers and find common factors and multiples",
+      "leaf_topic": "Fluently divide multi-digit numbers",
+      "question": "528 ÷ 33 = ?",
+      "options": {
+        "A": "16",
+        "B": "17",
+        "C": "15",
+        "D": "33"
+      },
+      "answer_letter": "A",
+      "answer_text": "16",
+      "explanation": "Using the standard algorithm, 528 ÷ 33 = 16."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Compute fluently with multi-digit numbers and find common factors and multiples",
+      "leaf_topic": "Fluently divide multi-digit numbers",
+      "question": "1352 ÷ 26 = ?",
+      "options": {
+        "A": "52",
+        "B": "53",
+        "C": "51",
+        "D": "26"
+      },
+      "answer_letter": "A",
+      "answer_text": "52",
+      "explanation": "Using the standard algorithm, 1352 ÷ 26 = 52."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Compute fluently with multi-digit numbers and find common factors and multiples",
+      "leaf_topic": "Fluently divide multi-digit numbers",
+      "question": "390 ÷ 26 = ?",
+      "options": {
+        "A": "15",
+        "B": "16",
+        "C": "14",
+        "D": "26"
+      },
+      "answer_letter": "A",
+      "answer_text": "15",
+      "explanation": "Using the standard algorithm, 390 ÷ 26 = 15."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Compute fluently with multi-digit numbers and find common factors and multiples",
+      "leaf_topic": "Fluently divide multi-digit numbers",
+      "question": "960 ÷ 16 = ?",
+      "options": {
+        "A": "60",
+        "B": "61",
+        "C": "59",
+        "D": "16"
+      },
+      "answer_letter": "A",
+      "answer_text": "60",
+      "explanation": "Using the standard algorithm, 960 ÷ 16 = 60."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Compute fluently with multi-digit numbers and find common factors and multiples",
+      "leaf_topic": "Fluently operate with multi-digit decimals",
+      "question": "35.24 + 3.06 = ?",
+      "options": {
+        "A": "38.3",
+        "B": "38.4",
+        "C": "38.2",
+        "D": "107.83"
+      },
+      "answer_letter": "A",
+      "answer_text": "38.3",
+      "explanation": "Using the standard algorithm for decimals: 35.24 + 3.06 = 38.3."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Compute fluently with multi-digit numbers and find common factors and multiples",
+      "leaf_topic": "Fluently operate with multi-digit decimals",
+      "question": "44.39 + 1.64 = ?",
+      "options": {
+        "A": "46.03",
+        "B": "46.13",
+        "C": "45.93",
+        "D": "72.8"
+      },
+      "answer_letter": "A",
+      "answer_text": "46.03",
+      "explanation": "Using the standard algorithm for decimals: 44.39 + 1.64 = 46.03."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Compute fluently with multi-digit numbers and find common factors and multiples",
+      "leaf_topic": "Fluently operate with multi-digit decimals",
+      "question": "21.14 × 5.37 = ?",
+      "options": {
+        "A": "113.52",
+        "B": "113.62",
+        "C": "113.42",
+        "D": "26.51"
+      },
+      "answer_letter": "A",
+      "answer_text": "113.52",
+      "explanation": "Using the standard algorithm for decimals: 21.14 × 5.37 = 113.52."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Compute fluently with multi-digit numbers and find common factors and multiples",
+      "leaf_topic": "Fluently operate with multi-digit decimals",
+      "question": "15.29 × 9.42 = ?",
+      "options": {
+        "A": "144.03",
+        "B": "144.13",
+        "C": "143.93",
+        "D": "24.71"
+      },
+      "answer_letter": "A",
+      "answer_text": "144.03",
+      "explanation": "Using the standard algorithm for decimals: 15.29 × 9.42 = 144.03."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Compute fluently with multi-digit numbers and find common factors and multiples",
+      "leaf_topic": "Fluently operate with multi-digit decimals",
+      "question": "33.05 - 3.19 = ?",
+      "options": {
+        "A": "29.86",
+        "B": "29.96",
+        "C": "29.76",
+        "D": "36.24"
+      },
+      "answer_letter": "A",
+      "answer_text": "29.86",
+      "explanation": "Using the standard algorithm for decimals: 33.05 - 3.19 = 29.86."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Compute fluently with multi-digit numbers and find common factors and multiples",
+      "leaf_topic": "Fluently operate with multi-digit decimals",
+      "question": "42.3 + 2.71 = ?",
+      "options": {
+        "A": "45.01",
+        "B": "45.11",
+        "C": "44.91",
+        "D": "114.63"
+      },
+      "answer_letter": "A",
+      "answer_text": "45.01",
+      "explanation": "Using the standard algorithm for decimals: 42.3 + 2.71 = 45.01."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Compute fluently with multi-digit numbers and find common factors and multiples",
+      "leaf_topic": "Fluently operate with multi-digit decimals",
+      "question": "36.36 - 4.19 = ?",
+      "options": {
+        "A": "32.17",
+        "B": "32.27",
+        "C": "32.07",
+        "D": "40.55"
+      },
+      "answer_letter": "A",
+      "answer_text": "32.17",
+      "explanation": "Using the standard algorithm for decimals: 36.36 - 4.19 = 32.17."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Compute fluently with multi-digit numbers and find common factors and multiples",
+      "leaf_topic": "Fluently operate with multi-digit decimals",
+      "question": "28.68 × 7.56 = ?",
+      "options": {
+        "A": "216.82",
+        "B": "216.92",
+        "C": "216.72",
+        "D": "36.24"
+      },
+      "answer_letter": "A",
+      "answer_text": "216.82",
+      "explanation": "Using the standard algorithm for decimals: 28.68 × 7.56 = 216.82."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Compute fluently with multi-digit numbers and find common factors and multiples",
+      "leaf_topic": "Greatest common factor (GCF)",
+      "question": "What is the greatest common factor of 53 and 53?",
+      "options": {
+        "A": "53",
+        "B": "54",
+        "C": "53",
+        "D": "1"
+      },
+      "answer_letter": "A",
+      "answer_text": "53",
+      "explanation": "The greatest common factor of 53 and 53 is 53."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Compute fluently with multi-digit numbers and find common factors and multiples",
+      "leaf_topic": "Greatest common factor (GCF)",
+      "question": "What is the greatest common factor of 18 and 15?",
+      "options": {
+        "A": "3",
+        "B": "6",
+        "C": "15",
+        "D": "1"
+      },
+      "answer_letter": "A",
+      "answer_text": "3",
+      "explanation": "The greatest common factor of 18 and 15 is 3."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Compute fluently with multi-digit numbers and find common factors and multiples",
+      "leaf_topic": "Greatest common factor (GCF)",
+      "question": "What is the greatest common factor of 37 and 58?",
+      "options": {
+        "A": "1",
+        "B": "2",
+        "C": "37",
+        "D": "1"
+      },
+      "answer_letter": "A",
+      "answer_text": "1",
+      "explanation": "The greatest common factor of 37 and 58 is 1."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Compute fluently with multi-digit numbers and find common factors and multiples",
+      "leaf_topic": "Greatest common factor (GCF)",
+      "question": "What is the greatest common factor of 33 and 18?",
+      "options": {
+        "A": "3",
+        "B": "6",
+        "C": "18",
+        "D": "1"
+      },
+      "answer_letter": "A",
+      "answer_text": "3",
+      "explanation": "The greatest common factor of 33 and 18 is 3."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Compute fluently with multi-digit numbers and find common factors and multiples",
+      "leaf_topic": "Greatest common factor (GCF)",
+      "question": "What is the greatest common factor of 27 and 24?",
+      "options": {
+        "A": "3",
+        "B": "6",
+        "C": "24",
+        "D": "1"
+      },
+      "answer_letter": "A",
+      "answer_text": "3",
+      "explanation": "The greatest common factor of 27 and 24 is 3."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Compute fluently with multi-digit numbers and find common factors and multiples",
+      "leaf_topic": "Greatest common factor (GCF)",
+      "question": "What is the greatest common factor of 24 and 46?",
+      "options": {
+        "A": "2",
+        "B": "4",
+        "C": "24",
+        "D": "1"
+      },
+      "answer_letter": "A",
+      "answer_text": "2",
+      "explanation": "The greatest common factor of 24 and 46 is 2."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Compute fluently with multi-digit numbers and find common factors and multiples",
+      "leaf_topic": "Greatest common factor (GCF)",
+      "question": "What is the greatest common factor of 40 and 20?",
+      "options": {
+        "A": "20",
+        "B": "21",
+        "C": "20",
+        "D": "1"
+      },
+      "answer_letter": "A",
+      "answer_text": "20",
+      "explanation": "The greatest common factor of 40 and 20 is 20."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Compute fluently with multi-digit numbers and find common factors and multiples",
+      "leaf_topic": "Greatest common factor (GCF)",
+      "question": "What is the greatest common factor of 39 and 23?",
+      "options": {
+        "A": "1",
+        "B": "2",
+        "C": "23",
+        "D": "1"
+      },
+      "answer_letter": "A",
+      "answer_text": "1",
+      "explanation": "The greatest common factor of 39 and 23 is 1."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Compute fluently with multi-digit numbers and find common factors and multiples",
+      "leaf_topic": "Least common multiple (LCM)",
+      "question": "What is the least common multiple of 6 and 9?",
+      "options": {
+        "A": "18",
+        "B": "54",
+        "C": "3",
+        "D": "9"
+      },
+      "answer_letter": "A",
+      "answer_text": "18",
+      "explanation": "LCM(6, 9) = 18."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Compute fluently with multi-digit numbers and find common factors and multiples",
+      "leaf_topic": "Least common multiple (LCM)",
+      "question": "What is the least common multiple of 5 and 3?",
+      "options": {
+        "A": "15",
+        "B": "15",
+        "C": "1",
+        "D": "5"
+      },
+      "answer_letter": "A",
+      "answer_text": "15",
+      "explanation": "LCM(5, 3) = 15."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Compute fluently with multi-digit numbers and find common factors and multiples",
+      "leaf_topic": "Least common multiple (LCM)",
+      "question": "What is the least common multiple of 9 and 10?",
+      "options": {
+        "A": "90",
+        "B": "90",
+        "C": "1",
+        "D": "10"
+      },
+      "answer_letter": "A",
+      "answer_text": "90",
+      "explanation": "LCM(9, 10) = 90."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Compute fluently with multi-digit numbers and find common factors and multiples",
+      "leaf_topic": "Least common multiple (LCM)",
+      "question": "What is the least common multiple of 3 and 2?",
+      "options": {
+        "A": "6",
+        "B": "6",
+        "C": "1",
+        "D": "3"
+      },
+      "answer_letter": "A",
+      "answer_text": "6",
+      "explanation": "LCM(3, 2) = 6."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Compute fluently with multi-digit numbers and find common factors and multiples",
+      "leaf_topic": "Least common multiple (LCM)",
+      "question": "What is the least common multiple of 10 and 2?",
+      "options": {
+        "A": "10",
+        "B": "20",
+        "C": "2",
+        "D": "10"
+      },
+      "answer_letter": "A",
+      "answer_text": "10",
+      "explanation": "LCM(10, 2) = 10."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Compute fluently with multi-digit numbers and find common factors and multiples",
+      "leaf_topic": "Least common multiple (LCM)",
+      "question": "What is the least common multiple of 3 and 5?",
+      "options": {
+        "A": "15",
+        "B": "15",
+        "C": "1",
+        "D": "5"
+      },
+      "answer_letter": "A",
+      "answer_text": "15",
+      "explanation": "LCM(3, 5) = 15."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Compute fluently with multi-digit numbers and find common factors and multiples",
+      "leaf_topic": "Least common multiple (LCM)",
+      "question": "What is the least common multiple of 4 and 8?",
+      "options": {
+        "A": "8",
+        "B": "32",
+        "C": "4",
+        "D": "8"
+      },
+      "answer_letter": "A",
+      "answer_text": "8",
+      "explanation": "LCM(4, 8) = 8."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Compute fluently with multi-digit numbers and find common factors and multiples",
+      "leaf_topic": "Distributive property with common factors",
+      "question": "Express 45 + 25 as a multiple of a sum using the distributive property.",
+      "options": {
+        "A": "5(9 + 5)",
+        "B": "5(9 × 5)",
+        "C": "9 + 5",
+        "D": "45 × 25"
+      },
+      "answer_letter": "A",
+      "answer_text": "5(9 + 5)",
+      "explanation": "By distributive property: 45 + 25 = 5(9 + 5)."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Compute fluently with multi-digit numbers and find common factors and multiples",
+      "leaf_topic": "Distributive property with common factors",
+      "question": "Express 64 + 16 as a multiple of a sum using the distributive property.",
+      "options": {
+        "A": "8(8 + 2)",
+        "B": "8(8 × 2)",
+        "C": "8 + 2",
+        "D": "64 × 16"
+      },
+      "answer_letter": "A",
+      "answer_text": "8(8 + 2)",
+      "explanation": "By distributive property: 64 + 16 = 8(8 + 2)."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Compute fluently with multi-digit numbers and find common factors and multiples",
+      "leaf_topic": "Distributive property with common factors",
+      "question": "Express 24 + 6 as a multiple of a sum using the distributive property.",
+      "options": {
+        "A": "3(8 + 2)",
+        "B": "3(8 × 2)",
+        "C": "8 + 2",
+        "D": "24 × 6"
+      },
+      "answer_letter": "A",
+      "answer_text": "3(8 + 2)",
+      "explanation": "By distributive property: 24 + 6 = 3(8 + 2)."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Compute fluently with multi-digit numbers and find common factors and multiples",
+      "leaf_topic": "Distributive property with common factors",
+      "question": "Express 30 + 45 as a multiple of a sum using the distributive property.",
+      "options": {
+        "A": "5(6 + 9)",
+        "B": "5(6 × 9)",
+        "C": "6 + 9",
+        "D": "30 × 45"
+      },
+      "answer_letter": "A",
+      "answer_text": "5(6 + 9)",
+      "explanation": "By distributive property: 30 + 45 = 5(6 + 9)."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Compute fluently with multi-digit numbers and find common factors and multiples",
+      "leaf_topic": "Distributive property with common factors",
+      "question": "Express 32 + 40 as a multiple of a sum using the distributive property.",
+      "options": {
+        "A": "4(8 + 10)",
+        "B": "4(8 × 10)",
+        "C": "8 + 10",
+        "D": "32 × 40"
+      },
+      "answer_letter": "A",
+      "answer_text": "4(8 + 10)",
+      "explanation": "By distributive property: 32 + 40 = 4(8 + 10)."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Compute fluently with multi-digit numbers and find common factors and multiples",
+      "leaf_topic": "Distributive property with common factors",
+      "question": "Express 63 + 28 as a multiple of a sum using the distributive property.",
+      "options": {
+        "A": "7(9 + 4)",
+        "B": "7(9 × 4)",
+        "C": "9 + 4",
+        "D": "63 × 28"
+      },
+      "answer_letter": "A",
+      "answer_text": "7(9 + 4)",
+      "explanation": "By distributive property: 63 + 28 = 7(9 + 4)."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Positive and negative numbers in real-world contexts",
+      "question": "What does a elevation of -20 m represent?",
+      "options": {
+        "A": "20 meters below sea level",
+        "B": "a positive quantity only",
+        "C": "zero",
+        "D": "an undefined value"
+      },
+      "answer_letter": "A",
+      "answer_text": "20 meters below sea level",
+      "explanation": "Negative numbers indicate opposite direction or value; elevation of -20 m means 20 meters below sea level."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Positive and negative numbers in real-world contexts",
+      "question": "What does a account balance of -40 dollars represent?",
+      "options": {
+        "A": "a debt of 40 dollars",
+        "B": "a positive quantity only",
+        "C": "zero",
+        "D": "an undefined value"
+      },
+      "answer_letter": "A",
+      "answer_text": "a debt of 40 dollars",
+      "explanation": "Negative numbers indicate opposite direction or value; account balance of -40 dollars means a debt of 40 dollars."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Positive and negative numbers in real-world contexts",
+      "question": "What does a elevation of -20 m represent?",
+      "options": {
+        "A": "20 meters below sea level",
+        "B": "a positive quantity only",
+        "C": "zero",
+        "D": "an undefined value"
+      },
+      "answer_letter": "A",
+      "answer_text": "20 meters below sea level",
+      "explanation": "Negative numbers indicate opposite direction or value; elevation of -20 m means 20 meters below sea level."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Positive and negative numbers in real-world contexts",
+      "question": "What does a temperature of -5°C represent?",
+      "options": {
+        "A": "5 degrees below zero",
+        "B": "a positive quantity only",
+        "C": "zero",
+        "D": "an undefined value"
+      },
+      "answer_letter": "A",
+      "answer_text": "5 degrees below zero",
+      "explanation": "Negative numbers indicate opposite direction or value; temperature of -5°C means 5 degrees below zero."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Positive and negative numbers in real-world contexts",
+      "question": "What does a temperature of -5°C represent?",
+      "options": {
+        "A": "5 degrees below zero",
+        "B": "a positive quantity only",
+        "C": "zero",
+        "D": "an undefined value"
+      },
+      "answer_letter": "A",
+      "answer_text": "5 degrees below zero",
+      "explanation": "Negative numbers indicate opposite direction or value; temperature of -5°C means 5 degrees below zero."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Positive and negative numbers in real-world contexts",
+      "question": "What does a account balance of -40 dollars represent?",
+      "options": {
+        "A": "a debt of 40 dollars",
+        "B": "a positive quantity only",
+        "C": "zero",
+        "D": "an undefined value"
+      },
+      "answer_letter": "A",
+      "answer_text": "a debt of 40 dollars",
+      "explanation": "Negative numbers indicate opposite direction or value; account balance of -40 dollars means a debt of 40 dollars."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Positive and negative numbers in real-world contexts",
+      "question": "What does a temperature of -5°C represent?",
+      "options": {
+        "A": "5 degrees below zero",
+        "B": "a positive quantity only",
+        "C": "zero",
+        "D": "an undefined value"
+      },
+      "answer_letter": "A",
+      "answer_text": "5 degrees below zero",
+      "explanation": "Negative numbers indicate opposite direction or value; temperature of -5°C means 5 degrees below zero."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Positive and negative numbers in real-world contexts",
+      "question": "What does a temperature of -5°C represent?",
+      "options": {
+        "A": "5 degrees below zero",
+        "B": "a positive quantity only",
+        "C": "zero",
+        "D": "an undefined value"
+      },
+      "answer_letter": "A",
+      "answer_text": "5 degrees below zero",
+      "explanation": "Negative numbers indicate opposite direction or value; temperature of -5°C means 5 degrees below zero."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Opposite signs and opposites",
+      "question": "What is the opposite of the opposite of 10? That is, -(-10) = ?",
+      "options": {
+        "A": "10",
+        "B": "-10",
+        "C": "0",
+        "D": "11"
+      },
+      "answer_letter": "A",
+      "answer_text": "10",
+      "explanation": "The opposite of the opposite of a number is the number itself: -(-10) = 10."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Opposite signs and opposites",
+      "question": "What is the opposite of the opposite of 8? That is, -(-8) = ?",
+      "options": {
+        "A": "8",
+        "B": "-8",
+        "C": "0",
+        "D": "9"
+      },
+      "answer_letter": "A",
+      "answer_text": "8",
+      "explanation": "The opposite of the opposite of a number is the number itself: -(-8) = 8."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Opposite signs and opposites",
+      "question": "What is the opposite of the opposite of 9? That is, -(-9) = ?",
+      "options": {
+        "A": "9",
+        "B": "-9",
+        "C": "0",
+        "D": "10"
+      },
+      "answer_letter": "A",
+      "answer_text": "9",
+      "explanation": "The opposite of the opposite of a number is the number itself: -(-9) = 9."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Opposite signs and opposites",
+      "question": "What is the opposite of the opposite of 15? That is, -(-15) = ?",
+      "options": {
+        "A": "15",
+        "B": "-15",
+        "C": "0",
+        "D": "16"
+      },
+      "answer_letter": "A",
+      "answer_text": "15",
+      "explanation": "The opposite of the opposite of a number is the number itself: -(-15) = 15."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Opposite signs and opposites",
+      "question": "What is the opposite of the opposite of 14? That is, -(-14) = ?",
+      "options": {
+        "A": "14",
+        "B": "-14",
+        "C": "0",
+        "D": "15"
+      },
+      "answer_letter": "A",
+      "answer_text": "14",
+      "explanation": "The opposite of the opposite of a number is the number itself: -(-14) = 14."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Opposite signs and opposites",
+      "question": "What is the opposite of the opposite of 9? That is, -(-9) = ?",
+      "options": {
+        "A": "9",
+        "B": "-9",
+        "C": "0",
+        "D": "10"
+      },
+      "answer_letter": "A",
+      "answer_text": "9",
+      "explanation": "The opposite of the opposite of a number is the number itself: -(-9) = 9."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Signs of numbers in ordered pairs and quadrants",
+      "question": "In which quadrant is the point (-2, -3) located?",
+      "options": {
+        "A": "Quadrant III",
+        "B": "Quadrant I",
+        "C": "On an axis",
+        "D": "Quadrant III"
+      },
+      "answer_letter": "A",
+      "answer_text": "Quadrant III",
+      "explanation": "Signs determine the quadrant: (-2, -3) is in Quadrant III."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Signs of numbers in ordered pairs and quadrants",
+      "question": "In which quadrant is the point (2, -3) located?",
+      "options": {
+        "A": "Quadrant IV",
+        "B": "Quadrant I",
+        "C": "On an axis",
+        "D": "Quadrant III"
+      },
+      "answer_letter": "A",
+      "answer_text": "Quadrant IV",
+      "explanation": "Signs determine the quadrant: (2, -3) is in Quadrant IV."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Signs of numbers in ordered pairs and quadrants",
+      "question": "In which quadrant is the point (-2, -3) located?",
+      "options": {
+        "A": "Quadrant III",
+        "B": "Quadrant I",
+        "C": "On an axis",
+        "D": "Quadrant III"
+      },
+      "answer_letter": "A",
+      "answer_text": "Quadrant III",
+      "explanation": "Signs determine the quadrant: (-2, -3) is in Quadrant III."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Signs of numbers in ordered pairs and quadrants",
+      "question": "In which quadrant is the point (2, -3) located?",
+      "options": {
+        "A": "Quadrant IV",
+        "B": "Quadrant I",
+        "C": "On an axis",
+        "D": "Quadrant III"
+      },
+      "answer_letter": "A",
+      "answer_text": "Quadrant IV",
+      "explanation": "Signs determine the quadrant: (2, -3) is in Quadrant IV."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Signs of numbers in ordered pairs and quadrants",
+      "question": "In which quadrant is the point (3, -2) located?",
+      "options": {
+        "A": "Quadrant IV",
+        "B": "Quadrant I",
+        "C": "On an axis",
+        "D": "Quadrant III"
+      },
+      "answer_letter": "A",
+      "answer_text": "Quadrant IV",
+      "explanation": "Signs determine the quadrant: (3, -2) is in Quadrant IV."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Signs of numbers in ordered pairs and quadrants",
+      "question": "In which quadrant is the point (1, -3) located?",
+      "options": {
+        "A": "Quadrant IV",
+        "B": "Quadrant I",
+        "C": "On an axis",
+        "D": "Quadrant III"
+      },
+      "answer_letter": "A",
+      "answer_text": "Quadrant IV",
+      "explanation": "Signs determine the quadrant: (1, -3) is in Quadrant IV."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Signs of numbers in ordered pairs and quadrants",
+      "question": "In which quadrant is the point (2, -2) located?",
+      "options": {
+        "A": "Quadrant IV",
+        "B": "Quadrant I",
+        "C": "On an axis",
+        "D": "Quadrant III"
+      },
+      "answer_letter": "A",
+      "answer_text": "Quadrant IV",
+      "explanation": "Signs determine the quadrant: (2, -2) is in Quadrant IV."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Signs of numbers in ordered pairs and quadrants",
+      "question": "In which quadrant is the point (2, 2) located?",
+      "options": {
+        "A": "Quadrant I",
+        "B": "Quadrant I",
+        "C": "On an axis",
+        "D": "Quadrant III"
+      },
+      "answer_letter": "A",
+      "answer_text": "Quadrant I",
+      "explanation": "Signs determine the quadrant: (2, 2) is in Quadrant I."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Ordering and absolute value of rational numbers",
+      "question": "Which symbol correctly completes the inequality: -9 ___ -8?",
+      "options": {
+        "A": "<",
+        "B": "=",
+        "C": ">",
+        "D": "Cannot be determined"
+      },
+      "answer_letter": "A",
+      "answer_text": "<",
+      "explanation": "On a number line, -9 is to the left of -8, so -9 < -8."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Ordering and absolute value of rational numbers",
+      "question": "Which symbol correctly completes the inequality: 3 ___ 0?",
+      "options": {
+        "A": ">",
+        "B": "=",
+        "C": "<",
+        "D": "Cannot be determined"
+      },
+      "answer_letter": "A",
+      "answer_text": ">",
+      "explanation": "On a number line, 3 is to the right of 0, so 3 > 0."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Ordering and absolute value of rational numbers",
+      "question": "Which symbol correctly completes the inequality: -2 ___ -4?",
+      "options": {
+        "A": ">",
+        "B": "=",
+        "C": "<",
+        "D": "Cannot be determined"
+      },
+      "answer_letter": "A",
+      "answer_text": ">",
+      "explanation": "On a number line, -2 is to the right of -4, so -2 > -4."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Ordering and absolute value of rational numbers",
+      "question": "Which symbol correctly completes the inequality: 0 ___ -3?",
+      "options": {
+        "A": ">",
+        "B": "=",
+        "C": "<",
+        "D": "Cannot be determined"
+      },
+      "answer_letter": "A",
+      "answer_text": ">",
+      "explanation": "On a number line, 0 is to the right of -3, so 0 > -3."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Ordering and absolute value of rational numbers",
+      "question": "Which symbol correctly completes the inequality: -2 ___ 2?",
+      "options": {
+        "A": "<",
+        "B": "=",
+        "C": ">",
+        "D": "Cannot be determined"
+      },
+      "answer_letter": "A",
+      "answer_text": "<",
+      "explanation": "On a number line, -2 is to the left of 2, so -2 < 2."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Ordering and absolute value of rational numbers",
+      "question": "Which symbol correctly completes the inequality: -6 ___ -1?",
+      "options": {
+        "A": "<",
+        "B": "=",
+        "C": ">",
+        "D": "Cannot be determined"
+      },
+      "answer_letter": "A",
+      "answer_text": "<",
+      "explanation": "On a number line, -6 is to the left of -1, so -6 < -1."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Ordering and absolute value of rational numbers",
+      "question": "Which symbol correctly completes the inequality: 4 ___ 0?",
+      "options": {
+        "A": ">",
+        "B": "=",
+        "C": "<",
+        "D": "Cannot be determined"
+      },
+      "answer_letter": "A",
+      "answer_text": ">",
+      "explanation": "On a number line, 4 is to the right of 0, so 4 > 0."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Ordering and absolute value of rational numbers",
+      "question": "Which symbol correctly completes the inequality: -8 ___ -10?",
+      "options": {
+        "A": ">",
+        "B": "=",
+        "C": "<",
+        "D": "Cannot be determined"
+      },
+      "answer_letter": "A",
+      "answer_text": ">",
+      "explanation": "On a number line, -8 is to the right of -10, so -8 > -10."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Absolute value as distance from zero",
+      "question": "What is the absolute value of -6? (| -6 | = ?)",
+      "options": {
+        "A": "6",
+        "B": "-6",
+        "C": "0",
+        "D": "-7"
+      },
+      "answer_letter": "A",
+      "answer_text": "6",
+      "explanation": "Absolute value is the distance from 0: |-6| = 6."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Absolute value as distance from zero",
+      "question": "What is the absolute value of -1? (| -1 | = ?)",
+      "options": {
+        "A": "1",
+        "B": "-1",
+        "C": "0",
+        "D": "-2"
+      },
+      "answer_letter": "A",
+      "answer_text": "1",
+      "explanation": "Absolute value is the distance from 0: |-1| = 1."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Absolute value as distance from zero",
+      "question": "What is the absolute value of -2? (| -2 | = ?)",
+      "options": {
+        "A": "2",
+        "B": "-2",
+        "C": "0",
+        "D": "-3"
+      },
+      "answer_letter": "A",
+      "answer_text": "2",
+      "explanation": "Absolute value is the distance from 0: |-2| = 2."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Absolute value as distance from zero",
+      "question": "What is the absolute value of -17? (| -17 | = ?)",
+      "options": {
+        "A": "17",
+        "B": "-17",
+        "C": "0",
+        "D": "-18"
+      },
+      "answer_letter": "A",
+      "answer_text": "17",
+      "explanation": "Absolute value is the distance from 0: |-17| = 17."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Absolute value as distance from zero",
+      "question": "What is the absolute value of -18? (| -18 | = ?)",
+      "options": {
+        "A": "18",
+        "B": "-18",
+        "C": "0",
+        "D": "-19"
+      },
+      "answer_letter": "A",
+      "answer_text": "18",
+      "explanation": "Absolute value is the distance from 0: |-18| = 18."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Absolute value as distance from zero",
+      "question": "What is the absolute value of -3? (| -3 | = ?)",
+      "options": {
+        "A": "3",
+        "B": "-3",
+        "C": "0",
+        "D": "-4"
+      },
+      "answer_letter": "A",
+      "answer_text": "3",
+      "explanation": "Absolute value is the distance from 0: |-3| = 3."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Absolute value as distance from zero",
+      "question": "What is the absolute value of -14? (| -14 | = ?)",
+      "options": {
+        "A": "14",
+        "B": "-14",
+        "C": "0",
+        "D": "-15"
+      },
+      "answer_letter": "A",
+      "answer_text": "14",
+      "explanation": "Absolute value is the distance from 0: |-14| = 14."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Absolute value as distance from zero",
+      "question": "What is the absolute value of -4? (| -4 | = ?)",
+      "options": {
+        "A": "4",
+        "B": "-4",
+        "C": "0",
+        "D": "-5"
+      },
+      "answer_letter": "A",
+      "answer_text": "4",
+      "explanation": "Absolute value is the distance from 0: |-4| = 4."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Graphing points in four quadrants and finding distances",
+      "question": "What is the distance between the points (3, 2) and (3, -3)?",
+      "options": {
+        "A": "5",
+        "B": "6",
+        "C": "3",
+        "D": "2"
+      },
+      "answer_letter": "A",
+      "answer_text": "5",
+      "explanation": "Points share the same x-coordinate, so distance is |2 - -3| = 5."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Graphing points in four quadrants and finding distances",
+      "question": "What is the distance between the points (1, 2) and (1, -3)?",
+      "options": {
+        "A": "5",
+        "B": "6",
+        "C": "1",
+        "D": "2"
+      },
+      "answer_letter": "A",
+      "answer_text": "5",
+      "explanation": "Points share the same x-coordinate, so distance is |2 - -3| = 5."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Graphing points in four quadrants and finding distances",
+      "question": "What is the distance between the points (3, 2) and (3, -2)?",
+      "options": {
+        "A": "4",
+        "B": "5",
+        "C": "3",
+        "D": "2"
+      },
+      "answer_letter": "A",
+      "answer_text": "4",
+      "explanation": "Points share the same x-coordinate, so distance is |2 - -2| = 4."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Graphing points in four quadrants and finding distances",
+      "question": "What is the distance between the points (5, 3) and (5, -1)?",
+      "options": {
+        "A": "4",
+        "B": "5",
+        "C": "5",
+        "D": "3"
+      },
+      "answer_letter": "A",
+      "answer_text": "4",
+      "explanation": "Points share the same x-coordinate, so distance is |3 - -1| = 4."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Graphing points in four quadrants and finding distances",
+      "question": "What is the distance between the points (6, 5) and (6, -5)?",
+      "options": {
+        "A": "10",
+        "B": "11",
+        "C": "6",
+        "D": "5"
+      },
+      "answer_letter": "A",
+      "answer_text": "10",
+      "explanation": "Points share the same x-coordinate, so distance is |5 - -5| = 10."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Graphing points in four quadrants and finding distances",
+      "question": "What is the distance between the points (6, 5) and (6, -3)?",
+      "options": {
+        "A": "8",
+        "B": "9",
+        "C": "6",
+        "D": "5"
+      },
+      "answer_letter": "A",
+      "answer_text": "8",
+      "explanation": "Points share the same x-coordinate, so distance is |5 - -3| = 8."
+    },
+    {
+      "domain": "The Number System",
+      "subdomain": "Apply and extend previous understandings of numbers to the system of rational numbers",
+      "leaf_topic": "Graphing points in four quadrants and finding distances",
+      "question": "What is the distance between the points (6, 1) and (6, -4)?",
+      "options": {
+        "A": "5",
+        "B": "6",
+        "C": "6",
+        "D": "1"
+      },
+      "answer_letter": "A",
+      "answer_text": "5",
+      "explanation": "Points share the same x-coordinate, so distance is |1 - -4| = 5."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Numerical expressions involving whole-number exponents",
+      "question": "Evaluate 4^2.",
+      "options": {
+        "A": "16",
+        "B": "8",
+        "C": "6",
+        "D": "4"
+      },
+      "answer_letter": "A",
+      "answer_text": "16",
+      "explanation": "4^2 = 4 multiplied by itself 2 times = 16."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Numerical expressions involving whole-number exponents",
+      "question": "Evaluate 2^4.",
+      "options": {
+        "A": "16",
+        "B": "8",
+        "C": "6",
+        "D": "8"
+      },
+      "answer_letter": "A",
+      "answer_text": "16",
+      "explanation": "2^4 = 2 multiplied by itself 4 times = 16."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Numerical expressions involving whole-number exponents",
+      "question": "Evaluate 3^3.",
+      "options": {
+        "A": "27",
+        "B": "9",
+        "C": "6",
+        "D": "9"
+      },
+      "answer_letter": "A",
+      "answer_text": "27",
+      "explanation": "3^3 = 3 multiplied by itself 3 times = 27."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Numerical expressions involving whole-number exponents",
+      "question": "Evaluate 4^4.",
+      "options": {
+        "A": "256",
+        "B": "16",
+        "C": "8",
+        "D": "64"
+      },
+      "answer_letter": "A",
+      "answer_text": "256",
+      "explanation": "4^4 = 4 multiplied by itself 4 times = 256."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Numerical expressions involving whole-number exponents",
+      "question": "Evaluate 3^4.",
+      "options": {
+        "A": "81",
+        "B": "12",
+        "C": "7",
+        "D": "27"
+      },
+      "answer_letter": "A",
+      "answer_text": "81",
+      "explanation": "3^4 = 3 multiplied by itself 4 times = 81."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Numerical expressions involving whole-number exponents",
+      "question": "Evaluate 4^2.",
+      "options": {
+        "A": "16",
+        "B": "8",
+        "C": "6",
+        "D": "4"
+      },
+      "answer_letter": "A",
+      "answer_text": "16",
+      "explanation": "4^2 = 4 multiplied by itself 2 times = 16."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Numerical expressions involving whole-number exponents",
+      "question": "Evaluate 4^4.",
+      "options": {
+        "A": "256",
+        "B": "16",
+        "C": "8",
+        "D": "64"
+      },
+      "answer_letter": "A",
+      "answer_text": "256",
+      "explanation": "4^4 = 4 multiplied by itself 4 times = 256."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Numerical expressions involving whole-number exponents",
+      "question": "Evaluate 5^3.",
+      "options": {
+        "A": "125",
+        "B": "15",
+        "C": "8",
+        "D": "25"
+      },
+      "answer_letter": "A",
+      "answer_text": "125",
+      "explanation": "5^3 = 5 multiplied by itself 3 times = 125."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Write expressions that record operations",
+      "question": "Express the calculation \"Subtract 3 from 5\" as an expression.",
+      "options": {
+        "A": "5 - 3",
+        "B": "3 - 5",
+        "C": "5 + 3",
+        "D": "5 × 3"
+      },
+      "answer_letter": "A",
+      "answer_text": "5 - 3",
+      "explanation": "\"Subtract 3 from 5\" is written as 5 - 3."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Write expressions that record operations",
+      "question": "Express the calculation \"Subtract 4 from 5\" as an expression.",
+      "options": {
+        "A": "5 - 4",
+        "B": "4 - 5",
+        "C": "5 + 4",
+        "D": "5 × 4"
+      },
+      "answer_letter": "A",
+      "answer_text": "5 - 4",
+      "explanation": "\"Subtract 4 from 5\" is written as 5 - 4."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Write expressions that record operations",
+      "question": "Express the calculation \"Subtract 9 from 5\" as an expression.",
+      "options": {
+        "A": "5 - 9",
+        "B": "9 - 5",
+        "C": "5 + 9",
+        "D": "5 × 9"
+      },
+      "answer_letter": "A",
+      "answer_text": "5 - 9",
+      "explanation": "\"Subtract 9 from 5\" is written as 5 - 9."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Write expressions that record operations",
+      "question": "Express the calculation \"Subtract 7 from 5\" as an expression.",
+      "options": {
+        "A": "5 - 7",
+        "B": "7 - 5",
+        "C": "5 + 7",
+        "D": "5 × 7"
+      },
+      "answer_letter": "A",
+      "answer_text": "5 - 7",
+      "explanation": "\"Subtract 7 from 5\" is written as 5 - 7."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Write expressions that record operations",
+      "question": "Express the calculation \"Subtract 3 from 5\" as an expression.",
+      "options": {
+        "A": "5 - 3",
+        "B": "3 - 5",
+        "C": "5 + 3",
+        "D": "5 × 3"
+      },
+      "answer_letter": "A",
+      "answer_text": "5 - 3",
+      "explanation": "\"Subtract 3 from 5\" is written as 5 - 3."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Write expressions that record operations",
+      "question": "Express the calculation \"Subtract 3 from 5\" as an expression.",
+      "options": {
+        "A": "5 - 3",
+        "B": "3 - 5",
+        "C": "5 + 3",
+        "D": "5 × 3"
+      },
+      "answer_letter": "A",
+      "answer_text": "5 - 3",
+      "explanation": "\"Subtract 3 from 5\" is written as 5 - 3."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Write expressions that record operations",
+      "question": "Express the calculation \"Subtract 8 from 5\" as an expression.",
+      "options": {
+        "A": "5 - 8",
+        "B": "8 - 5",
+        "C": "5 + 8",
+        "D": "5 × 8"
+      },
+      "answer_letter": "A",
+      "answer_text": "5 - 8",
+      "explanation": "\"Subtract 8 from 5\" is written as 5 - 8."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Write expressions that record operations",
+      "question": "Express the calculation \"Subtract 5 from 5\" as an expression.",
+      "options": {
+        "A": "5 - 5",
+        "B": "5 - 5",
+        "C": "5 + 5",
+        "D": "5 × 5"
+      },
+      "answer_letter": "A",
+      "answer_text": "5 - 5",
+      "explanation": "\"Subtract 5 from 5\" is written as 5 - 5."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Identify parts of an expression",
+      "question": "In the expression 2(8 + 7), which of the following is true?",
+      "options": {
+        "A": "It is a product of two factors; (8 + 7) is both a single entity and a sum of two terms",
+        "B": "It is only a sum",
+        "C": "2 is a quotient",
+        "D": "There are no factors"
+      },
+      "answer_letter": "A",
+      "answer_text": "It is a product of two factors; (8 + 7) is both a single entity and a sum of two terms",
+      "explanation": "2(8 + 7) is a product of the factors 2 and (8 + 7). (8 + 7) can be viewed as a single entity or as a sum."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Identify parts of an expression",
+      "question": "In the expression 2(8 + 7), which of the following is true?",
+      "options": {
+        "A": "It is a product of two factors; (8 + 7) is both a single entity and a sum of two terms",
+        "B": "It is only a sum",
+        "C": "2 is a quotient",
+        "D": "There are no factors"
+      },
+      "answer_letter": "A",
+      "answer_text": "It is a product of two factors; (8 + 7) is both a single entity and a sum of two terms",
+      "explanation": "2(8 + 7) is a product of the factors 2 and (8 + 7). (8 + 7) can be viewed as a single entity or as a sum."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Identify parts of an expression",
+      "question": "In the expression 2(8 + 7), which of the following is true?",
+      "options": {
+        "A": "It is a product of two factors; (8 + 7) is both a single entity and a sum of two terms",
+        "B": "It is only a sum",
+        "C": "2 is a quotient",
+        "D": "There are no factors"
+      },
+      "answer_letter": "A",
+      "answer_text": "It is a product of two factors; (8 + 7) is both a single entity and a sum of two terms",
+      "explanation": "2(8 + 7) is a product of the factors 2 and (8 + 7). (8 + 7) can be viewed as a single entity or as a sum."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Identify parts of an expression",
+      "question": "In the expression 2(8 + 7), which of the following is true?",
+      "options": {
+        "A": "It is a product of two factors; (8 + 7) is both a single entity and a sum of two terms",
+        "B": "It is only a sum",
+        "C": "2 is a quotient",
+        "D": "There are no factors"
+      },
+      "answer_letter": "A",
+      "answer_text": "It is a product of two factors; (8 + 7) is both a single entity and a sum of two terms",
+      "explanation": "2(8 + 7) is a product of the factors 2 and (8 + 7). (8 + 7) can be viewed as a single entity or as a sum."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Identify parts of an expression",
+      "question": "In the expression 2(8 + 7), which of the following is true?",
+      "options": {
+        "A": "It is a product of two factors; (8 + 7) is both a single entity and a sum of two terms",
+        "B": "It is only a sum",
+        "C": "2 is a quotient",
+        "D": "There are no factors"
+      },
+      "answer_letter": "A",
+      "answer_text": "It is a product of two factors; (8 + 7) is both a single entity and a sum of two terms",
+      "explanation": "2(8 + 7) is a product of the factors 2 and (8 + 7). (8 + 7) can be viewed as a single entity or as a sum."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Identify parts of an expression",
+      "question": "In the expression 2(8 + 7), which of the following is true?",
+      "options": {
+        "A": "It is a product of two factors; (8 + 7) is both a single entity and a sum of two terms",
+        "B": "It is only a sum",
+        "C": "2 is a quotient",
+        "D": "There are no factors"
+      },
+      "answer_letter": "A",
+      "answer_text": "It is a product of two factors; (8 + 7) is both a single entity and a sum of two terms",
+      "explanation": "2(8 + 7) is a product of the factors 2 and (8 + 7). (8 + 7) can be viewed as a single entity or as a sum."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Evaluate expressions at specific values (including formulas)",
+      "question": "Using V = s³, find the volume of a cube with side length s = 1/2.",
+      "options": {
+        "A": "1/8",
+        "B": "3/2",
+        "C": "1/2",
+        "D": "1"
+      },
+      "answer_letter": "A",
+      "answer_text": "1/8",
+      "explanation": "V = (1/2)³ = 1/8 = 1/8."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Evaluate expressions at specific values (including formulas)",
+      "question": "Using V = s³, find the volume of a cube with side length s = 1/2.",
+      "options": {
+        "A": "1/8",
+        "B": "3/2",
+        "C": "1/2",
+        "D": "1"
+      },
+      "answer_letter": "A",
+      "answer_text": "1/8",
+      "explanation": "V = (1/2)³ = 1/8 = 1/8."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Evaluate expressions at specific values (including formulas)",
+      "question": "Using V = s³, find the volume of a cube with side length s = 1/2.",
+      "options": {
+        "A": "1/8",
+        "B": "3/2",
+        "C": "1/2",
+        "D": "1"
+      },
+      "answer_letter": "A",
+      "answer_text": "1/8",
+      "explanation": "V = (1/2)³ = 1/8 = 1/8."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Evaluate expressions at specific values (including formulas)",
+      "question": "Using V = s³, find the volume of a cube with side length s = 1/2.",
+      "options": {
+        "A": "1/8",
+        "B": "3/2",
+        "C": "1/2",
+        "D": "1"
+      },
+      "answer_letter": "A",
+      "answer_text": "1/8",
+      "explanation": "V = (1/2)³ = 1/8 = 1/8."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Evaluate expressions at specific values (including formulas)",
+      "question": "Using V = s³, find the volume of a cube with side length s = 1/2.",
+      "options": {
+        "A": "1/8",
+        "B": "3/2",
+        "C": "1/2",
+        "D": "1"
+      },
+      "answer_letter": "A",
+      "answer_text": "1/8",
+      "explanation": "V = (1/2)³ = 1/8 = 1/8."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Evaluate expressions at specific values (including formulas)",
+      "question": "Using V = s³, find the volume of a cube with side length s = 1/2.",
+      "options": {
+        "A": "1/8",
+        "B": "3/2",
+        "C": "1/2",
+        "D": "1"
+      },
+      "answer_letter": "A",
+      "answer_text": "1/8",
+      "explanation": "V = (1/2)³ = 1/8 = 1/8."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Evaluate expressions at specific values (including formulas)",
+      "question": "Using V = s³, find the volume of a cube with side length s = 1/2.",
+      "options": {
+        "A": "1/8",
+        "B": "3/2",
+        "C": "1/2",
+        "D": "1"
+      },
+      "answer_letter": "A",
+      "answer_text": "1/8",
+      "explanation": "V = (1/2)³ = 1/8 = 1/8."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Evaluate expressions at specific values (including formulas)",
+      "question": "Using V = s³, find the volume of a cube with side length s = 1/2.",
+      "options": {
+        "A": "1/8",
+        "B": "3/2",
+        "C": "1/2",
+        "D": "1"
+      },
+      "answer_letter": "A",
+      "answer_text": "1/8",
+      "explanation": "V = (1/2)³ = 1/8 = 1/8."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Generate equivalent expressions using properties",
+      "question": "Apply the distributive property to 4(2 + x). Which is equivalent?",
+      "options": {
+        "A": "8 + 4x",
+        "B": "4 + 2x",
+        "C": "8x",
+        "D": "2 + 4x"
+      },
+      "answer_letter": "A",
+      "answer_text": "8 + 4x",
+      "explanation": "4(2 + x) = 4×2 + 4×x = 8 + 4x."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Generate equivalent expressions using properties",
+      "question": "Apply the distributive property to 5(2 + x). Which is equivalent?",
+      "options": {
+        "A": "10 + 5x",
+        "B": "5 + 2x",
+        "C": "10x",
+        "D": "2 + 5x"
+      },
+      "answer_letter": "A",
+      "answer_text": "10 + 5x",
+      "explanation": "5(2 + x) = 5×2 + 5×x = 10 + 5x."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Generate equivalent expressions using properties",
+      "question": "Apply the distributive property to 5(2 + x). Which is equivalent?",
+      "options": {
+        "A": "10 + 5x",
+        "B": "5 + 2x",
+        "C": "10x",
+        "D": "2 + 5x"
+      },
+      "answer_letter": "A",
+      "answer_text": "10 + 5x",
+      "explanation": "5(2 + x) = 5×2 + 5×x = 10 + 5x."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Generate equivalent expressions using properties",
+      "question": "Apply the distributive property to 2(2 + x). Which is equivalent?",
+      "options": {
+        "A": "4 + 2x",
+        "B": "2 + 2x",
+        "C": "4x",
+        "D": "2 + 2x"
+      },
+      "answer_letter": "A",
+      "answer_text": "4 + 2x",
+      "explanation": "2(2 + x) = 2×2 + 2×x = 4 + 2x."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Generate equivalent expressions using properties",
+      "question": "Apply the distributive property to 2(2 + x). Which is equivalent?",
+      "options": {
+        "A": "4 + 2x",
+        "B": "2 + 2x",
+        "C": "4x",
+        "D": "2 + 2x"
+      },
+      "answer_letter": "A",
+      "answer_text": "4 + 2x",
+      "explanation": "2(2 + x) = 2×2 + 2×x = 4 + 2x."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Generate equivalent expressions using properties",
+      "question": "Apply the distributive property to 6(2 + x). Which is equivalent?",
+      "options": {
+        "A": "12 + 6x",
+        "B": "6 + 2x",
+        "C": "12x",
+        "D": "2 + 6x"
+      },
+      "answer_letter": "A",
+      "answer_text": "12 + 6x",
+      "explanation": "6(2 + x) = 6×2 + 6×x = 12 + 6x."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Generate equivalent expressions using properties",
+      "question": "Apply the distributive property to 4(2 + x). Which is equivalent?",
+      "options": {
+        "A": "8 + 4x",
+        "B": "4 + 2x",
+        "C": "8x",
+        "D": "2 + 4x"
+      },
+      "answer_letter": "A",
+      "answer_text": "8 + 4x",
+      "explanation": "4(2 + x) = 4×2 + 4×x = 8 + 4x."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Generate equivalent expressions using properties",
+      "question": "Apply the distributive property to 6(2 + x). Which is equivalent?",
+      "options": {
+        "A": "12 + 6x",
+        "B": "6 + 2x",
+        "C": "12x",
+        "D": "2 + 6x"
+      },
+      "answer_letter": "A",
+      "answer_text": "12 + 6x",
+      "explanation": "6(2 + x) = 6×2 + 6×x = 12 + 6x."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Identify when two expressions are equivalent",
+      "question": "Which pair of expressions are equivalent?",
+      "options": {
+        "A": "y + y + y and 3y",
+        "B": "y + y and y²",
+        "C": "3y and y + 3",
+        "D": "y × y and 2y"
+      },
+      "answer_letter": "A",
+      "answer_text": "y + y + y and 3y",
+      "explanation": "y + y + y = 3y for any value of y; they name the same number."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Identify when two expressions are equivalent",
+      "question": "Which pair of expressions are equivalent?",
+      "options": {
+        "A": "y + y + y and 3y",
+        "B": "y + y and y²",
+        "C": "3y and y + 3",
+        "D": "y × y and 2y"
+      },
+      "answer_letter": "A",
+      "answer_text": "y + y + y and 3y",
+      "explanation": "y + y + y = 3y for any value of y; they name the same number."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Identify when two expressions are equivalent",
+      "question": "Which pair of expressions are equivalent?",
+      "options": {
+        "A": "y + y + y and 3y",
+        "B": "y + y and y²",
+        "C": "3y and y + 3",
+        "D": "y × y and 2y"
+      },
+      "answer_letter": "A",
+      "answer_text": "y + y + y and 3y",
+      "explanation": "y + y + y = 3y for any value of y; they name the same number."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Identify when two expressions are equivalent",
+      "question": "Which pair of expressions are equivalent?",
+      "options": {
+        "A": "y + y + y and 3y",
+        "B": "y + y and y²",
+        "C": "3y and y + 3",
+        "D": "y × y and 2y"
+      },
+      "answer_letter": "A",
+      "answer_text": "y + y + y and 3y",
+      "explanation": "y + y + y = 3y for any value of y; they name the same number."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Identify when two expressions are equivalent",
+      "question": "Which pair of expressions are equivalent?",
+      "options": {
+        "A": "y + y + y and 3y",
+        "B": "y + y and y²",
+        "C": "3y and y + 3",
+        "D": "y × y and 2y"
+      },
+      "answer_letter": "A",
+      "answer_text": "y + y + y and 3y",
+      "explanation": "y + y + y = 3y for any value of y; they name the same number."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Apply and extend previous understandings of arithmetic to algebraic expressions",
+      "leaf_topic": "Identify when two expressions are equivalent",
+      "question": "Which pair of expressions are equivalent?",
+      "options": {
+        "A": "y + y + y and 3y",
+        "B": "y + y and y²",
+        "C": "3y and y + 3",
+        "D": "y × y and 2y"
+      },
+      "answer_letter": "A",
+      "answer_text": "y + y + y and 3y",
+      "explanation": "y + y + y = 3y for any value of y; they name the same number."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Reason about and solve one-variable equations and inequalities",
+      "leaf_topic": "Solve equations of the form x + p = q",
+      "question": "Solve for x: x + 8 = 15",
+      "options": {
+        "A": "7",
+        "B": "23",
+        "C": "15",
+        "D": "8"
+      },
+      "answer_letter": "A",
+      "answer_text": "7",
+      "explanation": "Subtract 8 from both sides: x = 15 - 8 = 7."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Reason about and solve one-variable equations and inequalities",
+      "leaf_topic": "Solve equations of the form x + p = q",
+      "question": "Solve for x: x + 2 = 14",
+      "options": {
+        "A": "12",
+        "B": "16",
+        "C": "14",
+        "D": "2"
+      },
+      "answer_letter": "A",
+      "answer_text": "12",
+      "explanation": "Subtract 2 from both sides: x = 14 - 2 = 12."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Reason about and solve one-variable equations and inequalities",
+      "leaf_topic": "Solve equations of the form x + p = q",
+      "question": "Solve for x: x + 7 = 11",
+      "options": {
+        "A": "4",
+        "B": "18",
+        "C": "11",
+        "D": "7"
+      },
+      "answer_letter": "A",
+      "answer_text": "4",
+      "explanation": "Subtract 7 from both sides: x = 11 - 7 = 4."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Reason about and solve one-variable equations and inequalities",
+      "leaf_topic": "Solve equations of the form x + p = q",
+      "question": "Solve for x: x + 7 = 16",
+      "options": {
+        "A": "9",
+        "B": "23",
+        "C": "16",
+        "D": "7"
+      },
+      "answer_letter": "A",
+      "answer_text": "9",
+      "explanation": "Subtract 7 from both sides: x = 16 - 7 = 9."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Reason about and solve one-variable equations and inequalities",
+      "leaf_topic": "Solve equations of the form x + p = q",
+      "question": "Solve for x: x + 12 = 22",
+      "options": {
+        "A": "10",
+        "B": "34",
+        "C": "22",
+        "D": "12"
+      },
+      "answer_letter": "A",
+      "answer_text": "10",
+      "explanation": "Subtract 12 from both sides: x = 22 - 12 = 10."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Reason about and solve one-variable equations and inequalities",
+      "leaf_topic": "Solve equations of the form x + p = q",
+      "question": "Solve for x: x + 12 = 18",
+      "options": {
+        "A": "6",
+        "B": "30",
+        "C": "18",
+        "D": "12"
+      },
+      "answer_letter": "A",
+      "answer_text": "6",
+      "explanation": "Subtract 12 from both sides: x = 18 - 12 = 6."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Reason about and solve one-variable equations and inequalities",
+      "leaf_topic": "Solve equations of the form x + p = q",
+      "question": "Solve for x: x + 7 = 27",
+      "options": {
+        "A": "20",
+        "B": "34",
+        "C": "27",
+        "D": "7"
+      },
+      "answer_letter": "A",
+      "answer_text": "20",
+      "explanation": "Subtract 7 from both sides: x = 27 - 7 = 20."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Reason about and solve one-variable equations and inequalities",
+      "leaf_topic": "Solve equations of the form x + p = q",
+      "question": "Solve for x: x + 15 = 31",
+      "options": {
+        "A": "16",
+        "B": "46",
+        "C": "31",
+        "D": "15"
+      },
+      "answer_letter": "A",
+      "answer_text": "16",
+      "explanation": "Subtract 15 from both sides: x = 31 - 15 = 16."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Reason about and solve one-variable equations and inequalities",
+      "leaf_topic": "Solve equations of the form px = q",
+      "question": "Solve for x: 4x = 20",
+      "options": {
+        "A": "5",
+        "B": "24",
+        "C": "20",
+        "D": "80"
+      },
+      "answer_letter": "A",
+      "answer_text": "5",
+      "explanation": "Divide both sides by 4: x = 20 ÷ 4 = 5."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Reason about and solve one-variable equations and inequalities",
+      "leaf_topic": "Solve equations of the form px = q",
+      "question": "Solve for x: 4x = 16",
+      "options": {
+        "A": "4",
+        "B": "20",
+        "C": "16",
+        "D": "64"
+      },
+      "answer_letter": "A",
+      "answer_text": "4",
+      "explanation": "Divide both sides by 4: x = 16 ÷ 4 = 4."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Reason about and solve one-variable equations and inequalities",
+      "leaf_topic": "Solve equations of the form px = q",
+      "question": "Solve for x: 8x = 16",
+      "options": {
+        "A": "2",
+        "B": "24",
+        "C": "16",
+        "D": "128"
+      },
+      "answer_letter": "A",
+      "answer_text": "2",
+      "explanation": "Divide both sides by 8: x = 16 ÷ 8 = 2."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Reason about and solve one-variable equations and inequalities",
+      "leaf_topic": "Solve equations of the form px = q",
+      "question": "Solve for x: 4x = 28",
+      "options": {
+        "A": "7",
+        "B": "32",
+        "C": "28",
+        "D": "112"
+      },
+      "answer_letter": "A",
+      "answer_text": "7",
+      "explanation": "Divide both sides by 4: x = 28 ÷ 4 = 7."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Reason about and solve one-variable equations and inequalities",
+      "leaf_topic": "Solve equations of the form px = q",
+      "question": "Solve for x: 8x = 96",
+      "options": {
+        "A": "12",
+        "B": "104",
+        "C": "96",
+        "D": "768"
+      },
+      "answer_letter": "A",
+      "answer_text": "12",
+      "explanation": "Divide both sides by 8: x = 96 ÷ 8 = 12."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Reason about and solve one-variable equations and inequalities",
+      "leaf_topic": "Solve equations of the form px = q",
+      "question": "Solve for x: 5x = 30",
+      "options": {
+        "A": "6",
+        "B": "35",
+        "C": "30",
+        "D": "150"
+      },
+      "answer_letter": "A",
+      "answer_text": "6",
+      "explanation": "Divide both sides by 5: x = 30 ÷ 5 = 6."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Reason about and solve one-variable equations and inequalities",
+      "leaf_topic": "Solve equations of the form px = q",
+      "question": "Solve for x: 4x = 12",
+      "options": {
+        "A": "3",
+        "B": "16",
+        "C": "12",
+        "D": "48"
+      },
+      "answer_letter": "A",
+      "answer_text": "3",
+      "explanation": "Divide both sides by 4: x = 12 ÷ 4 = 3."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Reason about and solve one-variable equations and inequalities",
+      "leaf_topic": "Solve equations of the form px = q",
+      "question": "Solve for x: 8x = 16",
+      "options": {
+        "A": "2",
+        "B": "24",
+        "C": "16",
+        "D": "128"
+      },
+      "answer_letter": "A",
+      "answer_text": "2",
+      "explanation": "Divide both sides by 8: x = 16 ÷ 8 = 2."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Reason about and solve one-variable equations and inequalities",
+      "leaf_topic": "Write and represent inequalities x > c or x < c",
+      "question": "Which inequality represents \"a number x is greater than 8\"?",
+      "options": {
+        "A": "x > 8",
+        "B": "x < 8",
+        "C": "x = 8",
+        "D": "x ≥ 9"
+      },
+      "answer_letter": "A",
+      "answer_text": "x > 8",
+      "explanation": "\"Greater than 8\" is written x > 8. It has infinitely many solutions."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Reason about and solve one-variable equations and inequalities",
+      "leaf_topic": "Write and represent inequalities x > c or x < c",
+      "question": "Which inequality represents \"a number x is greater than 4\"?",
+      "options": {
+        "A": "x > 4",
+        "B": "x < 4",
+        "C": "x = 4",
+        "D": "x ≥ 5"
+      },
+      "answer_letter": "A",
+      "answer_text": "x > 4",
+      "explanation": "\"Greater than 4\" is written x > 4. It has infinitely many solutions."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Reason about and solve one-variable equations and inequalities",
+      "leaf_topic": "Write and represent inequalities x > c or x < c",
+      "question": "Which inequality represents \"a number x is greater than 4\"?",
+      "options": {
+        "A": "x > 4",
+        "B": "x < 4",
+        "C": "x = 4",
+        "D": "x ≥ 5"
+      },
+      "answer_letter": "A",
+      "answer_text": "x > 4",
+      "explanation": "\"Greater than 4\" is written x > 4. It has infinitely many solutions."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Reason about and solve one-variable equations and inequalities",
+      "leaf_topic": "Write and represent inequalities x > c or x < c",
+      "question": "Which inequality represents \"a number x is greater than 8\"?",
+      "options": {
+        "A": "x > 8",
+        "B": "x < 8",
+        "C": "x = 8",
+        "D": "x ≥ 9"
+      },
+      "answer_letter": "A",
+      "answer_text": "x > 8",
+      "explanation": "\"Greater than 8\" is written x > 8. It has infinitely many solutions."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Reason about and solve one-variable equations and inequalities",
+      "leaf_topic": "Write and represent inequalities x > c or x < c",
+      "question": "Which inequality represents \"a number x is greater than 6\"?",
+      "options": {
+        "A": "x > 6",
+        "B": "x < 6",
+        "C": "x = 6",
+        "D": "x ≥ 7"
+      },
+      "answer_letter": "A",
+      "answer_text": "x > 6",
+      "explanation": "\"Greater than 6\" is written x > 6. It has infinitely many solutions."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Reason about and solve one-variable equations and inequalities",
+      "leaf_topic": "Write and represent inequalities x > c or x < c",
+      "question": "Which inequality represents \"a number x is greater than 5\"?",
+      "options": {
+        "A": "x > 5",
+        "B": "x < 5",
+        "C": "x = 5",
+        "D": "x ≥ 6"
+      },
+      "answer_letter": "A",
+      "answer_text": "x > 5",
+      "explanation": "\"Greater than 5\" is written x > 5. It has infinitely many solutions."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Represent and analyze quantitative relationships between dependent and independent variables",
+      "leaf_topic": "Write equations relating dependent and independent variables",
+      "question": "A car travels at a constant speed of 50 miles per hour. Which equation relates distance d (miles) and time t (hours)?",
+      "options": {
+        "A": "d = 50t",
+        "B": "t = 50d",
+        "C": "d = t + 50",
+        "D": "d = 50 / t"
+      },
+      "answer_letter": "A",
+      "answer_text": "d = 50t",
+      "explanation": "Distance = speed × time, so d = 50t."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Represent and analyze quantitative relationships between dependent and independent variables",
+      "leaf_topic": "Write equations relating dependent and independent variables",
+      "question": "A car travels at a constant speed of 50 miles per hour. Which equation relates distance d (miles) and time t (hours)?",
+      "options": {
+        "A": "d = 50t",
+        "B": "t = 50d",
+        "C": "d = t + 50",
+        "D": "d = 50 / t"
+      },
+      "answer_letter": "A",
+      "answer_text": "d = 50t",
+      "explanation": "Distance = speed × time, so d = 50t."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Represent and analyze quantitative relationships between dependent and independent variables",
+      "leaf_topic": "Write equations relating dependent and independent variables",
+      "question": "A car travels at a constant speed of 40 miles per hour. Which equation relates distance d (miles) and time t (hours)?",
+      "options": {
+        "A": "d = 40t",
+        "B": "t = 40d",
+        "C": "d = t + 40",
+        "D": "d = 40 / t"
+      },
+      "answer_letter": "A",
+      "answer_text": "d = 40t",
+      "explanation": "Distance = speed × time, so d = 40t."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Represent and analyze quantitative relationships between dependent and independent variables",
+      "leaf_topic": "Write equations relating dependent and independent variables",
+      "question": "A car travels at a constant speed of 50 miles per hour. Which equation relates distance d (miles) and time t (hours)?",
+      "options": {
+        "A": "d = 50t",
+        "B": "t = 50d",
+        "C": "d = t + 50",
+        "D": "d = 50 / t"
+      },
+      "answer_letter": "A",
+      "answer_text": "d = 50t",
+      "explanation": "Distance = speed × time, so d = 50t."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Represent and analyze quantitative relationships between dependent and independent variables",
+      "leaf_topic": "Write equations relating dependent and independent variables",
+      "question": "A car travels at a constant speed of 60 miles per hour. Which equation relates distance d (miles) and time t (hours)?",
+      "options": {
+        "A": "d = 60t",
+        "B": "t = 60d",
+        "C": "d = t + 60",
+        "D": "d = 60 / t"
+      },
+      "answer_letter": "A",
+      "answer_text": "d = 60t",
+      "explanation": "Distance = speed × time, so d = 60t."
+    },
+    {
+      "domain": "Expressions and Equations",
+      "subdomain": "Represent and analyze quantitative relationships between dependent and independent variables",
+      "leaf_topic": "Write equations relating dependent and independent variables",
+      "question": "A car travels at a constant speed of 55 miles per hour. Which equation relates distance d (miles) and time t (hours)?",
+      "options": {
+        "A": "d = 55t",
+        "B": "t = 55d",
+        "C": "d = t + 55",
+        "D": "d = 55 / t"
+      },
+      "answer_letter": "A",
+      "answer_text": "d = 55t",
+      "explanation": "Distance = speed × time, so d = 55t."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Area of triangles by composing/decomposing",
+      "question": "What is the area of a triangle with base 8 and height 4?",
+      "options": {
+        "A": "16",
+        "B": "32",
+        "C": "12",
+        "D": "64"
+      },
+      "answer_letter": "A",
+      "answer_text": "16",
+      "explanation": "Area of triangle = (1/2) × base × height = (1/2)×8×4 = 16."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Area of triangles by composing/decomposing",
+      "question": "What is the area of a triangle with base 8 and height 8?",
+      "options": {
+        "A": "32",
+        "B": "64",
+        "C": "16",
+        "D": "128"
+      },
+      "answer_letter": "A",
+      "answer_text": "32",
+      "explanation": "Area of triangle = (1/2) × base × height = (1/2)×8×8 = 32."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Area of triangles by composing/decomposing",
+      "question": "What is the area of a triangle with base 12 and height 9?",
+      "options": {
+        "A": "54",
+        "B": "108",
+        "C": "21",
+        "D": "216"
+      },
+      "answer_letter": "A",
+      "answer_text": "54",
+      "explanation": "Area of triangle = (1/2) × base × height = (1/2)×12×9 = 54."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Area of triangles by composing/decomposing",
+      "question": "What is the area of a triangle with base 12 and height 8?",
+      "options": {
+        "A": "48",
+        "B": "96",
+        "C": "20",
+        "D": "192"
+      },
+      "answer_letter": "A",
+      "answer_text": "48",
+      "explanation": "Area of triangle = (1/2) × base × height = (1/2)×12×8 = 48."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Area of triangles by composing/decomposing",
+      "question": "What is the area of a triangle with base 4 and height 4?",
+      "options": {
+        "A": "8",
+        "B": "16",
+        "C": "8",
+        "D": "32"
+      },
+      "answer_letter": "A",
+      "answer_text": "8",
+      "explanation": "Area of triangle = (1/2) × base × height = (1/2)×4×4 = 8."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Area of triangles by composing/decomposing",
+      "question": "What is the area of a triangle with base 8 and height 5?",
+      "options": {
+        "A": "20",
+        "B": "40",
+        "C": "13",
+        "D": "80"
+      },
+      "answer_letter": "A",
+      "answer_text": "20",
+      "explanation": "Area of triangle = (1/2) × base × height = (1/2)×8×5 = 20."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Area of triangles by composing/decomposing",
+      "question": "What is the area of a triangle with base 8 and height 3?",
+      "options": {
+        "A": "12",
+        "B": "24",
+        "C": "11",
+        "D": "48"
+      },
+      "answer_letter": "A",
+      "answer_text": "12",
+      "explanation": "Area of triangle = (1/2) × base × height = (1/2)×8×3 = 12."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Area of triangles by composing/decomposing",
+      "question": "What is the area of a triangle with base 5 and height 9?",
+      "options": {
+        "A": "45/2",
+        "B": "45",
+        "C": "14",
+        "D": "90"
+      },
+      "answer_letter": "A",
+      "answer_text": "45/2",
+      "explanation": "Area of triangle = (1/2) × base × height = (1/2)×5×9 = 45/2."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Area of special quadrilaterals and parallelograms",
+      "question": "What is the area of a parallelogram with base 10 and height 8?",
+      "options": {
+        "A": "80",
+        "B": "40",
+        "C": "18",
+        "D": "36"
+      },
+      "answer_letter": "A",
+      "answer_text": "80",
+      "explanation": "Area of parallelogram = base × height = 10 × 8 = 80."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Area of special quadrilaterals and parallelograms",
+      "question": "What is the area of a parallelogram with base 10 and height 6?",
+      "options": {
+        "A": "60",
+        "B": "30",
+        "C": "16",
+        "D": "32"
+      },
+      "answer_letter": "A",
+      "answer_text": "60",
+      "explanation": "Area of parallelogram = base × height = 10 × 6 = 60."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Area of special quadrilaterals and parallelograms",
+      "question": "What is the area of a parallelogram with base 6 and height 6?",
+      "options": {
+        "A": "36",
+        "B": "18",
+        "C": "12",
+        "D": "24"
+      },
+      "answer_letter": "A",
+      "answer_text": "36",
+      "explanation": "Area of parallelogram = base × height = 6 × 6 = 36."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Area of special quadrilaterals and parallelograms",
+      "question": "What is the area of a parallelogram with base 8 and height 5?",
+      "options": {
+        "A": "40",
+        "B": "20",
+        "C": "13",
+        "D": "26"
+      },
+      "answer_letter": "A",
+      "answer_text": "40",
+      "explanation": "Area of parallelogram = base × height = 8 × 5 = 40."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Area of special quadrilaterals and parallelograms",
+      "question": "What is the area of a parallelogram with base 5 and height 8?",
+      "options": {
+        "A": "40",
+        "B": "20",
+        "C": "13",
+        "D": "26"
+      },
+      "answer_letter": "A",
+      "answer_text": "40",
+      "explanation": "Area of parallelogram = base × height = 5 × 8 = 40."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Area of special quadrilaterals and parallelograms",
+      "question": "What is the area of a parallelogram with base 11 and height 3?",
+      "options": {
+        "A": "33",
+        "B": "33/2",
+        "C": "14",
+        "D": "28"
+      },
+      "answer_letter": "A",
+      "answer_text": "33",
+      "explanation": "Area of parallelogram = base × height = 11 × 3 = 33."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Volume of right rectangular prism with fractional edge lengths",
+      "question": "Find the volume of a right rectangular prism with edge lengths 5/3, 1, and 2.",
+      "options": {
+        "A": "10/3",
+        "B": "14/3",
+        "C": "11/3",
+        "D": "28/3"
+      },
+      "answer_letter": "A",
+      "answer_text": "10/3",
+      "explanation": "V = l × w × h = 5/3 × 1 × 2 = 10/3."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Volume of right rectangular prism with fractional edge lengths",
+      "question": "Find the volume of a right rectangular prism with edge lengths 1/3, 3/2, and 3.",
+      "options": {
+        "A": "3/2",
+        "B": "29/6",
+        "C": "7/2",
+        "D": "29/3"
+      },
+      "answer_letter": "A",
+      "answer_text": "3/2",
+      "explanation": "V = l × w × h = 1/3 × 3/2 × 3 = 3/2."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Volume of right rectangular prism with fractional edge lengths",
+      "question": "Find the volume of a right rectangular prism with edge lengths 1/3, 3/2, and 3.",
+      "options": {
+        "A": "3/2",
+        "B": "29/6",
+        "C": "7/2",
+        "D": "29/3"
+      },
+      "answer_letter": "A",
+      "answer_text": "3/2",
+      "explanation": "V = l × w × h = 1/3 × 3/2 × 3 = 3/2."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Volume of right rectangular prism with fractional edge lengths",
+      "question": "Find the volume of a right rectangular prism with edge lengths 2, 2, and 3.",
+      "options": {
+        "A": "12",
+        "B": "7",
+        "C": "7",
+        "D": "14"
+      },
+      "answer_letter": "A",
+      "answer_text": "12",
+      "explanation": "V = l × w × h = 2 × 2 × 3 = 12."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Volume of right rectangular prism with fractional edge lengths",
+      "question": "Find the volume of a right rectangular prism with edge lengths 2, 2, and 3.",
+      "options": {
+        "A": "12",
+        "B": "7",
+        "C": "7",
+        "D": "14"
+      },
+      "answer_letter": "A",
+      "answer_text": "12",
+      "explanation": "V = l × w × h = 2 × 2 × 3 = 12."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Volume of right rectangular prism with fractional edge lengths",
+      "question": "Find the volume of a right rectangular prism with edge lengths 2/3, 3/2, and 3.",
+      "options": {
+        "A": "3",
+        "B": "31/6",
+        "C": "4",
+        "D": "31/3"
+      },
+      "answer_letter": "A",
+      "answer_text": "3",
+      "explanation": "V = l × w × h = 2/3 × 3/2 × 3 = 3."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Volume of right rectangular prism with fractional edge lengths",
+      "question": "Find the volume of a right rectangular prism with edge lengths 1/2, 3, and 2.",
+      "options": {
+        "A": "3",
+        "B": "11/2",
+        "C": "7/2",
+        "D": "11"
+      },
+      "answer_letter": "A",
+      "answer_text": "3",
+      "explanation": "V = l × w × h = 1/2 × 3 × 2 = 3."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Volume of right rectangular prism with fractional edge lengths",
+      "question": "Find the volume of a right rectangular prism with edge lengths 5/3, 3/2, and 2.",
+      "options": {
+        "A": "5",
+        "B": "31/6",
+        "C": "9/2",
+        "D": "31/3"
+      },
+      "answer_letter": "A",
+      "answer_text": "5",
+      "explanation": "V = l × w × h = 5/3 × 3/2 × 2 = 5."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Draw polygons in the coordinate plane and find side lengths",
+      "question": "What is the length of the side joining points (1, 2) and (1, 5)?",
+      "options": {
+        "A": "3",
+        "B": "3",
+        "C": "4",
+        "D": "Cannot be determined"
+      },
+      "answer_letter": "A",
+      "answer_text": "3",
+      "explanation": "Points share the same first coordinate, so length = |5 - 2| = 3."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Draw polygons in the coordinate plane and find side lengths",
+      "question": "What is the length of the side joining points (1, 2) and (1, 5)?",
+      "options": {
+        "A": "3",
+        "B": "3",
+        "C": "4",
+        "D": "Cannot be determined"
+      },
+      "answer_letter": "A",
+      "answer_text": "3",
+      "explanation": "Points share the same first coordinate, so length = |5 - 2| = 3."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Draw polygons in the coordinate plane and find side lengths",
+      "question": "What is the length of the side joining points (1, 2) and (1, 5)?",
+      "options": {
+        "A": "3",
+        "B": "3",
+        "C": "4",
+        "D": "Cannot be determined"
+      },
+      "answer_letter": "A",
+      "answer_text": "3",
+      "explanation": "Points share the same first coordinate, so length = |5 - 2| = 3."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Draw polygons in the coordinate plane and find side lengths",
+      "question": "What is the length of the side joining points (1, 2) and (1, 5)?",
+      "options": {
+        "A": "3",
+        "B": "3",
+        "C": "4",
+        "D": "Cannot be determined"
+      },
+      "answer_letter": "A",
+      "answer_text": "3",
+      "explanation": "Points share the same first coordinate, so length = |5 - 2| = 3."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Draw polygons in the coordinate plane and find side lengths",
+      "question": "What is the length of the side joining points (1, 2) and (1, 5)?",
+      "options": {
+        "A": "3",
+        "B": "3",
+        "C": "4",
+        "D": "Cannot be determined"
+      },
+      "answer_letter": "A",
+      "answer_text": "3",
+      "explanation": "Points share the same first coordinate, so length = |5 - 2| = 3."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Draw polygons in the coordinate plane and find side lengths",
+      "question": "What is the length of the side joining points (1, 2) and (1, 5)?",
+      "options": {
+        "A": "3",
+        "B": "3",
+        "C": "4",
+        "D": "Cannot be determined"
+      },
+      "answer_letter": "A",
+      "answer_text": "3",
+      "explanation": "Points share the same first coordinate, so length = |5 - 2| = 3."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Draw polygons in the coordinate plane and find side lengths",
+      "question": "What is the length of the side joining points (1, 2) and (1, 5)?",
+      "options": {
+        "A": "3",
+        "B": "3",
+        "C": "4",
+        "D": "Cannot be determined"
+      },
+      "answer_letter": "A",
+      "answer_text": "3",
+      "explanation": "Points share the same first coordinate, so length = |5 - 2| = 3."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Nets and surface area of three-dimensional figures",
+      "question": "A rectangular prism has dimensions 5 × 3 × 4. What is its surface area?",
+      "options": {
+        "A": "94",
+        "B": "60",
+        "C": "24",
+        "D": "19"
+      },
+      "answer_letter": "A",
+      "answer_text": "94",
+      "explanation": "Surface area = 2(lw + lh + wh) = 2(5×3 + 5×4 + 3×4) = 94."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Nets and surface area of three-dimensional figures",
+      "question": "A rectangular prism has dimensions 5 × 3 × 4. What is its surface area?",
+      "options": {
+        "A": "94",
+        "B": "60",
+        "C": "24",
+        "D": "19"
+      },
+      "answer_letter": "A",
+      "answer_text": "94",
+      "explanation": "Surface area = 2(lw + lh + wh) = 2(5×3 + 5×4 + 3×4) = 94."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Nets and surface area of three-dimensional figures",
+      "question": "A rectangular prism has dimensions 2 × 4 × 4. What is its surface area?",
+      "options": {
+        "A": "64",
+        "B": "32",
+        "C": "20",
+        "D": "12"
+      },
+      "answer_letter": "A",
+      "answer_text": "64",
+      "explanation": "Surface area = 2(lw + lh + wh) = 2(2×4 + 2×4 + 4×4) = 64."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Nets and surface area of three-dimensional figures",
+      "question": "A rectangular prism has dimensions 6 × 4 × 2. What is its surface area?",
+      "options": {
+        "A": "88",
+        "B": "48",
+        "C": "24",
+        "D": "26"
+      },
+      "answer_letter": "A",
+      "answer_text": "88",
+      "explanation": "Surface area = 2(lw + lh + wh) = 2(6×4 + 6×2 + 4×2) = 88."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Nets and surface area of three-dimensional figures",
+      "question": "A rectangular prism has dimensions 3 × 4 × 2. What is its surface area?",
+      "options": {
+        "A": "52",
+        "B": "24",
+        "C": "18",
+        "D": "14"
+      },
+      "answer_letter": "A",
+      "answer_text": "52",
+      "explanation": "Surface area = 2(lw + lh + wh) = 2(3×4 + 3×2 + 4×2) = 52."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Nets and surface area of three-dimensional figures",
+      "question": "A rectangular prism has dimensions 3 × 3 × 2. What is its surface area?",
+      "options": {
+        "A": "42",
+        "B": "18",
+        "C": "16",
+        "D": "11"
+      },
+      "answer_letter": "A",
+      "answer_text": "42",
+      "explanation": "Surface area = 2(lw + lh + wh) = 2(3×3 + 3×2 + 3×2) = 42."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Nets and surface area of three-dimensional figures",
+      "question": "A rectangular prism has dimensions 2 × 3 × 3. What is its surface area?",
+      "options": {
+        "A": "42",
+        "B": "18",
+        "C": "16",
+        "D": "9"
+      },
+      "answer_letter": "A",
+      "answer_text": "42",
+      "explanation": "Surface area = 2(lw + lh + wh) = 2(2×3 + 2×3 + 3×3) = 42."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Nets and surface area of three-dimensional figures",
+      "question": "A rectangular prism has dimensions 6 × 2 × 3. What is its surface area?",
+      "options": {
+        "A": "72",
+        "B": "36",
+        "C": "22",
+        "D": "15"
+      },
+      "answer_letter": "A",
+      "answer_text": "72",
+      "explanation": "Surface area = 2(lw + lh + wh) = 2(6×2 + 6×3 + 2×3) = 72."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Area of polygons by composing into rectangles or decomposing into triangles",
+      "question": "A trapezoid has parallel sides of length 7 and 9 and height 7. What is its area?",
+      "options": {
+        "A": "56",
+        "B": "441",
+        "C": "112",
+        "D": "23"
+      },
+      "answer_letter": "A",
+      "answer_text": "56",
+      "explanation": "Area of trapezoid = (1/2)×(sum of parallel sides)×height = (1/2)×(7+9)×7 = 56."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Area of polygons by composing into rectangles or decomposing into triangles",
+      "question": "A trapezoid has parallel sides of length 5 and 9 and height 6. What is its area?",
+      "options": {
+        "A": "42",
+        "B": "270",
+        "C": "84",
+        "D": "20"
+      },
+      "answer_letter": "A",
+      "answer_text": "42",
+      "explanation": "Area of trapezoid = (1/2)×(sum of parallel sides)×height = (1/2)×(5+9)×6 = 42."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Area of polygons by composing into rectangles or decomposing into triangles",
+      "question": "A trapezoid has parallel sides of length 7 and 7 and height 4. What is its area?",
+      "options": {
+        "A": "28",
+        "B": "196",
+        "C": "56",
+        "D": "18"
+      },
+      "answer_letter": "A",
+      "answer_text": "28",
+      "explanation": "Area of trapezoid = (1/2)×(sum of parallel sides)×height = (1/2)×(7+7)×4 = 28."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Area of polygons by composing into rectangles or decomposing into triangles",
+      "question": "A trapezoid has parallel sides of length 5 and 9 and height 3. What is its area?",
+      "options": {
+        "A": "21",
+        "B": "135",
+        "C": "42",
+        "D": "17"
+      },
+      "answer_letter": "A",
+      "answer_text": "21",
+      "explanation": "Area of trapezoid = (1/2)×(sum of parallel sides)×height = (1/2)×(5+9)×3 = 21."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Area of polygons by composing into rectangles or decomposing into triangles",
+      "question": "A trapezoid has parallel sides of length 10 and 10 and height 3. What is its area?",
+      "options": {
+        "A": "30",
+        "B": "300",
+        "C": "60",
+        "D": "23"
+      },
+      "answer_letter": "A",
+      "answer_text": "30",
+      "explanation": "Area of trapezoid = (1/2)×(sum of parallel sides)×height = (1/2)×(10+10)×3 = 30."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Area of polygons by composing into rectangles or decomposing into triangles",
+      "question": "A trapezoid has parallel sides of length 10 and 7 and height 4. What is its area?",
+      "options": {
+        "A": "34",
+        "B": "280",
+        "C": "68",
+        "D": "21"
+      },
+      "answer_letter": "A",
+      "answer_text": "34",
+      "explanation": "Area of trapezoid = (1/2)×(sum of parallel sides)×height = (1/2)×(10+7)×4 = 34."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Area of polygons by composing into rectangles or decomposing into triangles",
+      "question": "A trapezoid has parallel sides of length 5 and 10 and height 7. What is its area?",
+      "options": {
+        "A": "105/2",
+        "B": "350",
+        "C": "105",
+        "D": "22"
+      },
+      "answer_letter": "A",
+      "answer_text": "105/2",
+      "explanation": "Area of trapezoid = (1/2)×(sum of parallel sides)×height = (1/2)×(5+10)×7 = 105/2."
+    },
+    {
+      "domain": "Geometry",
+      "subdomain": "Solve real-world and mathematical problems involving area, surface area, and volume",
+      "leaf_topic": "Area of polygons by composing into rectangles or decomposing into triangles",
+      "question": "A trapezoid has parallel sides of length 7 and 4 and height 7. What is its area?",
+      "options": {
+        "A": "77/2",
+        "B": "196",
+        "C": "77",
+        "D": "18"
+      },
+      "answer_letter": "A",
+      "answer_text": "77/2",
+      "explanation": "Area of trapezoid = (1/2)×(sum of parallel sides)×height = (1/2)×(7+4)×7 = 77/2."
+    },
+    {
+      "domain": "Statistics and Probability",
+      "subdomain": "Develop understanding of statistical variability",
+      "leaf_topic": "Recognize a statistical question",
+      "question": "Which of the following is a statistical question?",
+      "options": {
+        "A": "How old are the students in my school?",
+        "B": "How old am I?",
+        "C": "What is 2 + 2?",
+        "D": "What is the capital of France?"
+      },
+      "answer_letter": "A",
+      "answer_text": "How old are the students in my school?",
+      "explanation": "A statistical question anticipates variability in the data. Ages of students vary; a single person's age does not."
+    },
+    {
+      "domain": "Statistics and Probability",
+      "subdomain": "Develop understanding of statistical variability",
+      "leaf_topic": "Recognize a statistical question",
+      "question": "Which of the following is a statistical question?",
+      "options": {
+        "A": "How old are the students in my school?",
+        "B": "How old am I?",
+        "C": "What is 2 + 2?",
+        "D": "What is the capital of France?"
+      },
+      "answer_letter": "A",
+      "answer_text": "How old are the students in my school?",
+      "explanation": "A statistical question anticipates variability in the data. Ages of students vary; a single person's age does not."
+    },
+    {
+      "domain": "Statistics and Probability",
+      "subdomain": "Develop understanding of statistical variability",
+      "leaf_topic": "Recognize a statistical question",
+      "question": "Which of the following is a statistical question?",
+      "options": {
+        "A": "How old are the students in my school?",
+        "B": "How old am I?",
+        "C": "What is 2 + 2?",
+        "D": "What is the capital of France?"
+      },
+      "answer_letter": "A",
+      "answer_text": "How old are the students in my school?",
+      "explanation": "A statistical question anticipates variability in the data. Ages of students vary; a single person's age does not."
+    },
+    {
+      "domain": "Statistics and Probability",
+      "subdomain": "Develop understanding of statistical variability",
+      "leaf_topic": "Recognize a statistical question",
+      "question": "Which of the following is a statistical question?",
+      "options": {
+        "A": "How old are the students in my school?",
+        "B": "How old am I?",
+        "C": "What is 2 + 2?",
+        "D": "What is the capital of France?"
+      },
+      "answer_letter": "A",
+      "answer_text": "How old are the students in my school?",
+      "explanation": "A statistical question anticipates variability in the data. Ages of students vary; a single person's age does not."
+    },
+    {
+      "domain": "Statistics and Probability",
+      "subdomain": "Develop understanding of statistical variability",
+      "leaf_topic": "Recognize a statistical question",
+      "question": "Which of the following is a statistical question?",
+      "options": {
+        "A": "How old are the students in my school?",
+        "B": "How old am I?",
+        "C": "What is 2 + 2?",
+        "D": "What is the capital of France?"
+      },
+      "answer_letter": "A",
+      "answer_text": "How old are the students in my school?",
+      "explanation": "A statistical question anticipates variability in the data. Ages of students vary; a single person's age does not."
+    },
+    {
+      "domain": "Statistics and Probability",
+      "subdomain": "Develop understanding of statistical variability",
+      "leaf_topic": "Recognize a statistical question",
+      "question": "Which of the following is a statistical question?",
+      "options": {
+        "A": "How old are the students in my school?",
+        "B": "How old am I?",
+        "C": "What is 2 + 2?",
+        "D": "What is the capital of France?"
+      },
+      "answer_letter": "A",
+      "answer_text": "How old are the students in my school?",
+      "explanation": "A statistical question anticipates variability in the data. Ages of students vary; a single person's age does not."
+    },
+    {
+      "domain": "Statistics and Probability",
+      "subdomain": "Develop understanding of statistical variability",
+      "leaf_topic": "Recognize a statistical question",
+      "question": "Which of the following is a statistical question?",
+      "options": {
+        "A": "How old are the students in my school?",
+        "B": "How old am I?",
+        "C": "What is 2 + 2?",
+        "D": "What is the capital of France?"
+      },
+      "answer_letter": "A",
+      "answer_text": "How old are the students in my school?",
+      "explanation": "A statistical question anticipates variability in the data. Ages of students vary; a single person's age does not."
+    },
+    {
+      "domain": "Statistics and Probability",
+      "subdomain": "Develop understanding of statistical variability",
+      "leaf_topic": "Recognize a statistical question",
+      "question": "Which of the following is a statistical question?",
+      "options": {
+        "A": "How old are the students in my school?",
+        "B": "How old am I?",
+        "C": "What is 2 + 2?",
+        "D": "What is the capital of France?"
+      },
+      "answer_letter": "A",
+      "answer_text": "How old are the students in my school?",
+      "explanation": "A statistical question anticipates variability in the data. Ages of students vary; a single person's age does not."
+    },
+    {
+      "domain": "Statistics and Probability",
+      "subdomain": "Develop understanding of statistical variability",
+      "leaf_topic": "Data distribution described by center, spread, and shape",
+      "question": "A set of data collected to answer a statistical question has a distribution that can be described by which of the following?",
+      "options": {
+        "A": "Its center, spread, and overall shape",
+        "B": "Only its mean",
+        "C": "Only the largest value",
+        "D": "The number of questions asked"
+      },
+      "answer_letter": "A",
+      "answer_text": "Its center, spread, and overall shape",
+      "explanation": "A data distribution is described by its center, spread (variability), and overall shape."
+    },
+    {
+      "domain": "Statistics and Probability",
+      "subdomain": "Develop understanding of statistical variability",
+      "leaf_topic": "Data distribution described by center, spread, and shape",
+      "question": "A set of data collected to answer a statistical question has a distribution that can be described by which of the following?",
+      "options": {
+        "A": "Its center, spread, and overall shape",
+        "B": "Only its mean",
+        "C": "Only the largest value",
+        "D": "The number of questions asked"
+      },
+      "answer_letter": "A",
+      "answer_text": "Its center, spread, and overall shape",
+      "explanation": "A data distribution is described by its center, spread (variability), and overall shape."
+    },
+    {
+      "domain": "Statistics and Probability",
+      "subdomain": "Develop understanding of statistical variability",
+      "leaf_topic": "Data distribution described by center, spread, and shape",
+      "question": "A set of data collected to answer a statistical question has a distribution that can be described by which of the following?",
+      "options": {
+        "A": "Its center, spread, and overall shape",
+        "B": "Only its mean",
+        "C": "Only the largest value",
+        "D": "The number of questions asked"
+      },
+      "answer_letter": "A",
+      "answer_text": "Its center, spread, and overall shape",
+      "explanation": "A data distribution is described by its center, spread (variability), and overall shape."
+    },
+    {
+      "domain": "Statistics and Probability",
+      "subdomain": "Develop understanding of statistical variability",
+      "leaf_topic": "Data distribution described by center, spread, and shape",
+      "question": "A set of data collected to answer a statistical question has a distribution that can be described by which of the following?",
+      "options": {
+        "A": "Its center, spread, and overall shape",
+        "B": "Only its mean",
+        "C": "Only the largest value",
+        "D": "The number of questions asked"
+      },
+      "answer_letter": "A",
+      "answer_text": "Its center, spread, and overall shape",
+      "explanation": "A data distribution is described by its center, spread (variability), and overall shape."
+    },
+    {
+      "domain": "Statistics and Probability",
+      "subdomain": "Develop understanding of statistical variability",
+      "leaf_topic": "Data distribution described by center, spread, and shape",
+      "question": "A set of data collected to answer a statistical question has a distribution that can be described by which of the following?",
+      "options": {
+        "A": "Its center, spread, and overall shape",
+        "B": "Only its mean",
+        "C": "Only the largest value",
+        "D": "The number of questions asked"
+      },
+      "answer_letter": "A",
+      "answer_text": "Its center, spread, and overall shape",
+      "explanation": "A data distribution is described by its center, spread (variability), and overall shape."
+    },
+    {
+      "domain": "Statistics and Probability",
+      "subdomain": "Develop understanding of statistical variability",
+      "leaf_topic": "Data distribution described by center, spread, and shape",
+      "question": "A set of data collected to answer a statistical question has a distribution that can be described by which of the following?",
+      "options": {
+        "A": "Its center, spread, and overall shape",
+        "B": "Only its mean",
+        "C": "Only the largest value",
+        "D": "The number of questions asked"
+      },
+      "answer_letter": "A",
+      "answer_text": "Its center, spread, and overall shape",
+      "explanation": "A data distribution is described by its center, spread (variability), and overall shape."
+    },
+    {
+      "domain": "Statistics and Probability",
+      "subdomain": "Develop understanding of statistical variability",
+      "leaf_topic": "Measures of center vs measures of variation",
+      "question": "Which statement is true?",
+      "options": {
+        "A": "A measure of center summarizes all values with a single number, while a measure of variation describes how values vary",
+        "B": "Mean and median are measures of variation",
+        "C": "Range is a measure of center",
+        "D": "There is no difference between center and variation"
+      },
+      "answer_letter": "A",
+      "answer_text": "A measure of center summarizes all values with a single number, while a measure of variation describes how values vary",
+      "explanation": "Measures of center (mean, median) give a typical value; measures of variation (IQR, MAD) describe spread."
+    },
+    {
+      "domain": "Statistics and Probability",
+      "subdomain": "Develop understanding of statistical variability",
+      "leaf_topic": "Measures of center vs measures of variation",
+      "question": "Which statement is true?",
+      "options": {
+        "A": "A measure of center summarizes all values with a single number, while a measure of variation describes how values vary",
+        "B": "Mean and median are measures of variation",
+        "C": "Range is a measure of center",
+        "D": "There is no difference between center and variation"
+      },
+      "answer_letter": "A",
+      "answer_text": "A measure of center summarizes all values with a single number, while a measure of variation describes how values vary",
+      "explanation": "Measures of center (mean, median) give a typical value; measures of variation (IQR, MAD) describe spread."
+    },
+    {
+      "domain": "Statistics and Probability",
+      "subdomain": "Develop understanding of statistical variability",
+      "leaf_topic": "Measures of center vs measures of variation",
+      "question": "Which statement is true?",
+      "options": {
+        "A": "A measure of center summarizes all values with a single number, while a measure of variation describes how values vary",
+        "B": "Mean and median are measures of variation",
+        "C": "Range is a measure of center",
+        "D": "There is no difference between center and variation"
+      },
+      "answer_letter": "A",
+      "answer_text": "A measure of center summarizes all values with a single number, while a measure of variation describes how values vary",
+      "explanation": "Measures of center (mean, median) give a typical value; measures of variation (IQR, MAD) describe spread."
+    },
+    {
+      "domain": "Statistics and Probability",
+      "subdomain": "Develop understanding of statistical variability",
+      "leaf_topic": "Measures of center vs measures of variation",
+      "question": "Which statement is true?",
+      "options": {
+        "A": "A measure of center summarizes all values with a single number, while a measure of variation describes how values vary",
+        "B": "Mean and median are measures of variation",
+        "C": "Range is a measure of center",
+        "D": "There is no difference between center and variation"
+      },
+      "answer_letter": "A",
+      "answer_text": "A measure of center summarizes all values with a single number, while a measure of variation describes how values vary",
+      "explanation": "Measures of center (mean, median) give a typical value; measures of variation (IQR, MAD) describe spread."
+    },
+    {
+      "domain": "Statistics and Probability",
+      "subdomain": "Develop understanding of statistical variability",
+      "leaf_topic": "Measures of center vs measures of variation",
+      "question": "Which statement is true?",
+      "options": {
+        "A": "A measure of center summarizes all values with a single number, while a measure of variation describes how values vary",
+        "B": "Mean and median are measures of variation",
+        "C": "Range is a measure of center",
+        "D": "There is no difference between center and variation"
+      },
+      "answer_letter": "A",
+      "answer_text": "A measure of center summarizes all values with a single number, while a measure of variation describes how values vary",
+      "explanation": "Measures of center (mean, median) give a typical value; measures of variation (IQR, MAD) describe spread."
+    },
+    {
+      "domain": "Statistics and Probability",
+      "subdomain": "Develop understanding of statistical variability",
+      "leaf_topic": "Measures of center vs measures of variation",
+      "question": "Which statement is true?",
+      "options": {
+        "A": "A measure of center summarizes all values with a single number, while a measure of variation describes how values vary",
+        "B": "Mean and median are measures of variation",
+        "C": "Range is a measure of center",
+        "D": "There is no difference between center and variation"
+      },
+      "answer_letter": "A",
+      "answer_text": "A measure of center summarizes all values with a single number, while a measure of variation describes how values vary",
+      "explanation": "Measures of center (mean, median) give a typical value; measures of variation (IQR, MAD) describe spread."
+    },
+    {
+      "domain": "Statistics and Probability",
+      "subdomain": "Summarize and describe distributions",
+      "leaf_topic": "Display numerical data in plots (dot plots, histograms, box plots)",
+      "question": "Which type of plot is useful for displaying the distribution of numerical data and showing the median and quartiles?",
+      "options": {
+        "A": "Box plot",
+        "B": "Pie chart only",
+        "C": "Bar graph of categories only",
+        "D": "Line graph of time series only"
+      },
+      "answer_letter": "A",
+      "answer_text": "Box plot",
+      "explanation": "A box plot (box-and-whisker) displays the median, quartiles, and potential outliers of numerical data."
+    },
+    {
+      "domain": "Statistics and Probability",
+      "subdomain": "Summarize and describe distributions",
+      "leaf_topic": "Display numerical data in plots (dot plots, histograms, box plots)",
+      "question": "Which type of plot is useful for displaying the distribution of numerical data and showing the median and quartiles?",
+      "options": {
+        "A": "Box plot",
+        "B": "Pie chart only",
+        "C": "Bar graph of categories only",
+        "D": "Line graph of time series only"
+      },
+      "answer_letter": "A",
+      "answer_text": "Box plot",
+      "explanation": "A box plot (box-and-whisker) displays the median, quartiles, and potential outliers of numerical data."
+    },
+    {
+      "domain": "Statistics and Probability",
+      "subdomain": "Summarize and describe distributions",
+      "leaf_topic": "Display numerical data in plots (dot plots, histograms, box plots)",
+      "question": "Which type of plot is useful for displaying the distribution of numerical data and showing the median and quartiles?",
+      "options": {
+        "A": "Box plot",
+        "B": "Pie chart only",
+        "C": "Bar graph of categories only",
+        "D": "Line graph of time series only"
+      },
+      "answer_letter": "A",
+      "answer_text": "Box plot",
+      "explanation": "A box plot (box-and-whisker) displays the median, quartiles, and potential outliers of numerical data."
+    },
+    {
+      "domain": "Statistics and Probability",
+      "subdomain": "Summarize and describe distributions",
+      "leaf_topic": "Display numerical data in plots (dot plots, histograms, box plots)",
+      "question": "Which type of plot is useful for displaying the distribution of numerical data and showing the median and quartiles?",
+      "options": {
+        "A": "Box plot",
+        "B": "Pie chart only",
+        "C": "Bar graph of categories only",
+        "D": "Line graph of time series only"
+      },
+      "answer_letter": "A",
+      "answer_text": "Box plot",
+      "explanation": "A box plot (box-and-whisker) displays the median, quartiles, and potential outliers of numerical data."
+    },
+    {
+      "domain": "Statistics and Probability",
+      "subdomain": "Summarize and describe distributions",
+      "leaf_topic": "Display numerical data in plots (dot plots, histograms, box plots)",
+      "question": "Which type of plot is useful for displaying the distribution of numerical data and showing the median and quartiles?",
+      "options": {
+        "A": "Box plot",
+        "B": "Pie chart only",
+        "C": "Bar graph of categories only",
+        "D": "Line graph of time series only"
+      },
+      "answer_letter": "A",
+      "answer_text": "Box plot",
+      "explanation": "A box plot (box-and-whisker) displays the median, quartiles, and potential outliers of numerical data."
+    },
+    {
+      "domain": "Statistics and Probability",
+      "subdomain": "Summarize and describe distributions",
+      "leaf_topic": "Display numerical data in plots (dot plots, histograms, box plots)",
+      "question": "Which type of plot is useful for displaying the distribution of numerical data and showing the median and quartiles?",
+      "options": {
+        "A": "Box plot",
+        "B": "Pie chart only",
+        "C": "Bar graph of categories only",
+        "D": "Line graph of time series only"
+      },
+      "answer_letter": "A",
+      "answer_text": "Box plot",
+      "explanation": "A box plot (box-and-whisker) displays the median, quartiles, and potential outliers of numerical data."
+    },
+    {
+      "domain": "Statistics and Probability",
+      "subdomain": "Summarize and describe distributions",
+      "leaf_topic": "Summarize numerical data sets (center and variability)",
+      "question": "For the data set [17, 18, 25, 39, 39], what is the median?",
+      "options": {
+        "A": "25",
+        "B": "27",
+        "C": "39",
+        "D": "17"
+      },
+      "answer_letter": "A",
+      "answer_text": "25",
+      "explanation": "The median is the middle value when ordered: 25."
+    },
+    {
+      "domain": "Statistics and Probability",
+      "subdomain": "Summarize and describe distributions",
+      "leaf_topic": "Summarize numerical data sets (center and variability)",
+      "question": "For the data set [30, 38, 43, 45, 48], what is the median?",
+      "options": {
+        "A": "43",
+        "B": "40",
+        "C": "48",
+        "D": "30"
+      },
+      "answer_letter": "A",
+      "answer_text": "43",
+      "explanation": "The median is the middle value when ordered: 43."
+    }
+  ]
+}
