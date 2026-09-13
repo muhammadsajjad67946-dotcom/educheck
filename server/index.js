@@ -6,7 +6,8 @@ import Stripe from 'stripe'
 import { checkDatabase, pool } from './db.js'
 import { getStudentCount } from './studentCount.js'
 import { saveStripePaymentRecord } from './paymentStore.js'
-import { generateGeminiQuestions, generateGeminiReport } from './geminiReport.js'
+import { generateDiagnosticsWithGemini, generateGeminiQuestions, generateGeminiReport } from './geminiReport.js'
+
 import { isMailConfigured, sendContactEmails } from './mailer.js'
 
 const app = express()
@@ -1112,8 +1113,33 @@ app.post('/api/admin/students', async (request, response) => {
   }
 })
 
+app.post('/api/admin/questions/generate-diagnostics', async (request, response) => {
+  const { question, grade = 5, subject = 'Math', topic = 'Mathematics', options = {}, answer = 'A' } = request.body
+
+  if (!question?.trim() || !['A', 'B', 'C', 'D'].includes(answer) || ['A', 'B', 'C', 'D'].some((opt) => !options[opt]?.trim())) {
+    return response.status(400).json({ message: 'Question, four options, and correct answer are required for AI generation.' })
+  }
+
+  try {
+    const result = await generateDiagnosticsWithGemini({
+      question: question.trim(),
+      grade: Number(grade) || 5,
+      subject,
+      topic,
+      options,
+      answer,
+    })
+    return response.json(result)
+  } catch (error) {
+    console.error('AI diagnostics generation failed:', error)
+    return response.status(500).json({ message: error.message || 'Unable to generate diagnostics with AI.' })
+  }
+})
+
 app.post('/api/admin/questions', async (request, response) => {
   const { question, subject = 'Math', topic, topicId, subtopic, grade, difficulty, options = {}, answer, explanation = null } = request.body
+  const rawDiagnostics = request.body.distractor_diagnostics ?? request.body.distractorDiagnostics ?? null
+  const distractorDiagnosticsJson = rawDiagnostics ? (typeof rawDiagnostics === 'string' ? rawDiagnostics : JSON.stringify(rawDiagnostics)) : null
   const requestedSubtopicId = request.body.subtopicId ?? request.body.subtopic_id
 
   if (!question?.trim() || !Number.isInteger(Number(grade)) || !['Low', 'Medium', 'High'].includes(difficulty) || !['A', 'B', 'C', 'D'].includes(answer) || ['A', 'B', 'C', 'D'].some((option) => !options[option]?.trim())) {
@@ -1207,12 +1233,12 @@ app.post('/api/admin/questions', async (request, response) => {
 
     const [result] = await connection.query(
       `INSERT INTO questions
-        (subject_id, topic_id, chapter_id, subtopic_id, subtopic_name, question_text, grade_id, grade, difficulty, option_a, option_b, option_c, option_d, correct_answer, explanation)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-            [subjectId, selectedTopicId, chapterId, selectedSubtopicId, normalizedSelectedSubtopicName || null, question.trim(), gradeId, numericGrade, difficulty, options.A.trim(), options.B.trim(), options.C.trim(), options.D.trim(), answer, explanation],
+        (subject_id, topic_id, chapter_id, subtopic_id, subtopic_name, question_text, grade_id, grade, difficulty, option_a, option_b, option_c, option_d, correct_answer, explanation, distractor_diagnostics)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [subjectId, selectedTopicId, chapterId, selectedSubtopicId, normalizedSelectedSubtopicName || null, question.trim(), gradeId, numericGrade, difficulty, options.A.trim(), options.B.trim(), options.C.trim(), options.D.trim(), answer, explanation, distractorDiagnosticsJson],
     )
     await connection.commit()
-    return response.status(201).json({ id: result.insertId, question: question.trim(), subject: subject.trim(), topic: normalizedTopicName || 'General', subtopic: normalizedSelectedSubtopicName || null, subtopicId: selectedSubtopicId, grade: Number(grade), difficulty, options, answer, status: 'Active' })
+    return response.status(201).json({ id: result.insertId, question: question.trim(), subject: subject.trim(), topic: normalizedTopicName || 'General', subtopic: normalizedSelectedSubtopicName || null, subtopicId: selectedSubtopicId, grade: Number(grade), difficulty, options, answer, status: 'Active', explanation, distractor_diagnostics: rawDiagnostics })
   } catch (error) {
     await connection.rollback()
     console.error('Admin question save failed:', error)
@@ -1460,6 +1486,8 @@ app.get('/api/questions', async (request, response) => {
 
 app.put('/api/admin/questions/:questionId', async (request, response) => {
   const { question, subject = 'Math', topic, topicId, subtopic, grade, difficulty, options = {}, answer, explanation = null } = request.body
+  const rawDiagnostics = request.body.distractor_diagnostics ?? request.body.distractorDiagnostics ?? null
+  const distractorDiagnosticsJson = rawDiagnostics ? (typeof rawDiagnostics === 'string' ? rawDiagnostics : JSON.stringify(rawDiagnostics)) : null
   const requestedSubtopicId = request.body.subtopicId ?? request.body.subtopic_id
   const questionId = Number(request.params.questionId)
 
@@ -1512,11 +1540,11 @@ app.put('/api/admin/questions/:questionId', async (request, response) => {
     await connection.query(
       `UPDATE questions SET subject_id = ?, topic_id = ?, chapter_id = ?, subtopic_id = ?, subtopic_name = ?,
        question_text = ?, grade_id = ?, grade = ?, difficulty = ?, option_a = ?, option_b = ?, option_c = ?, option_d = ?,
-       correct_answer = ?, explanation = ? WHERE id = ?`,
-      [subjectId, selectedTopicId, chapterId, selectedSubtopicId, normalizedSelectedSubtopicName || null, question.trim(), gradeId, Number(grade), difficulty, options.A.trim(), options.B.trim(), options.C.trim(), options.D.trim(), answer, explanation, questionId],
+       correct_answer = ?, explanation = ?, distractor_diagnostics = ? WHERE id = ?`,
+      [subjectId, selectedTopicId, chapterId, selectedSubtopicId, normalizedSelectedSubtopicName || null, question.trim(), gradeId, Number(grade), difficulty, options.A.trim(), options.B.trim(), options.C.trim(), options.D.trim(), answer, explanation, distractorDiagnosticsJson, questionId],
     )
     await connection.commit()
-    return response.json({ id: questionId, question: question.trim(), subject: subject.trim(), topic: normalizedTopicName, subtopic: normalizedSelectedSubtopicName || null, subtopicId: selectedSubtopicId, grade: Number(grade), difficulty, options, answer, status: 'Active', explanation })
+    return response.json({ id: questionId, question: question.trim(), subject: subject.trim(), topic: normalizedTopicName, subtopic: normalizedSelectedSubtopicName || null, subtopicId: selectedSubtopicId, grade: Number(grade), difficulty, options, answer, status: 'Active', explanation, distractor_diagnostics: rawDiagnostics })
   } catch (error) {
     await connection.rollback()
     console.error('Admin question update failed:', error)
@@ -1525,6 +1553,7 @@ app.put('/api/admin/questions/:questionId', async (request, response) => {
     connection.release()
   }
 })
+
 
 app.get('/api/feedback', async (request, response) => {
   try {
@@ -1699,6 +1728,8 @@ app.listen(port, async () => {
     process.exit(1)
   }
 })
+}
+
   }
 
     const [result] = await connection.query(
@@ -2583,6 +2614,7 @@ app.delete('/api/admin/subscriptions/:subscriptionId', async (request, response)
   }
 })
 
+if (process.env.VERCEL !== '1') {
 app.listen(port, async () => {
   try {
     await checkDatabase()
@@ -2701,3 +2733,6 @@ app.listen(port, async () => {
     console.error(`API running, but MySQL is unavailable: ${error.message}`)
   }
 })
+}
+
+export default app
