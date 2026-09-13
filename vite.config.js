@@ -9,7 +9,7 @@ export default defineConfig({
   ],
   server: {
     proxy: {
-      '/api': 'educheck12.vercel.app',
+      '/api': 'https://educheck-y15k-404zic8ud-muhammadsajjad67946-6238s-projects.vercel.app',
     },
   },
 })
