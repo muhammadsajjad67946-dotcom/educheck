@@ -533,10 +533,23 @@ app.post('/api/payments', async (request, response) => {
   }
 })
 
-app.get('/api/admin/dashboard', async (_request, response) => {
+let adminDashboardCache = { data: null, expiresAt: 0 }
+let adminAnalyticsCache = { data: null, expiresAt: 0 }
+
+export function invalidateAdminCache() {
+  adminDashboardCache.expiresAt = 0
+  adminAnalyticsCache.expiresAt = 0
+}
+
+app.get('/api/admin/dashboard', async (request, response) => {
+  const force = request.query.refresh === 'true'
+  if (!force && adminDashboardCache.data && Date.now() < adminDashboardCache.expiresAt) {
+    return response.json(adminDashboardCache.data)
+  }
+
   try {
-    const studentCount = await getStudentCount(pool)
-    const [[questionCount], [testStats], [revenueStats], [recentPayments], [recentAssessments], [performanceTrend], [subjectPerformance]] = await Promise.all([
+    const [[studentRows], [questionCount], [testStats], [revenueStats], [recentPayments], [recentAssessments], [performanceTrend], [subjectPerformance]] = await Promise.all([
+      pool.query("SELECT COUNT(*) AS total FROM users WHERE role = 'student'"),
       pool.query('SELECT COUNT(*) AS total FROM questions WHERE is_active = 1'),
       pool.query("SELECT COUNT(*) AS total, COALESCE(AVG(percentage), 0) AS averageScore FROM assessment_attempts WHERE status = 'submitted'"),
       pool.query("SELECT COALESCE(SUM(amount), 0) AS total FROM payments WHERE status = 'paid'"),
@@ -569,7 +582,7 @@ app.get('/api/admin/dashboard', async (_request, response) => {
          LIMIT 10`,
       ),
       pool.query(
-           `SELECT COALESCE(t.subject, 'Math') AS subject,
+        `SELECT COALESCE(t.subject, 'Math') AS subject,
              ROUND((SUM(aa.is_correct) / NULLIF(COUNT(aa.id), 0)) * 100) AS score,
              COUNT(DISTINCT aa.attempt_id) AS assessments
         FROM attempt_answers aa
@@ -582,9 +595,9 @@ app.get('/api/admin/dashboard', async (_request, response) => {
       ),
     ])
 
-    return response.json({
+    const payload = {
       stats: {
-        students: Number(studentCount || 0),
+        students: Number(studentRows[0]?.total || 0),
         questions: Number(questionCount[0]?.total || 0),
         tests: Number(testStats[0]?.total || 0),
         averageScore: Math.round(Number(testStats[0]?.averageScore || 0)),
@@ -610,14 +623,22 @@ app.get('/api/admin/dashboard', async (_request, response) => {
         score: Number(entry.score || 0),
         assessments: Number(entry.assessments || 0),
       })),
-    })
+    }
+
+    adminDashboardCache = { data: payload, expiresAt: Date.now() + 30000 }
+    return response.json(payload)
   } catch (error) {
     console.error('Admin dashboard load failed:', error)
     return response.status(500).json({ message: 'Unable to load admin dashboard data.' })
   }
 })
 
-app.get('/api/admin/analytics', async (_request, response) => {
+app.get('/api/admin/analytics', async (request, response) => {
+  const force = request.query.refresh === 'true'
+  if (!force && adminAnalyticsCache.data && Date.now() < adminAnalyticsCache.expiresAt) {
+    return response.json(adminAnalyticsCache.data)
+  }
+
   try {
     const [[summary], [trend], [topicAttempts]] = await Promise.all([
       pool.query(
@@ -652,7 +673,7 @@ app.get('/api/admin/analytics', async (_request, response) => {
       ),
     ])
 
-    return response.json({
+    const payload = {
       stats: {
         assessments: Number(summary[0]?.assessments || 0),
         averageScore: Math.round(Number(summary[0]?.averageScore || 0)),
@@ -677,7 +698,10 @@ app.get('/api/admin/analytics', async (_request, response) => {
           assessments: scores.length,
         }
       }),
-    })
+    }
+
+    adminAnalyticsCache = { data: payload, expiresAt: Date.now() + 30000 }
+    return response.json(payload)
   } catch (error) {
     console.error('Admin analytics load failed:', error)
     return response.status(500).json({ message: 'Unable to load analytics data.' })

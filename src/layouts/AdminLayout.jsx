@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import {
   Menu,
@@ -135,7 +135,11 @@ export default function AdminLayout() {
     navigate('/')
   }
 
-  useEffect(() => {
+  const [searchLoaded, setSearchLoaded] = useState(false)
+
+  const loadSearchData = useCallback(() => {
+    if (searchLoaded) return
+    setSearchLoaded(true)
     Promise.all([
       apiRequest('/admin/students'),
       apiRequest('/questions'),
@@ -146,14 +150,19 @@ export default function AdminLayout() {
         setSearchData({ students, questions, topics, payments })
       })
       .catch(() => {})
+  }, [searchLoaded])
 
-    const initialNotificationTimer = window.setTimeout(loadNotifications, 0)
-    const notificationTimer = window.setInterval(loadNotifications, 30000)
+  useEffect(() => {
+    // Idle background load for search after primary UI renders
+    const idleSearchTimer = window.setTimeout(loadSearchData, 3500)
+    const initialNotificationTimer = window.setTimeout(loadNotifications, 1000)
+    const notificationTimer = window.setInterval(loadNotifications, 45000)
     return () => {
+      window.clearTimeout(idleSearchTimer)
       window.clearTimeout(initialNotificationTimer)
       window.clearInterval(notificationTimer)
     }
-  }, [])
+  }, [loadSearchData])
 
   const normalizedSearch = searchTerm.trim().toLowerCase()
   const searchResults = normalizedSearch
@@ -349,7 +358,11 @@ export default function AdminLayout() {
                   type="text"
                   placeholder="Search students, questions, topics..."
                   value={searchTerm}
-                  onChange={(event) => setSearchTerm(event.target.value)}
+                  onFocus={loadSearchData}
+                  onChange={(event) => {
+                    loadSearchData()
+                    setSearchTerm(event.target.value)
+                  }}
                   className="w-full bg-transparent outline-none placeholder:text-slate-400 text-xs"
                 />
                 {searchTerm && (

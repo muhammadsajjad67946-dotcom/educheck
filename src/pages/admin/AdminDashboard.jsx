@@ -363,24 +363,46 @@ export default function AdminDashboard() {
   const { darkMode } = useApp()
   const [dashboardData, setDashboardData] = useState({ stats: null, payments: [], assessments: [], topicCandles: [] })
   const [loadError, setLoadError] = useState('')
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    Promise.all([apiRequest('/admin/dashboard'), apiRequest('/admin/analytics')])
-      .then(([dashboard, analytics]) => setDashboardData({ ...dashboard, topicCandles: analytics.topicCandles || [] }))
-      .catch((error) => setLoadError(error.message || 'Unable to load dashboard data.'))
+    let isMounted = true
+
+    apiRequest('/admin/dashboard')
+      .then((dashboard) => {
+        if (!isMounted) return
+        setDashboardData((prev) => ({ ...prev, ...dashboard }))
+        setLoading(false)
+      })
+      .catch((error) => {
+        if (!isMounted) return
+        setLoadError(error.message || 'Unable to load dashboard data.')
+        setLoading(false)
+      })
+
+    apiRequest('/admin/analytics')
+      .then((analytics) => {
+        if (!isMounted) return
+        setDashboardData((prev) => ({ ...prev, topicCandles: analytics?.topicCandles || [] }))
+      })
+      .catch(() => {})
+
+    return () => {
+      isMounted = false
+    }
   }, [])
 
   const stats = useMemo(() => {
     const databaseStats = dashboardData.stats || {}
 
     return {
-      students: { value: databaseStats.students || 0, change: null, isPositive: true },
-      questions: { value: databaseStats.questions || 0, change: null, isPositive: true },
-      tests: { value: databaseStats.tests || 0, change: null, isPositive: true },
-      avgScore: { value: databaseStats.averageScore || 0, change: null, isPositive: true },
-      revenue: { value: databaseStats.revenue || 0, change: null, isPositive: true },
+      students: { value: databaseStats.students ?? (loading ? '-' : 0), change: null, isPositive: true },
+      questions: { value: databaseStats.questions ?? (loading ? '-' : 0), change: null, isPositive: true },
+      tests: { value: databaseStats.tests ?? (loading ? '-' : 0), change: null, isPositive: true },
+      avgScore: { value: databaseStats.averageScore ?? (loading ? '-' : 0), change: null, isPositive: true },
+      revenue: { value: databaseStats.revenue ?? (loading ? '-' : 0), change: null, isPositive: true },
     }
-  }, [dashboardData.stats])
+  }, [dashboardData.stats, loading])
 
   return (
     <div className="space-y-8 pb-10">
