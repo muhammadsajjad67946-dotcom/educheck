@@ -15,7 +15,7 @@ if (!globalForDb.__mysqlPool) {
         password: process.env.DB_PASSWORD ?? process.env.MYSQLPASSWORD ?? '',
         database: process.env.DB_NAME || process.env.MYSQLDATABASE || 'neweducheck',
         waitForConnections: true,
-        connectionLimit: Number(process.env.DB_CONNECTION_LIMIT || 2),
+        connectionLimit: Number(process.env.DB_CONNECTION_LIMIT || 10),
         queueLimit: 0,
         connectTimeout: Number(process.env.DB_CONNECT_TIMEOUT || 15000),
         enableKeepAlive: true,

@@ -316,41 +316,149 @@ app.get('/api/profile', async (request, response) => {
   }
 })
 
-app.post('/api/auth/register', async (request, response) => {
-  const { name, email, password, fatherName = '', age = null, grade = 'Grade 5' } = request.body
-  const normalizedEmail = String(email || '').trim().toLowerCase()
+export async function ensureDatabaseReady() {
+  try {
+    try {
+      const [userCols] = await pool.query("SHOW COLUMNS FROM users WHERE Field = 'id'")
+      if (userCols.length > 0) {
+        const idCol = userCols[0]
+        const hasAi = String(idCol.Extra || '').toLowerCase().includes('auto_increment')
+        const isPri = String(idCol.Key || '').toUpperCase() === 'PRI'
+        if (!isPri) {
+          try { await pool.query('ALTER TABLE users ADD PRIMARY KEY (id)') } catch {}
+        }
+        if (!hasAi) {
+          try { await pool.query('ALTER TABLE users MODIFY id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT') } catch {}
+        }
+      }
+    } catch (e) {
+      console.warn('ensureDatabaseReady users note:', e.message)
+    }
 
-  if (!name?.trim() || !normalizedEmail || !password || password.length < 6) {
+    try {
+      const [profCols] = await pool.query("SHOW COLUMNS FROM student_profiles WHERE Field = 'id'")
+      if (profCols.length > 0) {
+        const idCol = profCols[0]
+        const hasAi = String(idCol.Extra || '').toLowerCase().includes('auto_increment')
+        const isPri = String(idCol.Key || '').toUpperCase() === 'PRI'
+        if (!isPri) {
+          try { await pool.query('ALTER TABLE student_profiles ADD PRIMARY KEY (id)') } catch {}
+        }
+        if (!hasAi) {
+          try { await pool.query('ALTER TABLE student_profiles MODIFY id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT') } catch {}
+        }
+      }
+    } catch (e) {
+      console.warn('ensureDatabaseReady student_profiles note:', e.message)
+    }
+  } catch (err) {
+    console.warn('ensureDatabaseReady global note:', err.message)
+  }
+}
+
+app.post('/api/auth/register', async (request, response) => {
+  const { name, email, password, fatherName = '', age = null, grade = 'Grade 5' } = request.body || {}
+  const cleanName = String(name || '').trim()
+  const cleanEmail = String(email || '').trim().toLowerCase()
+  const cleanFather = String(fatherName || '').trim()
+  const parsedAge = age && Number(age) >= 3 ? Number(age) : null
+  const cleanGrade = String(grade || 'Grade 5').trim().slice(0, 30)
+
+  if (!cleanName || !cleanEmail || !password || password.length < 6) {
     return response.status(400).json({ message: 'Name, valid email, and a password of at least 6 characters are required.' })
   }
 
   try {
-    const [existing] = await pool.query('SELECT id FROM users WHERE email = ?', [normalizedEmail])
-    if (existing.length) return response.status(409).json({ message: 'An account with this email already exists.' })
-
-    const passwordHash = await bcrypt.hash(password, 12)
-    const connection = await pool.getConnection()
-    try {
-      await connection.beginTransaction()
-      const [userResult] = await connection.query(
-        'INSERT INTO users (name, email, password_hash, role) VALUES (?, ?, ?, ?)',
-        [name.trim(), normalizedEmail, passwordHash, 'student'],
-      )
-      await connection.query(
-        'INSERT INTO student_profiles (user_id, father_name, age, grade) VALUES (?, ?, ?, ?)',
-        [userResult.insertId, fatherName, age || null, grade],
-      )
-      await connection.commit()
-      return response.status(201).json({ id: userResult.insertId, name: name.trim(), email: normalizedEmail, age: age || '', grade, actualGrade: null, role: 'student' })
-    } catch (error) {
-      await connection.rollback()
-      throw error
-    } finally {
-      connection.release()
+    const [existing] = await pool.query('SELECT id FROM users WHERE email = ?', [cleanEmail])
+    if (existing.length) {
+      return response.status(409).json({ message: 'An account with this email already exists.' })
     }
+
+    const passwordHash = await bcrypt.hash(password, 10)
+
+    let userInsertId = null
+    try {
+      const [userResult] = await pool.query(
+        'INSERT INTO users (name, email, password_hash, role) VALUES (?, ?, ?, ?)',
+        [cleanName, cleanEmail, passwordHash, 'student'],
+      )
+      userInsertId = userResult.insertId
+    } catch (insertErr) {
+      if (insertErr.code === 'ER_NO_DEFAULT_FOR_FIELD' || String(insertErr.message).includes("'id'")) {
+        try {
+          await pool.query('ALTER TABLE users MODIFY id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT')
+          const [retryResult] = await pool.query(
+            'INSERT INTO users (name, email, password_hash, role) VALUES (?, ?, ?, ?)',
+            [cleanName, cleanEmail, passwordHash, 'student'],
+          )
+          userInsertId = retryResult.insertId
+        } catch (alterErr) {
+          const [maxUser] = await pool.query('SELECT COALESCE(MAX(id), 0) + 1 AS nextId FROM users')
+          const nextUserId = Number(maxUser[0]?.nextId) || 1
+          await pool.query(
+            'INSERT INTO users (id, name, email, password_hash, role) VALUES (?, ?, ?, ?, ?)',
+            [nextUserId, cleanName, cleanEmail, passwordHash, 'student'],
+          )
+          userInsertId = nextUserId
+        }
+      } else {
+        throw insertErr
+      }
+    }
+
+    if (!userInsertId) {
+      const [fetched] = await pool.query('SELECT id FROM users WHERE email = ?', [cleanEmail])
+      userInsertId = fetched[0]?.id
+    }
+
+    if (userInsertId) {
+      try {
+        await pool.query(
+          'INSERT INTO student_profiles (user_id, father_name, age, grade) VALUES (?, ?, ?, ?)',
+          [userInsertId, cleanFather || null, parsedAge, cleanGrade],
+        )
+      } catch (profErr) {
+        if (profErr.code === 'ER_NO_DEFAULT_FOR_FIELD' || String(profErr.message).includes("'id'")) {
+          try {
+            await pool.query('ALTER TABLE student_profiles MODIFY id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT')
+            await pool.query(
+              'INSERT INTO student_profiles (user_id, father_name, age, grade) VALUES (?, ?, ?, ?)',
+              [userInsertId, cleanFather || null, parsedAge, cleanGrade],
+            )
+          } catch (pAlterErr) {
+            const [maxProf] = await pool.query('SELECT COALESCE(MAX(id), 0) + 1 AS nextId FROM student_profiles')
+            const nextProfId = Number(maxProf[0]?.nextId) || 1
+            await pool.query(
+              'INSERT INTO student_profiles (id, user_id, father_name, age, grade) VALUES (?, ?, ?, ?, ?)',
+              [nextProfId, userInsertId, cleanFather || null, parsedAge, cleanGrade],
+            )
+          }
+        } else if (profErr.code === 'ER_DUP_ENTRY') {
+          await pool.query(
+            'UPDATE student_profiles SET father_name = ?, age = ?, grade = ? WHERE user_id = ?',
+            [cleanFather || null, parsedAge, cleanGrade, userInsertId],
+          )
+        } else {
+          console.warn('Student profile insert note:', profErr.message)
+        }
+      }
+    }
+
+    return response.status(201).json({
+      id: userInsertId,
+      name: cleanName,
+      email: cleanEmail,
+      age: parsedAge || '',
+      grade: cleanGrade,
+      actualGrade: null,
+      role: 'student',
+    })
   } catch (error) {
     console.error('Registration failed:', error)
-    return response.status(500).json({ message: 'Unable to create account.' })
+    if (error.code === 'ER_DUP_ENTRY') {
+      return response.status(409).json({ message: 'An account with this email already exists.' })
+    }
+    return response.status(500).json({ message: error.sqlMessage || error.message || 'Unable to create account.' })
   }
 })
 

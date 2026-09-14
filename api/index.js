@@ -1,6 +1,19 @@
-import app from '../server/index.js'
+import app, { ensureDatabaseReady } from '../server/index.js'
 
-export default function handler(req, res) {
+let dbInitPromise = null
+function initDbOnce() {
+  if (!dbInitPromise && typeof ensureDatabaseReady === 'function') {
+    dbInitPromise = ensureDatabaseReady().catch((err) => {
+      console.warn('ensureDatabaseReady background error:', err?.message || err)
+    })
+  }
+  return dbInitPromise
+}
+
+export default async function handler(req, res) {
+  // Trigger background database schema check if not already run
+  initDbOnce()
+
   // If Vercel proxy forwarded the original incoming URI in headers, prefer it:
   const forwardedUri = req.headers['x-forwarded-uri'] || req.headers['x-matched-path']
   if (forwardedUri && forwardedUri.startsWith('/api')) {
@@ -19,3 +32,4 @@ export default function handler(req, res) {
 
   return app(req, res)
 }
+

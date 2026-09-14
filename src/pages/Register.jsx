@@ -78,24 +78,29 @@ export default function Register() {
     const email = form.email.trim().toLowerCase()
 
     try {
+      const trimmedName = form.name.trim()
+      const trimmedEmail = email.trim().toLowerCase()
+      const trimmedFather = form.fatherName ? form.fatherName.trim() : ''
+      const parsedAge = form.age ? Number(form.age) : null
+
       const account = await apiRequest('/auth/register', {
         method: 'POST',
         body: JSON.stringify({ 
-          name: form.name, 
-          email, 
+          name: trimmedName, 
+          email: trimmedEmail, 
           password: form.password, 
-          fatherName: form.fatherName, 
-          age: form.age, 
+          fatherName: trimmedFather, 
+          age: parsedAge, 
           grade: form.grade 
         }),
       })
       
       const nextProfile = {
         id: account.id,
-        name: form.name,
-        email,
-        fatherName: form.fatherName,
-        age: form.age,
+        name: trimmedName,
+        email: trimmedEmail,
+        fatherName: trimmedFather,
+        age: parsedAge || '',
         grade: form.grade,
         actualGrade: account.actualGrade || '',
         currentDifficulty: account.currentDifficulty || 'Low',
