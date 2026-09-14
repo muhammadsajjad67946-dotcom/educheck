@@ -11,8 +11,13 @@ function initDbOnce() {
 }
 
 export default async function handler(req, res) {
-  // Trigger background database schema check if not already run
-  initDbOnce()
+  // Ensure database schema check runs and completes before processing request
+  try {
+    await initDbOnce()
+  } catch (err) {
+    console.warn('initDbOnce in handler failed:', err?.message || err)
+  }
+
 
   // If Vercel proxy forwarded the original incoming URI in headers, prefer it:
   const forwardedUri = req.headers['x-forwarded-uri'] || req.headers['x-matched-path']

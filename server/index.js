@@ -318,6 +318,15 @@ app.get('/api/profile', async (request, response) => {
 
 export async function ensureDatabaseReady() {
   try {
+    // 1. Clean up invalid/orphaned zero-id rows from prior failed inserts
+    try {
+      await pool.query('DELETE FROM student_profiles WHERE user_id = 0')
+      await pool.query('DELETE FROM users WHERE id = 0')
+    } catch (e) {
+      console.warn('ensureDatabaseReady cleanup id 0:', e.message)
+    }
+
+    // 2. Ensure PRIMARY KEY & AUTO_INCREMENT on users
     try {
       const [userCols] = await pool.query("SHOW COLUMNS FROM users WHERE Field = 'id'")
       if (userCols.length > 0) {
@@ -335,6 +344,7 @@ export async function ensureDatabaseReady() {
       console.warn('ensureDatabaseReady users note:', e.message)
     }
 
+    // 3. Ensure PRIMARY KEY & AUTO_INCREMENT on student_profiles
     try {
       const [profCols] = await pool.query("SHOW COLUMNS FROM student_profiles WHERE Field = 'id'")
       if (profCols.length > 0) {
@@ -355,6 +365,38 @@ export async function ensureDatabaseReady() {
     console.warn('ensureDatabaseReady global note:', err.message)
   }
 }
+
+app.get('/api/repair-database', async (_req, res) => {
+  const log = []
+  try {
+    try {
+      const [delSp] = await pool.query('DELETE FROM student_profiles WHERE user_id = 0')
+      const [delU] = await pool.query('DELETE FROM users WHERE id = 0')
+      log.push(`Cleaned id=0: users=${delU.affectedRows}, student_profiles=${delSp.affectedRows}`)
+    } catch (e) {
+      log.push(`Cleanup error: ${e.message}`)
+    }
+
+    try {
+      await pool.query('ALTER TABLE users MODIFY id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT')
+      log.push('users table AUTO_INCREMENT: success')
+    } catch (e) {
+      log.push(`users AUTO_INCREMENT note: ${e.message}`)
+    }
+
+    try {
+      await pool.query('ALTER TABLE student_profiles MODIFY id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT')
+      log.push('student_profiles table AUTO_INCREMENT: success')
+    } catch (e) {
+      log.push(`student_profiles AUTO_INCREMENT note: ${e.message}`)
+    }
+
+    res.json({ ok: true, log })
+  } catch (err) {
+    res.status(500).json({ ok: false, error: err.message, log })
+  }
+})
+
 
 app.post('/api/auth/register', async (request, response) => {
   const { name, email, password, fatherName = '', age = null, grade = 'Grade 5' } = request.body || {}
