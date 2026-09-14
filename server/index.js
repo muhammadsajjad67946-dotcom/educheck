@@ -81,7 +81,7 @@ function inferQuestionSubtopic(questionText, topic) {
   return matches.find(([pattern]) => pattern.test(text))?.[1] || `${normalizeAssessmentTopic(topic)} Skills`
 }
 
-app.use(cors({ origin: process.env.CLIENT_ORIGIN || 'http://localhost:5173' }))
+app.use(cors({ origin: process.env.CLIENT_ORIGIN || 'educheck12.vercel.app' }))
 app.post('/api/stripe/webhook', express.raw({ type: 'application/json' }), async (request, response) => {
   if (!stripe || !process.env.STRIPE_WEBHOOK_SECRET) {
     return response.status(503).send('Stripe webhook is not configured.')
@@ -384,8 +384,8 @@ app.post('/api/create-checkout-session', async (request, response) => {
       mode: 'payment',
       line_items: [{ price_data: { currency: 'pkr', product_data: { name: 'EduCheck Mathematics Assessment' }, unit_amount: 350000 }, quantity: 1 }],
       metadata: { studentId: String(studentId) },
-      success_url: `${process.env.CLIENT_ORIGIN || 'http://localhost:5173'}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.CLIENT_ORIGIN || 'http://localhost:5173'}/payment`,
+      success_url: `${process.env.CLIENT_ORIGIN || 'educheck12.vercel.app'}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.CLIENT_ORIGIN || 'educheck12.vercel.app'}/payment`,
     })
 
     return response.status(201).json({ sessionId: session.id, url: session.url })
