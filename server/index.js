@@ -1295,7 +1295,7 @@ app.post('/api/admin/questions', async (request, response) => {
   } catch (error) {
     await connection.rollback()
     console.error('Admin question save failed:', error)
-    return response.status(500).json({ message: 'Unable to save question.' })
+    return response.status(500).json({ message: error.message || 'Unable to save question.' })
   } finally {
     connection.release()
   }
@@ -1616,7 +1616,7 @@ app.put('/api/admin/questions/:questionId', async (request, response) => {
   } catch (error) {
     await connection.rollback()
     console.error('Admin question update failed:', error)
-    return response.status(500).json({ message: 'Unable to update question.' })
+    return response.status(500).json({ message: error.message || 'Unable to update question.' })
   } finally {
     connection.release()
   }
@@ -2505,6 +2505,7 @@ app.get('/api/attempt-answers/:attemptId', async (request, response) => {
   }
 })
 
+/* Duplicate legacy route replaced by handler at line 1304
 app.post('/api/assessment-attempts', async (request, response) => {
   const { studentId, attemptId = null, questions = [], answers = {}, estimatedGrade = null } = request.body
   const numericStudentId = Number(studentId)
@@ -2598,6 +2599,7 @@ app.post('/api/assessment-attempts', async (request, response) => {
     return response.status(500).json({ message: 'Unable to save assessment results.' })
   }
 })
+*/
 
 // ==================== SUBSCRIPTIONS MANAGEMENT ====================
 app.get('/api/subscriptions', async (request, response) => {

@@ -77,6 +77,8 @@ export default function AdminQuestions() {
   const [aiSuccessMessage, setAiSuccessMessage] = useState('')
   const importInputRef = useRef(null)
 
+  const updateForm = (field, value) => setForm((previous) => ({ ...previous, [field]: value }))
+
   const parentTopics = topics.filter((topic) => !topic.parentTopicId)
   const subtopics = selectedTopicId ? topics.filter((topic) => Number(topic.parentTopicId) === Number(selectedTopicId)) : []
 
@@ -96,10 +98,13 @@ export default function AdminQuestions() {
     const chosenTopic = topics.find((topic) => String(topic.id) === String(selectedTopicId))
     const chosenSubtopic = topics.find((topic) => String(topic.id) === String(selectedSubtopicId))
 
-    updateForm('topicId', selectedTopicId || '')
-    updateForm('subtopicId', selectedSubtopicId || '')
-    updateForm('topic', chosenTopic ? chosenTopic.name : '')
-    updateForm('subtopic', chosenSubtopic ? chosenSubtopic.name : '')
+    setForm((previous) => ({
+      ...previous,
+      topicId: selectedTopicId || '',
+      subtopicId: selectedSubtopicId || '',
+      topic: chosenTopic ? chosenTopic.name : '',
+      subtopic: chosenSubtopic ? chosenSubtopic.name : '',
+    }))
   }, [selectedTopicId, selectedSubtopicId, topics])
 
   const loadAllQuestions = async () => {
@@ -116,8 +121,6 @@ export default function AdminQuestions() {
       setIsLoadingAll(false)
     }
   }
-
-  const updateForm = (field, value) => setForm((previous) => ({ ...previous, [field]: value }))
 
   const handleAutoGenerateAI = async () => {
     if (!form.question.trim()) {
