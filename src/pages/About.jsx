@@ -1,27 +1,27 @@
-import { ArrowRight, BookOpen, BarChart3, Sparkles, ShieldCheck, Target, Brain, CheckCircle2 } from 'lucide-react'
+import { ArrowRight, BookOpen, BarChart3, Sparkles, ShieldCheck, Target, HeartHandshake, Smile } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 
 const featureList = [
   {
-    icon: Brain,
-    title: 'Adaptive Diagnostic Engine',
-    description: 'Starts tests directly at the student’s target grade (e.g. Grade 8), dynamically shifting between Low, Medium, and High difficulty.',
+    icon: Smile,
+    title: 'Adaptive & Stress-Free Quizzes',
+    description: 'Quizzes start at your child’s grade and adapt naturally to their pace, keeping math encouraging and never overwhelming.',
   },
   {
     icon: Target,
-    title: 'Foundational Weak-Point Tracing',
-    description: 'When an error occurs, the algorithm checks immediate lower grades (e.g. Grade 7) for that specific subtopic to locate the true root gap.',
+    title: 'Finding the Real Learning Gaps',
+    description: 'When a question feels tricky, we gently trace back to see which earlier concept needs a quick refresher.',
   },
   {
     icon: Sparkles,
-    title: 'Gemini AI Step-by-Step Guidance',
-    description: 'Every incorrect answer is paired with clear, step-by-step guidance: "Here is how to solve this correctly: Step 1... Step 2...".',
+    title: 'Helpful Step-by-Step Guidance',
+    description: 'Whenever a mistake happens, clear and friendly explanations walk through the solution one simple step at a time.',
   },
   {
     icon: BarChart3,
-    title: 'Actionable Diagnostic Reports',
-    description: 'Students and parents receive comprehensive diagnostic reports comparing Target Grade vs Actual Demonstrated Math Level.',
+    title: 'Clear, Simple Progress for Parents',
+    description: 'Easy-to-read reports showing where your child excels and exactly what to practice next to build their confidence.',
   },
 ]
 
@@ -34,24 +34,17 @@ export default function About() {
       <section className={`overflow-hidden rounded-4xl border p-8 md:p-12 lg:p-14 shadow-2xl backdrop-blur-2xl transition-colors duration-300 ${
         darkMode ? 'border-white/10 bg-slate-950/70 shadow-slate-950/80' : 'border-slate-200 bg-white shadow-slate-200/50'
       }`}>
-        <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div className="space-y-6">
-            <div className={`inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-bold uppercase tracking-widest ${
-              darkMode ? 'border-sky-400/30 bg-sky-500/10 text-sky-300' : 'border-sky-300 bg-sky-50 text-sky-700'
-            }`}>
-              <Sparkles size={14} />
-              About EduCheck
-            </div>
-
+        <div className="grid gap-10 lg:grid-cols-2 lg:items-start">
+          <div className="flex min-w-0 w-full flex-col items-start space-y-6">
             <h1 className="text-3xl font-extrabold leading-tight sm:text-4xl md:text-5xl">
-              Smarter Math Assessment for{' '}
+              Helping Every Child Feel Confident in{' '}
               <span className="bg-gradient-to-r from-sky-400 via-cyan-400 to-violet-500 bg-clip-text text-transparent">
-                Every Learner.
+                Mathematics.
               </span>
             </h1>
 
-            <p className={`text-base sm:text-lg leading-relaxed ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
-              EduCheck was built to remove the guesswork from learning mathematics. Instead of traditional static tests, our adaptive diagnostic test dynamically adjusts question difficulty and zeroes in on the exact grade where conceptual misunderstandings started.
+            <p className={`text-left text-base leading-relaxed sm:text-lg ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
+              We believe that no child is bad at math — they just need concepts explained in a way that truly connects. EduCheck replaces stressful tests with friendly, adaptive quizzes that pinpoint exactly where a student shines and where a little extra patience will help them succeed.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
@@ -73,9 +66,9 @@ export default function About() {
             </div>
           </div>
 
-          <div className="relative">
+          <div className="relative min-w-0 w-full">
             <div className="absolute inset-0 -z-10 rounded-3xl bg-gradient-to-br from-sky-500/10 via-violet-500/10 to-transparent blur-3xl" />
-            <div className={`rounded-3xl border p-6 shadow-xl ${
+            <div className={`w-full min-w-0 rounded-3xl border p-6 shadow-xl ${
               darkMode ? 'border-white/10 bg-slate-900/60' : 'border-slate-200 bg-slate-50/80'
             }`}>
               <div className="grid gap-4">
@@ -87,7 +80,7 @@ export default function About() {
                       <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-500/20 to-violet-500/20 text-sky-400">
                         <Icon size={20} />
                       </div>
-                      <div>
+                      <div className="min-w-0">
                         <h3 className={`text-base font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>{title}</h3>
                         <p className={`mt-1 text-xs sm:text-sm leading-relaxed ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>{description}</p>
                       </div>
@@ -109,9 +102,9 @@ export default function About() {
             <Target size={20} />
           </div>
           <p className="text-xs uppercase tracking-widest text-cyan-500 font-bold">Our Mission</p>
-          <h2 className="mt-2 text-xl font-bold">Measure & Trace Gaps</h2>
+          <h2 className="mt-2 text-xl font-bold">Clarity Over Confusion</h2>
           <p className={`mt-2 text-sm leading-relaxed ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
-            We empower students, parents, and educators by turning raw test results into clear, actionable, subtopic-level learning roadmaps.
+            We turn test numbers into clear, friendly guidance — showing parents and teachers simple roadmaps to support their child’s unique learning journey.
           </p>
         </div>
 
@@ -119,12 +112,12 @@ export default function About() {
           darkMode ? 'border-white/10 bg-slate-900/60' : 'border-slate-200 bg-white'
         }`}>
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-500/10 text-violet-400 mb-4">
-            <Brain size={20} />
+            <HeartHandshake size={20} />
           </div>
           <p className="text-xs uppercase tracking-widest text-violet-500 font-bold">Our Approach</p>
-          <h2 className="mt-2 text-xl font-bold">Adaptive Intelligence</h2>
+          <h2 className="mt-2 text-xl font-bold">Meeting Kids Where They Are</h2>
           <p className={`mt-2 text-sm leading-relaxed ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
-            Rather than a flat grade-level score, our engine diagnoses whether an 8th grader’s weakness in Algebra is actually rooted in 7th-grade equations.
+            Every child learns differently. We identify the exact root of any difficulty so learning feels like an easy, encouraging step forward.
           </p>
         </div>
 
@@ -135,9 +128,9 @@ export default function About() {
             <ShieldCheck size={20} />
           </div>
           <p className="text-xs uppercase tracking-widest text-emerald-500 font-bold">Our Commitment</p>
-          <h2 className="mt-2 text-xl font-bold">Confident Growth</h2>
+          <h2 className="mt-2 text-xl font-bold">Growing Real Confidence</h2>
           <p className={`mt-2 text-sm leading-relaxed ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
-            EduCheck combines instant Gemini AI explanations, downloadable PDF reports, and progress tracking to make learning transparent.
+            With gentle step-by-step guidance, clear PDF summaries, and steady encouragement, we help students build lasting confidence in math.
           </p>
         </div>
       </section>

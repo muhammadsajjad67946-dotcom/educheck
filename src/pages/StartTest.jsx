@@ -101,9 +101,9 @@ export default function StartTest() {
   const { user, testState, assessmentHistory, setTestState, setPendingRetake, darkMode } = useApp()
   const [index, setIndex] = useState(0)
   const [selected, setSelected] = useState('')
-  const [selectedDifficulty, setSelectedDifficulty] = useState(user?.currentDifficulty || 'Low')
-  const questionCount = 30
+  const [selectedDifficulty, setSelectedDifficulty] = useState(user?.currentDifficulty || 'Medium')
   const [selectedTopic, setSelectedTopic] = useState('Overall')
+  const questionCount = selectedTopic === 'Overall' ? 30 : 20
   const [hasStarted, setHasStarted] = useState(false)
   const [loadingQuestions, setLoadingQuestions] = useState(false)
   const [loadError, setLoadError] = useState('')

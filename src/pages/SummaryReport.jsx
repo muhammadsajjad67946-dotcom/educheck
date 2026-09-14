@@ -103,12 +103,11 @@ export default function SummaryReport() {
 
   const demonstratedGradeRaw = report.demonstratedMathLevel ?? latestAssessment?.estimatedGrade ?? 0
   const fallbackDemonstrated = 1.0 + (scorePercent / 100) * Math.max(0, targetGradeNum - 1)
-  const demonstratedGradeNum = Number(
-    (demonstratedGradeRaw && Number(demonstratedGradeRaw) >= 1.0
-      ? Number(demonstratedGradeRaw)
-      : (computedAdaptiveGrade ?? fallbackDemonstrated)
-    ).toFixed(1)
-  )
+  const isOldInflated = demonstratedGradeRaw && scorePercent < 60 && Number(demonstratedGradeRaw) > (fallbackDemonstrated + 1.0)
+  const effectiveRawGrade = isOldInflated
+    ? (computedAdaptiveGrade ?? fallbackDemonstrated)
+    : (demonstratedGradeRaw && Number(demonstratedGradeRaw) >= 1.0 ? Number(demonstratedGradeRaw) : (computedAdaptiveGrade ?? fallbackDemonstrated))
+  const demonstratedGradeNum = Number(effectiveRawGrade.toFixed(1))
   const gradeGap = (demonstratedGradeNum - targetGradeNum).toFixed(1)
 
   const subtopicReport = reportQuestions.length

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ArrowRight, Mail, MapPin, Phone, CheckCircle2, Sparkles, Send } from 'lucide-react'
+import { ArrowRight, Mail, MapPin, Phone, CheckCircle2, Send } from 'lucide-react'
 import { useApp } from '../context/AppContext'
 import { apiRequest } from '../utils/api'
 
@@ -12,21 +12,21 @@ const contactMethods = [
   },
   {
     icon: Phone,
-    title: 'Phone Support',
+    title: 'Call Us Directly',
     value: '0319 4720 778',
     href: 'tel:+923194720778',
   },
   {
     icon: MapPin,
-    title: '',
-    value: 'EduCheck Tech Hub, Pakistan',
+    title: 'Location',
+    value: 'EduCheck Learning Hub, Pakistan',
     href: '#',
   },
 ]
 
 export default function Contact() {
   const { darkMode, user } = useApp()
-  const [formData, setFormData] = useState({ name: '', email: '', subject: 'Diagnostic Assessment Support', message: '' })
+  const [formData, setFormData] = useState({ name: '', email: '', subject: 'Support & Guidance', message: '' })
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
@@ -42,9 +42,9 @@ export default function Contact() {
     try {
       await apiRequest('/contact', { method: 'POST', body: JSON.stringify({ ...formData, userId: user?.id }) })
       setSubmitted(true)
-      setFormData({ name: '', email: '', subject: 'Diagnostic Assessment Support', message: '' })
+      setFormData({ name: '', email: '', subject: 'Support & Guidance', message: '' })
     } catch (submitError) {
-      setError(submitError.message || 'Unable to send your message right now.')
+      setError(submitError.message || 'Unable to send your message right now. Please try again later.')
     } finally {
       setSubmitting(false)
     }
@@ -58,14 +58,14 @@ export default function Contact() {
         <div className="grid gap-12 lg:grid-cols-[1fr_1.1fr]">
           <div className="flex flex-col justify-start space-y-5">
             <h1 className="text-3xl font-extrabold leading-tight sm:text-4xl md:text-5xl">
-              We’re Here to Help Your{' '}
+              We’re Here to Support Your Child’s{' '}
               <span className="bg-gradient-to-r from-sky-400 via-cyan-400 to-violet-500 bg-clip-text text-transparent">
-                Students Excel.
+                Learning Journey.
               </span>
             </h1>
 
             <p className={`max-w-lg text-base sm:text-lg leading-relaxed ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
-              Have questions about our adaptive diagnostic assessment, Gemini AI step-by-step reporting, or student diagnostic tracking? Send us a message and our academic team will reply promptly.
+              Have a question about our math assessments, need guidance understanding a student report, or simply want to share your feedback? Send us a message.
             </p>
 
             <div className="space-y-4 pt-2">
@@ -95,15 +95,15 @@ export default function Contact() {
           <div className={`rounded-3xl border p-6 sm:p-8 shadow-xl ${
             darkMode ? 'border-white/10 bg-slate-900/60' : 'border-slate-200 bg-slate-50/80'
           }`}>
-            <h2 className="text-2xl font-bold">Send us a Message</h2>
+            <h2 className="text-2xl font-bold">Send Us a Message</h2>
             <p className={`mt-1 text-xs sm:text-sm ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>
-              Fill in your details below and our team will get back to you within 24 hours.
+              Fill in your details below and our team will personally get back to you within 24 hours.
             </p>
 
             {submitted && (
               <div className="mt-4 flex items-center gap-3 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-emerald-600 dark:text-emerald-400 text-sm font-semibold">
                 <CheckCircle2 size={20} className="shrink-0" />
-                <span>Thank you! Your message has been sent successfully. We will reach out soon.</span>
+                <span>Thank you so much! Your message has been sent successfully. We will reach out to you shortly.</span>
               </div>
             )}
             {error && <div className="mt-4 rounded-2xl border border-rose-500/30 bg-rose-500/10 p-4 text-sm font-semibold text-rose-600 dark:text-rose-400">{error}</div>}
@@ -118,7 +118,7 @@ export default function Contact() {
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  placeholder="Student or Parent Name"
+                  placeholder="Your Name (Parent or Student)"
                   className={`w-full rounded-xl border px-4 py-3 text-sm transition focus:outline-none focus:ring-2 focus:ring-sky-400/50 ${
                     darkMode
                       ? 'border-white/10 bg-slate-950/80 text-white placeholder:text-slate-500'
@@ -153,7 +153,7 @@ export default function Contact() {
                   type="text"
                   value={formData.subject}
                   onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                  placeholder="Assessment Support, Feedback, etc."
+                  placeholder="E.g. Assessment question, feedback, or general inquiry"
                   className={`w-full rounded-xl border px-4 py-3 text-sm transition focus:outline-none focus:ring-2 focus:ring-sky-400/50 ${
                     darkMode
                       ? 'border-white/10 bg-slate-950/80 text-white placeholder:text-slate-500'
@@ -171,7 +171,7 @@ export default function Contact() {
                   required
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  placeholder="Tell us how we can assist you..."
+                  placeholder="Tell us how we can help you..."
                   className={`w-full resize-none rounded-xl border px-4 py-3 text-sm transition focus:outline-none focus:ring-2 focus:ring-sky-400/50 ${
                     darkMode
                       ? 'border-white/10 bg-slate-950/80 text-white placeholder:text-slate-500'

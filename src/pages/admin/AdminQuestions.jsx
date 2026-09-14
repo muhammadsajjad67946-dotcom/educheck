@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Search, Plus, Download, Upload, Eye, Pencil, Trash2, ChevronLeft, ChevronRight } from 'lucide-react'
+import { Search, Plus, Download, Upload, Eye, Pencil, Trash2, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react'
 import { apiRequest } from '../../utils/api'
 
 const emptyForm = {
@@ -16,7 +16,15 @@ const emptyForm = {
   optionC: '',
   optionD: '',
   answer: 'A',
+  explanation: '',
+  distractorDiagnostics: {
+    A: { error: '', remediation: '' },
+    B: { error: '', remediation: '' },
+    C: { error: '', remediation: '' },
+    D: { error: '', remediation: '' },
+  },
 }
+
 
 // Difficulty Badge
 function DifficultyBadge({ difficulty }) {
@@ -65,6 +73,8 @@ export default function AdminQuestions() {
   const [allQuestionsLoaded, setAllQuestionsLoaded] = useState(false)
   const [selectedTopicId, setSelectedTopicId] = useState('')
   const [selectedSubtopicId, setSelectedSubtopicId] = useState('')
+  const [isGeneratingAI, setIsGeneratingAI] = useState(false)
+  const [aiSuccessMessage, setAiSuccessMessage] = useState('')
   const importInputRef = useRef(null)
 
   const parentTopics = topics.filter((topic) => !topic.parentTopicId)
@@ -109,6 +119,71 @@ export default function AdminQuestions() {
 
   const updateForm = (field, value) => setForm((previous) => ({ ...previous, [field]: value }))
 
+  const handleAutoGenerateAI = async () => {
+    if (!form.question.trim()) {
+      setFormError('Please enter the question text first before generating with AI.')
+      return
+    }
+    const options = {
+      A: form.optionA.trim(),
+      B: form.optionB.trim(),
+      C: form.optionC.trim(),
+      D: form.optionD.trim(),
+    }
+    if (Object.values(options).some((opt) => !opt)) {
+      setFormError('Please fill all four options (A, B, C, D) first before generating with AI.')
+      return
+    }
+
+    setIsGeneratingAI(true)
+    setFormError('')
+    setAiSuccessMessage('')
+
+    try {
+      const chosenTopic = topics.find((topic) => String(topic.id) === String(selectedTopicId))
+      const data = await apiRequest('/admin/questions/generate-diagnostics', {
+        method: 'POST',
+        body: JSON.stringify({
+          question: form.question.trim(),
+          grade: Number(form.grade),
+          subject: form.subject,
+          topic: chosenTopic ? chosenTopic.name : form.topic,
+          options,
+          answer: form.answer,
+        }),
+      })
+
+      if (data.explanation) {
+        updateForm('explanation', data.explanation)
+      }
+
+      if (data.distractor_diagnostics) {
+        const newDiag = {
+          A: { error: '', remediation: '' },
+          B: { error: '', remediation: '' },
+          C: { error: '', remediation: '' },
+          D: { error: '', remediation: '' },
+        }
+        for (const [letter, val] of Object.entries(data.distractor_diagnostics)) {
+          if (newDiag[letter]) {
+            newDiag[letter] = {
+              error: val.error || '',
+              remediation: val.remediation || '',
+            }
+          }
+        }
+        updateForm('distractorDiagnostics', newDiag)
+      }
+
+      setAiSuccessMessage('✨ AI generated Explanation and Misconceptions successfully!')
+      setTimeout(() => setAiSuccessMessage(''), 5000)
+    } catch (err) {
+      setFormError(err.message || 'Failed to auto-generate with AI. You can enter them manually.')
+    } finally {
+      setIsGeneratingAI(false)
+    }
+  }
+
   const handleAddQuestion = async (event) => {
     event.preventDefault()
     const topicToSave = topics.find((topic) => String(topic.id) === String(selectedTopicId))
@@ -136,6 +211,18 @@ export default function AdminQuestions() {
       return
     }
 
+    const wrongOptions = ['A', 'B', 'C', 'D'].filter((opt) => opt !== form.answer)
+    const distractorDiagnosticsPayload = {}
+    for (const opt of wrongOptions) {
+      const d = form.distractorDiagnostics?.[opt]
+      if (d?.error?.trim() || d?.remediation?.trim()) {
+        distractorDiagnosticsPayload[opt] = {
+          error: d.error?.trim() || '',
+          remediation: d.remediation?.trim() || '',
+        }
+      }
+    }
+
     setIsSaving(true)
     try {
       const newQuestion = await apiRequest(editingQuestionId ? `/admin/questions/${editingQuestionId}` : '/admin/questions', {
@@ -148,6 +235,8 @@ export default function AdminQuestions() {
           subtopicId: subtopicToSave ? subtopicToSave.id : null,
           grade: Number(form.grade),
           options,
+          explanation: form.explanation?.trim() || null,
+          distractor_diagnostics: Object.keys(distractorDiagnosticsPayload).length ? distractorDiagnosticsPayload : null,
         }),
       })
       setQuestions((previous) => editingQuestionId
@@ -158,6 +247,7 @@ export default function AdminQuestions() {
       setSelectedTopicId(parentTopics[0]?.id ? String(parentTopics[0].id) : '')
       setSelectedSubtopicId('')
       setFormError('')
+      setAiSuccessMessage('')
       setShowAddModal(false)
     } catch (error) {
       setFormError(error.message)
@@ -172,6 +262,7 @@ export default function AdminQuestions() {
     setSelectedTopicId(parentTopics[0]?.id ? String(parentTopics[0].id) : '')
     setSelectedSubtopicId('')
     setFormError('')
+    setAiSuccessMessage('')
     setShowAddModal(true)
   }
 
@@ -179,6 +270,11 @@ export default function AdminQuestions() {
     const topic = topics.find((item) => String(item.id) === String(question.topicId || question.parentTopicId))
     const subtopic = topics.find((item) => String(item.id) === String(question.subtopicId))
     const gradeNumber = Number(question.gradeId || String(question.grade).match(/\d+/)?.[0] || 1)
+    let diag = question.distractor_diagnostics || {}
+    if (typeof diag === 'string') {
+      try { diag = JSON.parse(diag) } catch { diag = {} }
+    }
+
     setForm({
       question: question.question || '',
       subject: question.subject || 'Math',
@@ -193,13 +289,22 @@ export default function AdminQuestions() {
       optionC: question.options?.C || '',
       optionD: question.options?.D || '',
       answer: (question.correctAnswer || 'A').toUpperCase(),
+      explanation: question.explanation || '',
+      distractorDiagnostics: {
+        A: { error: diag.A?.error || '', remediation: diag.A?.remediation || '' },
+        B: { error: diag.B?.error || '', remediation: diag.B?.remediation || '' },
+        C: { error: diag.C?.error || '', remediation: diag.C?.remediation || '' },
+        D: { error: diag.D?.error || '', remediation: diag.D?.remediation || '' },
+      },
     })
     setSelectedTopicId(topic?.id ? String(topic.id) : '')
     setSelectedSubtopicId(subtopic?.id ? String(subtopic.id) : '')
     setEditingQuestionId(question.id)
     setFormError('')
+    setAiSuccessMessage('')
     setShowAddModal(true)
   }
+
 
   const handleDeleteQuestion = (questionId) => {
     setQuestions((previous) => previous.filter((question) => question.id !== questionId))
@@ -667,19 +772,89 @@ export default function AdminQuestions() {
                 ))}
               </div>
 
-              <label className="block max-w-xs">
-                <span className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">Correct Answer</span>
-                <select
-                  value={form.answer}
-                  onChange={(event) => updateForm('answer', event.target.value)}
-                  className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-3.5 py-2.5 text-slate-900 dark:text-white focus:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-500/20 cursor-pointer"
+              {/* Correct Answer & AI Button */}
+              <div className="flex flex-wrap items-end justify-between gap-3 pt-1">
+                <label className="block w-full sm:w-48">
+                  <span className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">Correct Answer</span>
+                  <select
+                    value={form.answer}
+                    onChange={(event) => updateForm('answer', event.target.value)}
+                    className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-3.5 py-2.5 text-sm font-semibold text-slate-900 dark:text-white focus:border-sky-400 focus:outline-none cursor-pointer"
+                  >
+                    <option value="A">Option A</option>
+                    <option value="B">Option B</option>
+                    <option value="C">Option C</option>
+                    <option value="D">Option D</option>
+                  </select>
+                </label>
+
+                <button
+                  type="button"
+                  onClick={handleAutoGenerateAI}
+                  disabled={isGeneratingAI}
+                  className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-sky-500 to-indigo-600 px-4 py-2.5 text-xs font-semibold text-white shadow-sm hover:from-sky-600 hover:to-indigo-700 disabled:opacity-50 transition cursor-pointer"
                 >
-                  <option value="A">Option A</option>
-                  <option value="B">Option B</option>
-                  <option value="C">Option C</option>
-                  <option value="D">Option D</option>
-                </select>
+                  <Sparkles size={14} className={isGeneratingAI ? 'animate-spin' : ''} />
+                  {isGeneratingAI ? 'Generating...' : 'Auto-Fill with AI'}
+                </button>
+              </div>
+
+              {aiSuccessMessage && (
+                <p className="text-xs font-medium text-emerald-600 dark:text-emerald-400">
+                  {aiSuccessMessage}
+                </p>
+              )}
+
+              {/* Explanation Field */}
+              <label className="block">
+                <span className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">
+                  Explanation
+                </span>
+                <textarea
+                  rows="2"
+                  value={form.explanation}
+                  onChange={(event) => updateForm('explanation', event.target.value)}
+                  className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-3.5 py-2 text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:border-sky-400 focus:bg-white dark:focus:bg-slate-800 focus:outline-none"
+                  placeholder="Step-by-step solution..."
+                />
               </label>
+
+              {/* Distractor Diagnostics */}
+              <div className="space-y-2 pt-1">
+                <span className="block text-sm font-medium text-slate-700 dark:text-slate-300">
+                  Wrong Options Feedback
+                </span>
+
+                <div className="grid gap-3 sm:grid-cols-3">
+                  {['A', 'B', 'C', 'D'].filter((opt) => opt !== form.answer).map((option) => (
+                    <div key={option} className="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-800/40 space-y-2">
+                      <span className="text-xs font-bold text-slate-700 dark:text-slate-300 block">
+                        Option {option}
+                      </span>
+                      <input
+                        value={form.distractorDiagnostics?.[option]?.error || ''}
+                        onChange={(e) => updateForm('distractorDiagnostics', {
+                          ...form.distractorDiagnostics,
+                          [option]: { ...form.distractorDiagnostics?.[option], error: e.target.value }
+                        })}
+                        className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-2.5 py-1.5 text-xs text-slate-900 dark:text-white placeholder-slate-400 focus:border-sky-400 focus:outline-none"
+                        placeholder="Student mistake..."
+                      />
+                      <input
+                        value={form.distractorDiagnostics?.[option]?.remediation || ''}
+                        onChange={(e) => updateForm('distractorDiagnostics', {
+                          ...form.distractorDiagnostics,
+                          [option]: { ...form.distractorDiagnostics?.[option], remediation: e.target.value }
+                        })}
+                        className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-2.5 py-1.5 text-xs text-slate-900 dark:text-white placeholder-slate-400 focus:border-sky-400 focus:outline-none"
+                        placeholder="Tip to fix..."
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+
 
               {formError && <p className="text-sm font-medium text-red-500">{formError}</p>}
 

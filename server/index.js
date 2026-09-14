@@ -3,12 +3,18 @@ import express from 'express'
 import cors from 'cors'
 import bcrypt from 'bcryptjs'
 import Stripe from 'stripe'
+import path from 'path'
+import fs from 'fs'
+import { fileURLToPath } from 'url'
 import { checkDatabase, pool } from './db.js'
 import { getStudentCount } from './studentCount.js'
 import { saveStripePaymentRecord } from './paymentStore.js'
 import { generateDiagnosticsWithGemini, generateGeminiQuestions, generateGeminiReport } from './geminiReport.js'
-
 import { isMailConfigured, sendContactEmails } from './mailer.js'
+import { autoSeedDatabaseIfNeeded } from './autoSeed.js'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 const app = express()
 const port = Number(process.env.PORT || 4000)
@@ -81,7 +87,26 @@ function inferQuestionSubtopic(questionText, topic) {
   return matches.find(([pattern]) => pattern.test(text))?.[1] || `${normalizeAssessmentTopic(topic)} Skills`
 }
 
-app.use(cors({ origin: process.env.CLIENT_ORIGIN || 'educheck12.vercel.app' }))
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'http://localhost:4000',
+  'https://educheck12.vercel.app',
+  process.env.CLIENT_ORIGIN,
+].filter(Boolean)
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true)
+      if (allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
+        return callback(null, true)
+      }
+      return callback(null, true)
+    },
+    credentials: true,
+  }),
+)
 app.post('/api/stripe/webhook', express.raw({ type: 'application/json' }), async (request, response) => {
   if (!stripe || !process.env.STRIPE_WEBHOOK_SECRET) {
     return response.status(503).send('Stripe webhook is not configured.')
@@ -107,6 +132,10 @@ app.post('/api/stripe/webhook', express.raw({ type: 'application/json' }), async
   return response.json({ received: true })
 })
 app.use(express.json({ limit: '1mb' }))
+
+app.get('/api', (_request, response) => {
+  response.json({ ok: true, service: 'EduCheck API', status: 'online' })
+})
 
 app.get('/api/contact', async (request, response) => {
   try {
@@ -384,8 +413,8 @@ app.post('/api/create-checkout-session', async (request, response) => {
       mode: 'payment',
       line_items: [{ price_data: { currency: 'pkr', product_data: { name: 'EduCheck Mathematics Assessment' }, unit_amount: 350000 }, quantity: 1 }],
       metadata: { studentId: String(studentId) },
-      success_url: `${process.env.CLIENT_ORIGIN || 'educheck12.vercel.app'}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.CLIENT_ORIGIN || 'educheck12.vercel.app'}/payment`,
+      success_url: `${process.env.CLIENT_ORIGIN || 'http://localhost:5173'}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.CLIENT_ORIGIN || 'http://localhost:5173'}/payment`,
     })
 
     return response.status(201).json({ sessionId: session.id, url: session.url })
@@ -1280,11 +1309,21 @@ app.post('/api/assessment-attempts', async (request, response) => {
       )
     }
 
+    const qIds = questions.map((q) => q.id).filter(Boolean)
+    let dbCorrectAnswers = new Map()
+    if (qIds.length > 0) {
+      const [dbQRows] = await connection.query(
+        'SELECT id, correct_answer FROM questions WHERE id IN (?)',
+        [qIds]
+      )
+      dbCorrectAnswers = new Map(dbQRows.map((r) => [r.id, normalizeAnswer(r.correct_answer)]))
+    }
+
     if (attemptId) {
       for (const question of questions) {
         if (question.id == null) continue
         const selectedAnswer = normalizeAnswer(answers[question.id])
-        const correctAnswer = normalizeAnswer(question.answer)
+        const correctAnswer = dbCorrectAnswers.get(question.id) || normalizeAnswer(question.correct_answer || question.answer || question.correctAnswer || question.correct_option)
         await connection.query(
           `INSERT INTO attempt_answers
            (attempt_id, question_id, selected_answer, correct_answer, is_correct, answered_at)
@@ -1308,7 +1347,8 @@ app.post('/api/assessment-attempts', async (request, response) => {
       const weakSubtopics = new Map()
       for (const question of questions) {
         const selectedAnswer = normalizeAnswer(answers[question.id])
-        if (!selectedAnswer || selectedAnswer === normalizeAnswer(question.answer || question.correctAnswer)) continue
+        const correctAnswer = dbCorrectAnswers.get(question.id) || normalizeAnswer(question.correct_answer || question.answer || question.correctAnswer || question.correct_option)
+        if (!selectedAnswer || selectedAnswer === correctAnswer) continue
         const key = `${question.topic || 'Mathematics'}|||${question.subtopic || 'General'}`
         const current = weakSubtopics.get(key) || { wrong: 0, grade: Number(question.grade) || 1 }
         weakSubtopics.set(key, { wrong: current.wrong + 1, grade: Math.min(current.grade, Number(question.grade) || 1) })
@@ -1332,7 +1372,11 @@ app.post('/api/assessment-attempts', async (request, response) => {
       const selectedAnswer = normalizeAnswer(answers[question.id])
       return selectedAnswer != null
     })
-    const correctAnswers = questions.filter((question) => normalizeAnswer(answers[question.id]) === normalizeAnswer(question.answer)).length
+    const correctAnswers = questions.filter((question) => {
+      const selectedAnswer = normalizeAnswer(answers[question.id])
+      const correctAnswer = dbCorrectAnswers.get(question.id) || normalizeAnswer(question.correct_answer || question.answer || question.correctAnswer || question.correct_option)
+      return selectedAnswer != null && selectedAnswer === correctAnswer
+    }).length
     const totalQuestions = questions.length
 
     const [attemptResult] = await connection.query(
@@ -1344,7 +1388,7 @@ app.post('/api/assessment-attempts', async (request, response) => {
 
     for (const question of questions) {
       const selectedAnswer = normalizeAnswer(answers[question.id])
-      const correctAnswer = normalizeAnswer(question.answer)
+      const correctAnswer = dbCorrectAnswers.get(question.id) || normalizeAnswer(question.correct_answer || question.answer || question.correctAnswer || question.correct_option)
       await connection.query(
         `INSERT INTO attempt_answers
          (attempt_id, question_id, selected_answer, correct_answer, is_correct, answered_at)
@@ -1781,11 +1825,21 @@ app.post('/api/assessment-attempts', async (request, response) => {
       )
     }
 
+    const qIds = questions.map((q) => q.id).filter(Boolean)
+    let dbCorrectAnswers = new Map()
+    if (qIds.length > 0) {
+      const [dbQRows] = await connection.query(
+        'SELECT id, correct_answer FROM questions WHERE id IN (?)',
+        [qIds]
+      )
+      dbCorrectAnswers = new Map(dbQRows.map((r) => [r.id, normalizeAnswer(r.correct_answer)]))
+    }
+
     if (attemptId) {
       for (const question of questions) {
         if (question.id == null) continue
         const selectedAnswer = normalizeAnswer(answers[question.id])
-        const correctAnswer = normalizeAnswer(question.answer)
+        const correctAnswer = dbCorrectAnswers.get(question.id) || normalizeAnswer(question.correct_answer || question.answer || question.correctAnswer || question.correct_option)
         await connection.query(
           `INSERT INTO attempt_answers
            (attempt_id, question_id, selected_answer, correct_answer, is_correct, answered_at)
@@ -1817,7 +1871,11 @@ app.post('/api/assessment-attempts', async (request, response) => {
       const selectedAnswer = normalizeAnswer(answers[question.id])
       return selectedAnswer != null
     })
-    const correctAnswers = questions.filter((question) => normalizeAnswer(answers[question.id]) === normalizeAnswer(question.answer)).length
+    const correctAnswers = questions.filter((question) => {
+      const selectedAnswer = normalizeAnswer(answers[question.id])
+      const correctAnswer = dbCorrectAnswers.get(question.id) || normalizeAnswer(question.correct_answer || question.answer || question.correctAnswer || question.correct_option)
+      return selectedAnswer != null && selectedAnswer === correctAnswer
+    }).length
     const totalQuestions = questions.length
 
     const [attemptResult] = await connection.query(
@@ -1830,7 +1888,7 @@ app.post('/api/assessment-attempts', async (request, response) => {
     for (const question of questions) {
       if (question.id == null) continue
       const selectedAnswer = normalizeAnswer(answers[question.id])
-      const correctAnswer = normalizeAnswer(question.answer)
+      const correctAnswer = dbCorrectAnswers.get(question.id) || normalizeAnswer(question.correct_answer || question.answer || question.correctAnswer || question.correct_option)
       await connection.query(
         `INSERT INTO attempt_answers
          (attempt_id, question_id, selected_answer, correct_answer, is_correct, answered_at)
@@ -2461,13 +2519,23 @@ app.post('/api/assessment-attempts', async (request, response) => {
         }
       }
 
+      const qIds = questions.map((q) => q.id).filter(Boolean)
+      let dbCorrectAnswers = new Map()
+      if (qIds.length > 0) {
+        const [dbQRows] = await connection.query(
+          'SELECT id, correct_answer FROM questions WHERE id IN (?)',
+          [qIds]
+        )
+        dbCorrectAnswers = new Map(dbQRows.map((r) => [r.id, String(r.correct_answer || '').trim().toUpperCase()]))
+      }
+
       let correctAnswers = 0
       let answeredQuestions = 0
       for (const question of questions) {
         if (question.id == null) continue
         const selectedAnswer = String(answers[question.id] || '').trim().toUpperCase() || null
-        const correctAnswer = String(question.answer || question.correctAnswer || 'A').trim().toUpperCase()
-        const isCorrect = selectedAnswer === correctAnswer
+        const correctAnswer = dbCorrectAnswers.get(question.id) || String(question.correct_answer || question.answer || question.correctAnswer || question.correct_option || '').trim().toUpperCase()
+        const isCorrect = Boolean(selectedAnswer && correctAnswer && selectedAnswer === correctAnswer)
         if (selectedAnswer) answeredQuestions += 1
         if (isCorrect) correctAnswers += 1
         await connection.query(
@@ -2614,10 +2682,22 @@ app.delete('/api/admin/subscriptions/:subscriptionId', async (request, response)
   }
 })
 
+const distPath = path.resolve(__dirname, '../dist')
+if (fs.existsSync(distPath)) {
+  app.use(express.static(distPath))
+  app.get('{*splat}', (req, res, next) => {
+    if (req.path.startsWith('/api')) {
+      return next()
+    }
+    res.sendFile(path.join(distPath, 'index.html'))
+  })
+}
+
 if (process.env.VERCEL !== '1') {
 app.listen(port, async () => {
   try {
     await checkDatabase()
+    await autoSeedDatabaseIfNeeded()
     await pool.query(`
       CREATE TABLE IF NOT EXISTS contact_messages (
         id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,

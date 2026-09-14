@@ -169,12 +169,11 @@ export default function Login() {
             </div>
           )}
 
-          <div className={`flex flex-col gap-3 text-sm sm:flex-row sm:items-center sm:justify-between ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
+          <div className={`flex flex-col gap-3 text-sm sm:flex-row sm:items-center sm:justify-start ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
             <label className="flex items-center gap-2">
               <input type="checkbox" className={`h-4 w-4 rounded border ${darkMode ? 'border-slate-600 bg-slate-900 text-sky-400 focus:ring-sky-400' : 'border-slate-300 bg-white text-sky-500 focus:ring-sky-300'}`} />
               Remember me
             </label>
-            <Link to="/" className={`${darkMode ? 'text-sky-300 hover:text-white' : 'text-sky-600 hover:text-sky-700'}`}>Forgot password?</Link>
           </div>
 
           <button

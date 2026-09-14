@@ -46,8 +46,8 @@ function getFoundationAliases(subtopic) {
 function findFoundationalQuestion(questionBank, topic, subtopic, currentGrade, askedIds = [], usedQuestionIds = []) {
   const helperAliases = getFoundationAliases(subtopic)
   const targetGrade = Math.max(1, Number(currentGrade) - 1)
-  const globalUsed = new Set(Array.isArray(usedQuestionIds) ? usedQuestionIds : [])
-  const isUnused = (q) => !askedIds.includes(q.id) && !globalUsed.has(q.id) && q.topic === topic
+  const alreadyAsked = new Set(Array.isArray(askedIds) ? askedIds : [])
+  const isUnused = (q) => !alreadyAsked.has(q.id) && q.topic === topic
 
   const isSameSubtopicOrAlias = (q) => (
     matchesQuestionSubtopic(q, subtopic) ||
@@ -752,20 +752,32 @@ export function calculateAdaptiveTopicGE(questions, answers, targetGrade) {
   const attempted = questions.filter((question) => answers[question.id] !== undefined)
   if (!attempted.length) return null
 
-  const evidence = attempted.map((question) => {
-    const difficultyOffset = { Low: -0.25, Medium: 0, High: 0.25 }[question.difficulty] || 0
-    const gradeEvidence = Number(question.grade) + difficultyOffset
+  const target = Math.max(1, Number(targetGrade) || 8)
+  const maxSpan = Math.max(0, target - 1.0)
+
+  let weightedScore = 0
+  let weightedTotal = 0
+
+  attempted.forEach((question) => {
+    const weight = { Low: 1, Medium: 2, High: 3 }[question.difficulty] || 2
+    weightedTotal += weight
     const expected = question.correct_answer || question.answer || question.correctAnswer || question.correct_option
     const isCorrect = answers[question.id] !== undefined && String(answers[question.id]).trim().toUpperCase() === String(expected || '').trim().toUpperCase()
-    return isCorrect ? gradeEvidence + 0.5 : gradeEvidence - 0.5
+    if (isCorrect) {
+      weightedScore += weight
+    }
   })
-  return Number(clamp(evidence.reduce((sum, value) => sum + value, 0) / evidence.length, 1, targetGrade).toFixed(2))
+
+  const topicAccuracy = weightedTotal > 0 ? weightedScore / weightedTotal : 0
+  const topicGE = 1.0 + topicAccuracy * maxSpan
+  return Number(clamp(topicGE, 1.0, target).toFixed(2))
 }
 
 export function calculateAdaptiveOverallGE(topicResults, targetGrade) {
-  const values = Object.values(topicResults).filter((value) => typeof value === 'number')
+  const values = Object.values(topicResults).filter((value) => typeof value === 'number' && Number.isFinite(value))
   if (!values.length) return null
-  return Number(clamp(values.reduce((sum, value) => sum + value, 0) / values.length, 1, targetGrade).toFixed(2))
+  const target = Math.max(1, Number(targetGrade) || 8)
+  return Number(clamp(values.reduce((sum, value) => sum + value, 0) / values.length, 1.0, target).toFixed(2))
 }
 
 function matchesStrand(questionTopic, selectedStrand) {
@@ -837,38 +849,31 @@ export function createGradeBatchTestState(questionBank, targetGrade, selectedStr
     topics.forEach((topic) => {
       const isTopicMatch = (q) => matchesStrand(q.topic, topic)
 
-      // Separate questions by grade and difficulty, and shuffle each bucket to ensure random variety on retakes
+      // Prioritize questions strictly at the selected targetGrade
       const targetGradeQuestions = questionBank.filter((q) => isTopicMatch(q) && Number(q.grade) === maxGrade && !usedIds.has(q.id))
       const lowerGradeQuestions = questionBank.filter((q) => isTopicMatch(q) && Number(q.grade) < maxGrade && !usedIds.has(q.id))
 
-      const targetLow = shuffleArray(targetGradeQuestions.filter((q) => q.difficulty === 'Low'))
       const targetMed = shuffleArray(targetGradeQuestions.filter((q) => q.difficulty === 'Medium'))
+      const targetLow = shuffleArray(targetGradeQuestions.filter((q) => q.difficulty === 'Low'))
       const targetHigh = shuffleArray(targetGradeQuestions.filter((q) => q.difficulty === 'High'))
 
-      const lowerLow = shuffleArray(lowerGradeQuestions.filter((q) => q.difficulty === 'Low'))
-      const lowerMed = shuffleArray(lowerGradeQuestions.filter((q) => q.difficulty === 'Medium'))
-      const lowerHigh = shuffleArray(lowerGradeQuestions.filter((q) => q.difficulty === 'High'))
+      // Primary pool: strictly target grade questions starting at Medium baseline
+      const primaryTargetPool = [...targetMed, ...targetLow, ...targetHigh]
+      const fallbackLowerPool = shuffleArray(lowerGradeQuestions)
 
-      const poolLow = [...targetLow, ...lowerLow]
-      const poolMed = [...targetMed, ...lowerMed]
-      const poolHigh = [...targetHigh, ...lowerHigh]
-
-      // Balanced difficulty progression: 2 Low, 2 Medium, 2 High
       const picked = []
-      const quotaPerDiff = Math.max(1, Math.floor(questionsPerTopic / 3))
-
-      picked.push(...poolLow.splice(0, quotaPerDiff))
-      picked.push(...poolMed.splice(0, quotaPerDiff))
-      picked.push(...poolHigh.splice(0, quotaPerDiff))
-
-      // If any bucket was short, backfill from remaining shuffled candidates
-      const remainingCombined = [...poolMed, ...poolLow, ...poolHigh]
-      while (picked.length < questionsPerTopic && remainingCombined.length > 0) {
-        picked.push(remainingCombined.shift())
+      // Take up to questionsPerTopic from target grade first
+      while (picked.length < questionsPerTopic && primaryTargetPool.length > 0) {
+        picked.push(primaryTargetPool.shift())
+      }
+      // If target grade runs short, backfill from lower grades
+      while (picked.length < questionsPerTopic && fallbackLowerPool.length > 0) {
+        picked.push(fallbackLowerPool.shift())
       }
 
-      // Sort topic questions adaptively: Low -> Medium -> High
-      picked.sort((a, b) => (diffOrder[a.difficulty] || 2) - (diffOrder[b.difficulty] || 2))
+      // Sort topic questions adaptively: Medium first (baseline), then Low, then High
+      const startingOrder = { Medium: 1, Low: 2, High: 3 }
+      picked.sort((a, b) => (startingOrder[a.difficulty] || 2) - (startingOrder[b.difficulty] || 2))
 
       picked.forEach((q) => usedIds.add(q.id))
       topicPools[topic] = picked
@@ -885,7 +890,7 @@ export function createGradeBatchTestState(questionBank, targetGrade, selectedStr
 
     if (initialPool.length < questionLimit) {
       const remainingQuestions = shuffleArray(
-        questionBank.filter((question) => Number(question.grade) <= maxGrade && !usedIds.has(question.id))
+        questionBank.filter((question) => Number(question.grade) === maxGrade && !usedIds.has(question.id))
       )
       for (const question of remainingQuestions) {
         if (initialPool.length >= questionLimit) break
@@ -897,13 +902,13 @@ export function createGradeBatchTestState(questionBank, targetGrade, selectedStr
     // Specific strand selected by student
     const isTopicMatch = (q) => matchesStrand(q.topic, selectedStrand)
 
-    const targetLow = shuffleArray(questionBank.filter((q) => isTopicMatch(q) && Number(q.grade) === maxGrade && q.difficulty === 'Low'))
     const targetMed = shuffleArray(questionBank.filter((q) => isTopicMatch(q) && Number(q.grade) === maxGrade && q.difficulty === 'Medium'))
+    const targetLow = shuffleArray(questionBank.filter((q) => isTopicMatch(q) && Number(q.grade) === maxGrade && q.difficulty === 'Low'))
     const targetHigh = shuffleArray(questionBank.filter((q) => isTopicMatch(q) && Number(q.grade) === maxGrade && q.difficulty === 'High'))
 
     const lowerQuestions = shuffleArray(questionBank.filter((q) => isTopicMatch(q) && Number(q.grade) < maxGrade))
 
-    const combined = [...targetLow, ...targetMed, ...targetHigh, ...lowerQuestions]
+    const combined = [...targetMed, ...targetLow, ...targetHigh, ...lowerQuestions]
     initialPool = combined.slice(0, questionLimit)
     if (initialPool.length < questionLimit) {
       const remaining = shuffleArray(questionBank.filter((q) => isTopicMatch(q) && !initialPool.some(p => p.id === q.id)))
@@ -917,10 +922,11 @@ export function createGradeBatchTestState(questionBank, targetGrade, selectedStr
     selectedStrand,
     targetGrade: maxGrade,
     batchGrade: maxGrade,
-    currentDifficulty: 'Low',
+    currentDifficulty: 'Medium',
     batchQuestionCount: 0,
     batchCorrect: 0,
     batchWrong: 0,
+    askedIds: [],
     questions: initialPool,
     usedQuestionIds: initialPool.map((question) => question.id),
     maxBudget: questionLimit,
@@ -938,6 +944,7 @@ export function advanceGradeBatchTest(state, questionBank, currentQuestion, sele
   const batchQuestionCount = Number(state.batchQuestionCount || 0) + 1
   const batchCorrect = Number(state.batchCorrect || 0) + (isCorrect ? 1 : 0)
   const batchWrong = Number(state.batchWrong || 0) + (isCorrect ? 0 : 1)
+  const askedIds = [...new Set([...(state.askedIds || []), currentQuestion.id])]
   const usedQuestionIds = [...new Set([...(state.usedQuestionIds || []), currentQuestion.id])]
   const subtopic = currentQuestion.subtopic || currentQuestion.topic
   const currentGrade = Number(currentQuestion.grade) || state.targetGrade || 8
@@ -945,10 +952,10 @@ export function advanceGradeBatchTest(state, questionBank, currentQuestion, sele
   let weakPoints = [...(state.weakPoints || [])]
   let strongPoints = [...(state.strongPoints || [])]
   let questions = [...(state.questions || [])]
-  let nextDifficulty = state.currentDifficulty || 'Low'
+  let nextDifficulty = state.currentDifficulty || 'Medium'
 
   if (isCorrect) {
-    // Difficulty increases: Low -> Medium -> High
+    // Difficulty progression: Low -> Medium -> High
     if (nextDifficulty === 'Low') nextDifficulty = 'Medium'
     else if (nextDifficulty === 'Medium') nextDifficulty = 'High'
     else if (nextDifficulty === 'High') {
@@ -957,36 +964,56 @@ export function advanceGradeBatchTest(state, questionBank, currentQuestion, sele
       }
     }
   } else {
-    // Student answered wrong at current grade!
-    // Search immediate lower grade (e.g. Grade 7 if currentGrade is 8) for the exact same subtopic
-    const foundationalQ = findFoundationalQuestion(
-      questionBank,
-      currentQuestion.topic,
-      subtopic,
-      currentGrade,
-      usedQuestionIds,
-      usedQuestionIds
-    )
+    // Student answered WRONG
+    if (currentQuestion.difficulty === 'High') {
+      // 1. If student fails a High (advanced) question, stay at current selected grade and drop to Medium
+      nextDifficulty = 'Medium'
+      const sameGradeMed = questionBank.find(
+        (q) => !usedQuestionIds.includes(q.id) &&
+          Number(q.grade) === currentGrade &&
+          q.topic === currentQuestion.topic &&
+          q.difficulty === 'Medium' &&
+          matchesQuestionSubtopic(q, subtopic)
+      ) || questionBank.find(
+        (q) => !usedQuestionIds.includes(q.id) &&
+          Number(q.grade) === currentGrade &&
+          q.topic === currentQuestion.topic &&
+          q.difficulty === 'Medium'
+      )
 
-    if (foundationalQ) {
-      // Inject this foundational question as the immediate next question in the test
-      const currentIndex = questions.findIndex(q => q.id === currentQuestion.id)
-      const insertionIndex = currentIndex >= 0 ? currentIndex + 1 : questions.length
-      
-      // Remove this question if already in list later
-      questions = questions.filter(q => q.id !== foundationalQ.id)
-      questions.splice(insertionIndex, 0, foundationalQ)
-      usedQuestionIds.push(foundationalQ.id)
-      
-      // Difficulty drops to check foundational understanding
-      nextDifficulty = 'Low'
+      if (sameGradeMed) {
+        const currentIndex = questions.findIndex((q) => q.id === currentQuestion.id)
+        const insertionIndex = currentIndex >= 0 ? currentIndex + 1 : questions.length
+        questions = questions.filter((q) => q.id !== sameGradeMed.id)
+        questions.splice(insertionIndex, 0, sameGradeMed)
+        usedQuestionIds.push(sameGradeMed.id)
+      }
     } else {
-      nextDifficulty = 'Low'
-    }
+      // 2. If student fails Medium or Low, search immediate lower grade (currentGrade - 1) for the EXACT SAME SUBTOPIC
+      const foundationalQ = findFoundationalQuestion(
+        questionBank,
+        currentQuestion.topic,
+        subtopic,
+        currentGrade,
+        askedIds,
+        askedIds
+      )
 
-    // Record as weak point if already at or below targetGrade
-    if (!weakPoints.includes(subtopic)) {
-      weakPoints.push(subtopic)
+      if (foundationalQ) {
+        const currentIndex = questions.findIndex((q) => q.id === currentQuestion.id)
+        const insertionIndex = currentIndex >= 0 ? currentIndex + 1 : questions.length
+        questions = questions.filter((q) => q.id !== foundationalQ.id)
+        questions.splice(insertionIndex, 0, foundationalQ)
+        usedQuestionIds.push(foundationalQ.id)
+        nextDifficulty = 'Low'
+      } else {
+        nextDifficulty = 'Low'
+      }
+
+      // Record subtopic in weak points for remediation
+      if (!weakPoints.includes(subtopic)) {
+        weakPoints.push(subtopic)
+      }
     }
   }
 
@@ -1003,9 +1030,10 @@ export function advanceGradeBatchTest(state, questionBank, currentQuestion, sele
     batchQuestionCount,
     batchCorrect,
     batchWrong,
-    currentDifficulty: nextDifficulty,
+    askedIds,
     usedQuestionIds,
     questions,
+    currentDifficulty: nextDifficulty,
     weakPoints,
     strongPoints,
     assessmentComplete,

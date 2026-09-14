@@ -297,3 +297,40 @@ Count: ${count}`
     answer: String(question.answer || 'A').toUpperCase(),
   }))
 }
+
+export async function generateDiagnosticsWithGemini({ question, grade, subject = 'Math', topic = 'Mathematics', options = {}, answer = 'A' }) {
+  const normAnswer = String(answer || 'A').toUpperCase()
+  const wrongOptions = ['A', 'B', 'C', 'D'].filter(opt => opt !== normAnswer)
+
+  const prompt = `You are an expert K-8 educational psychologist and mathematics curriculum specialist.
+Analyze this Grade ${grade} ${subject} question (${topic}):
+Question: ${question}
+Options:
+A: ${options.A || ''}
+B: ${options.B || ''}
+C: ${options.C || ''}
+D: ${options.D || ''}
+Correct Answer: Option ${normAnswer} (${options[normAnswer] || ''})
+
+Generate:
+1. "explanation": A clear, student-friendly step-by-step mathematical explanation showing why Option ${normAnswer} is correct.
+2. "distractor_diagnostics": For each WRONG option (${wrongOptions.join(', ')}), describe the exact misconception or calculation mistake a student made to choose that option, and provide a constructive remediation tip.
+
+Return ONLY a valid JSON object matching this schema:
+{
+  "explanation": "Step-by-step solution...",
+  "distractor_diagnostics": {
+    "${wrongOptions[0]}": { "error": "Short description of misconception", "remediation": "Brief actionable tip to fix this mistake" },
+    "${wrongOptions[1]}": { "error": "Short description of misconception", "remediation": "Brief actionable tip to fix this mistake" },
+    "${wrongOptions[2]}": { "error": "Short description of misconception", "remediation": "Brief actionable tip to fix this mistake" }
+  }
+}`
+
+  const raw = await requestGemini(prompt)
+  const result = extractJson(raw)
+  return {
+    explanation: String(result.explanation || '').trim(),
+    distractor_diagnostics: result.distractor_diagnostics || {}
+  }
+}
+

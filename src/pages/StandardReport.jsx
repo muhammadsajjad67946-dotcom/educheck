@@ -65,9 +65,11 @@ export default function StandardReport({ downloadOnly = false }) {
   const targetGradeNum = Number(report.selectedGrade || String(user?.grade || '').match(/\d+/)?.[0] || 1)
   const rawReportGrade = report.demonstratedMathLevel
   const fallbackGrade = totalQuestions ? 1.0 + (overallAccuracy / 100) * Math.max(0, targetGradeNum - 1) : 1.0
-  const demonstratedMathLevel = Number(
-    (rawReportGrade && Number(rawReportGrade) >= 1.0 ? Number(rawReportGrade) : fallbackGrade).toFixed(1)
-  )
+  const isOldInflated = rawReportGrade && overallAccuracy < 60 && Number(rawReportGrade) > (fallbackGrade + 1.0)
+  const effectiveReportGrade = isOldInflated
+    ? fallbackGrade
+    : (rawReportGrade && Number(rawReportGrade) >= 1.0 ? Number(rawReportGrade) : fallbackGrade)
+  const demonstratedMathLevel = Number(effectiveReportGrade.toFixed(1))
 
   const handleDownload = () => {
     try {

@@ -692,8 +692,6 @@ export function generateCompleteAssessmentResult(allQuestions, answers, selected
   const accuracyBasedGE = accuracy > 0 ? 1.0 + accuracy * (gradeNum - 1.0) : 1.0
   const finalDemonstratedLevel = adaptiveOverall !== null && Number.isFinite(adaptiveOverall) && adaptiveOverall >= 1.0
     ? clamp(adaptiveOverall, 1.0, gradeNum)
-    : overallGradeLevel >= 1.0
-    ? clamp(overallGradeLevel, 1.0, gradeNum)
     : clamp(accuracyBasedGE, 1.0, gradeNum)
 
   const overallGradeEquivalent = parseFloat(finalDemonstratedLevel.toFixed(2))

@@ -5,27 +5,27 @@ import { useApp } from '../context/AppContext'
 const services = [
   {
     icon: BrainCircuit,
-    title: 'Adaptive Diagnostic Assessment',
-    description: 'Dynamic testing starting directly at the student’s target grade (e.g. Grade 8), branching Low ➔ Medium ➔ High to measure true ability level.',
-    features: ['Multi-Topic Diagnostic Coverage', 'Dynamic Difficulty Engine', 'Grade 7 Foundational Tracing'],
+    title: 'Personalized Smart Quizzes',
+    description: 'Questions adapt naturally to your child’s pace. Never overwhelming, never boring — keeping math fun and engaging.',
+    features: ['Grade 1 to 8 tailored', 'Adapts to their comfort', 'Zero exam stress'],
   },
   {
     icon: Sparkles,
-    title: 'Gemini AI Step-by-Step Guidance',
-    description: 'Instant contextual AI explanations for every mistake: "Here is how to solve this correctly: Step 1... Step 2... The correct option is X".',
-    features: ['Step-by-Step Solutions', 'Root Misconception Analysis', 'Remediation Steps'],
+    title: 'Patient AI Math Helper',
+    description: 'Whenever a mistake happens, our AI gently explains how to solve it step-by-step, just like a patient private tutor.',
+    features: ['Simple explanations', 'Explains "Why" clearly', 'Encouraging tone'],
   },
   {
     icon: ChartNoAxesCombined,
-    title: 'Demonstrated Grade & Matrix',
-    description: 'Accurate calculation of true math grade level vs chosen target grade, supported by complete subtopic tick/cross breakdown tables.',
-    features: ['Actual Math Level Calculation', 'High Diagnostic Confidence', 'Subtopic Tick/Cross Matrix'],
+    title: 'True Learning Progress',
+    description: 'See your child’s actual learning level compared to their class, helping you spot weak concepts and celebrate real growth.',
+    features: ['Real grade readiness', 'Catches gaps early', 'Clear learning roadmap'],
   },
   {
     icon: ClipboardCheck,
-    title: 'Comprehensive PDF Reports',
-    description: 'Instant downloadable Summary and Detailed Subtopic PDF sheets for offline review by students, parents, and private tutors.',
-    features: ['Summary PDF Download', 'Detailed Subtopic PDF Sheet', 'Instant Print Format'],
+    title: 'Easy-to-Read Reports',
+    description: 'Download colorful, simple PDF summaries anytime to track milestones or share directly with your child’s school teachers.',
+    features: ['1-Click PDF download', 'Parent-friendly view', 'Great for teacher review'],
   },
 ]
 
@@ -33,60 +33,62 @@ export default function Services() {
   const { darkMode } = useApp()
 
   return (
-    <div className={`mx-auto max-w-7xl px-4 py-8 md:px-8 space-y-12 transition-colors duration-300 ${darkMode ? 'text-slate-100' : 'text-slate-900'}`}>
+    <div className={`mx-auto max-w-7xl px-4 py-6 md:px-8 space-y-8 transition-colors duration-300 ${darkMode ? 'text-slate-100' : 'text-slate-900'}`}>
       {/* Header Card */}
-      <section className={`rounded-4xl border p-8 md:p-12 lg:p-14 shadow-2xl backdrop-blur-2xl transition-colors duration-300 ${
+      <section className={`rounded-3xl border p-6 sm:p-8 md:p-10 shadow-xl backdrop-blur-2xl transition-colors duration-300 ${
         darkMode ? 'border-white/10 bg-slate-950/70 shadow-slate-950/80' : 'border-slate-200 bg-white shadow-slate-200/50'
       }`}>
-        <div className="mx-auto flex max-w-3xl flex-col items-center text-center space-y-5">
-          <div className={`inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-bold uppercase tracking-widest ${
+        <div className="mx-auto flex max-w-2xl flex-col items-center text-center space-y-4">
+          <div className={`inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1 text-xs font-bold uppercase tracking-wider ${
             darkMode ? 'border-violet-400/30 bg-violet-500/10 text-violet-300' : 'border-violet-300 bg-violet-50 text-violet-700'
           }`}>
-            <Sparkles size={14} />
-            Our Core Services
+            <Sparkles size={13} />
+            What We Offer
           </div>
-          <h1 className="text-3xl font-extrabold sm:text-4xl md:text-5xl">
-            Built to Support Smarter{' '}
+          <h1 className="text-2xl font-extrabold sm:text-3xl md:text-4xl">
+            Everything Your Child Needs to{' '}
             <span className="bg-gradient-to-r from-sky-400 via-cyan-400 to-violet-500 bg-clip-text text-transparent">
-              Math Learning.
+              Truly Understand & Enjoy Math.
             </span>
           </h1>
-          <p className={`text-base sm:text-lg leading-relaxed ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
-            From intelligent adaptive diagnostic assessments to instant Gemini AI step-by-step tutoring guidance, EduCheck provides the complete toolset for academic success.
+          <p className={`text-sm sm:text-base leading-relaxed ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
+            No pressure, no complicated jargon. Just gentle quizzes, patient step-by-step guidance, and clear insights so your child always feels encouraged to learn.
           </p>
 
-          <div className="pt-2">
+          <div className="pt-1">
             <Link
               to="/start-test"
-              className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-sky-500 via-cyan-500 to-violet-600 px-8 py-4 text-base font-bold text-white shadow-xl shadow-sky-500/25 transition duration-300 hover:scale-105 active:scale-95 hover:shadow-sky-500/40"
+              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-sky-500 via-cyan-500 to-violet-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-sky-500/20 transition duration-300 hover:scale-105 active:scale-95 hover:shadow-sky-500/30"
             >
-              Start Assessment
-              <ArrowRight size={18} />
+              Start Free Assessment
+              <ArrowRight size={16} />
             </Link>
           </div>
         </div>
 
-        {/* 4 Service Cards Grid */}
-        <div className="mt-12 grid gap-6 md:grid-cols-2">
+        {/* 4 Compact Service Cards Grid */}
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {services.map(({ icon: Icon, title, description, features: cardFeatures }) => (
             <div
               key={title}
-              className={`rounded-3xl border p-7 shadow-lg transition duration-300 hover:-translate-y-1 ${
+              className={`flex flex-col justify-between rounded-2xl border p-5 shadow-sm transition duration-300 hover:-translate-y-1 ${
                 darkMode
                   ? 'border-white/10 bg-slate-900/60 hover:border-sky-400/40 hover:bg-slate-900/80'
-                  : 'border-slate-200 bg-slate-50/80 hover:border-sky-300 hover:bg-white hover:shadow-xl'
+                  : 'border-slate-200/90 bg-slate-50/70 hover:border-sky-300 hover:bg-white hover:shadow-md'
               }`}
             >
-              <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-500/20 to-violet-500/20 text-sky-400 shadow-sm">
-                <Icon size={26} />
+              <div>
+                <div className="mb-3.5 flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-sky-500/15 to-violet-500/15 text-sky-400 shadow-xs">
+                  <Icon size={20} />
+                </div>
+                <h2 className="text-base font-bold text-slate-900 dark:text-white">{title}</h2>
+                <p className={`mt-1.5 text-xs leading-relaxed ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>{description}</p>
               </div>
-              <h2 className="text-xl font-bold">{title}</h2>
-              <p className={`mt-2 text-sm leading-relaxed ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>{description}</p>
 
-              <div className="mt-5 space-y-2 border-t pt-4 dark:border-white/10 border-slate-200">
+              <div className="mt-4 space-y-1.5 border-t pt-3 dark:border-white/10 border-slate-200/80">
                 {cardFeatures.map((feat) => (
-                  <div key={feat} className="flex items-center gap-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
-                    <CheckCircle2 size={14} className="text-emerald-500 shrink-0" />
+                  <div key={feat} className="flex items-center gap-1.5 text-[11px] font-medium text-slate-500 dark:text-slate-400">
+                    <CheckCircle2 size={13} className="text-emerald-500 shrink-0" />
                     <span>{feat}</span>
                   </div>
                 ))}
@@ -98,3 +100,4 @@ export default function Services() {
     </div>
   )
 }
+

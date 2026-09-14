@@ -9,7 +9,7 @@ export default defineConfig({
   ],
   server: {
     proxy: {
-      '/api': 'educheck12.vercel.app',
+      '/api': 'http://localhost:4000',
     },
   },
 })

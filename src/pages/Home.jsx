@@ -6,29 +6,29 @@ import { useApp } from '../context/AppContext'
 
 const howItWorks = [
   {
-    title: 'Sign Up & Select Grade',
-    description: 'Select your target grade (e.g. Grade 8). Test directly starts at your target syllabus level.',
+    title: 'Pick Your Grade (1–8)',
+    description: 'Select your child’s current grade. The assessment immediately personalizes questions to match their school syllabus.',
     icon: UserPlus,
     gradient: 'from-amber-400 via-orange-500 to-rose-500',
     shadow: 'shadow-orange-500/25',
   },
   {
-    title: 'Take 30 Adaptive MCQs',
-    description: 'Dynamic difficulty adjusts Low ➔ Medium ➔ High. Wrong answers trace lower grade subtopics.',
+    title: 'Interactive Smart Quiz',
+    description: 'Questions adjust naturally to their answers, never too overwhelming, never too boring, keeping learning fun and motivating.',
     icon: Brain,
     gradient: 'from-cyan-400 via-sky-500 to-blue-600',
     shadow: 'shadow-sky-500/25',
   },
   {
-    title: 'Weak Point Identification',
-    description: 'System pinpoints the exact foundational gap (e.g. Grade 7 topics) causing the hurdle.',
+    title: 'Find Hidden Learning Gaps',
+    description: 'Instead of just saying right or wrong, EduCheck gently discovers the exact earlier concepts that need a little extra practice.',
     icon: Target,
     gradient: 'from-emerald-400 via-teal-500 to-green-600',
     shadow: 'shadow-teal-500/25',
   },
   {
-    title: 'Gemini AI Step-by-Step Report',
-    description: 'Get instant explanations: "Here is how to solve this correctly: Step 1... Step 2...", with PDF reports.',
+    title: 'Friendly AI Guidance & Report',
+    description: 'Get clear, encouraging step-by-step explanations for every mistake, plus an easy-to-read PDF report for parents and teachers.',
     icon: FileText,
     gradient: 'from-violet-400 via-purple-500 to-indigo-600',
     shadow: 'shadow-purple-500/25',
@@ -38,33 +38,34 @@ const howItWorks = [
 const features = [
   {
     icon: Brain,
-    title: 'Adaptive Assessment Engine',
-    description: 'Starts at student target grade and branches down to foundational grades when errors occur to find true level.',
+    title: 'Adaptive Learning Path',
+    description: 'Just like a patient tutor, our smart test adjusts in real time to match each student’s unique pace and true capability.',
     gradient: 'from-pink-500 via-rose-500 to-red-500',
     shadow: 'shadow-rose-500/25',
   },
   {
     icon: Sparkles,
-    title: 'Gemini AI Explanations',
-    description: 'Sample-based step-by-step walkthroughs for every mistake explaining what went wrong and how to fix it.',
+    title: 'Friendly AI Explanations',
+    description: 'Warm, easy-to-understand solutions that show students how to solve problems step-by-step without feeling discouraged.',
     gradient: 'from-violet-500 via-purple-500 to-indigo-500',
     shadow: 'shadow-violet-500/25',
   },
   {
     icon: TrendingUp,
-    title: 'Demonstrated Grade Level',
-    description: 'Calculates the real mathematical competence level (e.g. Grade 6.8 vs Grade 8 target) with high confidence.',
+    title: 'Real Grade Readiness',
+    description: 'Discover your child’s actual learning level and see exactly how ready they are for their current school curriculum.',
     gradient: 'from-teal-400 via-emerald-500 to-green-600',
     shadow: 'shadow-emerald-500/25',
   },
   {
     icon: Lightbulb,
-    title: 'Subtopic Tick / Cross Matrix',
-    description: 'Exhaustive syllabus matrix showing exactly which subtopics are mastered and which need remediation.',
+    title: 'Topic Mastery Breakdown',
+    description: 'A visual, easy-to-read overview showing which math skills your child has mastered and where they can shine next.',
     gradient: 'from-amber-400 via-yellow-500 to-orange-500',
     shadow: 'shadow-amber-500/25',
   },
 ]
+
 
 export default function Home() {
   const { darkMode } = useApp()
@@ -85,7 +86,7 @@ export default function Home() {
               darkMode ? 'border-sky-400/30 bg-sky-500/10 text-sky-300' : 'border-sky-300 bg-sky-50 text-sky-700'
             }`}>
               <Sparkles size={16} className="animate-spin-slow text-sky-400" />
-              <span>ADAPTIVE DIAGNOSTIC ASSESSMENT ENGINE</span>
+              <span>SMART MATH ASSESSMENT FOR GRADES 1–8</span>
             </div>
 
             <h1 className="text-3xl font-black leading-tight tracking-tight sm:text-5xl lg:text-6xl">
@@ -94,12 +95,12 @@ export default function Home() {
               </span>
               <br />
               <span className={darkMode ? 'text-white' : 'text-slate-900'}>
-                Actual Math Weak Points.
+                True Math Potential.
               </span>
             </h1>
 
             <p className={`max-w-xl text-base leading-relaxed sm:text-lg ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
-              EduCheck adapts dynamically to your learning speed. Starting straight at your target grade (e.g. Grade 8), it pinpoints lower-grade foundational gaps and provides <strong>Gemini AI step-by-step guidance</strong> for every mistake.
+              Every student learns at their own pace. EduCheck meets your child right at their grade level, gently uncovers the foundational concepts holding them back, and provides friendly step-by-step guidance so they can master math with confidence.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
@@ -107,7 +108,7 @@ export default function Home() {
                 to="/register"
                 className="inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-sky-500 via-cyan-500 to-violet-600 px-7 py-4 text-base font-bold text-white shadow-xl shadow-sky-500/30 transition duration-300 hover:scale-105 active:scale-95"
               >
-                Start Diagnostic Test
+                Start Free Diagnostic
                 <ArrowRight size={18} />
               </Link>
               <Link
@@ -124,15 +125,15 @@ export default function Home() {
             <div className="grid grid-cols-2 gap-4 pt-4 sm:grid-cols-3">
               <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
                 <CheckCircle2 size={16} className="text-emerald-500 shrink-0" />
-                <span>Target Grade 8 Start</span>
+                <span>Personalized for Grades 1–8</span>
               </div>
               <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
                 <CheckCircle2 size={16} className="text-sky-500 shrink-0" />
-                <span>Grade 7 Gap Tracing</span>
+                <span>Traces Learning Gaps</span>
               </div>
               <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
                 <CheckCircle2 size={16} className="text-violet-500 shrink-0" />
-                <span>Gemini AI Solutions</span>
+                <span>Friendly AI Solutions</span>
               </div>
             </div>
           </div>
@@ -142,7 +143,7 @@ export default function Home() {
             <div className="relative w-full max-w-lg overflow-hidden rounded-3xl transition-all duration-300 hover:scale-[1.01]">
               <img
                 src={educheckImage}
-                alt="EduCheck Grades 1-8 Math Foundation Analysis"
+                alt="EduCheck Grades 1-8 Math Learning"
                 className="w-full h-auto object-contain rounded-3xl shadow-2xl animate-float"
               />
             </div>
@@ -156,15 +157,15 @@ export default function Home() {
           <div className={`inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-bold uppercase tracking-widest ${
             darkMode ? 'border-sky-400/30 bg-sky-500/10 text-sky-400' : 'border-sky-300 bg-sky-50 text-sky-700'
           }`}>
-            <span>Intelligent Workflow</span>
+            <span>Simple & Easy</span>
           </div>
           <h2 className="mt-3 text-3xl font-extrabold sm:text-4xl">
             <span className="bg-gradient-to-r from-sky-500 via-cyan-500 to-violet-600 bg-clip-text text-transparent">
-              4 Simple Steps to Identify Weak Points
+              4 Easy Steps to Build Strong Math Skills
             </span>
           </h2>
           <p className={`mt-3 text-base sm:text-lg leading-relaxed ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
-            How our adaptive algorithm tests your target syllabus, traces foundational gaps, and explains mistakes step-by-step.
+            See how our friendly adaptive quiz helps students find their weak spots and learn from every mistake.
           </p>
         </div>
 
@@ -200,17 +201,18 @@ export default function Home() {
           <div className={`inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-bold uppercase tracking-widest ${
             darkMode ? 'border-violet-400/30 bg-violet-500/10 text-violet-400' : 'border-violet-300 bg-violet-50 text-violet-700'
           }`}>
-            <span>Core Capabilities</span>
+            <span>Why Families Love Us</span>
           </div>
           <h2 className="mt-3 text-3xl font-extrabold sm:text-4xl">
             <span className="bg-gradient-to-r from-sky-500 via-indigo-500 to-violet-600 bg-clip-text text-transparent">
-              Engineered for Diagnostics & Rapid Remediation
+              Designed to Build Lifelong Confidence in Math
             </span>
           </h2>
           <p className={`mt-3 text-base sm:text-lg leading-relaxed ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
-            Built specifically to answer: "Where did the student make a mistake and what foundational step fixes it?"
+            We don't just grade answers — we give students the clarity, encouragement, and foundational tools to genuinely improve.
           </p>
         </div>
+
 
         <div className="mx-auto grid max-w-6xl gap-6 sm:grid-cols-2 md:grid-cols-4">
           {features.map((feature) => (
