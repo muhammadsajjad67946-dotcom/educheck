@@ -54,23 +54,37 @@ class ModalErrorBoundary extends React.Component {
   }
 }
 
-function PaymentForm({ amountFormatted = 'PKR 3,500', onSuccess, onError }) {
+function PaymentForm({ amountFormatted = 'PKR 3,500', onSuccess, onError, clientSecret, onFallbackCheckout }) {
   const stripe = useStripe()
   const elements = useElements()
   const [processing, setProcessing] = useState(false)
+  const [elementReady, setElementReady] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
   const [succeeded, setSucceeded] = useState(false)
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    if (!stripe || !elements) return
+    if (!stripe || !elements || !elementReady) {
+      setErrorMessage('Please wait for the payment form to finish loading.')
+      return
+    }
 
     setProcessing(true)
     setErrorMessage('')
 
     try {
+      // 1. Submit and validate Elements form inputs
+      const { error: submitError } = await elements.submit()
+      if (submitError) {
+        setErrorMessage(submitError.message || 'Please complete all required card fields.')
+        setProcessing(false)
+        return
+      }
+
+      // 2. Confirm the payment with mounted elements and clientSecret
       const result = await stripe.confirmPayment({
         elements,
+        clientSecret,
         redirect: 'if_required',
       })
 
@@ -115,7 +129,10 @@ function PaymentForm({ amountFormatted = 'PKR 3,500', onSuccess, onError }) {
   return (
     <form onSubmit={handleSubmit} className="mt-4 space-y-5">
       <div className="rounded-2xl border border-white/10 bg-slate-900/60 p-4">
-        <PaymentElement options={{ layout: 'tabs' }} />
+        <PaymentElement
+          options={{ layout: 'tabs' }}
+          onReady={() => setElementReady(true)}
+        />
       </div>
 
       {errorMessage && (
@@ -126,10 +143,15 @@ function PaymentForm({ amountFormatted = 'PKR 3,500', onSuccess, onError }) {
 
       <button
         type="submit"
-        disabled={!stripe || processing}
+        disabled={!stripe || !elements || !elementReady || processing}
         className="w-full flex items-center justify-center gap-2.5 rounded-2xl bg-gradient-to-r from-sky-500 via-cyan-500 to-indigo-600 px-6 py-3.5 text-base font-bold text-white shadow-lg shadow-sky-500/25 transition hover:scale-[1.01] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer"
       >
-        {processing ? (
+        {!elementReady ? (
+          <>
+            <Loader2 size={18} className="animate-spin" />
+            <span>Loading Secure Card Form...</span>
+          </>
+        ) : processing ? (
           <>
             <Loader2 size={18} className="animate-spin" />
             <span>Processing Payment...</span>
@@ -141,6 +163,18 @@ function PaymentForm({ amountFormatted = 'PKR 3,500', onSuccess, onError }) {
           </>
         )}
       </button>
+
+      {onFallbackCheckout && (
+        <div className="text-center pt-1">
+          <button
+            type="button"
+            onClick={onFallbackCheckout}
+            className="text-xs text-sky-400 hover:text-sky-300 underline inline-flex items-center gap-1 cursor-pointer bg-transparent border-0"
+          >
+            <ExternalLink size={12} /> Having trouble with card entry? Pay via Stripe Hosted Checkout
+          </button>
+        </div>
+      )}
 
       <div className="flex items-center justify-center text-xs text-slate-400 pt-1">
         <span className="flex items-center gap-1.5">
@@ -335,6 +369,8 @@ export default function InAppPaymentModal({ isOpen, onClose, onPaymentComplete }
               <PaymentForm
                 amountFormatted="PKR 3,500"
                 onSuccess={handleSuccess}
+                clientSecret={clientSecret}
+                onFallbackCheckout={handleFallbackCheckout}
               />
             </Elements>
           ) : null}
