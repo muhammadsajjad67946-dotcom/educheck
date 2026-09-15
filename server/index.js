@@ -2611,9 +2611,11 @@ app.get('/api/assessment-attempts/:attemptId/answers', async (request, response)
               aa.correct_answer as correctAnswer, aa.is_correct as isCorrect, 
               aa.answered_at as answeredAt, 
               q.option_a, q.option_b, q.option_c, q.option_d,
-              q.difficulty, s.name as subject
+              q.difficulty, q.grade, t.name as topic, q.subtopic_name as subtopic,
+              q.explanation, s.name as subject
        FROM attempt_answers aa
        JOIN questions q ON q.id = aa.question_id
+       LEFT JOIN topics t ON t.id = q.topic_id
        LEFT JOIN subjects s ON s.id = q.subject_id
        WHERE aa.attempt_id = ?
        ORDER BY aa.answered_at`,
@@ -2622,6 +2624,7 @@ app.get('/api/assessment-attempts/:attemptId/answers', async (request, response)
     
     const formattedAnswers = answers.map(a => ({
       ...a,
+      id: a.questionId,
       isCorrect: Boolean(a.isCorrect),
       options: {
         A: a.option_a,

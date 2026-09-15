@@ -27,18 +27,73 @@ export default function SummaryReport() {
   const [profileAge, setProfileAge] = useState('')
   const [activeFilter, setActiveFilter] = useState('wrong')
   const [expandedQuestions, setExpandedQuestions] = useState({})
+  const [dbAttemptData, setDbAttemptData] = useState(null)
 
   const latestAssessment = assessmentResult || assessmentHistory?.[assessmentHistory.length - 1] || null
 
+  useEffect(() => {
+    const attemptId = latestAssessment?.id || latestAssessment?.assessmentAttemptId
+    if (attemptId && (!latestAssessment?.questions || latestAssessment.questions.length === 0)) {
+      apiRequest(`/assessment-attempts/${attemptId}/answers`)
+        .then((answersList) => {
+          if (Array.isArray(answersList) && answersList.length > 0) {
+            const reconstructedQuestions = answersList.map((a) => ({
+              id: a.questionId,
+              questionId: a.questionId,
+              grade: a.grade,
+              topic: a.topic || a.subject || 'General',
+              subtopic: a.subtopic || 'General',
+              question: a.question,
+              options: a.options,
+              answer: a.correctAnswer,
+              correct_answer: a.correctAnswer,
+              selectedAnswer: a.selectedAnswer,
+              explanation: a.explanation || 'Worked solution available in review.',
+            }))
+            const reconstructedAnswers = Object.fromEntries(
+              answersList.map((a) => [a.questionId, a.selectedAnswer])
+            )
+            const correctCount = answersList.filter((a) => a.isCorrect).length
+            const wrongCount = answersList.length - correctCount
+            const percent = answersList.length ? Math.round((correctCount / answersList.length) * 100) : 0
+
+            setDbAttemptData({
+              ...latestAssessment,
+              questions: reconstructedQuestions,
+              answers: reconstructedAnswers,
+              total: answersList.length,
+              totalQuestions: answersList.length,
+              correct: correctCount,
+              wrong: wrongCount,
+              percentage: percent,
+              score: correctCount,
+              reportData: {
+                ...(latestAssessment?.reportData || {}),
+                totalQuestions: answersList.length,
+                totalAttempted: answersList.length,
+                totalCorrect: correctCount,
+                totalWrong: wrongCount,
+                accuracy: answersList.length ? correctCount / answersList.length : 0,
+                selectedGrade: latestAssessment?.estimated_grade || user?.grade || 8,
+              },
+            })
+          }
+        })
+        .catch((err) => console.warn('Could not restore attempt answers from DB:', err))
+    }
+  }, [latestAssessment?.id, latestAssessment?.assessmentAttemptId, latestAssessment?.questions?.length, user?.grade])
+
+  const effectiveAssessment = (latestAssessment?.questions?.length ? latestAssessment : dbAttemptData) || latestAssessment
+
   const handleRetakeWeakAreas = () => {
     let weakTopics = []
-    if (latestAssessment) {
-      const lowAccuracy = (latestAssessment.topicBreakdown || [])
+    if (effectiveAssessment) {
+      const lowAccuracy = (effectiveAssessment.topicBreakdown || [])
         .filter((t) => Number(t.percentage || 0) < 70)
         .map((t) => t.topic)
-      const gaps = latestAssessment.reportData?.weakPoints || latestAssessment.reportData?.gaps || []
-      const storedQuestions = latestAssessment.questions || []
-      const storedAnswers = latestAssessment.answers || {}
+      const gaps = effectiveAssessment.reportData?.weakPoints || effectiveAssessment.reportData?.gaps || []
+      const storedQuestions = effectiveAssessment.questions || []
+      const storedAnswers = effectiveAssessment.answers || {}
       const wrongTopics = storedQuestions
         .filter((q) => {
           const ans = storedAnswers[q.id]
@@ -59,13 +114,13 @@ export default function SummaryReport() {
       startFresh: true,
     }))
   }
-  const report = latestAssessment?.reportData || {}
+  const report = effectiveAssessment?.reportData || {}
 
-  const actualQuestionCount = Number(latestAssessment?.questions?.length || report.totalQuestions || report.totalAttempted || latestAssessment?.total || 0)
+  const actualQuestionCount = Number(effectiveAssessment?.questions?.length || report.totalQuestions || report.totalAttempted || effectiveAssessment?.total || 0)
   const totalQuestions = Math.max(actualQuestionCount, Number(report.totalQuestions || 0), 1)
-  const totalCorrect = Number(report.totalCorrect ?? latestAssessment?.correct ?? 0)
-  const totalAttempted = Number(report.totalQuestions || latestAssessment?.total || report.totalAttempted || latestAssessment?.totalAttempted || totalQuestions)
-  const totalWrong = Number(report.totalWrong ?? latestAssessment?.wrong ?? Math.max(0, totalAttempted - totalCorrect))
+  const totalCorrect = Number(report.totalCorrect ?? effectiveAssessment?.correct ?? effectiveAssessment?.correct_answers ?? 0)
+  const totalAttempted = Number(report.totalQuestions || effectiveAssessment?.total || report.totalAttempted || effectiveAssessment?.totalAttempted || totalQuestions)
+  const totalWrong = Number(report.totalWrong ?? effectiveAssessment?.wrong ?? effectiveAssessment?.wrong_answers ?? Math.max(0, totalAttempted - totalCorrect))
   const scorePercent = totalQuestions ? Math.round((totalCorrect / totalQuestions) * 100) : 0
   const diagnosticConfidence = getDiagnosticConfidence(
     totalAttempted,
@@ -78,15 +133,15 @@ export default function SummaryReport() {
   const targetGradeNum = Number(report.selectedGrade || String(user.grade || '').match(/\d+/)?.[0] || 8)
   const getCorrectAnswer = (question) => question?.correct_answer || question?.correctAnswer || question?.answer || question?.correct_option || null
 
-  const reportQuestions = (latestAssessment?.questions?.length
-    ? latestAssessment.questions
+  const reportQuestions = (effectiveAssessment?.questions?.length
+    ? effectiveAssessment.questions
     : Array.isArray(report.questionReview) ? report.questionReview : [])
     .map((question) => ({
       ...question,
       answer: getCorrectAnswer(question),
     }))
 
-  const reportAnswers = latestAssessment?.answers || Object.fromEntries(
+  const reportAnswers = effectiveAssessment?.answers || Object.fromEntries(
     reportQuestions.map((question) => [question.id, question.selectedAnswer]),
   )
 
@@ -101,7 +156,7 @@ export default function SummaryReport() {
     return overall !== null && Number.isFinite(overall) && overall >= 1.0 ? overall : null
   })()
 
-  const demonstratedGradeRaw = report.demonstratedMathLevel ?? latestAssessment?.estimatedGrade ?? 0
+  const demonstratedGradeRaw = report.demonstratedMathLevel ?? effectiveAssessment?.estimatedGrade ?? 0
   const fallbackDemonstrated = 1.0 + (scorePercent / 100) * Math.max(0, targetGradeNum - 1)
   const isOldInflated = demonstratedGradeRaw && scorePercent < 60 && Number(demonstratedGradeRaw) > (fallbackDemonstrated + 1.0)
   const effectiveRawGrade = isOldInflated
@@ -122,11 +177,11 @@ export default function SummaryReport() {
     (Array.isArray(report.questionReview) ? report.questionReview : []).map((item) => [String(item.questionId || item.id), item])
   )
 
-  const allQuestionsList = (latestAssessment?.questions?.length ? latestAssessment.questions : (report.questionReview || []))
+  const allQuestionsList = (effectiveAssessment?.questions?.length ? effectiveAssessment.questions : (report.questionReview || []))
 
   const comprehensiveQuestions = allQuestionsList.map((question, index) => {
     const qId = question.id ?? question.questionId ?? (index + 1)
-    const selectedAnswer = latestAssessment?.answers?.[qId] ?? question.selectedAnswer ?? null
+    const selectedAnswer = effectiveAssessment?.answers?.[qId] ?? question.selectedAnswer ?? null
     const correctAnswer = getCorrectAnswer(question)
     const isAnswered = selectedAnswer !== undefined && selectedAnswer !== null && selectedAnswer !== ''
     const isCorrect = isAnswered && String(selectedAnswer).toUpperCase() === String(correctAnswer || '').toUpperCase()

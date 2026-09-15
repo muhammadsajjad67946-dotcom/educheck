@@ -165,8 +165,6 @@ export function AppProvider({ children }) {
     localStorage.removeItem('educheck_authenticated')
     localStorage.removeItem(getPaymentStorageKey(PAYMENT_STATUS_STORAGE_KEY, user))
     localStorage.removeItem(getPaymentStorageKey(PAYMENT_ID_STORAGE_KEY, user))
-    localStorage.removeItem(resultKey)
-    localStorage.removeItem(historyKey)
     localStorage.removeItem('educheck_pendingRetake')
   }
 
