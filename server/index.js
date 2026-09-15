@@ -2217,13 +2217,16 @@ app.post('/api/assessment-attempts/start', async (request, response) => {
         topicBuckets[top] = [...targetQ, ...lowerQ]
       })
 
-      // Interleave 6 from each topic so student experiences all 5 topics
-      for (let i = 0; i < perTopic; i++) {
-        for (const top of topics) {
-          const candidate = topicBuckets[top]?.find((q) => !selectedIds.has(q.id))
-          if (candidate) {
+      // Block-wise across the 5 topics: 6 questions per strand sequentially (1-6 Strand 1, 7-12 Strand 2, etc.)
+      for (const top of topics) {
+        const bucket = topicBuckets[top] || []
+        let count = 0
+        for (const candidate of bucket) {
+          if (count >= perTopic) break
+          if (!selectedIds.has(candidate.id)) {
             selected.push(candidate)
             selectedIds.add(candidate.id)
+            count++
           }
         }
       }

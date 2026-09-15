@@ -879,12 +879,11 @@ export function createGradeBatchTestState(questionBank, targetGrade, selectedStr
       topicPools[topic] = picked
     })
 
-    // Interleave across the 5 topics so student experiences variety throughout the test
-    for (let i = 0; i < questionsPerTopic; i++) {
-      for (const topic of topics) {
-        if (topicPools[topic]?.[i]) {
-          initialPool.push(topicPools[topic][i])
-        }
+    // Block-wise across the 5 topics: 6 questions per strand sequentially (1-6 Strand 1, 7-12 Strand 2, etc.)
+    for (const topic of topics) {
+      const bucket = topicPools[topic] || []
+      for (let i = 0; i < questionsPerTopic && i < bucket.length; i++) {
+        initialPool.push(bucket[i])
       }
     }
 
