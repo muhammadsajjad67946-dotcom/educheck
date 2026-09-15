@@ -90,6 +90,8 @@ export default function SubmitTest() {
 
       const subtopicTickCrossReport = buildSubtopicTickCrossReport(questions, answers, selectedTargetGrade)
       reportData.subtopicTickCrossReport = subtopicTickCrossReport
+      reportData.weaknessMap = testState.adaptiveState?.weaknessMap || {}
+      reportData.probeHistory = testState.adaptiveState?.probeHistory || []
       reportData.questionReview = questions.map((question) => {
         const selectedAnswer = answers[question.id]
         const isAnswered = selectedAnswer !== undefined && selectedAnswer !== null && selectedAnswer !== ''
@@ -232,6 +234,8 @@ export default function SubmitTest() {
         questions,
         answers,
         subtopicReport: subtopicTickCrossReport,
+        weaknessMap: testState.adaptiveState?.weaknessMap || {},
+        probeHistory: testState.adaptiveState?.probeHistory || [],
         reportData,
         submittedAt: new Date().toISOString(),
       }

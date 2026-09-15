@@ -11,6 +11,8 @@ import {
   ChevronUp,
   AlertCircle,
   CheckCircle2,
+  Target,
+  Compass,
 } from 'lucide-react'
 import { jsPDF } from 'jspdf'
 import { useApp } from '../context/AppContext'
@@ -248,6 +250,89 @@ export default function SummaryReport() {
       diagnosedRemediation: distractorRemediation,
     }
   })
+
+  const weaknessMap = effectiveAssessment?.weaknessMap
+    || effectiveAssessment?.reportData?.weaknessMap
+    || assessmentResult?.weaknessMap
+    || assessmentResult?.reportData?.weaknessMap
+    || {}
+
+  const getSubtopicDiagnosticInfo = (subtopicName, topicName) => {
+    const normSub = String(subtopicName || '').trim().toLowerCase()
+    const normTopic = String(topicName || '').trim().toLowerCase()
+
+    // 1. Check direct match in weaknessMap from adaptive bounce-back probes
+    const directEntry = Object.entries(weaknessMap).find(([k]) => {
+      const normK = String(k).trim().toLowerCase()
+      return normK === normSub || normK.includes(normSub) || normSub.includes(normK)
+    })
+    const mapInfo = directEntry ? directEntry[1] : null
+
+    // 2. Derive matching questions for specific misconception details
+    const matchingWrongQuestions = comprehensiveQuestions.filter((q) => {
+      if (q.isCorrect) return false
+      const qSub = String(q.subtopic || '').trim().toLowerCase()
+      const qTop = String(q.topic || '').trim().toLowerCase()
+      return (qSub === normSub || qSub.includes(normSub) || normSub.includes(qSub)) &&
+             (qTop === normTopic || qTop.includes(normTopic) || normTopic.includes(qTop))
+    })
+
+    if (mapInfo && mapInfo.rootGrade) {
+      const rootGrade = Number(mapInfo.rootGrade)
+      const gradesBehind = Math.max(0, targetGradeNum - rootGrade)
+      const primaryGap = matchingWrongQuestions.find((q) => q.diagnosedGap)?.diagnosedGap || matchingWrongQuestions[0]?.reason || 'Foundational prerequisite gap'
+      const primaryRemediation = matchingWrongQuestions.find((q) => q.diagnosedRemediation)?.diagnosedRemediation || 'Review earlier grade concepts before advancing.'
+      return {
+        rootGrade,
+        gradesBehind,
+        probeDepth: mapInfo.probeDepth || 1,
+        resolved: mapInfo.resolved,
+        specificGap: primaryGap,
+        remediation: primaryRemediation,
+      }
+    }
+
+    if (matchingWrongQuestions.length > 0) {
+      const minGrade = Math.min(...matchingWrongQuestions.map((q) => Number(q.grade) || targetGradeNum))
+      const gradesBehind = Math.max(0, targetGradeNum - minGrade)
+      const primaryGap = matchingWrongQuestions.find((q) => q.diagnosedGap)?.diagnosedGap || matchingWrongQuestions[0]?.reason || 'Needs targeted practice'
+      const primaryRemediation = matchingWrongQuestions.find((q) => q.diagnosedRemediation)?.diagnosedRemediation || 'Practice fundamental problems in this area.'
+      return {
+        rootGrade: minGrade,
+        gradesBehind,
+        probeDepth: gradesBehind,
+        resolved: false,
+        specificGap: primaryGap,
+        remediation: primaryRemediation,
+      }
+    }
+
+    return null
+  }
+
+  const flatSubtopicRows = Object.entries(subtopicReport || {}).flatMap(([gradeKey, topics]) =>
+    Object.entries(topics || {}).flatMap(([topicName, subtopics]) =>
+      Object.entries(subtopics || {})
+        .filter(([, outcome]) => outcome !== '–')
+        .map(([subtopicName, outcome]) => {
+          const isSuccess = outcome === '\u2713' || outcome === 'Correct'
+          const diagnostic = !isSuccess ? getSubtopicDiagnosticInfo(subtopicName, topicName) : null
+          return {
+            gradeKey,
+            topicName,
+            subtopicName,
+            outcome,
+            isSuccess,
+            diagnostic,
+          }
+        })
+    )
+  )
+
+  const masteredSubtopics = flatSubtopicRows.filter((r) => r.isSuccess)
+  const weakSubtopicGaps = flatSubtopicRows
+    .filter((r) => !r.isSuccess)
+    .sort((a, b) => (b.diagnostic?.gradesBehind || 0) - (a.diagnostic?.gradesBehind || 0))
 
   const wrongQuestions = comprehensiveQuestions.filter((q) => !q.isCorrect)
 
@@ -555,6 +640,123 @@ export default function SummaryReport() {
         </div>
       </div>
 
+      {/* Adaptive Root Weakness Analysis & Action Plan */}
+      <div className={`rounded-3xl border p-6 sm:p-8 shadow-xl backdrop-blur-xl ${
+        darkMode
+          ? 'border-sky-500/30 bg-gradient-to-br from-slate-950 via-slate-900 to-sky-950/30 shadow-sky-950/20'
+          : 'border-sky-200 bg-gradient-to-br from-white via-sky-50/40 to-white shadow-sky-100'
+      }`}>
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div className="flex items-center gap-3">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-tr from-sky-500 to-indigo-600 text-white shadow-lg shadow-sky-500/30">
+              <Target size={24} />
+            </div>
+            <div>
+              <div className="inline-flex items-center gap-1.5 rounded-full border border-sky-400/30 bg-sky-500/10 px-3 py-0.5 text-xs font-bold text-sky-400">
+                <Compass size={12} /> Adaptive Prerequisite Diagnosis
+              </div>
+              <h2 className="mt-1 text-xl sm:text-2xl font-black tracking-tight">
+                Root Weakness & Conceptual Gap Analysis
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+                Identifies WHERE foundational math misconceptions originate across grade levels
+              </p>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2">
+            <div className={`rounded-2xl border px-4 py-2 text-center ${darkMode ? 'border-white/10 bg-slate-900/60' : 'border-slate-200 bg-white'}`}>
+              <div className="text-xs text-slate-500">Evaluated</div>
+              <div className="text-lg font-black text-sky-500">{flatSubtopicRows.length} Subtopics</div>
+            </div>
+            <div className={`rounded-2xl border px-4 py-2 text-center ${darkMode ? 'border-white/10 bg-slate-900/60' : 'border-slate-200 bg-white'}`}>
+              <div className="text-xs text-slate-500">Mastered</div>
+              <div className="text-lg font-black text-emerald-500">{masteredSubtopics.length}</div>
+            </div>
+            <div className={`rounded-2xl border px-4 py-2 text-center ${darkMode ? 'border-white/10 bg-slate-900/60' : 'border-slate-200 bg-white'}`}>
+              <div className="text-xs text-slate-500">Action Needed</div>
+              <div className="text-lg font-black text-rose-500">{weakSubtopicGaps.length}</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Deepest Conceptual Gaps Identified */}
+        {weakSubtopicGaps.length > 0 ? (
+          <div className="mt-6 space-y-4">
+            <div className="text-xs font-bold uppercase tracking-wider text-rose-500 flex items-center gap-1.5">
+              <AlertCircle size={14} /> Critical Concept Focus Areas (For Student, Teacher & Parent)
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {weakSubtopicGaps.slice(0, 6).map((item, idx) => {
+                const behind = item.diagnostic?.gradesBehind || 0
+                const rootGrade = item.diagnostic?.rootGrade || targetGradeNum
+                const isDeeperGap = behind > 0
+
+                return (
+                  <div
+                    key={`gap-${idx}`}
+                    className={`rounded-2xl border p-4 transition hover:border-rose-400/50 ${
+                      darkMode ? 'border-white/10 bg-slate-900/50' : 'border-slate-200 bg-slate-50/80'
+                    }`}
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <span className="text-xs font-bold text-sky-500 uppercase tracking-wide">
+                        {item.topicName}
+                      </span>
+                      <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold ${
+                        isDeeperGap
+                          ? 'bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30'
+                          : 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30'
+                      }`}>
+                        {isDeeperGap ? `Root: Grade ${rootGrade} (–${behind}y)` : `At Grade ${rootGrade}`}
+                      </span>
+                    </div>
+
+                    <h4 className="mt-2 font-bold text-sm line-clamp-1">{item.subtopicName}</h4>
+
+                    {item.diagnostic?.specificGap && (
+                      <p className="mt-1 text-xs text-rose-400 line-clamp-2">
+                        <strong>Gap:</strong> {item.diagnostic.specificGap}
+                      </p>
+                    )}
+
+                    {item.diagnostic?.remediation && (
+                      <p className="mt-2 text-xs text-slate-500 dark:text-slate-400 border-t pt-2 border-slate-200 dark:border-white/5 line-clamp-2">
+                        💡 <em>{item.diagnostic.remediation}</em>
+                      </p>
+                    )}
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        ) : (
+          <div className="mt-6 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-center text-sm font-semibold text-emerald-400">
+            ✓ Excellent performance! All evaluated concepts demonstrate strong grade-level mastery with no prerequisite knowledge gaps.
+          </div>
+        )}
+
+        {/* Mastered Strengths Pill Bar */}
+        {masteredSubtopics.length > 0 && (
+          <div className="mt-5 pt-4 border-t border-slate-200 dark:border-white/10">
+            <div className="text-xs font-bold uppercase tracking-wider text-emerald-500 mb-2.5 flex items-center gap-1.5">
+              <CheckCircle2 size={14} /> Mastered Concepts (Grade-Level Ready)
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {masteredSubtopics.map((m, idx) => (
+                <span
+                  key={`mastered-${idx}`}
+                  className="inline-flex items-center gap-1.5 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400"
+                >
+                  ✓ {m.subtopicName}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
       {/* Gemini AI Diagnostic Guidance & Resolution Section */}
       <div className={`rounded-3xl border p-6 sm:p-8 shadow-xl ${
         darkMode ? 'border-violet-500/30 bg-gradient-to-br from-slate-950 via-slate-900 to-violet-950/40' : 'border-violet-200 bg-gradient-to-br from-white via-violet-50/40 to-white shadow-violet-100'
@@ -807,8 +1009,9 @@ export default function SummaryReport() {
               <tr>
                 <th className="px-5 py-3.5">Grade Level</th>
                 <th className="px-5 py-3.5">Topic</th>
-                <th className="px-5 py-3.5">Subtopic</th>
+                <th className="px-5 py-3.5">Subtopic & Identified Gap</th>
                 <th className="px-5 py-3.5 text-center">Status</th>
+                <th className="px-5 py-3.5 text-center">Root Level (Prerequisite)</th>
               </tr>
             </thead>
             <tbody className="divide-y dark:divide-white/5 divide-slate-200">
@@ -818,11 +1021,28 @@ export default function SummaryReport() {
                     .filter(([, outcome]) => outcome !== '–')
                     .map(([subtopicName, outcome]) => {
                       const isSuccess = outcome === '\u2713' || outcome === 'Correct'
+                      const diag = !isSuccess ? getSubtopicDiagnosticInfo(subtopicName, topicName) : null
+                      const rootG = diag?.rootGrade || targetGradeNum
+                      const behind = diag?.gradesBehind || 0
+
                       return (
                         <tr key={`${gradeKey}-${topicName}-${subtopicName}`} className={darkMode ? 'hover:bg-slate-800/30' : 'hover:bg-slate-100/50'}>
                           <td className="px-5 py-3.5 font-bold text-sky-500">{gradeKey}</td>
                           <td className="px-5 py-3.5 font-medium">{topicName}</td>
-                          <td className="px-5 py-3.5 text-slate-500 dark:text-slate-400">{subtopicName}</td>
+                          <td className="px-5 py-3.5">
+                            <div className="font-semibold text-slate-800 dark:text-slate-200">{subtopicName}</div>
+                            {!isSuccess && diag?.specificGap && (
+                              <div className="mt-1 text-xs text-rose-500 dark:text-rose-400 font-normal">
+                                <span className="font-bold uppercase tracking-wider text-[10px] text-rose-600 dark:text-rose-300 bg-rose-500/10 px-1.5 py-0.5 rounded mr-1">Specific Gap</span>
+                                {diag.specificGap}
+                              </div>
+                            )}
+                            {!isSuccess && diag?.remediation && (
+                              <div className="mt-1 text-[11px] text-slate-500 dark:text-slate-400 italic">
+                                💡 {diag.remediation}
+                              </div>
+                            )}
+                          </td>
                           <td className="px-5 py-3.5 text-center">
                             <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold ${
                               isSuccess
@@ -831,6 +1051,21 @@ export default function SummaryReport() {
                             }`}>
                               {isSuccess ? '✓ Mastered' : '✗ Needs Practice'}
                             </span>
+                          </td>
+                          <td className="px-5 py-3.5 text-center">
+                            {isSuccess ? (
+                              <span className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-500">
+                                ✓ Grade Level
+                              </span>
+                            ) : behind > 0 ? (
+                              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30">
+                                Grade {rootG} ⚠️ ({behind}y behind)
+                              </span>
+                            ) : (
+                              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-amber-500/15 text-amber-600 dark:text-amber-400">
+                                Grade {targetGradeNum} (At Grade)
+                              </span>
+                            )}
                           </td>
                         </tr>
                       )

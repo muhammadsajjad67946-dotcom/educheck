@@ -7,6 +7,7 @@ export const GRADE_BATCH_QUESTION_COUNT = 30
 export const QUESTIONS_PER_CATEGORY = 6
 export const QUESTIONS_PER_GRADE_BATCH = 6
 export const BATCH_PASSING_SCORE = 4
+export const MAX_PROBE_DEPTH = 2
 
 export function shuffleArray(array) {
   const arr = [...(array || [])]
@@ -936,6 +937,9 @@ export function createGradeBatchTestState(questionBank, targetGrade, selectedStr
     weakPoints: [],
     strongPoints: [],
     prerequisiteChecks: {},
+    activeProbe: null,
+    probeHistory: [],
+    weaknessMap: {},
   }
 }
 
@@ -949,100 +953,254 @@ export function advanceGradeBatchTest(state, questionBank, currentQuestion, sele
   const askedIds = [...new Set([...(state.askedIds || []), currentQuestion.id])]
   const usedQuestionIds = [...new Set([...(state.usedQuestionIds || []), currentQuestion.id])]
   const subtopic = currentQuestion.subtopic || currentQuestion.topic
-  const currentGrade = Number(currentQuestion.grade) || state.targetGrade || 8
+  const questionGrade = Number(currentQuestion.grade) || state.targetGrade || 8
 
   let weakPoints = [...(state.weakPoints || [])]
   let strongPoints = [...(state.strongPoints || [])]
   let questions = [...(state.questions || [])]
   let nextDifficulty = state.currentDifficulty || 'Medium'
+  let activeProbe = state.activeProbe ? { ...state.activeProbe } : null
+  let probeHistory = [...(state.probeHistory || [])]
+  let weaknessMap = { ...(state.weaknessMap || {}) }
 
-  if (isCorrect) {
-    // Difficulty progression: Low -> Medium -> High
-    const targetDiff = currentQuestion.difficulty === 'Low' ? 'Medium' : 'High'
-    nextDifficulty = targetDiff
+  const isProbeQuestion = activeProbe && questionGrade < state.targetGrade
 
-    if (targetDiff === 'High') {
-      if (currentGrade >= state.targetGrade && !strongPoints.includes(subtopic)) {
-        strongPoints.push(subtopic)
+  if (isProbeQuestion) {
+    // ========== PROBE QUESTION RESPONSE ==========
+    if (isCorrect) {
+      // Probe question answered correctly — prerequisite verified at this level
+      // Record which grade level was weak (one above where they got it right)
+      const weakGrade = activeProbe.probeGrade // The grade they failed at to trigger this probe
+      probeHistory.push({
+        subtopic: activeProbe.subtopic,
+        topic: activeProbe.topic,
+        startGrade: activeProbe.startGrade,
+        probeGrade: questionGrade,
+        depth: activeProbe.depth,
+        result: 'prerequisite_verified',
+        weakAtGrade: weakGrade,
+      })
+
+      if (weakGrade < state.targetGrade) {
+        weaknessMap[activeProbe.subtopic] = {
+          rootGrade: weakGrade,
+          probeDepth: activeProbe.depth,
+          resolved: true,
+        }
+      }
+
+      // BOUNCE BACK to target grade
+      activeProbe = null
+      nextDifficulty = 'Medium'
+
+      // Inject a target grade question for the next concept
+      const bounceBackQ = questionBank.find(
+        (q) => !usedQuestionIds.includes(q.id) &&
+          Number(q.grade) === state.targetGrade &&
+          q.difficulty === 'Medium'
+      )
+      if (bounceBackQ) {
+        const currentIndex = questions.findIndex((q) => q.id === currentQuestion.id)
+        const insertionIndex = currentIndex >= 0 ? currentIndex + 1 : questions.length
+        questions = questions.filter((q) => q.id !== bounceBackQ.id)
+        questions.splice(insertionIndex, 0, bounceBackQ)
+        usedQuestionIds.push(bounceBackQ.id)
+      }
+    } else {
+      // Probe question answered WRONG
+      if (activeProbe.depth < MAX_PROBE_DEPTH && questionGrade > 1) {
+        // Go ONE more level deeper
+        const deeperGrade = questionGrade - 1
+        const deeperQ = findFoundationalQuestion(
+          questionBank,
+          activeProbe.topic,
+          activeProbe.subtopic,
+          questionGrade,
+          askedIds,
+          usedQuestionIds
+        )
+
+        if (deeperQ) {
+          activeProbe = {
+            ...activeProbe,
+            probeGrade: questionGrade,
+            depth: activeProbe.depth + 1,
+          }
+          const currentIndex = questions.findIndex((q) => q.id === currentQuestion.id)
+          const insertionIndex = currentIndex >= 0 ? currentIndex + 1 : questions.length
+          questions = questions.filter((q) => q.id !== deeperQ.id)
+          questions.splice(insertionIndex, 0, deeperQ)
+          usedQuestionIds.push(deeperQ.id)
+          nextDifficulty = 'Low'
+        } else {
+          // No deeper question available — record weakness and bounce back
+          weaknessMap[activeProbe.subtopic] = {
+            rootGrade: questionGrade,
+            probeDepth: activeProbe.depth,
+            resolved: false,
+          }
+          probeHistory.push({
+            subtopic: activeProbe.subtopic,
+            topic: activeProbe.topic,
+            startGrade: activeProbe.startGrade,
+            probeGrade: questionGrade,
+            depth: activeProbe.depth,
+            result: 'no_deeper_questions',
+            weakAtGrade: questionGrade,
+          })
+          activeProbe = null
+          nextDifficulty = 'Medium'
+
+          const bounceBackQ = questionBank.find(
+            (q) => !usedQuestionIds.includes(q.id) &&
+              Number(q.grade) === state.targetGrade &&
+              q.difficulty === 'Medium'
+          )
+          if (bounceBackQ) {
+            const currentIndex = questions.findIndex((q) => q.id === currentQuestion.id)
+            const insertionIndex = currentIndex >= 0 ? currentIndex + 1 : questions.length
+            questions = questions.filter((q) => q.id !== bounceBackQ.id)
+            questions.splice(insertionIndex, 0, bounceBackQ)
+            usedQuestionIds.push(bounceBackQ.id)
+          }
+        }
+      } else {
+        // Maximum probe depth reached — ROOT WEAKNESS FOUND
+        weaknessMap[activeProbe.subtopic] = {
+          rootGrade: Math.max(1, questionGrade),
+          probeDepth: activeProbe.depth,
+          resolved: false,
+        }
+        probeHistory.push({
+          subtopic: activeProbe.subtopic,
+          topic: activeProbe.topic,
+          startGrade: activeProbe.startGrade,
+          probeGrade: questionGrade,
+          depth: activeProbe.depth,
+          result: 'root_weakness_found',
+          weakAtGrade: Math.max(1, questionGrade),
+        })
+
+        if (!weakPoints.includes(activeProbe.subtopic)) {
+          weakPoints.push(activeProbe.subtopic)
+        }
+
+        // BOUNCE BACK to target grade for next concept
+        activeProbe = null
+        nextDifficulty = 'Medium'
+
+        const bounceBackQ = questionBank.find(
+          (q) => !usedQuestionIds.includes(q.id) &&
+            Number(q.grade) === state.targetGrade &&
+            q.difficulty === 'Medium'
+        )
+        if (bounceBackQ) {
+          const currentIndex = questions.findIndex((q) => q.id === currentQuestion.id)
+          const insertionIndex = currentIndex >= 0 ? currentIndex + 1 : questions.length
+          questions = questions.filter((q) => q.id !== bounceBackQ.id)
+          questions.splice(insertionIndex, 0, bounceBackQ)
+          usedQuestionIds.push(bounceBackQ.id)
+        }
       }
     }
-
-    // Immediately inject an elevated difficulty question as the next question
-    const elevatedQ = questionBank.find(
-      (q) => !usedQuestionIds.includes(q.id) &&
-        Number(q.grade) === currentGrade &&
-        matchesStrand(q.topic, currentQuestion.topic) &&
-        q.difficulty === targetDiff &&
-        matchesQuestionSubtopic(q, subtopic)
-    ) || questionBank.find(
-      (q) => !usedQuestionIds.includes(q.id) &&
-        Number(q.grade) === currentGrade &&
-        matchesStrand(q.topic, currentQuestion.topic) &&
-        q.difficulty === targetDiff
-    )
-
-    if (elevatedQ) {
-      const currentIndex = questions.findIndex((q) => q.id === currentQuestion.id)
-      const insertionIndex = currentIndex >= 0 ? currentIndex + 1 : questions.length
-      questions = questions.filter((q) => q.id !== elevatedQ.id)
-      questions.splice(insertionIndex, 0, elevatedQ)
-      usedQuestionIds.push(elevatedQ.id)
-    }
   } else {
-    // Student answered WRONG
-    if (currentQuestion.difficulty === 'High') {
-      // 1. If student fails a High (advanced) question, stay at current selected grade and drop to Medium
-      nextDifficulty = 'Medium'
-      const sameGradeMed = questionBank.find(
+    // ========== NORMAL QUESTION (not a probe) ==========
+    if (isCorrect) {
+      const targetDiff = currentQuestion.difficulty === 'Low' ? 'Medium' : 'High'
+      nextDifficulty = targetDiff
+
+      if (targetDiff === 'High') {
+        if (questionGrade >= state.targetGrade && !strongPoints.includes(subtopic)) {
+          strongPoints.push(subtopic)
+        }
+      }
+
+      // Inject elevated difficulty question at target grade
+      const elevatedQ = questionBank.find(
         (q) => !usedQuestionIds.includes(q.id) &&
-          Number(q.grade) === currentGrade &&
-          q.topic === currentQuestion.topic &&
-          q.difficulty === 'Medium' &&
+          Number(q.grade) === state.targetGrade &&
+          matchesStrand(q.topic, currentQuestion.topic) &&
+          q.difficulty === targetDiff &&
           matchesQuestionSubtopic(q, subtopic)
       ) || questionBank.find(
         (q) => !usedQuestionIds.includes(q.id) &&
-          Number(q.grade) === currentGrade &&
-          q.topic === currentQuestion.topic &&
-          q.difficulty === 'Medium'
+          Number(q.grade) === state.targetGrade &&
+          matchesStrand(q.topic, currentQuestion.topic) &&
+          q.difficulty === targetDiff
       )
 
-      if (sameGradeMed) {
+      if (elevatedQ) {
         const currentIndex = questions.findIndex((q) => q.id === currentQuestion.id)
         const insertionIndex = currentIndex >= 0 ? currentIndex + 1 : questions.length
-        questions = questions.filter((q) => q.id !== sameGradeMed.id)
-        questions.splice(insertionIndex, 0, sameGradeMed)
-        usedQuestionIds.push(sameGradeMed.id)
+        questions = questions.filter((q) => q.id !== elevatedQ.id)
+        questions.splice(insertionIndex, 0, elevatedQ)
+        usedQuestionIds.push(elevatedQ.id)
       }
     } else {
-      // 2. If student fails Medium or Low, search immediate lower grade (currentGrade - 1) for the EXACT SAME SUBTOPIC
-      const foundationalQ = findFoundationalQuestion(
-        questionBank,
-        currentQuestion.topic,
-        subtopic,
-        currentGrade,
-        askedIds,
-        askedIds
-      )
+      // Student answered WRONG on a normal question
+      if (currentQuestion.difficulty === 'High') {
+        // Failed High — drop to Medium at SAME target grade (no probe needed)
+        nextDifficulty = 'Medium'
+        const sameGradeMed = questionBank.find(
+          (q) => !usedQuestionIds.includes(q.id) &&
+            Number(q.grade) === state.targetGrade &&
+            q.topic === currentQuestion.topic &&
+            q.difficulty === 'Medium' &&
+            matchesQuestionSubtopic(q, subtopic)
+        ) || questionBank.find(
+          (q) => !usedQuestionIds.includes(q.id) &&
+            Number(q.grade) === state.targetGrade &&
+            q.topic === currentQuestion.topic &&
+            q.difficulty === 'Medium'
+        )
 
-      if (foundationalQ) {
-        const currentIndex = questions.findIndex((q) => q.id === currentQuestion.id)
-        const insertionIndex = currentIndex >= 0 ? currentIndex + 1 : questions.length
-        questions = questions.filter((q) => q.id !== foundationalQ.id)
-        questions.splice(insertionIndex, 0, foundationalQ)
-        usedQuestionIds.push(foundationalQ.id)
-        nextDifficulty = 'Low'
+        if (sameGradeMed) {
+          const currentIndex = questions.findIndex((q) => q.id === currentQuestion.id)
+          const insertionIndex = currentIndex >= 0 ? currentIndex + 1 : questions.length
+          questions = questions.filter((q) => q.id !== sameGradeMed.id)
+          questions.splice(insertionIndex, 0, sameGradeMed)
+          usedQuestionIds.push(sameGradeMed.id)
+        }
       } else {
-        nextDifficulty = 'Low'
-      }
+        // Failed Medium or Low — START DIAGNOSTIC PROBE to lower grade
+        const foundationalQ = findFoundationalQuestion(
+          questionBank,
+          currentQuestion.topic,
+          subtopic,
+          questionGrade,
+          askedIds,
+          usedQuestionIds
+        )
 
-      // Record subtopic in weak points for remediation
-      if (!weakPoints.includes(subtopic)) {
-        weakPoints.push(subtopic)
+        if (foundationalQ) {
+          // Start a new probe
+          activeProbe = {
+            startGrade: state.targetGrade,
+            subtopic: subtopic,
+            topic: currentQuestion.topic,
+            probeGrade: questionGrade,
+            depth: 1,
+          }
+
+          const currentIndex = questions.findIndex((q) => q.id === currentQuestion.id)
+          const insertionIndex = currentIndex >= 0 ? currentIndex + 1 : questions.length
+          questions = questions.filter((q) => q.id !== foundationalQ.id)
+          questions.splice(insertionIndex, 0, foundationalQ)
+          usedQuestionIds.push(foundationalQ.id)
+          nextDifficulty = 'Low'
+        } else {
+          nextDifficulty = 'Low'
+        }
+
+        // Record subtopic in weak points
+        if (!weakPoints.includes(subtopic)) {
+          weakPoints.push(subtopic)
+        }
       }
     }
   }
 
-  // Keep the fixed assessment length while allowing prerequisite probes to replace later items.
+  // Keep the fixed assessment length
   const questionLimit = state.questionLimit || GRADE_BATCH_QUESTION_COUNT
   if (questions.length > questionLimit) {
     questions = questions.slice(0, questionLimit)
@@ -1062,6 +1220,9 @@ export function advanceGradeBatchTest(state, questionBank, currentQuestion, sele
     weakPoints,
     strongPoints,
     assessmentComplete,
+    activeProbe,
+    probeHistory,
+    weaknessMap,
   }
 }
 

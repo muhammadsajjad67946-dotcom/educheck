@@ -1596,7 +1596,7 @@ app.get('/api/questions', async (request, response) => {
     const safeMaxGrade = Math.min(Math.max(Number.isFinite(maxGradeId) ? maxGradeId : 6, 1), 8)
     const safeMinGrade = Math.min(Math.max(Number.isFinite(minGradeId) ? minGradeId : 1, 1), safeMaxGrade)
 
-    let whereClause = 'q.grade IS NOT NULL'
+    let whereClause = "q.grade IS NOT NULL AND q.explanation IS NOT NULL AND TRIM(q.explanation) != '' AND q.distractor_diagnostics IS NOT NULL AND TRIM(q.distractor_diagnostics) != ''"
     const queryValues = []
 
     if (Number.isFinite(gradeId) && gradeId >= 1 && gradeId <= 8) {
@@ -2149,6 +2149,8 @@ app.post('/api/assessment-attempts/start', async (request, response) => {
        FROM questions q
        LEFT JOIN topics t ON t.id = q.topic_id
       WHERE q.grade BETWEEN ? AND ?
+         AND q.explanation IS NOT NULL AND TRIM(q.explanation) != ''
+         AND q.distractor_diagnostics IS NOT NULL AND TRIM(q.distractor_diagnostics) != ''
          ${topicClause ? topicClause : ''}
        ORDER BY RAND()
        LIMIT 10000
@@ -2165,6 +2167,8 @@ app.post('/api/assessment-attempts/start', async (request, response) => {
          FROM questions q
          LEFT JOIN topics t ON t.id = q.topic_id
          WHERE q.grade BETWEEN ? AND ?
+           AND q.explanation IS NOT NULL AND TRIM(q.explanation) != ''
+           AND q.distractor_diagnostics IS NOT NULL AND TRIM(q.distractor_diagnostics) != ''
            ${topicClause ? topicClause : ''}
          ORDER BY RAND()
          LIMIT 10000
@@ -2182,6 +2186,8 @@ app.post('/api/assessment-attempts/start', async (request, response) => {
          FROM questions q
          LEFT JOIN topics t ON t.id = q.topic_id
          WHERE q.grade IS NOT NULL
+           AND q.explanation IS NOT NULL AND TRIM(q.explanation) != ''
+           AND q.distractor_diagnostics IS NOT NULL AND TRIM(q.distractor_diagnostics) != ''
            ${topicClause ? topicClause : ''}
          ORDER BY RAND()
          LIMIT 10000
