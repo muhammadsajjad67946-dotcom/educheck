@@ -103,7 +103,7 @@ export default function StartTest() {
   const [selected, setSelected] = useState('')
   const [selectedDifficulty, setSelectedDifficulty] = useState(user?.currentDifficulty || 'Medium')
   const [selectedTopic, setSelectedTopic] = useState('Overall')
-  const questionCount = selectedTopic === 'Overall' ? 30 : 20
+  const questionCount = 30
   const [hasStarted, setHasStarted] = useState(false)
   const [loadingQuestions, setLoadingQuestions] = useState(false)
   const [loadError, setLoadError] = useState('')
@@ -516,7 +516,7 @@ export default function StartTest() {
 
               <button
                 type="button"
-                onClick={assessmentComplete || index >= totalQuestions - 1 ? () => navigate('/submit-test') : handleNext}
+                onClick={index >= totalQuestions - 1 ? () => navigate('/submit-test') : handleNext}
                 disabled={!selected}
                 className={`inline-flex items-center gap-2 rounded-full px-7 py-2.5 text-sm font-bold text-white shadow-lg transition-all duration-200 ${
                   selected
@@ -524,7 +524,7 @@ export default function StartTest() {
                     : 'bg-slate-700/60 text-slate-400 border border-white/5 cursor-not-allowed shadow-none'
                 }`}
               >
-                {assessmentComplete || index >= totalQuestions - 1 ? 'Submit Assessment' : 'Next Question'}
+                {index >= totalQuestions - 1 ? 'Submit Assessment' : 'Next Question'}
                 <ArrowRight size={16} />
               </button>
             </div>
