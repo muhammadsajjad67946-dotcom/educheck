@@ -250,8 +250,8 @@ export default function InAppPaymentModal({ isOpen, onClose, onPaymentComplete }
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-md p-4 transition-all duration-300">
-      <div className={`relative w-full max-w-lg rounded-3xl border p-6 md:p-8 shadow-2xl transition-all duration-300 ${
+    <div className="fixed inset-0 z-50 overflow-y-auto flex min-h-screen items-center justify-center p-3 sm:p-6 bg-slate-950/85 backdrop-blur-md transition-all duration-300">
+      <div className={`relative w-full max-w-lg max-h-[92vh] flex flex-col overflow-y-auto my-auto rounded-3xl border p-5 sm:p-7 md:p-8 shadow-2xl transition-all duration-300 ${
         darkMode
           ? 'border-white/10 bg-slate-950/95 text-white shadow-sky-500/10'
           : 'border-slate-200 bg-white text-slate-900 shadow-xl'
