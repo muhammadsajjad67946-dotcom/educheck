@@ -2155,6 +2155,7 @@ app.post('/api/assessment-attempts/start', async (request, response) => {
        FOR UPDATE`,
       values,
     )
+    const filterTopicParams = topicClause ? [`%${topicFilter}%`] : []
     if (candidates.length < safeQuestionCount) {
       const [gradeFallback] = await connection.query(
         `SELECT q.id, q.grade, t.name AS topic, t.parent_topic_id AS parentTopicId, q.subtopic_name AS subtopic,
@@ -2164,10 +2165,11 @@ app.post('/api/assessment-attempts/start', async (request, response) => {
          FROM questions q
          LEFT JOIN topics t ON t.id = q.topic_id
          WHERE q.grade BETWEEN ? AND ?
+           ${topicClause ? topicClause : ''}
          ORDER BY RAND()
          LIMIT 10000
          FOR UPDATE`,
-        [safeMinGrade, safeMaxGrade],
+        [safeMinGrade, safeMaxGrade, ...filterTopicParams],
       )
       candidates.push(...gradeFallback)
     }
@@ -2180,9 +2182,11 @@ app.post('/api/assessment-attempts/start', async (request, response) => {
          FROM questions q
          LEFT JOIN topics t ON t.id = q.topic_id
          WHERE q.grade IS NOT NULL
+           ${topicClause ? topicClause : ''}
          ORDER BY RAND()
          LIMIT 10000
          FOR UPDATE`,
+        filterTopicParams,
       )
       candidates.push(...bankFallback)
     }
@@ -2191,17 +2195,21 @@ app.post('/api/assessment-attempts/start', async (request, response) => {
     const selectedIds = new Set()
     const topics = ['Number & Operations', 'Algebra', 'Geometry', 'Measurement', 'Data Analysis']
 
+    const isMatchTopic = (qTopic, strand) => {
+      const normQ = String(qTopic || '').toLowerCase()
+      const normS = String(strand || '').toLowerCase()
+      if (!strand || strand === 'Overall') return true
+      if (normS.includes('data') || normS.includes('analysis')) return normQ.includes('data') || normQ.includes('analysis') || normQ.includes('statistic') || normQ.includes('probability')
+      if (normS.includes('number') || normS.includes('operation')) return normQ.includes('number') || normQ.includes('operation')
+      return normQ.includes(normS.split(' ')[0])
+    }
+
     if (!topicFilter || topicFilter === 'Overall') {
       const perTopic = Math.floor(safeQuestionCount / topics.length) // 6 questions per topic
       const topicBuckets = {}
 
       topics.forEach((top) => {
-        const isMatch = (q) => {
-          const qTopic = String(q.topic || '').toLowerCase()
-          if (top === 'Number & Operations') return qTopic.includes('number') || qTopic.includes('operation')
-          if (top === 'Data Analysis') return qTopic.includes('data') || qTopic.includes('analysis') || qTopic.includes('statistic')
-          return qTopic.includes(top.toLowerCase().split(' ')[0])
-        }
+        const isMatch = (q) => isMatchTopic(q.topic, top)
 
         const targetQ = candidates.filter((q) => isMatch(q) && Number(q.grade) === safeMaxGrade)
         const lowerQ = candidates.filter((q) => isMatch(q) && Number(q.grade) < safeMaxGrade && Number(q.grade) >= safeMinGrade)
@@ -2225,6 +2233,7 @@ app.post('/api/assessment-attempts/start', async (request, response) => {
       for (const question of candidates) {
         if (selected.length >= safeQuestionCount) break
         if (selectedIds.has(question.id)) continue
+        if (topicFilter && topicFilter !== 'Overall' && !isMatchTopic(question.topic, topicFilter)) continue
         selected.push(question)
         selectedIds.add(question.id)
       }

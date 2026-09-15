@@ -908,7 +908,10 @@ export function createGradeBatchTestState(questionBank, targetGrade, selectedStr
 
     const lowerQuestions = shuffleArray(questionBank.filter((q) => isTopicMatch(q) && Number(q.grade) < maxGrade))
 
-    const combined = [...targetMed, ...targetLow, ...targetHigh, ...lowerQuestions]
+    const combined = [
+      ...targetMed.slice(0, 1),
+      ...shuffleArray([...targetMed.slice(1), ...targetHigh, ...targetLow, ...lowerQuestions]),
+    ]
     initialPool = combined.slice(0, questionLimit)
     if (initialPool.length < questionLimit) {
       const remaining = shuffleArray(questionBank.filter((q) => isTopicMatch(q) && !initialPool.some(p => p.id === q.id)))
@@ -956,12 +959,35 @@ export function advanceGradeBatchTest(state, questionBank, currentQuestion, sele
 
   if (isCorrect) {
     // Difficulty progression: Low -> Medium -> High
-    if (nextDifficulty === 'Low') nextDifficulty = 'Medium'
-    else if (nextDifficulty === 'Medium') nextDifficulty = 'High'
-    else if (nextDifficulty === 'High') {
+    const targetDiff = currentQuestion.difficulty === 'Low' ? 'Medium' : 'High'
+    nextDifficulty = targetDiff
+
+    if (targetDiff === 'High') {
       if (currentGrade >= state.targetGrade && !strongPoints.includes(subtopic)) {
         strongPoints.push(subtopic)
       }
+    }
+
+    // Immediately inject an elevated difficulty question as the next question
+    const elevatedQ = questionBank.find(
+      (q) => !usedQuestionIds.includes(q.id) &&
+        Number(q.grade) === currentGrade &&
+        matchesStrand(q.topic, currentQuestion.topic) &&
+        q.difficulty === targetDiff &&
+        matchesQuestionSubtopic(q, subtopic)
+    ) || questionBank.find(
+      (q) => !usedQuestionIds.includes(q.id) &&
+        Number(q.grade) === currentGrade &&
+        matchesStrand(q.topic, currentQuestion.topic) &&
+        q.difficulty === targetDiff
+    )
+
+    if (elevatedQ) {
+      const currentIndex = questions.findIndex((q) => q.id === currentQuestion.id)
+      const insertionIndex = currentIndex >= 0 ? currentIndex + 1 : questions.length
+      questions = questions.filter((q) => q.id !== elevatedQ.id)
+      questions.splice(insertionIndex, 0, elevatedQ)
+      usedQuestionIds.push(elevatedQ.id)
     }
   } else {
     // Student answered WRONG
