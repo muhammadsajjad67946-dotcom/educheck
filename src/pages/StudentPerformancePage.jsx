@@ -7,7 +7,7 @@ import { ALL_TOPICS } from '../utils/scoring'
 export default function StudentPerformancePage() {
   const { assessmentId } = useParams()
   const navigate = useNavigate()
-  const { assessmentHistory, assessmentResult, user } = useApp()
+  const { assessmentHistory, assessmentResult, user, darkMode } = useApp()
 
   const selectedAssessment = useMemo(() => {
     const entries = [...(assessmentHistory || [])]
@@ -62,10 +62,10 @@ export default function StudentPerformancePage() {
 
   if (!selectedAssessment) {
     return (
-      <div className="mx-auto max-w-5xl rounded-[2rem] border border-white/10 bg-white/10 p-8 shadow-[0_30px_120px_-40px_rgba(96,165,250,0.4)] backdrop-blur-xl">
-        <div className="rounded-[1.5rem] border border-white/10 bg-slate-950/60 p-6 text-center text-slate-200">
-          <h2 className="text-3xl font-semibold text-white">No assessment selected</h2>
-          <p className="mt-3 text-slate-300">Choose a saved assessment to view the student performance details.</p>
+      <div className={`mx-auto max-w-5xl rounded-[2rem] border p-8 backdrop-blur-xl transition-all duration-300 ${darkMode ? 'border-white/10 bg-slate-950/80 shadow-[0_30px_120px_-40px_rgba(96,165,250,0.4)]' : 'border-slate-200 bg-white shadow-xl shadow-slate-200/50'}`}>
+        <div className={`rounded-[1.5rem] border p-6 text-center ${darkMode ? 'border-white/10 bg-slate-900/60 text-slate-200' : 'border-slate-200 bg-slate-50 text-slate-700'}`}>
+          <h2 className={`text-3xl font-semibold ${darkMode ? 'text-white' : 'text-slate-900'}`}>No assessment selected</h2>
+          <p className={`mt-3 ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>Choose a saved assessment to view the student performance details.</p>
         </div>
       </div>
     )
@@ -81,50 +81,50 @@ export default function StudentPerformancePage() {
   const overallScore = Number(selectedAssessment.percentage ?? selectedAssessment.score ?? selectedAssessment.reportData?.overallResult?.finalCumulativeScore ?? 0)
 
   return (
-    <div className="mx-auto max-w-6xl rounded-[2rem] border border-white/10 bg-white/10 p-8 shadow-[0_30px_120px_-40px_rgba(96,165,250,0.4)] backdrop-blur-xl">
+    <div className={`mx-auto max-w-6xl rounded-[2rem] border p-8 backdrop-blur-xl transition-all duration-300 ${darkMode ? 'border-white/10 bg-slate-950/80 shadow-[0_30px_120px_-40px_rgba(96,165,250,0.4)]' : 'border-slate-200 bg-white shadow-xl shadow-slate-200/50'}`}>
       <div className="mb-6 flex items-center justify-between gap-4">
         <button
           type="button"
           onClick={() => navigate(-1)}
-          className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-slate-900/40 px-4 py-2 text-sm font-medium text-slate-200 transition hover:bg-slate-800/60"
+          className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition ${darkMode ? 'border-white/10 bg-slate-900/40 text-slate-200 hover:bg-slate-800/60' : 'border-slate-300 bg-white text-slate-700 hover:bg-slate-100 shadow-sm'}`}
         >
           <ArrowLeft size={16} />
           Back
         </button>
       </div>
 
-      <div className="rounded-[1.5rem] border border-white/10 bg-slate-950/60 p-6">
-        <div className="flex items-center gap-2 text-sky-300">
+      <div className={`rounded-[1.5rem] border p-6 transition-all duration-300 ${darkMode ? 'border-white/10 bg-slate-900/60' : 'border-slate-200 bg-slate-50/80'}`}>
+        <div className={`flex items-center gap-2 font-medium ${darkMode ? 'text-sky-300' : 'text-sky-600'}`}>
           <BarChart3 size={18} />
           <span className="text-sm font-semibold uppercase tracking-[0.2em]">Student Performance</span>
         </div>
 
-        <h2 className="mt-4 text-3xl font-semibold text-white">Student Information</h2>
+        <h2 className={`mt-4 text-3xl font-semibold ${darkMode ? 'text-white' : 'text-slate-900'}`}>Student Information</h2>
 
         <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-            <div className="flex items-center gap-2 text-sm text-slate-400"><UserRound size={16} /> Student</div>
-            <div className="mt-3 text-xl font-bold text-white">{studentName}</div>
+          <div className={`rounded-2xl border p-4 transition-all ${darkMode ? 'border-white/10 bg-slate-950/40' : 'border-slate-200 bg-white shadow-sm'}`}>
+            <div className={`flex items-center gap-2 text-sm font-medium ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}><UserRound size={16} /> Student</div>
+            <div className={`mt-3 text-xl font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>{studentName}</div>
           </div>
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-            <div className="flex items-center gap-2 text-sm text-slate-400"><BookOpenCheck size={16} /> Grade</div>
-            <div className="mt-3 text-xl font-bold text-white">{studentGrade}</div>
+          <div className={`rounded-2xl border p-4 transition-all ${darkMode ? 'border-white/10 bg-slate-950/40' : 'border-slate-200 bg-white shadow-sm'}`}>
+            <div className={`flex items-center gap-2 text-sm font-medium ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}><BookOpenCheck size={16} /> Grade</div>
+            <div className={`mt-3 text-xl font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>{studentGrade}</div>
           </div>
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-            <div className="flex items-center gap-2 text-sm text-slate-400"><CalendarDays size={16} /> Assessment Date</div>
-            <div className="mt-3 text-xl font-bold text-white">{assessmentDate}</div>
+          <div className={`rounded-2xl border p-4 transition-all ${darkMode ? 'border-white/10 bg-slate-950/40' : 'border-slate-200 bg-white shadow-sm'}`}>
+            <div className={`flex items-center gap-2 text-sm font-medium ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}><CalendarDays size={16} /> Assessment Date</div>
+            <div className={`mt-3 text-xl font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>{assessmentDate}</div>
           </div>
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-            <div className="flex items-center gap-2 text-sm text-slate-400"><Trophy size={16} /> Overall Score</div>
-            <div className="mt-3 text-xl font-bold text-white">{overallScore}%</div>
+          <div className={`rounded-2xl border p-4 transition-all ${darkMode ? 'border-white/10 bg-slate-950/40' : 'border-slate-200 bg-white shadow-sm'}`}>
+            <div className={`flex items-center gap-2 text-sm font-medium ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}><Trophy size={16} /> Overall Score</div>
+            <div className={`mt-3 text-xl font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>{overallScore}%</div>
           </div>
         </div>
       </div>
 
-      <div className="mt-8 rounded-[1.5rem] border border-white/10 bg-slate-950/55 p-6">
-        <div className="mb-5 flex items-center gap-2 text-sky-300">
+      <div className={`mt-8 rounded-[1.5rem] border p-6 transition-all duration-300 ${darkMode ? 'border-white/10 bg-slate-900/60' : 'border-slate-200 bg-slate-50/80'}`}>
+        <div className={`mb-5 flex items-center gap-2 font-medium ${darkMode ? 'text-sky-300' : 'text-sky-600'}`}>
           <BookOpenCheck size={18} />
-          <span className="text-lg font-semibold text-white">Mathematics Topics</span>
+          <span className={`text-lg font-semibold ${darkMode ? 'text-white' : 'text-slate-900'}`}>Mathematics Topics</span>
         </div>
 
         <div className="mb-6 flex flex-wrap gap-3">
@@ -138,8 +138,12 @@ export default function StudentPerformancePage() {
                 onClick={() => setSelectedTopic(topic.name)}
                 className={`rounded-full border px-4 py-2 text-sm font-semibold transition ${
                   isActive
-                    ? 'border-sky-400 bg-sky-500/15 text-sky-200'
-                    : 'border-white/10 bg-white/5 text-slate-300 hover:bg-white/10'
+                    ? darkMode
+                      ? 'border-sky-400 bg-sky-500/20 text-sky-200'
+                      : 'border-sky-500 bg-sky-50 text-sky-700 ring-2 ring-sky-400/20 shadow-sm'
+                    : darkMode
+                      ? 'border-white/10 bg-slate-800/60 text-slate-300 hover:bg-white/10'
+                      : 'border-slate-300 bg-white text-slate-700 hover:bg-slate-100 shadow-sm'
                 }`}
               >
                 {topic.name}
@@ -149,37 +153,37 @@ export default function StudentPerformancePage() {
         </div>
 
         {activeTopic && (
-          <div className="rounded-[1.5rem] border border-white/10 bg-white/5 p-6">
+          <div className={`rounded-[1.5rem] border p-6 transition-all ${darkMode ? 'border-white/10 bg-slate-950/40' : 'border-slate-200 bg-white shadow-sm'}`}>
             <div className="mb-5 flex items-center justify-between gap-3">
-              <h3 className="text-2xl font-semibold text-white">{activeTopic.name}</h3>
-              <span className="rounded-full bg-sky-500/15 px-3 py-1 text-sm font-semibold text-sky-200">{activeTopic.stats.percentage}%</span>
+              <h3 className={`text-2xl font-semibold ${darkMode ? 'text-white' : 'text-slate-900'}`}>{activeTopic.name}</h3>
+              <span className={`rounded-full px-3 py-1 text-sm font-semibold ${darkMode ? 'bg-sky-500/15 text-sky-200' : 'bg-sky-100 text-sky-800 border border-sky-200'}`}>{activeTopic.stats.percentage}%</span>
             </div>
 
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-              <div className="rounded-2xl border border-white/10 bg-slate-900/60 p-4">
-                <div className="text-sm text-slate-400">Correct</div>
-                <div className="mt-2 text-2xl font-bold text-emerald-300">{activeTopic.stats.correct}</div>
+              <div className={`rounded-2xl border p-4 ${darkMode ? 'border-white/10 bg-slate-900/60' : 'border-slate-200 bg-slate-50'}`}>
+                <div className={`text-sm font-medium ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>Correct</div>
+                <div className={`mt-2 text-2xl font-bold ${darkMode ? 'text-emerald-300' : 'text-emerald-600'}`}>{activeTopic.stats.correct}</div>
               </div>
-              <div className="rounded-2xl border border-white/10 bg-slate-900/60 p-4">
-                <div className="text-sm text-slate-400">Wrong</div>
-                <div className="mt-2 text-2xl font-bold text-red-300">{activeTopic.stats.wrong}</div>
+              <div className={`rounded-2xl border p-4 ${darkMode ? 'border-white/10 bg-slate-900/60' : 'border-slate-200 bg-slate-50'}`}>
+                <div className={`text-sm font-medium ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>Wrong</div>
+                <div className={`mt-2 text-2xl font-bold ${darkMode ? 'text-red-300' : 'text-rose-600'}`}>{activeTopic.stats.wrong}</div>
               </div>
-              <div className="rounded-2xl border border-white/10 bg-slate-900/60 p-4">
-                <div className="text-sm text-slate-400">Unanswered</div>
-                <div className="mt-2 text-2xl font-bold text-amber-300">{activeTopic.stats.unanswered}</div>
+              <div className={`rounded-2xl border p-4 ${darkMode ? 'border-white/10 bg-slate-900/60' : 'border-slate-200 bg-slate-50'}`}>
+                <div className={`text-sm font-medium ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>Unanswered</div>
+                <div className={`mt-2 text-2xl font-bold ${darkMode ? 'text-amber-300' : 'text-amber-600'}`}>{activeTopic.stats.unanswered}</div>
               </div>
-              <div className="rounded-2xl border border-white/10 bg-slate-900/60 p-4">
-                <div className="text-sm text-slate-400">Total</div>
-                <div className="mt-2 text-2xl font-bold text-sky-300">{activeTopic.stats.total}</div>
+              <div className={`rounded-2xl border p-4 ${darkMode ? 'border-white/10 bg-slate-900/60' : 'border-slate-200 bg-slate-50'}`}>
+                <div className={`text-sm font-medium ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>Total</div>
+                <div className={`mt-2 text-2xl font-bold ${darkMode ? 'text-sky-300' : 'text-sky-600'}`}>{activeTopic.stats.total}</div>
               </div>
             </div>
 
             <div className="mt-6">
-              <div className="mb-2 flex items-center justify-between text-sm text-slate-300">
-                <span>Topic performance</span>
-                <span className="font-semibold text-white">{activeTopic.stats.percentage}%</span>
+              <div className={`mb-2 flex items-center justify-between text-sm ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
+                <span className="font-medium">Topic performance</span>
+                <span className={`font-semibold ${darkMode ? 'text-white' : 'text-slate-900'}`}>{activeTopic.stats.percentage}%</span>
               </div>
-              <div className="h-2.5 rounded-full bg-white/10">
+              <div className={`h-2.5 rounded-full overflow-hidden ${darkMode ? 'bg-white/10' : 'bg-slate-200'}`}>
                 <div
                   className="h-2.5 rounded-full bg-gradient-to-r from-sky-500 to-violet-500"
                   style={{ width: `${Math.min(100, Math.max(0, activeTopic.stats.percentage))}%` }}

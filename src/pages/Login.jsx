@@ -139,8 +139,8 @@ export default function Login() {
             </label>
           </div>
 
-          <label className={`block rounded-2xl border px-4 py-3 transition-all duration-200 ${darkMode ? 'border-slate-800/70 bg-slate-900/80 hover:border-sky-400/30 focus-within:border-sky-400/50 focus-within:bg-slate-800/90' : 'border-slate-300 bg-slate-50 hover:border-sky-300 focus-within:border-sky-400 focus-within:bg-white'}`}>
-            <span className={`mb-2 flex items-center gap-2 text-sm font-medium ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}><Mail size={16} /> Email</span>
+          <label className={`block rounded-2xl border px-4 py-3 transition-all duration-200 ${darkMode ? 'border-slate-800/70 bg-slate-900/80 hover:border-sky-400/30 focus-within:border-sky-400/50 focus-within:bg-slate-800/90' : 'border-slate-300 bg-white hover:border-sky-300 focus-within:border-sky-400 focus-within:ring-2 focus-within:ring-sky-100 shadow-sm'}`}>
+            <span className={`mb-2 flex items-center gap-2 text-sm font-medium ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}><Mail size={16} /> Email</span>
             <input
               type="email"
               required
@@ -151,8 +151,8 @@ export default function Login() {
             />
           </label>
 
-          <label className={`block rounded-2xl border px-4 py-3 transition-all duration-200 ${darkMode ? 'border-slate-800/70 bg-slate-900/80 hover:border-sky-400/30 focus-within:border-sky-400/50 focus-within:bg-slate-800/90' : 'border-slate-300 bg-slate-50 hover:border-sky-300 focus-within:border-sky-400 focus-within:bg-white'}`}>
-            <span className={`mb-2 flex items-center gap-2 text-sm font-medium ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}><Lock size={16} /> Password</span>
+          <label className={`block rounded-2xl border px-4 py-3 transition-all duration-200 ${darkMode ? 'border-slate-800/70 bg-slate-900/80 hover:border-sky-400/30 focus-within:border-sky-400/50 focus-within:bg-slate-800/90' : 'border-slate-300 bg-white hover:border-sky-300 focus-within:border-sky-400 focus-within:ring-2 focus-within:ring-sky-100 shadow-sm'}`}>
+            <span className={`mb-2 flex items-center gap-2 text-sm font-medium ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}><Lock size={16} /> Password</span>
             <input
               type="password"
               required

@@ -293,31 +293,39 @@ export default function InAppPaymentModal({ isOpen, onClose, onPaymentComplete }
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-5 right-5 flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-400 transition hover:bg-white/10 hover:text-white cursor-pointer"
+          className={`absolute top-5 right-5 flex h-9 w-9 items-center justify-center rounded-full border transition cursor-pointer ${
+            darkMode
+              ? 'border-white/10 bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white'
+              : 'border-slate-200 bg-slate-100 text-slate-500 hover:bg-slate-200 hover:text-slate-800'
+          }`}
         >
           <X size={18} />
         </button>
 
-        <div className="flex items-center gap-2 rounded-full border border-sky-400/30 bg-sky-500/10 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-sky-400 w-fit">
+        <div className="flex items-center gap-2 rounded-full border border-sky-400/30 bg-sky-500/10 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-sky-500 w-fit">
           <Sparkles size={13} /> Secure In-App Payment
         </div>
 
-        <h2 className="mt-3 text-2xl font-bold tracking-tight">
+        <h2 className={`mt-3 text-2xl font-bold tracking-tight ${darkMode ? 'text-white' : 'text-slate-900'}`}>
           Unlock Full Assessment Access
         </h2>
 
-        <p className="mt-1 text-xs text-slate-400 leading-relaxed">
+        <p className={`mt-1 text-xs leading-relaxed ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>
           Pay once for 30 days of unlimited adaptive math diagnostics and reports. No external redirects required.
         </p>
 
-        <div className="mt-4 flex items-center justify-between rounded-2xl border border-white/10 bg-slate-900/50 px-4 py-3 text-xs">
+        <div className={`mt-4 flex items-center justify-between rounded-2xl border px-4 py-3 text-xs ${
+          darkMode
+            ? 'border-white/10 bg-slate-900/50'
+            : 'border-slate-200 bg-slate-50'
+        }`}>
           <div>
-            <span className="text-slate-400">Student: </span>
-            <span className="font-bold text-white">{user?.name || 'Student'}</span>
-            {user?.grade && <span className="text-slate-400"> ({user.grade})</span>}
+            <span className={darkMode ? 'text-slate-400' : 'text-slate-500'}>Student: </span>
+            <span className={`font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>{user?.name || 'Student'}</span>
+            {user?.grade && <span className={darkMode ? 'text-slate-400' : 'text-slate-500'}> ({user.grade})</span>}
           </div>
           <div className="text-right">
-            <span className="rounded-full bg-sky-500/10 border border-sky-400/30 px-3 py-1 font-bold text-sky-400">
+            <span className="rounded-full bg-sky-500/10 border border-sky-400/30 px-3 py-1 font-bold text-sky-500">
               PKR 3,500
             </span>
           </div>

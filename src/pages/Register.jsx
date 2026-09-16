@@ -139,27 +139,27 @@ export default function Register() {
         <form onSubmit={handleSubmit} className={`space-y-5 rounded-[2rem] border p-8 transition-all duration-300 ${darkMode ? 'border-white/10 bg-slate-950/85 shadow-[0_30px_90px_-30px_rgba(56,189,248,0.2)]' : 'border-slate-200 bg-white shadow-[0_20px_70px_-35px_rgba(59,130,246,0.35)]'}`}>
           {/* Full name and Email */}
           <div className="grid gap-4 md:grid-cols-2">
-            <label className={`block rounded-2xl border px-4 py-3 transition-all duration-200 ${darkMode ? 'border-slate-800/70 bg-slate-900/80 hover:border-sky-400/30 focus-within:border-sky-400/50 focus-within:bg-slate-800/90' : 'border-slate-300 bg-slate-50 hover:border-sky-300 focus-within:border-sky-400 focus-within:bg-white'}`}>
-              <span className={`mb-2 flex items-center gap-2 text-sm font-medium ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}><User size={16} /> Full name</span>
+            <label className={`block rounded-2xl border px-4 py-3 transition-all duration-200 ${darkMode ? 'border-slate-800/70 bg-slate-900/80 hover:border-sky-400/30 focus-within:border-sky-400/50 focus-within:bg-slate-800/90' : 'border-slate-300 bg-white hover:border-sky-300 focus-within:border-sky-400 focus-within:ring-2 focus-within:ring-sky-100 shadow-sm'}`}>
+              <span className={`mb-2 flex items-center gap-2 text-sm font-medium ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}><User size={16} /> Full name</span>
               <input 
                 type="text"
                 name="name"
                 required 
                 value={form.name} 
                 onChange={handleChange}
-                className={`w-full bg-transparent text-white outline-none ${darkMode ? 'placeholder:text-slate-500' : 'text-slate-900 placeholder:text-slate-400'}`} 
+                className={`w-full bg-transparent outline-none ${darkMode ? 'text-white placeholder:text-slate-500' : 'text-slate-900 placeholder:text-slate-400'}`} 
                 placeholder="Name" 
               />
             </label>
-            <label className={`block rounded-2xl border px-4 py-3 transition-all duration-200 ${darkMode ? 'border-slate-800/70 bg-slate-900/80 hover:border-sky-400/30 focus-within:border-sky-400/50 focus-within:bg-slate-800/90' : 'border-slate-300 bg-slate-50 hover:border-sky-300 focus-within:border-sky-400 focus-within:bg-white'}`}>
-              <span className={`mb-2 flex items-center gap-2 text-sm font-medium ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}><Mail size={16} /> Email</span>
+            <label className={`block rounded-2xl border px-4 py-3 transition-all duration-200 ${darkMode ? 'border-slate-800/70 bg-slate-900/80 hover:border-sky-400/30 focus-within:border-sky-400/50 focus-within:bg-slate-800/90' : 'border-slate-300 bg-white hover:border-sky-300 focus-within:border-sky-400 focus-within:ring-2 focus-within:ring-sky-100 shadow-sm'}`}>
+              <span className={`mb-2 flex items-center gap-2 text-sm font-medium ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}><Mail size={16} /> Email</span>
               <input 
                 type="email" 
                 name="email"
                 required 
                 value={form.email} 
                 onChange={handleChange}
-                className={`w-full bg-transparent text-white outline-none ${darkMode ? 'placeholder:text-slate-500' : 'text-slate-900 placeholder:text-slate-400'}`} 
+                className={`w-full bg-transparent outline-none ${darkMode ? 'text-white placeholder:text-slate-500' : 'text-slate-900 placeholder:text-slate-400'}`} 
                 placeholder="Email" 
               />
             </label>
@@ -167,20 +167,20 @@ export default function Register() {
 
           {/* Father name and Age */}
           <div className="grid gap-4 md:grid-cols-2">
-            <label className={`block rounded-2xl border px-4 py-3 transition-all duration-200 ${darkMode ? 'border-slate-800/70 bg-slate-900/80 hover:border-sky-400/30 focus-within:border-sky-400/50 focus-within:bg-slate-800/90' : 'border-slate-300 bg-slate-50 hover:border-sky-300 focus-within:border-sky-400 focus-within:bg-white'}`}>
-              <span className={`mb-2 flex items-center gap-2 text-sm font-medium ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}><User size={16} /> Father name</span>
+            <label className={`block rounded-2xl border px-4 py-3 transition-all duration-200 ${darkMode ? 'border-slate-800/70 bg-slate-900/80 hover:border-sky-400/30 focus-within:border-sky-400/50 focus-within:bg-slate-800/90' : 'border-slate-300 bg-white hover:border-sky-300 focus-within:border-sky-400 focus-within:ring-2 focus-within:ring-sky-100 shadow-sm'}`}>
+              <span className={`mb-2 flex items-center gap-2 text-sm font-medium ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}><User size={16} /> Father name</span>
               <input 
                 type="text"
                 name="fatherName"
                 required 
                 value={form.fatherName} 
                 onChange={handleChange}
-                className={`w-full bg-transparent text-white outline-none ${darkMode ? 'placeholder:text-slate-500' : 'text-slate-900 placeholder:text-slate-400'}`} 
+                className={`w-full bg-transparent outline-none ${darkMode ? 'text-white placeholder:text-slate-500' : 'text-slate-900 placeholder:text-slate-400'}`} 
                 placeholder="Father name" 
               />
             </label>
-            <label className={`block rounded-2xl border px-4 py-3 transition-all duration-200 ${darkMode ? 'border-slate-800/70 bg-slate-900/80 hover:border-sky-400/30 focus-within:border-sky-400/50 focus-within:bg-slate-800/90' : 'border-slate-300 bg-slate-50 hover:border-sky-300 focus-within:border-sky-400 focus-within:bg-white'}`}>
-              <span className={`mb-2 flex items-center gap-2 text-sm font-medium ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>Age</span>
+            <label className={`block rounded-2xl border px-4 py-3 transition-all duration-200 ${darkMode ? 'border-slate-800/70 bg-slate-900/80 hover:border-sky-400/30 focus-within:border-sky-400/50 focus-within:bg-slate-800/90' : 'border-slate-300 bg-white hover:border-sky-300 focus-within:border-sky-400 focus-within:ring-2 focus-within:ring-sky-100 shadow-sm'}`}>
+              <span className={`mb-2 flex items-center gap-2 text-sm font-medium ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>Age</span>
               <input 
                 type="number" 
                 name="age"
@@ -188,7 +188,7 @@ export default function Register() {
                 required 
                 value={form.age} 
                 onChange={handleChange}
-                className={`w-full bg-transparent text-white outline-none ${darkMode ? 'placeholder:text-slate-500' : 'text-slate-900 placeholder:text-slate-400'}`} 
+                className={`w-full bg-transparent outline-none ${darkMode ? 'text-white placeholder:text-slate-500' : 'text-slate-900 placeholder:text-slate-400'}`} 
                 placeholder="Age" 
               />
             </label>
@@ -196,35 +196,35 @@ export default function Register() {
 
           {/* Password and Confirm Password */}
           <div className="grid gap-4 md:grid-cols-2">
-            <label className={`block rounded-2xl border px-4 py-3 transition-all duration-200 ${darkMode ? 'border-slate-800/70 bg-slate-900/80 hover:border-sky-400/30 focus-within:border-sky-400/50 focus-within:bg-slate-800/90' : 'border-slate-300 bg-slate-50 hover:border-sky-300 focus-within:border-sky-400 focus-within:bg-white'}`}>
-              <span className={`mb-2 flex items-center gap-2 text-sm font-medium ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}><Lock size={16} /> Password</span>
+            <label className={`block rounded-2xl border px-4 py-3 transition-all duration-200 ${darkMode ? 'border-slate-800/70 bg-slate-900/80 hover:border-sky-400/30 focus-within:border-sky-400/50 focus-within:bg-slate-800/90' : 'border-slate-300 bg-white hover:border-sky-300 focus-within:border-sky-400 focus-within:ring-2 focus-within:ring-sky-100 shadow-sm'}`}>
+              <span className={`mb-2 flex items-center gap-2 text-sm font-medium ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}><Lock size={16} /> Password</span>
               <input 
                 type="password" 
                 name="password"
                 required 
                 value={form.password} 
                 onChange={handleChange}
-                className={`w-full bg-transparent text-white outline-none ${darkMode ? 'placeholder:text-slate-500' : 'text-slate-900 placeholder:text-slate-400'}`}
-                placeholder="Password"
+                className={`w-full bg-transparent outline-none ${darkMode ? 'text-white placeholder:text-slate-500' : 'text-slate-900 placeholder:text-slate-400'}`}
+                placeholder="Password" 
               />
             </label>
-            <label className={`block rounded-2xl border px-4 py-3 transition-all duration-200 ${darkMode ? 'border-slate-800/70 bg-slate-900/80 hover:border-sky-400/30 focus-within:border-sky-400/50 focus-within:bg-slate-800/90' : 'border-slate-300 bg-slate-50 hover:border-sky-300 focus-within:border-sky-400 focus-within:bg-white'}`}>
-              <span className={`mb-2 flex items-center gap-2 text-sm font-medium ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}><Lock size={16} /> Confirm password</span>
+            <label className={`block rounded-2xl border px-4 py-3 transition-all duration-200 ${darkMode ? 'border-slate-800/70 bg-slate-900/80 hover:border-sky-400/30 focus-within:border-sky-400/50 focus-within:bg-slate-800/90' : 'border-slate-300 bg-white hover:border-sky-300 focus-within:border-sky-400 focus-within:ring-2 focus-within:ring-sky-100 shadow-sm'}`}>
+              <span className={`mb-2 flex items-center gap-2 text-sm font-medium ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}><Lock size={16} /> Confirm password</span>
               <input 
                 type="password" 
                 name="confirmPassword"
                 required 
                 value={form.confirmPassword} 
                 onChange={handleChange}
-                className={`w-full bg-transparent text-white outline-none ${darkMode ? 'placeholder:text-slate-500' : 'text-slate-900 placeholder:text-slate-400'}`}
+                className={`w-full bg-transparent outline-none ${darkMode ? 'text-white placeholder:text-slate-500' : 'text-slate-900 placeholder:text-slate-400'}`}
                 placeholder="Confirm password"
               />
             </label>
           </div>
 
           {/* Grade Level */}
-          <label className={`block rounded-2xl border px-4 py-3 transition-all duration-200 ${darkMode ? 'border-slate-800/70 bg-slate-900/80 hover:border-sky-400/30 focus-within:border-sky-400/50 focus-within:bg-slate-800/90' : 'border-slate-300 bg-slate-50 hover:border-sky-300 focus-within:border-sky-400 focus-within:bg-white'}`}>
-            <span className={`mb-2 block text-sm font-medium ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>Grade level</span>
+          <label className={`block rounded-2xl border px-4 py-3 transition-all duration-200 ${darkMode ? 'border-slate-800/70 bg-slate-900/80 hover:border-sky-400/30 focus-within:border-sky-400/50 focus-within:bg-slate-800/90' : 'border-slate-300 bg-white hover:border-sky-300 focus-within:border-sky-400 focus-within:ring-2 focus-within:ring-sky-100 shadow-sm'}`}>
+            <span className={`mb-2 block text-sm font-medium ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>Grade level</span>
             <select 
               name="grade"
               required 

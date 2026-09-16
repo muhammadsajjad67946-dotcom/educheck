@@ -134,20 +134,29 @@ html[data-theme='light'] .user-main .bg-slate-200 {
   background-color: #f4f7fb !important;
 }
 
+html[data-theme='light'] input,
+html[data-theme='light'] textarea,
+html[data-theme='light'] select,
 html[data-theme='light'] .user-main input,
 html[data-theme='light'] .user-main textarea,
 html[data-theme='light'] .user-main select {
-  color: #172033 !important;
-  background-color: #ffffff !important;
-  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
 }
 
-html[data-theme='light'] .user-main button.text-white,
-html[data-theme='light'] .user-main a.bg-gradient-to-r,
-html[data-theme='light'] .user-main a.bg-gradient-to-br,
-html[data-theme='light'] .user-main .bg-gradient-to-r.text-white,
-html[data-theme='light'] .user-main .bg-gradient-to-br.text-white {
+html[data-theme='light'] input::placeholder,
+html[data-theme='light'] textarea::placeholder {
+  color: #64748b !important;
+  -webkit-text-fill-color: #64748b !important;
+}
+
+html[data-theme='light'] button.text-white,
+html[data-theme='light'] a.bg-gradient-to-r,
+html[data-theme='light'] a.bg-gradient-to-br,
+html[data-theme='light'] .bg-gradient-to-r.text-white,
+html[data-theme='light'] .bg-gradient-to-br.text-white {
   color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
 }
 
 :root {
@@ -168,6 +177,7 @@ html {
 
 html[data-theme='light'] {
   background: #f8fafc;
+  color: #0f172a;
 }
 
 body {

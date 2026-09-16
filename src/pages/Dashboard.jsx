@@ -18,7 +18,7 @@ import {
 } from 'lucide-react'
 import { useApp } from '../context/AppContext'
 import { apiRequest } from '../utils/api'
-import { buildDashboardMetrics } from '../utils/dashboardMetrics'
+import { buildDashboardMetrics, parseGradeNumber } from '../utils/dashboardMetrics'
 
 const strandOrder = [
   { name: 'Number & Operations', key: 'Number & Operations', icon: Calculator, color: 'from-sky-400 to-indigo-500', textLight: 'text-sky-400' },
@@ -49,6 +49,7 @@ export default function Dashboard() {
         payments: [],
         userGrade: user?.grade || 'Grade 6',
         fallbackAssessment: assessmentResult || assessmentHistory?.[assessmentHistory.length - 1] || null,
+        userName: user?.name,
       }))
       return
     }
@@ -78,7 +79,8 @@ export default function Dashboard() {
           assessments,
           payments,
           userGrade: actualGrade,
-          fallbackAssessment: assessmentResult || assessments[0] || null,
+          fallbackAssessment: assessmentResult || assessments[0] || assessmentHistory?.[assessmentHistory.length - 1] || null,
+          userName: user?.name,
         })
 
         setLiveDashboardMetrics({
@@ -94,20 +96,28 @@ export default function Dashboard() {
           payments: [],
           userGrade: user.grade || 'Grade 6',
           fallbackAssessment: assessmentResult || assessmentHistory?.[assessmentHistory.length - 1] || null,
+          userName: user?.name,
         }))
       })
 
     return () => {
       isMounted = false
     }
-  }, [assessmentHistory, assessmentResult, paymentStatus, updateProfile, user?.grade, user?.id])
+  }, [assessmentHistory, assessmentResult, paymentStatus, updateProfile, user?.grade, user?.id, user?.name])
 
   const latestAssessment = useMemo(() => {
     if (assessmentResult) return assessmentResult
     const validLive = (liveAssessments || []).filter(
       (a) => !['abandoned', 'in_progress'].includes(String(a?.status || '').toLowerCase().trim())
     )
-    if (validLive.length > 0) return validLive[0]
+    if (validLive.length > 0) {
+      const sortedLive = [...validLive].sort((a, b) => {
+        const timeA = new Date(a.submittedAt || a.submitted_at || a.testDate || a.created_at || a.createdAt || 0).getTime() || Number(a.id || 0)
+        const timeB = new Date(b.submittedAt || b.submitted_at || b.testDate || b.created_at || b.createdAt || 0).getTime() || Number(b.id || 0)
+        return timeB - timeA
+      })
+      return sortedLive[0]
+    }
     const validHistory = (assessmentHistory || []).filter(
       (a) => !['abandoned', 'in_progress'].includes(String(a?.status || '').toLowerCase().trim())
     )
@@ -124,31 +134,56 @@ export default function Dashboard() {
     return Math.round(total / entries.length)
   }, [assessmentHistory, assessmentResult])
 
+  const latestAccuracy = Number.isFinite(liveDashboardMetrics.latestAccuracy)
+    ? liveDashboardMetrics.latestAccuracy
+    : (latestAssessment?.percentage != null
+        ? Math.round(Number(latestAssessment.percentage))
+        : (assessmentResult?.percentage != null ? Math.round(Number(assessmentResult.percentage)) : fallbackAverageAccuracy))
+
+  const totalAssessments = Number.isFinite(liveDashboardMetrics.totalAssessments) && liveDashboardMetrics.totalAssessments > 0
+    ? liveDashboardMetrics.totalAssessments
+    : assessmentHistory.length || (assessmentResult ? 1 : 0)
+
+  const displayAccuracy = totalAssessments > 0 ? latestAccuracy : 0
+  const averageAccuracy = Number.isFinite(liveDashboardMetrics.averageAccuracy) ? liveDashboardMetrics.averageAccuracy : fallbackAverageAccuracy
+
   const fallbackCurrentGradeLevel = useMemo(() => {
+    const targetAssessment = assessmentResult || latestAssessment
+    if (targetAssessment) {
+      const raw = targetAssessment.demonstratedMathLevel ??
+        targetAssessment.estimated_grade ??
+        targetAssessment.estimatedGrade ??
+        targetAssessment.reportData?.demonstratedMathLevel ??
+        targetAssessment.reportData?.overallResult?.demonstratedMathLevel
+      const parsed = parseGradeNumber(raw)
+      if (Number.isFinite(parsed) && parsed > 0) return Number(parsed.toFixed(1))
+    }
+
     const rawEntries = assessmentHistory.length ? assessmentHistory : assessmentResult ? [assessmentResult] : []
     const entries = rawEntries.filter(
       (e) => !['abandoned', 'in_progress'].includes(String(e?.status || '').toLowerCase().trim())
     )
     if (!entries.length) return 0
 
-    const latest = entries[entries.length - 1]
-    const assessedGradeRaw = latest?.estimated_grade ??
-      latest?.estimatedGrade ??
-      latest?.demonstratedMathLevel ??
-      latest?.reportData?.demonstratedMathLevel
-    const parsedAssessed = assessedGradeRaw != null && assessedGradeRaw !== '' ? Number(assessedGradeRaw) : null
-    if (Number.isFinite(parsedAssessed) && parsedAssessed > 0) return Number(parsedAssessed.toFixed(1))
+    for (let i = entries.length - 1; i >= 0; i--) {
+      const entry = entries[i]
+      const assessedGradeRaw = entry?.demonstratedMathLevel ??
+        entry?.estimated_grade ??
+        entry?.estimatedGrade ??
+        entry?.reportData?.demonstratedMathLevel ??
+        entry?.reportData?.overallResult?.demonstratedMathLevel
+      const parsedAssessed = parseGradeNumber(assessedGradeRaw)
+      if (Number.isFinite(parsedAssessed) && parsedAssessed > 0) return Number(parsedAssessed.toFixed(1))
+    }
 
     const selectedGradeNumber = Number(String(user?.grade || '').match(/Grade\s*(\d+)/i)?.[1] || 1)
-    const accuracy = fallbackAverageAccuracy / 100
+    const accuracy = displayAccuracy / 100
     return Number((1 + accuracy * Math.max(0, selectedGradeNumber - 1)).toFixed(1))
-  }, [assessmentHistory, assessmentResult, fallbackAverageAccuracy, user?.grade])
+  }, [assessmentHistory, assessmentResult, displayAccuracy, latestAssessment, user?.grade])
 
-  const totalAssessments = Number.isFinite(liveDashboardMetrics.totalAssessments) && liveDashboardMetrics.totalAssessments > 0
-    ? liveDashboardMetrics.totalAssessments
-    : assessmentHistory.length || (assessmentResult ? 1 : 0)
-  const averageAccuracy = Number.isFinite(liveDashboardMetrics.averageAccuracy) ? liveDashboardMetrics.averageAccuracy : fallbackAverageAccuracy
-  const currentGradeLevel = Number.isFinite(liveDashboardMetrics.currentGradeLevel) ? liveDashboardMetrics.currentGradeLevel : fallbackCurrentGradeLevel
+  const currentGradeLevel = Number.isFinite(liveDashboardMetrics.currentGradeLevel) && liveDashboardMetrics.currentGradeLevel > 0
+    ? liveDashboardMetrics.currentGradeLevel
+    : fallbackCurrentGradeLevel
 
   const strandPerformance = useMemo(() => {
     const latestResult = latestAssessment || assessmentResult || null
@@ -244,11 +279,11 @@ export default function Dashboard() {
       const value = record && record.total ? Math.round(record.sum / record.total) : 0
       return { ...strand, value: `${value}%`, percentage: value }
     })
-  }, [assessmentHistory, assessmentResult, averageAccuracy, latestAssessment, liveAssessments])
+  }, [assessmentHistory, assessmentResult, averageAccuracy, displayAccuracy, latestAssessment, liveAssessments])
 
   const radius = 46
   const circumference = 2 * Math.PI * radius
-  const strokeDashoffset = circumference - (circumference * Math.min(100, Math.max(0, averageAccuracy))) / 100
+  const strokeDashoffset = circumference - (circumference * Math.min(100, Math.max(0, displayAccuracy))) / 100
 
   return (
     <div className="space-y-6">
@@ -325,18 +360,22 @@ export default function Dashboard() {
         {effectivePaymentStatus === 'paid' ? (
           <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div className="space-y-2.5 max-w-2xl">
-              <div className="inline-flex items-center gap-2 rounded-full border border-sky-400/30 bg-sky-500/10 px-3.5 py-1 text-xs font-bold text-sky-400 uppercase tracking-wider">
+              <div className="inline-flex items-center gap-2 rounded-full border border-sky-400/30 bg-sky-500/10 px-3.5 py-1 text-xs font-bold text-sky-500 dark:text-sky-400 uppercase tracking-wider">
                 <Sparkles size={13} /> Recommended Next Step
               </div>
-              <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-white">
+              <h2 className={`text-xl sm:text-2xl font-bold tracking-tight ${darkMode ? 'text-white' : 'text-slate-900'}`}>
                 Ready to Start Your Diagnostic Assessment?
               </h2>
-              <div className="flex flex-wrap items-center gap-2.5 pt-1 text-xs font-medium text-slate-300">
-                <span className="inline-flex items-center gap-1.5 rounded-xl bg-slate-800/80 px-3 py-1.5 border border-white/5">
-                  <Target size={13} className="text-cyan-400" /> Instant Skill Diagnostic
+              <div className="flex flex-wrap items-center gap-2.5 pt-1 text-xs font-medium">
+                <span className={`inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 border ${
+                  darkMode ? 'bg-slate-800/80 border-white/5 text-slate-300' : 'bg-white border-slate-200 text-slate-700 shadow-sm'
+                }`}>
+                  <Target size={13} className="text-cyan-500 dark:text-cyan-400" /> Instant Skill Diagnostic
                 </span>
-                <span className="inline-flex items-center gap-1.5 rounded-xl bg-slate-800/80 px-3 py-1.5 border border-white/5">
-                  <TrendingUp size={13} className="text-emerald-400" /> Subtopic Gap Analysis
+                <span className={`inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 border ${
+                  darkMode ? 'bg-slate-800/80 border-white/5 text-slate-300' : 'bg-white border-slate-200 text-slate-700 shadow-sm'
+                }`}>
+                  <TrendingUp size={13} className="text-emerald-500 dark:text-emerald-400" /> Subtopic Gap Analysis
                 </span>
               </div>
             </div>
@@ -354,10 +393,10 @@ export default function Dashboard() {
         ) : (
           <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div className="space-y-2.5 max-w-2xl">
-              <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-3.5 py-1 text-xs font-bold text-amber-400 uppercase tracking-wider">
+              <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-3.5 py-1 text-xs font-bold text-amber-500 dark:text-amber-400 uppercase tracking-wider">
                 <Clock3 size={13} /> Enrollment Pending
               </div>
-              <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-white">
+              <h2 className={`text-xl sm:text-2xl font-bold tracking-tight ${darkMode ? 'text-white' : 'text-slate-900'}`}>
                 Unlock 30 Days of Unlimited Diagnostic Tests
               </h2>
             </div>
@@ -378,12 +417,12 @@ export default function Dashboard() {
       {/* 3. Performance & Diagnostic Metrics: 4 Graceful, Balanced Cards */}
       <section className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="flex items-center gap-2 text-base font-bold text-white">
-            <Sparkles size={17} className="text-cyan-400" />
+          <h2 className={`flex items-center gap-2 text-base font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>
+            <Sparkles size={17} className="text-cyan-500 dark:text-cyan-400" />
             Performance Overview
           </h2>
           {totalAssessments > 0 && (
-            <span className="text-xs text-slate-400 font-medium">
+            <span className={`text-xs font-medium ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>
               Based on {totalAssessments} completed {totalAssessments === 1 ? 'assessment' : 'assessments'}
             </span>
           )}
@@ -391,70 +430,86 @@ export default function Dashboard() {
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {/* Card 1: Curriculum Grade */}
-          <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-slate-900/70 p-5 shadow-lg backdrop-blur transition-all duration-200 hover:-translate-y-0.5 hover:border-sky-500/40 hover:bg-slate-900/90">
+          <div className={`group relative overflow-hidden rounded-2xl border p-5 shadow-lg backdrop-blur transition-all duration-200 hover:-translate-y-0.5 ${
+            darkMode
+              ? 'border-white/10 bg-slate-900/70 hover:border-sky-500/40 hover:bg-slate-900/90'
+              : 'border-slate-200 bg-white hover:border-sky-300 hover:shadow-slate-200/60 shadow-slate-100'
+          }`}>
             <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-3">
-              <span className="min-w-0 text-xs font-bold uppercase leading-tight tracking-wider text-slate-400">Curriculum Grade</span>
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-500/15 text-sky-400 transition-transform duration-200 group-hover:scale-110">
+              <span className={`min-w-0 text-xs font-bold uppercase leading-tight tracking-wider ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>Curriculum Grade</span>
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-500/15 text-sky-500 dark:text-sky-400 transition-transform duration-200 group-hover:scale-110">
                 <GraduationCap size={20} />
               </div>
             </div>
             <div className="mt-4">
-              <div className="text-2xl sm:text-3xl font-extrabold text-white">
+              <div className={`text-2xl sm:text-3xl font-extrabold ${darkMode ? 'text-white' : 'text-slate-900'}`}>
                 {user?.grade || 'Grade 4'}
               </div>
-              <p className="mt-1 text-xs text-slate-400">Enrolled Standard Level</p>
+              <p className={`mt-1 text-xs ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>Enrolled Standard Level</p>
             </div>
           </div>
 
           {/* Card 2: Assessed Skill Level */}
-          <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-slate-900/70 p-5 shadow-lg backdrop-blur transition-all duration-200 hover:-translate-y-0.5 hover:border-violet-500/40 hover:bg-slate-900/90">
+          <div className={`group relative overflow-hidden rounded-2xl border p-5 shadow-lg backdrop-blur transition-all duration-200 hover:-translate-y-0.5 ${
+            darkMode
+              ? 'border-white/10 bg-slate-900/70 hover:border-violet-500/40 hover:bg-slate-900/90'
+              : 'border-slate-200 bg-white hover:border-violet-300 hover:shadow-slate-200/60 shadow-slate-100'
+          }`}>
             <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-3">
-              <span className="min-w-0 text-xs font-bold uppercase leading-tight tracking-wider text-slate-400">Assessed Skill Level</span>
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-500/15 text-violet-400 transition-transform duration-200 group-hover:scale-110">
+              <span className={`min-w-0 text-xs font-bold uppercase leading-tight tracking-wider ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>Assessed Skill Level</span>
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-500/15 text-violet-500 dark:text-violet-400 transition-transform duration-200 group-hover:scale-110">
                 <Award size={20} />
               </div>
             </div>
             <div className="mt-4">
-              <div className="text-2xl sm:text-3xl font-extrabold text-white">
+              <div className={`text-2xl sm:text-3xl font-extrabold ${darkMode ? 'text-white' : 'text-slate-900'}`}>
                 {totalAssessments > 0 ? `Grade ${currentGradeLevel.toFixed(1)}` : 'Pending'}
               </div>
-              <p className="mt-1 text-xs text-slate-400">
+              <p className={`mt-1 text-xs ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>
                 {totalAssessments > 0 ? 'Evaluated Benchmark' : 'Take test to evaluate'}
               </p>
             </div>
           </div>
 
           {/* Card 3: Assessments Completed */}
-          <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-slate-900/70 p-5 shadow-lg backdrop-blur transition-all duration-200 hover:-translate-y-0.5 hover:border-emerald-500/40 hover:bg-slate-900/90">
+          <div className={`group relative overflow-hidden rounded-2xl border p-5 shadow-lg backdrop-blur transition-all duration-200 hover:-translate-y-0.5 ${
+            darkMode
+              ? 'border-white/10 bg-slate-900/70 hover:border-emerald-500/40 hover:bg-slate-900/90'
+              : 'border-slate-200 bg-white hover:border-emerald-300 hover:shadow-slate-200/60 shadow-slate-100'
+          }`}>
             <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-3">
-              <span className="min-w-0 text-xs font-bold uppercase leading-tight tracking-wider text-slate-400">Tests Completed</span>
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/15 text-emerald-400 transition-transform duration-200 group-hover:scale-110">
+              <span className={`min-w-0 text-xs font-bold uppercase leading-tight tracking-wider ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>Tests Completed</span>
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/15 text-emerald-500 dark:text-emerald-400 transition-transform duration-200 group-hover:scale-110">
                 <BookOpen size={20} />
               </div>
             </div>
             <div className="mt-4">
-              <div className="text-2xl sm:text-3xl font-extrabold text-white">
+              <div className={`text-2xl sm:text-3xl font-extrabold ${darkMode ? 'text-white' : 'text-slate-900'}`}>
                 {totalAssessments}
               </div>
-              <p className="mt-1 text-xs text-slate-400">
+              <p className={`mt-1 text-xs ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>
                 {totalAssessments === 1 ? '1 assessment finished' : `${totalAssessments} assessments finished`}
               </p>
             </div>
           </div>
 
-          {/* Card 4: Average Accuracy */}
-          <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-slate-900/70 p-5 shadow-lg backdrop-blur transition-all duration-200 hover:-translate-y-0.5 hover:border-cyan-500/40 hover:bg-slate-900/90">
+          {/* Card 4: Overall Accuracy */}
+          <div className={`group relative overflow-hidden rounded-2xl border p-5 shadow-lg backdrop-blur transition-all duration-200 hover:-translate-y-0.5 ${
+            darkMode
+              ? 'border-white/10 bg-slate-900/70 hover:border-cyan-500/40 hover:bg-slate-900/90'
+              : 'border-slate-200 bg-white hover:border-cyan-300 hover:shadow-slate-200/60 shadow-slate-100'
+          }`}>
             <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-3">
-              <span className="min-w-0 text-xs font-bold uppercase leading-tight tracking-wider text-slate-400">Average Accuracy</span>
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-cyan-500/15 text-cyan-400 transition-transform duration-200 group-hover:scale-110">
+              <span className={`min-w-0 text-xs font-bold uppercase leading-tight tracking-wider ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>Overall Accuracy</span>
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-cyan-500/15 text-cyan-500 dark:text-cyan-400 transition-transform duration-200 group-hover:scale-110">
                 <Target size={20} />
               </div>
             </div>
             <div className="mt-4">
-              <div className="text-2xl sm:text-3xl font-extrabold text-white">
-                {totalAssessments > 0 ? `${averageAccuracy}%` : '—'}
+              <div className={`text-2xl sm:text-3xl font-extrabold ${darkMode ? 'text-white' : 'text-slate-900'}`}>
+                {totalAssessments > 0 ? `${displayAccuracy}%` : '—'}
               </div>
-              <p className="mt-1 text-xs text-emerald-400 font-medium">
+              <p className={`mt-1 text-xs font-medium ${darkMode ? 'text-emerald-400' : 'text-emerald-600'}`}>
                 {totalAssessments > 0 ? 'Overall diagnostic score' : 'Calculated after test'}
               </p>
             </div>
@@ -463,18 +518,28 @@ export default function Dashboard() {
       </section>
 
       {/* 4. Curriculum Strand Mastery Breakdown */}
-      <section className="rounded-3xl border border-white/10 bg-slate-950/80 p-6 sm:p-7 shadow-xl backdrop-blur-xl">
-        <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 border-b border-white/5 pb-4">
+      <section className={`rounded-3xl border p-6 sm:p-7 shadow-xl backdrop-blur-xl transition-all ${
+        darkMode
+          ? 'border-white/10 bg-slate-950/80'
+          : 'border-slate-200 bg-white shadow-slate-200/50'
+      }`}>
+        <div className={`mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 border-b pb-4 ${
+          darkMode ? 'border-white/5' : 'border-slate-100'
+        }`}>
           <div>
-            <h3 className="text-lg font-bold text-white">Curriculum Strand Mastery</h3>
-            <p className="text-xs text-slate-400 mt-0.5">Diagnostic accuracy breakdown across the 5 core mathematics strands</p>
+            <h3 className={`text-lg font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>Curriculum Strand Mastery</h3>
+            <p className={`text-xs mt-0.5 ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>Diagnostic accuracy breakdown across the 5 core mathematics strands</p>
           </div>
           {totalAssessments > 0 ? (
-            <span className="rounded-full bg-sky-500/10 border border-sky-400/20 px-3 py-1 text-xs font-semibold text-sky-400">
+            <span className={`rounded-full border px-3 py-1 text-xs font-semibold ${
+              darkMode ? 'bg-sky-500/10 border-sky-400/20 text-sky-400' : 'bg-sky-50 border-sky-200 text-sky-700'
+            }`}>
               Live Diagnostic
             </span>
           ) : (
-            <span className="rounded-full bg-slate-800 border border-white/5 px-3 py-1 text-xs font-medium text-slate-400">
+            <span className={`rounded-full border px-3 py-1 text-xs font-medium ${
+              darkMode ? 'bg-slate-800 border-white/5 text-slate-400' : 'bg-slate-100 border-slate-200 text-slate-600'
+            }`}>
               Baseline Ready
             </span>
           )}
@@ -482,7 +547,9 @@ export default function Dashboard() {
 
         <div className="grid gap-8 lg:grid-cols-[260px_1fr] items-center">
           {/* Circular Mastery Donut Chart */}
-          <div className="flex flex-col items-center justify-center rounded-2xl border border-white/5 bg-slate-900/50 p-6 text-center">
+          <div className={`flex flex-col items-center justify-center rounded-2xl border p-6 text-center ${
+            darkMode ? 'border-white/5 bg-slate-900/50' : 'border-slate-200/80 bg-slate-50/80'
+          }`}>
             <div className="relative flex items-center justify-center">
               <svg className="h-40 w-40 -rotate-90 transform" viewBox="0 0 100 100">
                 {/* Background Ring */}
@@ -491,7 +558,7 @@ export default function Dashboard() {
                   cy="50"
                   r={radius}
                   fill="transparent"
-                  stroke="rgba(255, 255, 255, 0.07)"
+                  stroke={darkMode ? 'rgba(255, 255, 255, 0.07)' : 'rgba(15, 23, 42, 0.08)'}
                   strokeWidth="8"
                 />
                 {/* Progress Ring */}
@@ -516,14 +583,14 @@ export default function Dashboard() {
                 </defs>
               </svg>
               <div className="absolute flex flex-col items-center text-center">
-                <span className="text-3xl font-extrabold text-white">
-                  {totalAssessments > 0 ? `${averageAccuracy}%` : '0%'}
+                <span className={`text-3xl font-extrabold ${darkMode ? 'text-white' : 'text-slate-900'}`}>
+                  {totalAssessments > 0 ? `${displayAccuracy}%` : '0%'}
                 </span>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-sky-400">Mastery</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-sky-500">Mastery</span>
               </div>
             </div>
-            <p className="mt-4 text-xs font-semibold text-slate-300">Overall Diagnostic Average</p>
-            <p className="text-[11px] text-slate-500 mt-0.5">Calibrated across answered strands</p>
+            <p className={`mt-4 text-xs font-semibold ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>Overall Diagnostic Accuracy</p>
+            <p className={`text-[11px] mt-0.5 ${darkMode ? 'text-slate-500' : 'text-slate-400'}`}>Calibrated across answered strands</p>
           </div>
 
           {/* 5 Strand Progress Bars with Dedicated Icons */}
@@ -534,24 +601,32 @@ export default function Dashboard() {
               return (
                 <div
                   key={strand.name}
-                  className="group rounded-2xl border border-white/5 bg-slate-900/50 p-4 transition-all duration-200 hover:border-white/15 hover:bg-slate-900/80"
+                  className={`group rounded-2xl border p-4 transition-all duration-200 ${
+                    darkMode
+                      ? 'border-white/5 bg-slate-900/50 hover:border-white/15 hover:bg-slate-900/80'
+                      : 'border-slate-200/80 bg-slate-50/60 hover:border-slate-300 hover:bg-slate-50'
+                  }`}
                 >
                   <div className="flex items-center justify-between mb-2.5">
                     <div className="flex items-center gap-3">
-                      <div className={`flex h-8 w-8 items-center justify-center rounded-xl bg-white/5 ${strand.textLight || 'text-sky-400'}`}>
+                      <div className={`flex h-8 w-8 items-center justify-center rounded-xl ${
+                        darkMode ? 'bg-white/5' : 'bg-white shadow-sm border border-slate-200/60'
+                      } ${strand.textLight || 'text-sky-500'}`}>
                         <StrandIcon size={16} />
                       </div>
-                      <span className="text-sm font-semibold text-slate-200 group-hover:text-white transition-colors">
+                      <span className={`text-sm font-semibold transition-colors ${
+                        darkMode ? 'text-slate-200 group-hover:text-white' : 'text-slate-700 group-hover:text-slate-900'
+                      }`}>
                         {strand.name}
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-sm font-bold text-white">
+                      <span className={`text-sm font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>
                         {totalAssessments > 0 ? strand.value : '0%'}
                       </span>
                     </div>
                   </div>
-                  <div className="h-2.5 w-full overflow-hidden rounded-full bg-slate-800/90">
+                  <div className={`h-2.5 w-full overflow-hidden rounded-full ${darkMode ? 'bg-slate-800/90' : 'bg-slate-200'}`}>
                     <div
                       className={`h-full rounded-full bg-gradient-to-r ${strand.color} transition-all duration-1000 ease-out`}
                       style={{ width: `${totalAssessments > 0 ? Math.min(100, Math.max(0, numVal)) : 0}%` }}
@@ -564,8 +639,10 @@ export default function Dashboard() {
         </div>
 
         {totalAssessments === 0 && (
-          <div className="mt-6 flex items-center justify-center gap-2 rounded-2xl border border-sky-500/20 bg-sky-500/5 px-4 py-3 text-xs text-sky-300">
-            <Sparkles size={15} className="shrink-0 text-sky-400" />
+          <div className={`mt-6 flex items-center justify-center gap-2 rounded-2xl border px-4 py-3 text-xs ${
+            darkMode ? 'border-sky-500/20 bg-sky-500/5 text-sky-300' : 'border-sky-200 bg-sky-50 text-sky-700'
+          }`}>
+            <Sparkles size={15} className="shrink-0 text-sky-500" />
             <span>Complete your first diagnostic test to view your strand-by-strand skill diagnostic analysis here.</span>
           </div>
         )}
