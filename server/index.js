@@ -316,6 +316,43 @@ app.get('/api/profile', async (request, response) => {
   }
 })
 
+app.put('/api/profile', async (request, response) => {
+  const { userId, name, fatherName, age, grade } = request.body
+  const numericUserId = Number(userId)
+  if (!Number.isInteger(numericUserId) || numericUserId < 1) {
+    return response.status(400).json({ message: 'Valid User ID is required.' })
+  }
+
+  try {
+    if (name) {
+      await pool.query('UPDATE users SET name = ? WHERE id = ?', [name.trim(), numericUserId])
+    }
+
+    const [existing] = await pool.query('SELECT id FROM student_profiles WHERE user_id = ? LIMIT 1', [numericUserId])
+    if (existing.length) {
+      const updates = []
+      const params = []
+      if (fatherName !== undefined) { updates.push('father_name = ?'); params.push(fatherName) }
+      if (age !== undefined && age !== '') { updates.push('age = ?'); params.push(Number(age)) }
+      if (grade) { updates.push('grade = ?'); params.push(String(grade)) }
+      if (updates.length) {
+        params.push(numericUserId)
+        await pool.query(`UPDATE student_profiles SET ${updates.join(', ')} WHERE user_id = ?`, params)
+      }
+    } else {
+      await pool.query(
+        'INSERT INTO student_profiles (user_id, father_name, age, grade) VALUES (?, ?, ?, ?)',
+        [numericUserId, fatherName || null, age ? Number(age) : null, grade || 'Grade 1']
+      )
+    }
+
+    return response.json({ success: true, message: 'Profile updated successfully.' })
+  } catch (error) {
+    console.error('Profile update failed:', error.message)
+    return response.status(500).json({ message: 'Unable to update profile.' })
+  }
+})
+
 export async function ensureDatabaseReady() {
   try {
     // 1. Clean up invalid/orphaned zero-id rows from prior failed inserts
@@ -1530,16 +1567,14 @@ app.post('/api/assessment-attempts', async (request, response) => {
       const currentProfile = (await connection.query('SELECT grade FROM student_profiles WHERE user_id = ? LIMIT 1', [studentId]))[0][0]
       const currentGrade = Number(String(currentProfile?.grade || '').match(/\d+/)?.[0] || selectedTargetGrade || 1)
       const weakGrade = weakSubtopics.size ? Math.min(...[...weakSubtopics.values()].map((item) => item.grade)) : null
-      const nextGrade = weakGrade != null
-        ? Math.max(1, Math.min(currentGrade - 1, weakGrade))
-        : currentGrade < Number(selectedTargetGrade || currentGrade) && correctAnswers / Math.max(questions.length, 1) >= 0.7
-          ? currentGrade + 1
-          : currentGrade
+      const isPassed = (correctAnswers / Math.max(questions.length, 1)) >= 0.7
+      const enrolledGradeNum = Number(selectedTargetGrade || currentGrade)
+      const nextGrade = isPassed && enrolledGradeNum < 8 ? enrolledGradeNum + 1 : enrolledGradeNum
       await connection.query('UPDATE student_profiles SET actual_grade = ?, grade = ? WHERE user_id = ?', [estimatedGrade, `Grade ${nextGrade}`, studentId])
       await connection.query('DELETE FROM attempt_questions WHERE attempt_id = ?', [attemptId])
       await saveReport(attemptId)
       await connection.commit()
-      return response.status(200).json({ id: attemptId, selectedTargetGrade, recommendedGrade: `Grade ${nextGrade}`, weakSubtopics: [...weakSubtopics.keys()] })
+      return response.status(200).json({ id: attemptId, selectedTargetGrade, recommendedGrade: `Grade ${weakGrade || enrolledGradeNum}`, weakSubtopics: [...weakSubtopics.keys()] })
     }
 
     const answerEntries = questions.filter((question) => {

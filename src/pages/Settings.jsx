@@ -1,6 +1,7 @@
 import { Edit3, Mail, Sparkles, UserRound, X, Check, Moon, Sun } from 'lucide-react'
 import { useApp } from '../context/AppContext'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { apiRequest } from '../utils/api'
 
 export default function Settings() {
   const { user, darkMode, setDarkMode, updateProfile } = useApp()
@@ -10,7 +11,18 @@ export default function Settings() {
     email: user.email || '',
     fatherName: user.fatherName || '',
     age: user.age || '',
+    grade: user.grade || 'Grade 5',
   })
+
+  useEffect(() => {
+    setFormData({
+      name: user.name || '',
+      email: user.email || '',
+      fatherName: user.fatherName || '',
+      age: user.age || '',
+      grade: user.grade || 'Grade 5',
+    })
+  }, [user])
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -20,9 +32,19 @@ export default function Settings() {
     }))
   }
 
-  const handleSave = () => {
+  const handleSave = async () => {
     updateProfile(formData)
     setIsEditing(false)
+    if (user?.id) {
+      try {
+        await apiRequest('/profile', {
+          method: 'PUT',
+          body: JSON.stringify({ userId: user.id, ...formData }),
+        })
+      } catch (err) {
+        console.warn('Settings save to database note:', err.message)
+      }
+    }
   }
 
   const handleCancel = () => {
@@ -31,6 +53,7 @@ export default function Settings() {
       email: user.email || '',
       fatherName: user.fatherName || '',
       age: user.age || '',
+      grade: user.grade || 'Grade 5',
     })
     setIsEditing(false)
   }
@@ -95,6 +118,21 @@ export default function Settings() {
                   onChange={handleInputChange}
                   className={`mt-2 w-full rounded-lg border px-4 py-2 transition-all duration-300 ${darkMode ? 'border-white/10 bg-white/10 text-white placeholder-slate-400 focus:border-sky-400/30 focus:bg-white/20 focus:outline-none' : 'border-slate-300 bg-white text-slate-900 placeholder-slate-500 focus:border-sky-300 focus:outline-none'}`}
                 />
+              </div>
+              <div className="sm:col-span-2">
+                <label className={`text-sm font-semibold ${darkMode ? 'text-sky-300' : 'text-sky-100'}`}>Selected grade</label>
+                <select
+                  name="grade"
+                  value={formData.grade}
+                  onChange={handleInputChange}
+                  className={`mt-2 w-full rounded-lg border px-4 py-2 transition-all duration-300 ${darkMode ? 'border-white/10 bg-slate-900 text-white focus:border-sky-400/30 focus:outline-none' : 'border-slate-300 bg-white text-slate-900 focus:border-sky-300 focus:outline-none'}`}
+                >
+                  {[1, 2, 3, 4, 5, 6, 7, 8].map((g) => (
+                    <option key={g} value={`Grade ${g}`}>
+                      Grade {g}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
 

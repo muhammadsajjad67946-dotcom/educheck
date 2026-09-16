@@ -709,7 +709,7 @@ export default function SummaryReport() {
                           ? 'bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30'
                           : 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30'
                       }`}>
-                        {isDeeperGap ? `Root: Grade ${rootGrade} (–${behind}y)` : `At Grade ${rootGrade}`}
+                        {isDeeperGap ? `Root: Grade ${rootGrade} (${behind} ${behind === 1 ? 'grade' : 'grades'} behind)` : `At Grade ${rootGrade}`}
                       </span>
                     </div>
 
@@ -1059,7 +1059,7 @@ export default function SummaryReport() {
                               </span>
                             ) : behind > 0 ? (
                               <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30">
-                                Grade {rootG} ⚠️ ({behind}y behind)
+                                Grade {rootG} ⚠️ (${behind} ${behind === 1 ? 'grade' : 'grades'} behind)
                               </span>
                             ) : (
                               <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-amber-500/15 text-amber-600 dark:text-amber-400">
