@@ -68,7 +68,7 @@ const features = [
 
 
 export default function Home() {
-  const { darkMode } = useApp()
+  const { authenticated, user, darkMode } = useApp()
 
   return (
     <div className="space-y-20 px-4 pb-20 pt-4 sm:px-6 lg:px-8">
@@ -105,20 +105,31 @@ export default function Home() {
 
             <div className="flex flex-wrap gap-4 pt-2">
               <Link
-                to="/register"
+                to={authenticated || user?.id ? "/start-test" : "/register"}
                 className="inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-sky-500 via-cyan-500 to-violet-600 px-7 py-4 text-base font-bold text-white shadow-xl shadow-sky-500/30 transition duration-300 hover:scale-105 active:scale-95"
               >
-                Start Free Diagnostic
+                {authenticated || user?.id ? 'Start Assessment' : 'Start Free Diagnostic'}
                 <ArrowRight size={18} />
               </Link>
-              <Link
-                to="/login"
-                className={`inline-flex items-center justify-center gap-2 rounded-2xl border px-7 py-4 text-base font-semibold transition duration-300 hover:scale-105 active:scale-95 ${
-                  darkMode ? 'border-white/15 bg-slate-900/80 text-slate-200 hover:bg-slate-800' : 'border-slate-200 bg-slate-100 text-slate-800 hover:bg-slate-200'
-                }`}
-              >
-                Sign In
-              </Link>
+              {authenticated || user?.id ? (
+                <Link
+                  to="/dashboard"
+                  className={`inline-flex items-center justify-center gap-2 rounded-2xl border px-7 py-4 text-base font-semibold transition duration-300 hover:scale-105 active:scale-95 ${
+                    darkMode ? 'border-white/15 bg-slate-900/80 text-slate-200 hover:bg-slate-800' : 'border-slate-200 bg-slate-100 text-slate-800 hover:bg-slate-200'
+                  }`}
+                >
+                  Dashboard
+                </Link>
+              ) : (
+                <Link
+                  to="/login"
+                  className={`inline-flex items-center justify-center gap-2 rounded-2xl border px-7 py-4 text-base font-semibold transition duration-300 hover:scale-105 active:scale-95 ${
+                    darkMode ? 'border-white/15 bg-slate-900/80 text-slate-200 hover:bg-slate-800' : 'border-slate-200 bg-slate-100 text-slate-800 hover:bg-slate-200'
+                  }`}
+                >
+                  Sign In
+                </Link>
+              )}
             </div>
 
             {/* Micro Feature Trust Badges */}

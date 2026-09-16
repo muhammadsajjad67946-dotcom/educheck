@@ -26,17 +26,19 @@ const featureList = [
 ]
 
 export default function About() {
-  const { darkMode } = useApp()
+  const { authenticated, user, darkMode } = useApp()
 
   return (
-    <div className={`mx-auto max-w-7xl px-4 py-8 md:px-8 space-y-12 transition-colors duration-300 ${darkMode ? 'text-slate-100' : 'text-slate-900'}`}>
-      {/* Main Hero Card */}
-      <section className={`overflow-hidden rounded-4xl border p-8 md:p-12 lg:p-14 shadow-2xl backdrop-blur-2xl transition-colors duration-300 ${
-        darkMode ? 'border-white/10 bg-slate-950/70 shadow-slate-950/80' : 'border-slate-200 bg-white shadow-slate-200/50'
-      }`}>
-        <div className="grid gap-10 lg:grid-cols-2 lg:items-start">
-          <div className="flex min-w-0 w-full flex-col items-start space-y-6">
-            <h1 className="text-3xl font-extrabold leading-tight sm:text-4xl md:text-5xl">
+    <div className="space-y-16 px-4 pb-20 pt-4 sm:px-6 lg:px-8">
+      {/* Hero Section */}
+      <div className="relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-gradient-to-br from-slate-950/80 via-slate-900/60 to-slate-950/80 p-8 shadow-2xl backdrop-blur-xl sm:p-12 lg:p-16">
+        <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
+          <div className="space-y-6">
+            <div className="inline-flex items-center gap-2 rounded-full border border-sky-400/30 bg-sky-500/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-sky-400">
+              <Sparkles size={14} /> Our Mission & Heart
+            </div>
+
+            <h1 className="text-left text-3xl font-black tracking-tight text-white sm:text-5xl sm:leading-tight">
               Helping Every Child Feel Confident in{' '}
               <span className="bg-gradient-to-r from-sky-400 via-cyan-400 to-violet-500 bg-clip-text text-transparent">
                 Mathematics.
@@ -49,7 +51,7 @@ export default function About() {
 
             <div className="flex flex-wrap gap-4 pt-2">
               <Link
-                to="/register"
+                to={authenticated || user?.id ? "/start-test" : "/register"}
                 className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-sky-500 via-cyan-500 to-violet-600 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-sky-500/25 transition hover:scale-105 active:scale-95"
               >
                 Start Assessment
@@ -91,7 +93,7 @@ export default function About() {
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
       {/* 3 Value Pillars */}
       <section className="grid gap-6 md:grid-cols-3">
