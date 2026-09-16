@@ -4,21 +4,45 @@ export function buildDashboardMetrics({
   userGrade = 'Grade 6',
   fallbackAssessment = null,
 } = {}) {
-  const entries = Array.isArray(assessments) ? assessments.filter(Boolean) : []
-  const totalAssessments = entries.length || (fallbackAssessment ? 1 : 0)
+  const rawEntries = Array.isArray(assessments) ? assessments.filter(Boolean) : []
 
-  const averageAccuracy = entries.length
-    ? Math.round(entries.reduce((sum, entry) => sum + Number(entry.percentage || 0), 0) / entries.length)
-    : Number(fallbackAssessment?.percentage || 0)
+  const isExcludedStatus = (entry) => {
+    const status = String(entry?.status || '').toLowerCase().trim()
+    return status === 'abandoned' || status === 'in_progress'
+  }
+
+  const validEntries = rawEntries.filter((entry) => !isExcludedStatus(entry))
+  const fallbackValid = fallbackAssessment && !isExcludedStatus(fallbackAssessment) ? fallbackAssessment : null
+
+  const entries = validEntries.length > 0
+    ? validEntries
+    : (fallbackValid ? [fallbackValid] : [])
+
+  const totalAssessments = entries.length
+
+  const averageAccuracy = totalAssessments > 0
+    ? Math.round(entries.reduce((sum, entry) => sum + Number(entry.percentage || 0), 0) / totalAssessments)
+    : (fallbackValid?.percentage != null ? Math.round(Number(fallbackValid.percentage)) : 0)
 
   const selectedGradeNumber = (() => {
     const match = String(userGrade || '').match(/Grade\s*(\d+)/i)
     return match ? Number(match[1]) : 6
   })()
 
-  const currentGradeLevel = totalAssessments
-    ? Number((1 + (averageAccuracy / 100) * Math.max(0, selectedGradeNumber - 1)).toFixed(1))
+  const latestEntry = entries[0] || fallbackValid
+  const assessedGradeRaw = latestEntry?.estimated_grade ??
+    latestEntry?.estimatedGrade ??
+    latestEntry?.demonstratedMathLevel ??
+    latestEntry?.reportData?.demonstratedMathLevel
+
+  const parsedAssessedGrade = assessedGradeRaw != null && assessedGradeRaw !== '' ? Number(assessedGradeRaw) : null
+
+  const currentGradeLevel = totalAssessments > 0
+    ? (Number.isFinite(parsedAssessedGrade) && parsedAssessedGrade > 0
+        ? Number(parsedAssessedGrade.toFixed(1))
+        : Number((1 + (averageAccuracy / 100) * Math.max(0, selectedGradeNumber - 1)).toFixed(1)))
     : 0
+
   const paymentStatus = Array.isArray(payments) && payments.some((payment) => String(payment?.status || '').toLowerCase() === 'paid') ? 'paid' : 'pending'
 
   return {

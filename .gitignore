@@ -13,6 +13,8 @@ dist-ssr
 *.local
 .env
 node_modules.zip
+*.zip
+dist.zip
 scratch/
 
 # Editor directories and files

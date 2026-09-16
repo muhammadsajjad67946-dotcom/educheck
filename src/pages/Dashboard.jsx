@@ -78,7 +78,7 @@ export default function Dashboard() {
           assessments,
           payments,
           userGrade: actualGrade,
-          fallbackAssessment: assessmentResult || assessments[assessments.length - 1] || null,
+          fallbackAssessment: assessmentResult || assessments[0] || null,
         })
 
         setLiveDashboardMetrics({
@@ -103,25 +103,46 @@ export default function Dashboard() {
   }, [assessmentHistory, assessmentResult, paymentStatus, updateProfile, user?.grade, user?.id])
 
   const latestAssessment = useMemo(() => {
-    const history = assessmentHistory.length ? assessmentHistory : []
-    return history[history.length - 1] || assessmentResult || null
-  }, [assessmentHistory, assessmentResult])
+    if (assessmentResult) return assessmentResult
+    const validLive = (liveAssessments || []).filter(
+      (a) => !['abandoned', 'in_progress'].includes(String(a?.status || '').toLowerCase().trim())
+    )
+    if (validLive.length > 0) return validLive[0]
+    const validHistory = (assessmentHistory || []).filter(
+      (a) => !['abandoned', 'in_progress'].includes(String(a?.status || '').toLowerCase().trim())
+    )
+    return validHistory[validHistory.length - 1] || null
+  }, [assessmentHistory, assessmentResult, liveAssessments])
 
   const fallbackAverageAccuracy = useMemo(() => {
-    const entries = assessmentHistory.length ? assessmentHistory : assessmentResult ? [assessmentResult] : []
+    const rawEntries = assessmentHistory.length ? assessmentHistory : assessmentResult ? [assessmentResult] : []
+    const entries = rawEntries.filter(
+      (e) => !['abandoned', 'in_progress'].includes(String(e?.status || '').toLowerCase().trim())
+    )
     if (!entries.length) return 0
     const total = entries.reduce((sum, entry) => sum + Number(entry.percentage || 0), 0)
     return Math.round(total / entries.length)
   }, [assessmentHistory, assessmentResult])
 
   const fallbackCurrentGradeLevel = useMemo(() => {
-    const entries = assessmentHistory.length ? assessmentHistory : assessmentResult ? [assessmentResult] : []
+    const rawEntries = assessmentHistory.length ? assessmentHistory : assessmentResult ? [assessmentResult] : []
+    const entries = rawEntries.filter(
+      (e) => !['abandoned', 'in_progress'].includes(String(e?.status || '').toLowerCase().trim())
+    )
     if (!entries.length) return 0
+
+    const latest = entries[entries.length - 1]
+    const assessedGradeRaw = latest?.estimated_grade ??
+      latest?.estimatedGrade ??
+      latest?.demonstratedMathLevel ??
+      latest?.reportData?.demonstratedMathLevel
+    const parsedAssessed = assessedGradeRaw != null && assessedGradeRaw !== '' ? Number(assessedGradeRaw) : null
+    if (Number.isFinite(parsedAssessed) && parsedAssessed > 0) return Number(parsedAssessed.toFixed(1))
 
     const selectedGradeNumber = Number(String(user?.grade || '').match(/Grade\s*(\d+)/i)?.[1] || 1)
     const accuracy = fallbackAverageAccuracy / 100
     return Number((1 + accuracy * Math.max(0, selectedGradeNumber - 1)).toFixed(1))
-  }, [fallbackAverageAccuracy, user?.grade])
+  }, [assessmentHistory, assessmentResult, fallbackAverageAccuracy, user?.grade])
 
   const totalAssessments = Number.isFinite(liveDashboardMetrics.totalAssessments) && liveDashboardMetrics.totalAssessments > 0
     ? liveDashboardMetrics.totalAssessments
@@ -131,32 +152,58 @@ export default function Dashboard() {
 
   const strandPerformance = useMemo(() => {
     const latestResult = latestAssessment || assessmentResult || null
-    const detailedTopicScores = latestResult?.reportData?.topicWisePerformance
+    let detailedTopicScores = latestResult?.reportData?.topicWisePerformance
       ? latestResult.reportData.topicWisePerformance
       : latestResult?.topicBreakdown
         ? latestResult.topicBreakdown
         : []
 
+    if (!detailedTopicScores.length && latestResult?.topic_breakdown) {
+      detailedTopicScores = Array.isArray(latestResult.topic_breakdown)
+        ? latestResult.topic_breakdown
+        : []
+    }
+
+    const matchStrandScore = (scoreMap, strandKey) => {
+      if (scoreMap[strandKey] !== undefined) return scoreMap[strandKey]
+      const sLower = strandKey.toLowerCase()
+      for (const [key, val] of Object.entries(scoreMap)) {
+        const kLower = key.toLowerCase()
+        if (kLower === sLower) return val
+        if (sLower.includes('number') && kLower.includes('number')) return val
+        if (sLower.includes('measure') && kLower.includes('measure')) return val
+        if (sLower.includes('data') && (kLower.includes('data') || kLower.includes('statistic') || kLower.includes('probability'))) return val
+        if (sLower.includes('geometry') && kLower.includes('geometry')) return val
+        if (sLower.includes('algebra') && kLower.includes('algebra')) return val
+      }
+      return undefined
+    }
+
     if (detailedTopicScores.length) {
-      const scoreMap = Object.fromEntries(
-        detailedTopicScores.map((item) => {
-          const topicName = item.topicName || item.topic || item.name || item.subject || ''
-          const value = Number(item.masteryPercentage ?? item.percentage ?? item.score ?? 0)
-          return [topicName, value]
-        }),
-      )
+      const scoreMap = {}
+      detailedTopicScores.forEach((item) => {
+        const topicName = item.topicName || item.topic || item.name || item.subject || ''
+        const value = Number(item.masteryPercentage ?? item.percentage ?? item.score ?? 0)
+        scoreMap[topicName] = value
+      })
 
       return strandOrder.map((strand) => {
-        const computed = scoreMap[strand.key] ?? scoreMap[strand.name] ?? 0
-        return { ...strand, value: `${Math.round(computed)}%`, percentage: Math.round(computed) }
+        const matched = matchStrandScore(scoreMap, strand.key) ?? matchStrandScore(scoreMap, strand.name)
+        const computed = matched !== undefined ? Math.round(matched) : 0
+        return { ...strand, value: `${computed}%`, percentage: computed }
       })
     }
 
-    const localEntries = assessmentHistory.length ? assessmentHistory : assessmentResult ? [assessmentResult] : []
-    const entries = liveAssessments.length ? liveAssessments.map((entry) => ({
+    const validLive = (liveAssessments || []).filter(
+      (a) => !['abandoned', 'in_progress'].includes(String(a?.status || '').toLowerCase().trim())
+    )
+    const validLocal = (assessmentHistory.length ? assessmentHistory : assessmentResult ? [assessmentResult] : []).filter(
+      (a) => !['abandoned', 'in_progress'].includes(String(a?.status || '').toLowerCase().trim())
+    )
+    const entries = validLive.length ? validLive.map((entry) => ({
       percentage: Number(entry.percentage || 0),
-      topicBreakdown: [],
-    })) : localEntries
+      topicBreakdown: Array.isArray(entry.topicBreakdown) ? entry.topicBreakdown : (Array.isArray(entry.topic_breakdown) ? entry.topic_breakdown : []),
+    })) : validLocal
 
     const totals = Object.fromEntries(strandOrder.map((strand) => [strand.key, { total: 0, sum: 0 }]))
     const hasDetailedBreakdown = entries.some((entry) => Array.isArray(entry.topicBreakdown) && entry.topicBreakdown.length > 0)
@@ -171,11 +218,24 @@ export default function Dashboard() {
 
     entries.forEach((entry) => {
       ;(entry.topicBreakdown || []).forEach((topic) => {
-        if (!totals[topic.topic]) {
-          totals[topic.topic] = { total: 0, sum: 0 }
+        const tName = topic.topic || topic.name || topic.topicName || ''
+        const targetStrand = strandOrder.find((s) => {
+          const sLower = s.key.toLowerCase()
+          const tLower = tName.toLowerCase()
+          return sLower === tLower ||
+            (sLower.includes('number') && tLower.includes('number')) ||
+            (sLower.includes('measure') && tLower.includes('measure')) ||
+            (sLower.includes('data') && (tLower.includes('data') || tLower.includes('statistic'))) ||
+            (sLower.includes('geometry') && tLower.includes('geometry')) ||
+            (sLower.includes('algebra') && tLower.includes('algebra'))
+        })
+        const strandKey = targetStrand ? targetStrand.key : tName
+
+        if (!totals[strandKey]) {
+          totals[strandKey] = { total: 0, sum: 0 }
         }
-        totals[topic.topic].total += 1
-        totals[topic.topic].sum += Number(topic.percentage || 0)
+        totals[strandKey].total += 1
+        totals[strandKey].sum += Number(topic.percentage ?? topic.masteryPercentage ?? topic.score ?? 0)
       })
     })
 
