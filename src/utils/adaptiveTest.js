@@ -781,12 +781,54 @@ export function calculateAdaptiveOverallGE(topicResults, targetGrade) {
   return Number(clamp(values.reduce((sum, value) => sum + value, 0) / values.length, 1.0, target).toFixed(2))
 }
 
-function matchesStrand(questionTopic, selectedStrand) {
+export function matchesStrand(questionTopic, selectedStrand) {
   if (!selectedStrand || selectedStrand === 'Overall') return true
-  const qTopic = String(questionTopic || '').toLowerCase()
-  if (selectedStrand === 'Number & Operations') return qTopic.includes('number') || qTopic.includes('operation')
-  if (selectedStrand === 'Data Analysis') return qTopic.includes('data') || qTopic.includes('analysis') || qTopic.includes('statistic') || qTopic.includes('probability')
-  return qTopic.includes(selectedStrand.toLowerCase().split(' ')[0])
+  const q = String(questionTopic || '').toLowerCase().trim()
+  const s = String(selectedStrand || '').toLowerCase().trim()
+
+  if (s.includes('number') || s.includes('operation')) {
+    return q.includes('number') || q.includes('operation') || q.includes('arithmetic') || q.includes('computation')
+  }
+  if (s.includes('data') || s.includes('analysis') || s.includes('statistic') || s.includes('probab')) {
+    return q.includes('data') || q.includes('analysis') || q.includes('statistic') || q.includes('probab')
+  }
+  if (s.includes('measure')) {
+    return q.includes('measure') || q.includes('length') || q.includes('mass') || q.includes('volume') || q.includes('metric')
+  }
+  if (s.includes('geom')) {
+    return q.includes('geom') || q.includes('shape') || q.includes('angle')
+  }
+  if (s.includes('algeb')) {
+    return q.includes('algeb') || q.includes('equation') || q.includes('expression') || q.includes('variable')
+  }
+  return q.includes(s.split(' ')[0])
+}
+
+export function replaceForSameStrand(questions, currentIndex, newQuestion, targetTopic) {
+  if (!newQuestion || !Array.isArray(questions)) return questions
+
+  // Find the LAST unasked question belonging to targetTopic
+  let replaceIdx = -1
+  for (let i = questions.length - 1; i > currentIndex; i--) {
+    if (matchesStrand(questions[i].topic, targetTopic)) {
+      replaceIdx = i
+      break
+    }
+  }
+
+  // If no unasked question of the same strand exists, do NOT overwrite other strands
+  if (replaceIdx === -1) {
+    return questions
+  }
+
+  const result = [...questions]
+  if (replaceIdx > currentIndex + 1) {
+    result.splice(replaceIdx, 1)
+    result.splice(currentIndex + 1, 0, newQuestion)
+  } else {
+    result[replaceIdx] = newQuestion
+  }
+  return result
 }
 
 function selectGradeBatchQuestions(questionBank, grade, selectedStrand, usedQuestionIds = []) {
@@ -880,11 +922,13 @@ export function createGradeBatchTestState(questionBank, targetGrade, selectedStr
       topicPools[topic] = picked
     })
 
-    // Block-wise across the 5 topics: 6 questions per strand sequentially (1-6 Strand 1, 7-12 Strand 2, etc.)
-    for (const topic of topics) {
-      const bucket = topicPools[topic] || []
-      for (let i = 0; i < questionsPerTopic && i < bucket.length; i++) {
-        initialPool.push(bucket[i])
+    // Interleave round-robin across the 5 topics so every strand appears evenly throughout the test
+    for (let round = 0; round < questionsPerTopic; round++) {
+      for (const topic of topics) {
+        const bucket = topicPools[topic] || []
+        if (bucket[round]) {
+          initialPool.push(bucket[round])
+        }
       }
     }
 
@@ -964,13 +1008,13 @@ export function advanceGradeBatchTest(state, questionBank, currentQuestion, sele
   let weaknessMap = { ...(state.weaknessMap || {}) }
 
   const isProbeQuestion = activeProbe && questionGrade < state.targetGrade
+  const currentIndex = questions.findIndex((q) => q.id === currentQuestion.id)
 
   if (isProbeQuestion) {
     // ========== PROBE QUESTION RESPONSE ==========
     if (isCorrect) {
       // Probe question answered correctly — prerequisite verified at this level
-      // Record which grade level was weak (one above where they got it right)
-      const weakGrade = activeProbe.probeGrade // The grade they failed at to trigger this probe
+      const weakGrade = activeProbe.probeGrade
       probeHistory.push({
         subtopic: activeProbe.subtopic,
         topic: activeProbe.topic,
@@ -989,27 +1033,11 @@ export function advanceGradeBatchTest(state, questionBank, currentQuestion, sele
         }
       }
 
-      // BOUNCE BACK to target grade
       activeProbe = null
       nextDifficulty = 'Medium'
-
-      // Inject a target grade question for the next concept
-      const bounceBackQ = questionBank.find(
-        (q) => !usedQuestionIds.includes(q.id) &&
-          Number(q.grade) === state.targetGrade &&
-          q.difficulty === 'Medium'
-      )
-      if (bounceBackQ) {
-        const currentIndex = questions.findIndex((q) => q.id === currentQuestion.id)
-        const insertionIndex = currentIndex >= 0 ? currentIndex + 1 : questions.length
-        questions = questions.filter((q) => q.id !== bounceBackQ.id)
-        questions.splice(insertionIndex, 0, bounceBackQ)
-        usedQuestionIds.push(bounceBackQ.id)
-      }
     } else {
       // Probe question answered WRONG
       if (activeProbe.depth < MAX_PROBE_DEPTH && questionGrade > 1) {
-        // Go ONE more level deeper
         const deeperGrade = questionGrade - 1
         const deeperQ = findFoundationalQuestion(
           questionBank,
@@ -1026,14 +1054,10 @@ export function advanceGradeBatchTest(state, questionBank, currentQuestion, sele
             probeGrade: questionGrade,
             depth: activeProbe.depth + 1,
           }
-          const currentIndex = questions.findIndex((q) => q.id === currentQuestion.id)
-          const insertionIndex = currentIndex >= 0 ? currentIndex + 1 : questions.length
-          questions = questions.filter((q) => q.id !== deeperQ.id)
-          questions.splice(insertionIndex, 0, deeperQ)
+          questions = replaceForSameStrand(questions, currentIndex, deeperQ, activeProbe.topic || currentQuestion.topic)
           usedQuestionIds.push(deeperQ.id)
           nextDifficulty = 'Low'
         } else {
-          // No deeper question available — record weakness and bounce back
           weaknessMap[activeProbe.subtopic] = {
             rootGrade: questionGrade,
             probeDepth: activeProbe.depth,
@@ -1048,21 +1072,11 @@ export function advanceGradeBatchTest(state, questionBank, currentQuestion, sele
             result: 'no_deeper_questions',
             weakAtGrade: questionGrade,
           })
+          if (!weakPoints.includes(activeProbe.subtopic)) {
+            weakPoints.push(activeProbe.subtopic)
+          }
           activeProbe = null
           nextDifficulty = 'Medium'
-
-          const bounceBackQ = questionBank.find(
-            (q) => !usedQuestionIds.includes(q.id) &&
-              Number(q.grade) === state.targetGrade &&
-              q.difficulty === 'Medium'
-          )
-          if (bounceBackQ) {
-            const currentIndex = questions.findIndex((q) => q.id === currentQuestion.id)
-            const insertionIndex = currentIndex >= 0 ? currentIndex + 1 : questions.length
-            questions = questions.filter((q) => q.id !== bounceBackQ.id)
-            questions.splice(insertionIndex, 0, bounceBackQ)
-            usedQuestionIds.push(bounceBackQ.id)
-          }
         }
       } else {
         // Maximum probe depth reached — ROOT WEAKNESS FOUND
@@ -1085,22 +1099,8 @@ export function advanceGradeBatchTest(state, questionBank, currentQuestion, sele
           weakPoints.push(activeProbe.subtopic)
         }
 
-        // BOUNCE BACK to target grade for next concept
         activeProbe = null
         nextDifficulty = 'Medium'
-
-        const bounceBackQ = questionBank.find(
-          (q) => !usedQuestionIds.includes(q.id) &&
-            Number(q.grade) === state.targetGrade &&
-            q.difficulty === 'Medium'
-        )
-        if (bounceBackQ) {
-          const currentIndex = questions.findIndex((q) => q.id === currentQuestion.id)
-          const insertionIndex = currentIndex >= 0 ? currentIndex + 1 : questions.length
-          questions = questions.filter((q) => q.id !== bounceBackQ.id)
-          questions.splice(insertionIndex, 0, bounceBackQ)
-          usedQuestionIds.push(bounceBackQ.id)
-        }
       }
     }
   } else {
@@ -1115,7 +1115,7 @@ export function advanceGradeBatchTest(state, questionBank, currentQuestion, sele
         }
       }
 
-      // Inject elevated difficulty question at target grade
+      // Inject elevated difficulty question at target grade within SAME strand
       const elevatedQ = questionBank.find(
         (q) => !usedQuestionIds.includes(q.id) &&
           Number(q.grade) === state.targetGrade &&
@@ -1130,39 +1130,33 @@ export function advanceGradeBatchTest(state, questionBank, currentQuestion, sele
       )
 
       if (elevatedQ) {
-        const currentIndex = questions.findIndex((q) => q.id === currentQuestion.id)
-        const insertionIndex = currentIndex >= 0 ? currentIndex + 1 : questions.length
-        questions = questions.filter((q) => q.id !== elevatedQ.id)
-        questions.splice(insertionIndex, 0, elevatedQ)
+        questions = replaceForSameStrand(questions, currentIndex, elevatedQ, currentQuestion.topic)
         usedQuestionIds.push(elevatedQ.id)
       }
     } else {
       // Student answered WRONG on a normal question
       if (currentQuestion.difficulty === 'High') {
-        // Failed High — drop to Medium at SAME target grade (no probe needed)
+        // Failed High — drop to Medium at SAME target grade within SAME strand
         nextDifficulty = 'Medium'
         const sameGradeMed = questionBank.find(
           (q) => !usedQuestionIds.includes(q.id) &&
             Number(q.grade) === state.targetGrade &&
-            q.topic === currentQuestion.topic &&
+            matchesStrand(q.topic, currentQuestion.topic) &&
             q.difficulty === 'Medium' &&
             matchesQuestionSubtopic(q, subtopic)
         ) || questionBank.find(
           (q) => !usedQuestionIds.includes(q.id) &&
             Number(q.grade) === state.targetGrade &&
-            q.topic === currentQuestion.topic &&
+            matchesStrand(q.topic, currentQuestion.topic) &&
             q.difficulty === 'Medium'
         )
 
         if (sameGradeMed) {
-          const currentIndex = questions.findIndex((q) => q.id === currentQuestion.id)
-          const insertionIndex = currentIndex >= 0 ? currentIndex + 1 : questions.length
-          questions = questions.filter((q) => q.id !== sameGradeMed.id)
-          questions.splice(insertionIndex, 0, sameGradeMed)
+          questions = replaceForSameStrand(questions, currentIndex, sameGradeMed, currentQuestion.topic)
           usedQuestionIds.push(sameGradeMed.id)
         }
       } else {
-        // Failed Medium or Low — START DIAGNOSTIC PROBE to lower grade
+        // Failed Medium or Low — START DIAGNOSTIC PROBE to lower grade within SAME strand
         const foundationalQ = findFoundationalQuestion(
           questionBank,
           currentQuestion.topic,
@@ -1173,7 +1167,6 @@ export function advanceGradeBatchTest(state, questionBank, currentQuestion, sele
         )
 
         if (foundationalQ) {
-          // Start a new probe
           activeProbe = {
             startGrade: state.targetGrade,
             subtopic: subtopic,
@@ -1182,10 +1175,7 @@ export function advanceGradeBatchTest(state, questionBank, currentQuestion, sele
             depth: 1,
           }
 
-          const currentIndex = questions.findIndex((q) => q.id === currentQuestion.id)
-          const insertionIndex = currentIndex >= 0 ? currentIndex + 1 : questions.length
-          questions = questions.filter((q) => q.id !== foundationalQ.id)
-          questions.splice(insertionIndex, 0, foundationalQ)
+          questions = replaceForSameStrand(questions, currentIndex, foundationalQ, currentQuestion.topic)
           usedQuestionIds.push(foundationalQ.id)
           nextDifficulty = 'Low'
         } else {

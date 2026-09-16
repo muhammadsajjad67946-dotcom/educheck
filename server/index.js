@@ -2259,11 +2259,14 @@ app.post('/api/assessment-attempts/start', async (request, response) => {
     const topics = ['Number & Operations', 'Algebra', 'Geometry', 'Measurement', 'Data Analysis']
 
     const isMatchTopic = (qTopic, strand) => {
-      const normQ = String(qTopic || '').toLowerCase()
-      const normS = String(strand || '').toLowerCase()
+      const normQ = String(qTopic || '').toLowerCase().trim()
+      const normS = String(strand || '').toLowerCase().trim()
       if (!strand || strand === 'Overall') return true
-      if (normS.includes('data') || normS.includes('analysis')) return normQ.includes('data') || normQ.includes('analysis') || normQ.includes('statistic') || normQ.includes('probability')
-      if (normS.includes('number') || normS.includes('operation')) return normQ.includes('number') || normQ.includes('operation')
+      if (normS.includes('data') || normS.includes('analysis')) return normQ.includes('data') || normQ.includes('analysis') || normQ.includes('statistic') || normQ.includes('probab')
+      if (normS.includes('number') || normS.includes('operation')) return normQ.includes('number') || normQ.includes('operation') || normQ.includes('arithmetic')
+      if (normS.includes('measure')) return normQ.includes('measure') || normQ.includes('length') || normQ.includes('mass') || normQ.includes('volume')
+      if (normS.includes('geom')) return normQ.includes('geom') || normQ.includes('shape') || normQ.includes('angle')
+      if (normS.includes('algeb')) return normQ.includes('algeb') || normQ.includes('equation') || normQ.includes('expression') || normQ.includes('variable')
       return normQ.includes(normS.split(' ')[0])
     }
 
@@ -2280,16 +2283,14 @@ app.post('/api/assessment-attempts/start', async (request, response) => {
         topicBuckets[top] = [...targetQ, ...lowerQ]
       })
 
-      // Block-wise across the 5 topics: 6 questions per strand sequentially (1-6 Strand 1, 7-12 Strand 2, etc.)
-      for (const top of topics) {
-        const bucket = topicBuckets[top] || []
-        let count = 0
-        for (const candidate of bucket) {
-          if (count >= perTopic) break
-          if (!selectedIds.has(candidate.id)) {
+      // Interleave round-robin across the 5 topics so every strand appears evenly from question 1 to 30
+      for (let round = 0; round < perTopic; round++) {
+        for (const top of topics) {
+          const bucket = topicBuckets[top] || []
+          const candidate = bucket.find((c) => !selectedIds.has(c.id))
+          if (candidate) {
             selected.push(candidate)
             selectedIds.add(candidate.id)
-            count++
           }
         }
       }
