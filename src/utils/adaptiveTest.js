@@ -7,7 +7,7 @@ export const GRADE_BATCH_QUESTION_COUNT = 30
 export const QUESTIONS_PER_CATEGORY = 6
 export const QUESTIONS_PER_GRADE_BATCH = 6
 export const BATCH_PASSING_SCORE = 4
-export const MAX_PROBE_DEPTH = 2
+export const MAX_PROBE_DEPTH = 1
 
 export function shuffleArray(array) {
   const arr = [...(array || [])]
