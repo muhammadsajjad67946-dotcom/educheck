@@ -398,6 +398,24 @@ export async function ensureDatabaseReady() {
     } catch (e) {
       console.warn('ensureDatabaseReady student_profiles note:', e.message)
     }
+
+    // 4. Ensure micro_skill, prerequisite_grade, prerequisite_concept exist on questions table
+    try {
+      const [qCols] = await pool.query("SHOW COLUMNS FROM questions LIKE 'micro_skill'")
+      if (!qCols || qCols.length === 0) {
+        try { await pool.query('ALTER TABLE questions ADD COLUMN micro_skill VARCHAR(255) NULL') } catch {}
+      }
+      const [pgCols] = await pool.query("SHOW COLUMNS FROM questions LIKE 'prerequisite_grade'")
+      if (!pgCols || pgCols.length === 0) {
+        try { await pool.query('ALTER TABLE questions ADD COLUMN prerequisite_grade INT NULL') } catch {}
+      }
+      const [pcCols] = await pool.query("SHOW COLUMNS FROM questions LIKE 'prerequisite_concept'")
+      if (!pcCols || pcCols.length === 0) {
+        try { await pool.query('ALTER TABLE questions ADD COLUMN prerequisite_concept VARCHAR(255) NULL') } catch {}
+      }
+    } catch (e) {
+      console.warn('ensureDatabaseReady questions columns note:', e.message)
+    }
   } catch (err) {
     console.warn('ensureDatabaseReady global note:', err.message)
   }
@@ -2198,9 +2216,21 @@ app.post('/api/assessment-attempts/start', async (request, response) => {
     )
     const weakAreas = new Set(weakRows.map((row) => row.weakness))
 
+    let hasMicroSkill = false
+    try {
+      const [chk] = await connection.query("SHOW COLUMNS FROM questions LIKE 'micro_skill'")
+      hasMicroSkill = Array.isArray(chk) && chk.length > 0
+    } catch {
+      hasMicroSkill = false
+    }
+
+    const microSelect = hasMicroSkill
+      ? 'q.micro_skill AS micro_skill, q.prerequisite_grade AS prerequisite_grade, q.prerequisite_concept AS prerequisite_concept,'
+      : 'NULL AS micro_skill, NULL AS prerequisite_grade, NULL AS prerequisite_concept,'
+
     const [candidates] = await connection.query(
-            `SELECT q.id, q.grade, t.name AS topic, t.parent_topic_id AS parentTopicId, q.subtopic_name AS subtopic,
-              q.micro_skill AS micro_skill, q.prerequisite_grade AS prerequisite_grade, q.prerequisite_concept AS prerequisite_concept,
+      `SELECT q.id, q.grade, t.name AS topic, t.parent_topic_id AS parentTopicId, q.subtopic_name AS subtopic,
+              ${microSelect}
               q.difficulty, q.question_text AS question,
               q.option_a, q.option_b, q.option_c, q.option_d,
               q.correct_answer, q.explanation, q.distractor_diagnostics
@@ -2219,7 +2249,7 @@ app.post('/api/assessment-attempts/start', async (request, response) => {
     if (candidates.length < safeQuestionCount) {
       const [gradeFallback] = await connection.query(
         `SELECT q.id, q.grade, t.name AS topic, t.parent_topic_id AS parentTopicId, q.subtopic_name AS subtopic,
-                q.micro_skill AS micro_skill, q.prerequisite_grade AS prerequisite_grade, q.prerequisite_concept AS prerequisite_concept,
+                ${microSelect}
                 q.difficulty, q.question_text AS question,
                 q.option_a, q.option_b, q.option_c, q.option_d,
                 q.correct_answer, q.explanation, q.distractor_diagnostics
@@ -2239,7 +2269,7 @@ app.post('/api/assessment-attempts/start', async (request, response) => {
     if (candidates.length < safeQuestionCount) {
       const [bankFallback] = await connection.query(
         `SELECT q.id, q.grade, t.name AS topic, t.parent_topic_id AS parentTopicId, q.subtopic_name AS subtopic,
-                q.micro_skill AS micro_skill, q.prerequisite_grade AS prerequisite_grade, q.prerequisite_concept AS prerequisite_concept,
+                ${microSelect}
                 q.difficulty, q.question_text AS question,
                 q.option_a, q.option_b, q.option_c, q.option_d,
                 q.correct_answer, q.explanation, q.distractor_diagnostics
@@ -2403,6 +2433,9 @@ app.post('/api/assessment-attempts/start', async (request, response) => {
         topic: question.topic || 'Uncategorized',
         parentTopicId: question.parentTopicId ?? 0,
         subtopic: question.subtopic || inferQuestionSubtopic(question.question, question.topic),
+        micro_skill: question.micro_skill || null,
+        prerequisite_grade: question.prerequisite_grade || null,
+        prerequisite_concept: question.prerequisite_concept || null,
         difficulty: question.difficulty,
         question: question.question,
         options: { A: question.option_a, B: question.option_b, C: question.option_c, D: question.option_d },
