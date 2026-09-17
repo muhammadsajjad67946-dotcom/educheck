@@ -788,42 +788,49 @@ export default function SummaryReport() {
         </div>
       </div>
 
-      {/* Adaptive Root Weakness Analysis & Action Plan */}
-      <div className={`rounded-3xl border p-6 sm:p-8 shadow-xl backdrop-blur-xl ${
+      {/* Learning Overview & Growth Areas Banner */}
+      <div className={`rounded-3xl border p-6 sm:p-8 shadow-lg backdrop-blur-xl ${
         darkMode
-          ? 'border-sky-500/30 bg-gradient-to-br from-slate-950 via-slate-900 to-sky-950/30 shadow-sky-950/20'
-          : 'border-sky-200 bg-gradient-to-br from-white via-sky-50/40 to-white shadow-sky-100'
+          ? 'border-white/10 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 shadow-slate-950/20'
+          : 'border-slate-200 bg-gradient-to-br from-white via-sky-50/30 to-white shadow-slate-200/50'
       }`}>
-        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <div className="flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-tr from-sky-500 to-indigo-600 text-white shadow-lg shadow-sky-500/30">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+          <div className="flex items-center gap-4">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-tr from-sky-500 to-indigo-600 text-white shadow-md shadow-sky-500/25">
               <Target size={24} />
             </div>
             <div>
-              <div className="inline-flex items-center gap-1.5 rounded-full border border-sky-400/30 bg-sky-500/10 px-3 py-0.5 text-xs font-bold text-sky-400">
-                <Compass size={12} /> Adaptive Prerequisite Diagnosis
+              <div className="inline-flex items-center gap-1.5 rounded-full border border-sky-400/30 bg-sky-500/10 px-3 py-0.5 text-xs font-bold text-sky-500 dark:text-sky-400">
+                <Sparkles size={12} /> Personalized Learning Overview
               </div>
-              <h2 className="mt-1 text-xl sm:text-2xl font-black tracking-tight">
-                Root Weakness & Conceptual Gap Analysis
+              <h2 className="mt-1 text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+                Learning Summary & Next Steps
               </h2>
               <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
-                Identifies WHERE foundational math misconceptions originate across grade levels
+                See the skills you have mastered and the exact areas to practice next.
               </p>
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2">
-            <div className={`rounded-2xl border px-4 py-2 text-center ${darkMode ? 'border-white/10 bg-slate-900/60' : 'border-slate-200 bg-white'}`}>
-              <div className="text-xs text-slate-500">Evaluated</div>
-              <div className="text-lg font-black text-sky-500">{flatSubtopicRows.length} Subtopics</div>
+          {/* Clean Aligned 3-Stat Row (Guaranteed No Awkward Wrapping) */}
+          <div className="grid grid-cols-3 gap-2 sm:gap-3 shrink-0">
+            <div className={`rounded-2xl border px-3.5 py-2.5 text-center ${
+              darkMode ? 'border-white/10 bg-slate-900/70' : 'border-slate-200 bg-white shadow-sm'
+            }`}>
+              <div className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Evaluated</div>
+              <div className="text-base sm:text-lg font-extrabold text-sky-500">{flatSubtopicRows.length} Topics</div>
             </div>
-            <div className={`rounded-2xl border px-4 py-2 text-center ${darkMode ? 'border-white/10 bg-slate-900/60' : 'border-slate-200 bg-white'}`}>
-              <div className="text-xs text-slate-500">Mastered</div>
-              <div className="text-lg font-black text-emerald-500">{masteredSubtopics.length}</div>
+            <div className={`rounded-2xl border px-3.5 py-2.5 text-center ${
+              darkMode ? 'border-white/10 bg-slate-900/70' : 'border-slate-200 bg-white shadow-sm'
+            }`}>
+              <div className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Mastered</div>
+              <div className="text-base sm:text-lg font-extrabold text-emerald-500">{masteredSubtopics.length} ✓</div>
             </div>
-            <div className={`rounded-2xl border px-4 py-2 text-center ${darkMode ? 'border-white/10 bg-slate-900/60' : 'border-slate-200 bg-white'}`}>
-              <div className="text-xs text-slate-500">Action Needed</div>
-              <div className="text-lg font-black text-rose-500">{weakSubtopicGaps.length}</div>
+            <div className={`rounded-2xl border px-3.5 py-2.5 text-center ${
+              darkMode ? 'border-white/10 bg-slate-900/70' : 'border-slate-200 bg-white shadow-sm'
+            }`}>
+              <div className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">To Practice</div>
+              <div className="text-base sm:text-lg font-extrabold text-rose-500">{weakSubtopicGaps.length}</div>
             </div>
           </div>
         </div>
