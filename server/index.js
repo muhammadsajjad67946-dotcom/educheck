@@ -2200,6 +2200,7 @@ app.post('/api/assessment-attempts/start', async (request, response) => {
 
     const [candidates] = await connection.query(
             `SELECT q.id, q.grade, t.name AS topic, t.parent_topic_id AS parentTopicId, q.subtopic_name AS subtopic,
+              q.micro_skill AS micro_skill, q.prerequisite_grade AS prerequisite_grade, q.prerequisite_concept AS prerequisite_concept,
               q.difficulty, q.question_text AS question,
               q.option_a, q.option_b, q.option_c, q.option_d,
               q.correct_answer, q.explanation, q.distractor_diagnostics
@@ -2218,6 +2219,7 @@ app.post('/api/assessment-attempts/start', async (request, response) => {
     if (candidates.length < safeQuestionCount) {
       const [gradeFallback] = await connection.query(
         `SELECT q.id, q.grade, t.name AS topic, t.parent_topic_id AS parentTopicId, q.subtopic_name AS subtopic,
+                q.micro_skill AS micro_skill, q.prerequisite_grade AS prerequisite_grade, q.prerequisite_concept AS prerequisite_concept,
                 q.difficulty, q.question_text AS question,
                 q.option_a, q.option_b, q.option_c, q.option_d,
                 q.correct_answer, q.explanation, q.distractor_diagnostics
@@ -2237,6 +2239,7 @@ app.post('/api/assessment-attempts/start', async (request, response) => {
     if (candidates.length < safeQuestionCount) {
       const [bankFallback] = await connection.query(
         `SELECT q.id, q.grade, t.name AS topic, t.parent_topic_id AS parentTopicId, q.subtopic_name AS subtopic,
+                q.micro_skill AS micro_skill, q.prerequisite_grade AS prerequisite_grade, q.prerequisite_concept AS prerequisite_concept,
                 q.difficulty, q.question_text AS question,
                 q.option_a, q.option_b, q.option_c, q.option_d,
                 q.correct_answer, q.explanation, q.distractor_diagnostics

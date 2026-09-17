@@ -227,6 +227,9 @@ export default function SummaryReport() {
       difficulty: question.difficulty || 'Medium',
       topic: question.topic || question.topic_name || 'General Mathematics',
       subtopic: question.subtopic || question.subtopic_name || 'General',
+      micro_skill: question.micro_skill || reportItem.micro_skill || null,
+      prerequisite_grade: question.prerequisite_grade || null,
+      prerequisite_concept: question.prerequisite_concept || null,
       question: question.question || question.question_text,
       options,
       selectedAnswer,
@@ -257,6 +260,144 @@ export default function SummaryReport() {
     || assessmentResult?.reportData?.weaknessMap
     || {}
 
+  function cleanConciseIssue(raw) {
+    if (!raw) return 'Needs review on this foundational concept.'
+    let str = String(raw).trim()
+    str = str.replace(/^the student\s+/i, '')
+    if (str.includes(':')) {
+      str = str.split(':')[0].trim()
+    }
+    str = str.replace(/\s*[\(\[].*?[\)\]]/g, '').trim()
+    str = str.replace(/\s*=\s*\d+.*$/g, '').trim()
+    if (/^\d+\s*[\+\-\*×÷\/]/.test(str)) {
+      str = 'Calculated total without checking problem constraints.'
+    } else if (/^\d+\s+is the value/i.test(str)) {
+      str = 'Confused the variable value with the required answer.'
+    }
+    if (str.length > 0) {
+      str = str.charAt(0).toUpperCase() + str.slice(1)
+    }
+    if (!str.endsWith('.')) str += '.'
+    return str
+  }
+
+  function cleanConciseFix(raw) {
+    if (!raw) return 'Practice key problems in this area.'
+    let str = String(raw).trim()
+    str = str.replace(/^(Remember:?\s*|Practice\s+)/i, '')
+    if (str.toLowerCase().startsWith('keep the numerator 1')) {
+      return 'Keep first fraction, invert second, and multiply.'
+    }
+    if (str.length > 0) {
+      str = str.charAt(0).toUpperCase() + str.slice(1)
+    }
+    if (!str.endsWith('.')) str += '.'
+    return str
+  }
+
+  function getLadderConcepts(subtopicName, topicName, rootGrade, targetGrade, prereqConcept) {
+    const norm = String(subtopicName || '').toLowerCase()
+    const pGrade = Math.max(1, rootGrade - 1)
+
+    if (prereqConcept && typeof prereqConcept === 'string' && prereqConcept.trim()) {
+      return {
+        prevGrade: pGrade,
+        prevConcept: 'Foundation',
+        rootConcept: prereqConcept.trim(),
+        targetConcept: subtopicName.split(' ')[0] || 'Target',
+      }
+    }
+
+    if (norm.includes('fraction') && (norm.includes('divis') || norm.includes('divid'))) {
+      return {
+        prevGrade: pGrade,
+        prevConcept: 'Multiplication',
+        rootConcept: 'Reciprocals',
+        targetConcept: 'Division',
+      }
+    }
+    if (norm.includes('fraction') && norm.includes('multipl')) {
+      return {
+        prevGrade: pGrade,
+        prevConcept: 'Addition',
+        rootConcept: 'Fractions',
+        targetConcept: 'Multiplication',
+      }
+    }
+    if (norm.includes('fraction')) {
+      return {
+        prevGrade: pGrade,
+        prevConcept: 'Sharing',
+        rootConcept: 'Reciprocals',
+        targetConcept: 'Fractions',
+      }
+    }
+    if (norm.includes('express') || norm.includes('algebra')) {
+      return {
+        prevGrade: pGrade,
+        prevConcept: 'Operations',
+        rootConcept: 'Variables',
+        targetConcept: 'Expressions',
+      }
+    }
+    if (norm.includes('inequal')) {
+      return {
+        prevGrade: pGrade,
+        prevConcept: 'Comparison',
+        rootConcept: 'Equations',
+        targetConcept: 'Inequalities',
+      }
+    }
+    if (norm.includes('decimal')) {
+      return {
+        prevGrade: pGrade,
+        prevConcept: 'Place Value',
+        rootConcept: 'Tenths',
+        targetConcept: 'Decimals',
+      }
+    }
+    if (norm.includes('ratio') || norm.includes('proport')) {
+      return {
+        prevGrade: pGrade,
+        prevConcept: 'Fractions',
+        rootConcept: 'Unit Rates',
+        targetConcept: 'Proportions',
+      }
+    }
+    if (norm.includes('angle') || norm.includes('shape') || norm.includes('geomet')) {
+      return {
+        prevGrade: pGrade,
+        prevConcept: '2D Shapes',
+        rootConcept: 'Angles',
+        targetConcept: 'Geometry',
+      }
+    }
+    if (norm.includes('perim') || norm.includes('area')) {
+      return {
+        prevGrade: pGrade,
+        prevConcept: 'Counting',
+        rootConcept: 'Perimeter',
+        targetConcept: 'Area',
+      }
+    }
+    if (norm.includes('integer') || norm.includes('negative')) {
+      return {
+        prevGrade: pGrade,
+        prevConcept: 'Number Line',
+        rootConcept: 'Absolute Value',
+        targetConcept: 'Integers',
+      }
+    }
+
+    const words = subtopicName.split(' ')
+    return {
+      prevGrade: pGrade,
+      prevConcept: 'Basics',
+      rootConcept: words[0] || 'Prerequisite',
+      targetConcept: words.slice(-1)[0] || 'Core Skill',
+    }
+  }
+
   const getSubtopicDiagnosticInfo = (subtopicName, topicName) => {
     const normSub = String(subtopicName || '').trim().toLowerCase()
     const normTopic = String(topicName || '').trim().toLowerCase()
@@ -277,6 +418,9 @@ export default function SummaryReport() {
              (qTop === normTopic || qTop.includes(normTopic) || normTopic.includes(qTop))
     })
 
+    const microSkill = matchingWrongQuestions[0]?.micro_skill || null
+    const prereqConcept = matchingWrongQuestions[0]?.prerequisite_concept || null
+
     if (mapInfo && mapInfo.rootGrade) {
       const rootGrade = Number(mapInfo.rootGrade)
       const gradesBehind = Math.max(0, targetGradeNum - rootGrade)
@@ -289,6 +433,8 @@ export default function SummaryReport() {
         resolved: mapInfo.resolved,
         specificGap: primaryGap,
         remediation: primaryRemediation,
+        microSkill,
+        prereqConcept,
       }
     }
 
@@ -304,6 +450,8 @@ export default function SummaryReport() {
         resolved: false,
         specificGap: primaryGap,
         remediation: primaryRemediation,
+        microSkill,
+        prereqConcept,
       }
     }
 
@@ -680,52 +828,107 @@ export default function SummaryReport() {
           </div>
         </div>
 
-        {/* Deepest Conceptual Gaps Identified */}
+        {/* Skills to Practice Next (Concise, Encouraging & Kid-Friendly) */}
         {weakSubtopicGaps.length > 0 ? (
           <div className="mt-6 space-y-4">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-500 flex items-center gap-1.5">
-              <AlertCircle size={14} /> Critical Concept Focus Areas (For Student, Teacher & Parent)
+            <div className="text-xs font-bold uppercase tracking-wider text-sky-500 flex items-center gap-1.5">
+              <Sparkles size={14} /> Skills to Practice Next
             </div>
 
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {weakSubtopicGaps.slice(0, 6).map((item, idx) => {
                 const behind = item.diagnostic?.gradesBehind || 0
                 const rootGrade = item.diagnostic?.rootGrade || targetGradeNum
                 const isDeeperGap = behind > 0
+                const displaySkill = item.diagnostic?.microSkill || item.subtopicName
+                const issue = cleanConciseIssue(item.diagnostic?.specificGap)
+                const fix = cleanConciseFix(item.diagnostic?.remediation)
+                const ladder = getLadderConcepts(item.subtopicName, item.topicName, rootGrade, targetGradeNum, item.diagnostic?.prereqConcept)
 
                 return (
                   <div
                     key={`gap-${idx}`}
-                    className={`rounded-2xl border p-4 transition hover:border-rose-400/50 ${
-                      darkMode ? 'border-white/10 bg-slate-900/50' : 'border-slate-200 bg-slate-50/80'
+                    className={`rounded-2xl border p-4.5 transition hover:border-sky-400/50 shadow-sm flex flex-col justify-between ${
+                      darkMode ? 'border-white/10 bg-slate-900/60' : 'border-slate-200 bg-white'
                     }`}
                   >
-                    <div className="flex items-start justify-between gap-2">
-                      <span className="text-xs font-bold text-sky-500 uppercase tracking-wide">
-                        {item.topicName}
-                      </span>
-                      <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold ${
-                        isDeeperGap
-                          ? 'bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30'
-                          : 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30'
-                      }`}>
-                        {isDeeperGap ? `Root: Grade ${rootGrade} (${behind} ${behind === 1 ? 'grade' : 'grades'} behind)` : `At Grade ${rootGrade}`}
-                      </span>
+                    <div>
+                      {/* Header: Topic & Root Badge */}
+                      <div className="flex items-start justify-between gap-2">
+                        <span className="text-[11px] font-extrabold text-sky-500 uppercase tracking-wider">
+                          {item.topicName}
+                        </span>
+                        <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold ${
+                          isDeeperGap
+                            ? 'bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30'
+                            : 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30'
+                        }`}>
+                          {isDeeperGap ? `Gr ${rootGrade} Review` : `At Grade ${rootGrade}`}
+                        </span>
+                      </div>
+
+                      {/* Micro-Skill / Subtopic Title */}
+                      <h4 className="mt-2 font-bold text-sm text-slate-900 dark:text-white line-clamp-1">
+                        {displaySkill}
+                      </h4>
+
+                      {/* Identified Issue & Root Weakness */}
+                      <div className="mt-2.5">
+                        <div className="text-[11px] font-bold text-rose-500 dark:text-rose-400 uppercase tracking-wide">
+                          Identified Issue:
+                        </div>
+                        <p className="mt-0.5 text-xs text-slate-700 dark:text-slate-200 font-medium line-clamp-2">
+                          {issue}
+                        </p>
+                        <div className="mt-1 text-[11px] text-slate-500 dark:text-slate-400">
+                          <strong className="text-slate-700 dark:text-slate-300">Root Weakness: </strong>
+                          <span className="text-rose-500 font-semibold">{ladder.rootConcept}</span>
+                          {isDeeperGap && (
+                            <span className="text-slate-400"> (Grade {rootGrade}, {behind} {behind === 1 ? 'grade' : 'grades'} behind)</span>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Learning Ladder with Concept Names */}
+                      <div className="mt-3 py-2 px-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-white/5 text-[11px]">
+                        <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
+                          Ladder:
+                        </div>
+                        <div className="flex flex-wrap items-center gap-1 font-semibold text-[11px]">
+                          {isDeeperGap ? (
+                            <>
+                              <span className="text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded">
+                                Gr {ladder.prevGrade}: {ladder.prevConcept} ✓
+                              </span>
+                              <span className="text-slate-400">→</span>
+                              <span className="text-rose-600 dark:text-rose-400 bg-rose-500/10 px-1.5 py-0.5 rounded border border-rose-500/20">
+                                Gr {rootGrade}: {ladder.rootConcept} ❌
+                              </span>
+                              <span className="text-slate-400">→</span>
+                              <span className="text-amber-600 dark:text-amber-400 bg-amber-500/10 px-1.5 py-0.5 rounded">
+                                Gr {targetGradeNum}: {ladder.targetConcept} ⚠️
+                              </span>
+                            </>
+                          ) : (
+                            <>
+                              <span className="text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded">
+                                Gr {ladder.prevGrade}: {ladder.prevConcept} ✓
+                              </span>
+                              <span className="text-slate-400">→</span>
+                              <span className="text-amber-600 dark:text-amber-400 bg-amber-500/10 px-1.5 py-0.5 rounded border border-amber-500/20">
+                                Gr {targetGradeNum}: {ladder.targetConcept} ⚠️
+                              </span>
+                            </>
+                          )}
+                        </div>
+                      </div>
                     </div>
 
-                    <h4 className="mt-2 font-bold text-sm line-clamp-1">{item.subtopicName}</h4>
-
-                    {item.diagnostic?.specificGap && (
-                      <p className="mt-1 text-xs text-rose-400 line-clamp-2">
-                        <strong>Gap:</strong> {item.diagnostic.specificGap}
-                      </p>
-                    )}
-
-                    {item.diagnostic?.remediation && (
-                      <p className="mt-2 text-xs text-slate-500 dark:text-slate-400 border-t pt-2 border-slate-200 dark:border-white/5 line-clamp-2">
-                        💡 <em>{item.diagnostic.remediation}</em>
-                      </p>
-                    )}
+                    {/* Quick Fix */}
+                    <div className="mt-3 pt-2.5 border-t border-slate-100 dark:border-white/5 text-xs text-slate-500 dark:text-slate-400">
+                      <span className="font-bold text-sky-500">Quick Fix: </span>
+                      {fix}
+                    </div>
                   </div>
                 )
               })}
@@ -1031,15 +1234,20 @@ export default function SummaryReport() {
                           <td className="px-5 py-3.5 font-medium">{topicName}</td>
                           <td className="px-5 py-3.5">
                             <div className="font-semibold text-slate-800 dark:text-slate-200">{subtopicName}</div>
+                            {diag?.microSkill && (
+                              <div className="text-[11px] font-medium text-sky-500 dark:text-sky-400">
+                                ↳ {diag.microSkill}
+                              </div>
+                            )}
                             {!isSuccess && diag?.specificGap && (
                               <div className="mt-1 text-xs text-rose-500 dark:text-rose-400 font-normal">
                                 <span className="font-bold uppercase tracking-wider text-[10px] text-rose-600 dark:text-rose-300 bg-rose-500/10 px-1.5 py-0.5 rounded mr-1">Specific Gap</span>
-                                {diag.specificGap}
+                                {cleanConciseIssue(diag.specificGap)}
                               </div>
                             )}
                             {!isSuccess && diag?.remediation && (
                               <div className="mt-1 text-[11px] text-slate-500 dark:text-slate-400 italic">
-                                💡 {diag.remediation}
+                                💡 {cleanConciseFix(diag.remediation)}
                               </div>
                             )}
                           </td>
@@ -1059,7 +1267,7 @@ export default function SummaryReport() {
                               </span>
                             ) : behind > 0 ? (
                               <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30">
-                                Grade {rootG} ⚠️ (${behind} ${behind === 1 ? 'grade' : 'grades'} behind)
+                                Grade {rootG} ⚠️ ({behind} {behind === 1 ? 'grade' : 'grades'} behind)
                               </span>
                             ) : (
                               <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-amber-500/15 text-amber-600 dark:text-amber-400">
