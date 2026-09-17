@@ -452,6 +452,40 @@ app.get('/api/repair-database', async (_req, res) => {
   }
 })
 
+app.get('/api/sync-micro-skills', async (_req, res) => {
+  const connection = await pool.getConnection()
+  try {
+    const fs = await import('fs')
+    const path = await import('path')
+    const candidates = [
+      path.resolve('server/microSkillsData.json'),
+      path.join(process.cwd(), 'server', 'microSkillsData.json'),
+      path.join(process.cwd(), 'microSkillsData.json'),
+    ]
+    const filePath = candidates.find((p) => fs.existsSync(p))
+    if (!filePath) {
+      return res.status(404).json({ error: 'microSkillsData.json not found' })
+    }
+    const data = JSON.parse(fs.readFileSync(filePath, 'utf8'))
+    await connection.beginTransaction()
+    let updated = 0
+    for (const item of data) {
+      const [r] = await connection.query(
+        'UPDATE questions SET micro_skill = ?, prerequisite_grade = ?, prerequisite_concept = ? WHERE id = ?',
+        [item.micro_skill, item.prerequisite_grade, item.prerequisite_concept, item.id]
+      )
+      if (r.affectedRows > 0) updated++
+    }
+    await connection.commit()
+    res.json({ ok: true, total: data.length, updated })
+  } catch (err) {
+    await connection.rollback()
+    res.status(500).json({ ok: false, error: err.message })
+  } finally {
+    connection.release()
+  }
+})
+
 
 app.post('/api/auth/register', async (request, response) => {
   const { name, email, password, fatherName = '', age = null, grade = 'Grade 5' } = request.body || {}
