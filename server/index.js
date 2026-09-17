@@ -12,6 +12,7 @@ import { saveStripePaymentRecord } from './paymentStore.js'
 import { generateDiagnosticsWithGemini, generateGeminiQuestions, generateGeminiReport } from './geminiReport.js'
 import { isMailConfigured, sendContactEmails } from './mailer.js'
 import { autoSeedDatabaseIfNeeded } from './autoSeed.js'
+import { microSkillsData } from './microSkillsData.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -455,21 +456,9 @@ app.get('/api/repair-database', async (_req, res) => {
 app.get('/api/sync-micro-skills', async (_req, res) => {
   const connection = await pool.getConnection()
   try {
-    const fs = await import('fs')
-    const path = await import('path')
-    const candidates = [
-      path.resolve('server/microSkillsData.json'),
-      path.join(process.cwd(), 'server', 'microSkillsData.json'),
-      path.join(process.cwd(), 'microSkillsData.json'),
-    ]
-    const filePath = candidates.find((p) => fs.existsSync(p))
-    if (!filePath) {
-      return res.status(404).json({ error: 'microSkillsData.json not found' })
-    }
-    const data = JSON.parse(fs.readFileSync(filePath, 'utf8'))
     await connection.beginTransaction()
     let updated = 0
-    for (const item of data) {
+    for (const item of microSkillsData) {
       const [r] = await connection.query(
         'UPDATE questions SET micro_skill = ?, prerequisite_grade = ?, prerequisite_concept = ? WHERE id = ?',
         [item.micro_skill, item.prerequisite_grade, item.prerequisite_concept, item.id]
@@ -477,7 +466,7 @@ app.get('/api/sync-micro-skills', async (_req, res) => {
       if (r.affectedRows > 0) updated++
     }
     await connection.commit()
-    res.json({ ok: true, total: data.length, updated })
+    res.json({ ok: true, total: microSkillsData.length, updated })
   } catch (err) {
     await connection.rollback()
     res.status(500).json({ ok: false, error: err.message })
