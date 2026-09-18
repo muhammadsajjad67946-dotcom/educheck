@@ -23,6 +23,9 @@ const emptyForm = {
     C: { error: '', remediation: '' },
     D: { error: '', remediation: '' },
   },
+  micro_skill: '',
+  prerequisite_grade: '',
+  prerequisite_concept: '',
 }
 
 
@@ -178,7 +181,19 @@ export default function AdminQuestions() {
         updateForm('distractorDiagnostics', newDiag)
       }
 
-      setAiSuccessMessage('✨ AI generated Explanation and Misconceptions successfully!')
+      if (data.micro_skill) {
+        updateForm('micro_skill', data.micro_skill)
+      }
+
+      if (data.prerequisite_grade != null) {
+        updateForm('prerequisite_grade', String(data.prerequisite_grade))
+      }
+
+      if (data.prerequisite_concept) {
+        updateForm('prerequisite_concept', data.prerequisite_concept)
+      }
+
+      setAiSuccessMessage('✨ AI generated Explanation, Misconceptions, and Prerequisite Skills successfully!')
       setTimeout(() => setAiSuccessMessage(''), 5000)
     } catch (err) {
       setFormError(err.message || 'Failed to auto-generate with AI. You can enter them manually.')
@@ -241,6 +256,9 @@ export default function AdminQuestions() {
           status: form.status || 'Active',
           explanation: form.explanation?.trim() || null,
           distractor_diagnostics: Object.keys(distractorDiagnosticsPayload).length ? distractorDiagnosticsPayload : null,
+          micro_skill: form.micro_skill?.trim() || null,
+          prerequisite_grade: form.prerequisite_grade !== '' && !isNaN(Number(form.prerequisite_grade)) ? Number(form.prerequisite_grade) : null,
+          prerequisite_concept: form.prerequisite_concept?.trim() || null,
         }),
       })
       setQuestions((previous) => editingQuestionId
@@ -300,6 +318,9 @@ export default function AdminQuestions() {
         C: { error: diag.C?.error || '', remediation: diag.C?.remediation || '' },
         D: { error: diag.D?.error || '', remediation: diag.D?.remediation || '' },
       },
+      micro_skill: question.micro_skill || '',
+      prerequisite_grade: question.prerequisite_grade != null ? String(question.prerequisite_grade) : '',
+      prerequisite_concept: question.prerequisite_concept || '',
     })
     setSelectedTopicId(topic?.id ? String(topic.id) : '')
     setSelectedSubtopicId(subtopic?.id ? String(subtopic.id) : '')
@@ -329,7 +350,7 @@ export default function AdminQuestions() {
           return matchesSearch && matchesSubject && matchesGrade && matchesDifficulty
         })
 
-      const headers = ['ID', 'Question', 'Subject', 'Topic ID', 'Topic', 'Subtopic ID', 'Subtopic', 'Grade', 'Difficulty', 'Option A', 'Option B', 'Option C', 'Option D', 'Correct Answer', 'Explanation']
+      const headers = ['ID', 'Question', 'Subject', 'Topic ID', 'Topic', 'Subtopic ID', 'Subtopic', 'Grade', 'Difficulty', 'Option A', 'Option B', 'Option C', 'Option D', 'Correct Answer', 'Explanation', 'Micro Skill', 'Prerequisite Grade', 'Prerequisite Concept']
       const rows = exportQuestions.map((question) => [
         question.id,
         question.question,
@@ -346,6 +367,9 @@ export default function AdminQuestions() {
         question.options?.D,
         question.correctAnswer,
         question.explanation,
+        question.micro_skill || '',
+        question.prerequisite_grade ?? '',
+        question.prerequisite_concept || '',
       ])
       const csv = [headers, ...rows].map((row) => row.map(escapeCsvValue).join(',')).join('\r\n')
       const blob = new Blob([`\uFEFF${csv}`], { type: 'text/csv;charset=utf-8;' })
@@ -439,6 +463,9 @@ export default function AdminQuestions() {
           },
           answer: rawAnswer.slice(0, 1),
           explanation: item.explanation || null,
+          micro_skill: item.micro_skill || item['micro skill'] || item.microSkill || null,
+          prerequisite_grade: (item.prerequisite_grade || item['prerequisite grade'] || item.prerequisiteGrade) ? Number(String(item.prerequisite_grade || item['prerequisite grade'] || item.prerequisiteGrade).match(/\d+/)?.[0] || null) : null,
+          prerequisite_concept: item.prerequisite_concept || item['prerequisite concept'] || item.prerequisiteConcept || null,
         }
         try {
           const saved = await apiRequest('/admin/questions', { method: 'POST', body: JSON.stringify(payload) })
@@ -618,6 +645,11 @@ export default function AdminQuestions() {
                     <p className="max-w-md text-sm font-medium text-slate-900 dark:text-white truncate" title={question.question}>
                       {question.question}
                     </p>
+                    {question.micro_skill && (
+                      <span className="inline-block mt-1 text-[11px] font-medium text-sky-600 dark:text-sky-400 bg-sky-50 dark:bg-sky-950/40 px-2 py-0.5 rounded border border-sky-200/50 dark:border-sky-800/50" title={`Prereq: Grade ${question.prerequisite_grade || 'Auto'} - ${question.prerequisite_concept || 'None'}`}>
+                        🎯 {question.micro_skill}
+                      </span>
+                    )}
                   </td>
                   <td className="px-6 py-4 text-sm text-slate-600 dark:text-slate-300">{question.subject}</td>
                   <td className="px-6 py-4 text-sm text-slate-600 dark:text-slate-300">{question.topic}</td>
@@ -858,7 +890,61 @@ export default function AdminQuestions() {
                 </div>
               </div>
 
+              {/* Diagnostic & Prerequisite Skills */}
+              <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-800/40 p-3.5 space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400">
+                    🎯 Diagnostic & Prerequisite Skills (Adaptive Testing)
+                  </span>
+                  <span className="text-[11px] text-slate-400 dark:text-slate-500">
+                    Used in Gap Analysis
+                  </span>
+                </div>
 
+                <div className="grid gap-3 sm:grid-cols-3">
+                  <div>
+                    <label className="mb-1 block text-xs font-medium text-slate-700 dark:text-slate-300">
+                      Micro-Skill
+                    </label>
+                    <input
+                      type="text"
+                      value={form.micro_skill || ''}
+                      onChange={(e) => updateForm('micro_skill', e.target.value)}
+                      className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-2.5 py-1.5 text-xs text-slate-900 dark:text-white placeholder-slate-400 focus:border-sky-400 focus:outline-none"
+                      placeholder="e.g. Multiplying Decimals"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="mb-1 block text-xs font-medium text-slate-700 dark:text-slate-300">
+                      Prerequisite Grade
+                    </label>
+                    <select
+                      value={form.prerequisite_grade ?? ''}
+                      onChange={(e) => updateForm('prerequisite_grade', e.target.value)}
+                      className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-2.5 py-1.5 text-xs text-slate-900 dark:text-white focus:border-sky-400 focus:outline-none cursor-pointer"
+                    >
+                      <option value="">Same / Auto-detect</option>
+                      {[1, 2, 3, 4, 5, 6, 7, 8].map((g) => (
+                        <option key={g} value={g}>Grade {g}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="mb-1 block text-xs font-medium text-slate-700 dark:text-slate-300">
+                      Prerequisite Concept
+                    </label>
+                    <input
+                      type="text"
+                      value={form.prerequisite_concept || ''}
+                      onChange={(e) => updateForm('prerequisite_concept', e.target.value)}
+                      className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-2.5 py-1.5 text-xs text-slate-900 dark:text-white placeholder-slate-400 focus:border-sky-400 focus:outline-none"
+                      placeholder="e.g. Multiplication Facts"
+                    />
+                  </div>
+                </div>
+              </div>
 
               {formError && <p className="text-sm font-medium text-red-500">{formError}</p>}
 

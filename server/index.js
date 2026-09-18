@@ -1456,6 +1456,12 @@ app.post('/api/admin/questions', async (request, response) => {
   const rawStatus = request.body.status ? String(request.body.status).toLowerCase() : 'active'
   const statusParam = ['active', 'inactive', 'archived'].includes(rawStatus) ? rawStatus : 'active'
   const isActiveParam = request.body.isActive !== undefined ? (request.body.isActive ? 1 : 0) : (statusParam === 'active' ? 1 : 0)
+  const rawMicroSkill = request.body.micro_skill ?? request.body.microSkill ?? null
+  const microSkill = rawMicroSkill ? String(rawMicroSkill).trim() : null
+  const rawPrereqGrade = request.body.prerequisite_grade ?? request.body.prerequisiteGrade
+  const prerequisiteGrade = (rawPrereqGrade !== undefined && rawPrereqGrade !== null && rawPrereqGrade !== '' && !isNaN(Number(rawPrereqGrade))) ? Number(rawPrereqGrade) : null
+  const rawPrereqConcept = request.body.prerequisite_concept ?? request.body.prerequisiteConcept ?? null
+  const prerequisiteConcept = rawPrereqConcept ? String(rawPrereqConcept).trim() : null
 
   if (!question?.trim() || !Number.isInteger(Number(grade)) || !['Low', 'Medium', 'High'].includes(difficulty) || !['A', 'B', 'C', 'D'].includes(answer) || ['A', 'B', 'C', 'D'].some((option) => !options[option]?.trim())) {
     return response.status(400).json({ message: 'Question, grade, difficulty, four options, and correct answer are required.' })
@@ -1548,12 +1554,12 @@ app.post('/api/admin/questions', async (request, response) => {
 
     const [result] = await connection.query(
       `INSERT INTO questions
-        (subject_id, topic_id, chapter_id, subtopic_id, subtopic_name, question_text, grade_id, grade, difficulty, option_a, option_b, option_c, option_d, correct_answer, explanation, distractor_diagnostics, status, is_active)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [subjectId, selectedTopicId, chapterId, selectedSubtopicId, normalizedSelectedSubtopicName || null, question.trim(), gradeId, numericGrade, difficulty, options.A.trim(), options.B.trim(), options.C.trim(), options.D.trim(), answer, explanation, distractorDiagnosticsJson, statusParam, isActiveParam],
+        (subject_id, topic_id, chapter_id, subtopic_id, subtopic_name, question_text, grade_id, grade, difficulty, option_a, option_b, option_c, option_d, correct_answer, explanation, distractor_diagnostics, status, is_active, micro_skill, prerequisite_grade, prerequisite_concept)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [subjectId, selectedTopicId, chapterId, selectedSubtopicId, normalizedSelectedSubtopicName || null, question.trim(), gradeId, numericGrade, difficulty, options.A.trim(), options.B.trim(), options.C.trim(), options.D.trim(), answer, explanation, distractorDiagnosticsJson, statusParam, isActiveParam, microSkill, prerequisiteGrade, prerequisiteConcept],
     )
     await connection.commit()
-    return response.status(201).json({ id: result.insertId, question: question.trim(), subject: subject.trim(), topic: normalizedTopicName || 'General', subtopic: normalizedSelectedSubtopicName || null, subtopicId: selectedSubtopicId, grade: Number(grade), difficulty, options, answer, status: statusParam.charAt(0).toUpperCase() + statusParam.slice(1), isActive: isActiveParam === 1, explanation, distractor_diagnostics: rawDiagnostics })
+    return response.status(201).json({ id: result.insertId, question: question.trim(), subject: subject.trim(), topic: normalizedTopicName || 'General', subtopic: normalizedSelectedSubtopicName || null, subtopicId: selectedSubtopicId, grade: Number(grade), difficulty, options, answer, status: statusParam.charAt(0).toUpperCase() + statusParam.slice(1), isActive: isActiveParam === 1, explanation, distractor_diagnostics: rawDiagnostics, micro_skill: microSkill, prerequisite_grade: prerequisiteGrade, prerequisite_concept: prerequisiteConcept })
   } catch (error) {
     await connection.rollback()
     console.error('Admin question save failed:', error)
@@ -1740,7 +1746,8 @@ app.get('/api/questions', async (request, response) => {
         q.difficulty, q.question_text AS question,
         q.option_a, q.option_b, q.option_c, q.option_d,
         q.correct_answer, q.explanation, q.distractor_diagnostics,
-        q.status, q.is_active
+        q.status, q.is_active,
+        q.micro_skill, q.prerequisite_grade, q.prerequisite_concept
        FROM questions q
        LEFT JOIN topics t ON t.id = q.topic_id
        LEFT JOIN subjects s ON s.id = q.subject_id
@@ -1774,7 +1781,8 @@ app.get('/api/questions', async (request, response) => {
           q.difficulty, q.question_text AS question,
           q.option_a, q.option_b, q.option_c, q.option_d,
           q.correct_answer, q.explanation, q.distractor_diagnostics,
-          q.status, q.is_active
+          q.status, q.is_active,
+          q.micro_skill, q.prerequisite_grade, q.prerequisite_concept
          FROM questions q
          LEFT JOIN topics t ON t.id = q.topic_id
          LEFT JOIN subjects s ON s.id = q.subject_id
@@ -1808,7 +1816,10 @@ app.get('/api/questions', async (request, response) => {
       correctAnswer: (question.correct_answer || 'a').toUpperCase(),
       explanation: question.explanation,
       status: question.status ? (question.status.charAt(0).toUpperCase() + question.status.slice(1).toLowerCase()) : 'Active',
-      isActive: question.is_active !== 0
+      isActive: question.is_active !== 0,
+      micro_skill: question.micro_skill || null,
+      prerequisite_grade: question.prerequisite_grade != null ? Number(question.prerequisite_grade) : null,
+      prerequisite_concept: question.prerequisite_concept || null
     })))
   } catch (error) {
     console.error('Questions load failed:', error.message)
@@ -1825,6 +1836,12 @@ app.put('/api/admin/questions/:questionId', async (request, response) => {
   const rawStatus = request.body.status ? String(request.body.status).toLowerCase() : null
   const statusParam = rawStatus && ['active', 'inactive', 'archived'].includes(rawStatus) ? rawStatus : null
   const isActiveParam = request.body.isActive !== undefined ? (request.body.isActive ? 1 : 0) : (statusParam ? (statusParam === 'active' ? 1 : 0) : null)
+  const rawMicroSkill = request.body.micro_skill ?? request.body.microSkill ?? null
+  const microSkill = rawMicroSkill !== null ? String(rawMicroSkill).trim() : null
+  const rawPrereqGrade = request.body.prerequisite_grade ?? request.body.prerequisiteGrade
+  const prerequisiteGrade = (rawPrereqGrade !== undefined && rawPrereqGrade !== null && rawPrereqGrade !== '' && !isNaN(Number(rawPrereqGrade))) ? Number(rawPrereqGrade) : null
+  const rawPrereqConcept = request.body.prerequisite_concept ?? request.body.prerequisiteConcept ?? null
+  const prerequisiteConcept = rawPrereqConcept !== null ? String(rawPrereqConcept).trim() : null
 
   if (!Number.isInteger(questionId) || questionId <= 0 || !question?.trim() || !Number.isInteger(Number(grade)) || !['Low', 'Medium', 'High'].includes(difficulty) || !['A', 'B', 'C', 'D'].includes(answer) || ['A', 'B', 'C', 'D'].some((option) => !options[option]?.trim())) {
     return response.status(400).json({ message: 'Question, grade, difficulty, four options, and correct answer are required.' })
@@ -1877,13 +1894,16 @@ app.put('/api/admin/questions/:questionId', async (request, response) => {
        question_text = ?, grade_id = ?, grade = ?, difficulty = ?, option_a = ?, option_b = ?, option_c = ?, option_d = ?,
        correct_answer = ?, explanation = ?, distractor_diagnostics = ?,
        status = COALESCE(?, status, 'active'),
-       is_active = COALESCE(?, is_active, 1)
+       is_active = COALESCE(?, is_active, 1),
+       micro_skill = ?,
+       prerequisite_grade = ?,
+       prerequisite_concept = ?
        WHERE id = ?`,
-      [subjectId, selectedTopicId, chapterId, selectedSubtopicId, normalizedSelectedSubtopicName || null, question.trim(), gradeId, Number(grade), difficulty, options.A.trim(), options.B.trim(), options.C.trim(), options.D.trim(), answer, explanation, distractorDiagnosticsJson, statusParam, isActiveParam, questionId],
+      [subjectId, selectedTopicId, chapterId, selectedSubtopicId, normalizedSelectedSubtopicName || null, question.trim(), gradeId, Number(grade), difficulty, options.A.trim(), options.B.trim(), options.C.trim(), options.D.trim(), answer, explanation, distractorDiagnosticsJson, statusParam, isActiveParam, microSkill, prerequisiteGrade, prerequisiteConcept, questionId],
     )
     await connection.commit()
     const resolvedStatus = statusParam || 'active'
-    return response.json({ id: questionId, question: question.trim(), subject: subject.trim(), topic: normalizedTopicName, subtopic: normalizedSelectedSubtopicName || null, subtopicId: selectedSubtopicId, grade: Number(grade), difficulty, options, answer, status: resolvedStatus.charAt(0).toUpperCase() + resolvedStatus.slice(1), isActive: isActiveParam !== 0, explanation, distractor_diagnostics: rawDiagnostics })
+    return response.json({ id: questionId, question: question.trim(), subject: subject.trim(), topic: normalizedTopicName, subtopic: normalizedSelectedSubtopicName || null, subtopicId: selectedSubtopicId, grade: Number(grade), difficulty, options, answer, status: resolvedStatus.charAt(0).toUpperCase() + resolvedStatus.slice(1), isActive: isActiveParam !== 0, explanation, distractor_diagnostics: rawDiagnostics, micro_skill: microSkill, prerequisite_grade: prerequisiteGrade, prerequisite_concept: prerequisiteConcept })
   } catch (error) {
     await connection.rollback()
     console.error('Admin question update failed:', error)

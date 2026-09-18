@@ -301,6 +301,8 @@ Count: ${count}`
 export async function generateDiagnosticsWithGemini({ question, grade, subject = 'Math', topic = 'Mathematics', options = {}, answer = 'A' }) {
   const normAnswer = String(answer || 'A').toUpperCase()
   const wrongOptions = ['A', 'B', 'C', 'D'].filter(opt => opt !== normAnswer)
+  const currentGrade = Number(grade) || 5
+  const fallbackPrereqGrade = Math.max(1, currentGrade - 1)
 
   const prompt = `You are an expert K-8 educational psychologist and mathematics curriculum specialist.
 Analyze this Grade ${grade} ${subject} question (${topic}):
@@ -315,6 +317,9 @@ Correct Answer: Option ${normAnswer} (${options[normAnswer] || ''})
 Generate:
 1. "explanation": A clear, student-friendly step-by-step mathematical explanation showing why Option ${normAnswer} is correct.
 2. "distractor_diagnostics": For each WRONG option (${wrongOptions.join(', ')}), describe the exact misconception or calculation mistake a student made to choose that option, and provide a constructive remediation tip.
+3. "micro_skill": A concise 2-5 word title of the specific micro-skill tested (e.g. "Multiplying Decimals", "Two Digit Regrouping", "Finding Missing Angles").
+4. "prerequisite_grade": An integer (typically 1 to 2 grade levels prior to Grade ${currentGrade}, e.g. ${fallbackPrereqGrade}, or 1 if currently Grade 1) representing the foundational grade where the underlying concept is first taught.
+5. "prerequisite_concept": A concise 2-5 word name of the foundational prerequisite concept needed to solve this problem (e.g. "Basic Multiplication Facts", "Place Value Of Tens", "Fraction Concepts").
 
 Return ONLY a valid JSON object matching this schema:
 {
@@ -323,14 +328,22 @@ Return ONLY a valid JSON object matching this schema:
     "${wrongOptions[0]}": { "error": "Short description of misconception", "remediation": "Brief actionable tip to fix this mistake" },
     "${wrongOptions[1]}": { "error": "Short description of misconception", "remediation": "Brief actionable tip to fix this mistake" },
     "${wrongOptions[2]}": { "error": "Short description of misconception", "remediation": "Brief actionable tip to fix this mistake" }
-  }
+  },
+  "micro_skill": "Concise Micro Skill Name",
+  "prerequisite_grade": ${fallbackPrereqGrade},
+  "prerequisite_concept": "Foundational Prerequisite Concept"
 }`
 
   const raw = await requestGemini(prompt)
   const result = extractJson(raw)
+  const prereqGradeNum = Number(result.prerequisite_grade)
+
   return {
     explanation: String(result.explanation || '').trim(),
-    distractor_diagnostics: result.distractor_diagnostics || {}
+    distractor_diagnostics: result.distractor_diagnostics || {},
+    micro_skill: result.micro_skill ? String(result.micro_skill).trim() : null,
+    prerequisite_grade: Number.isInteger(prereqGradeNum) && prereqGradeNum >= 1 && prereqGradeNum <= 8 ? prereqGradeNum : fallbackPrereqGrade,
+    prerequisite_concept: result.prerequisite_concept ? String(result.prerequisite_concept).trim() : null,
   }
 }
 
