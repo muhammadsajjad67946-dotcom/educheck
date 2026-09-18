@@ -30,6 +30,7 @@ export default function SummaryReport() {
   const [activeFilter, setActiveFilter] = useState('wrong')
   const [expandedQuestions, setExpandedQuestions] = useState({})
   const [dbAttemptData, setDbAttemptData] = useState(null)
+  const [showAllGaps, setShowAllGaps] = useState(false)
 
   const latestAssessment = assessmentResult || assessmentHistory?.[assessmentHistory.length - 1] || null
 
@@ -843,7 +844,7 @@ export default function SummaryReport() {
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {weakSubtopicGaps.slice(0, 6).map((item, idx) => {
+              {(showAllGaps ? weakSubtopicGaps : weakSubtopicGaps.slice(0, 6)).map((item, idx) => {
                 const behind = item.diagnostic?.gradesBehind || 0
                 const rootGrade = item.diagnostic?.rootGrade || targetGradeNum
                 const isDeeperGap = behind > 0
@@ -940,6 +941,27 @@ export default function SummaryReport() {
                 )
               })}
             </div>
+
+            {/* View All / Show Less Toggle Button */}
+            {weakSubtopicGaps.length > 6 && (
+              <div className="mt-5 text-center">
+                <button
+                  type="button"
+                  onClick={() => setShowAllGaps(!showAllGaps)}
+                  className="inline-flex items-center gap-2 rounded-xl border border-sky-500/30 bg-sky-500/10 px-5 py-2.5 text-xs font-bold text-sky-500 hover:bg-sky-500/20 transition cursor-pointer"
+                >
+                  {showAllGaps ? (
+                    <>
+                      <ChevronUp size={14} /> Show Top 6 Priority Areas Only
+                    </>
+                  ) : (
+                    <>
+                      <ChevronDown size={14} /> View All {weakSubtopicGaps.length} Areas to Practice (See More)
+                    </>
+                  )}
+                </button>
+              </div>
+            )}
           </div>
         ) : (
           <div className="mt-6 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-center text-sm font-semibold text-emerald-400">
