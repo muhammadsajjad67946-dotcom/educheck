@@ -48,14 +48,19 @@ function findFoundationalQuestion(questionBank, topic, subtopic, currentGrade, a
   const helperAliases = getFoundationAliases(subtopic)
   const targetGrade = Math.max(1, Number(currentGrade) - 1)
   const alreadyAsked = new Set(Array.isArray(askedIds) ? askedIds : [])
-  const isUnused = (q) => !alreadyAsked.has(q.id) && q.topic === topic
+  const isUnused = (q) => !alreadyAsked.has(q.id) && matchesStrand(q.topic, topic)
 
   const isSameSubtopicOrAlias = (q) => (
     matchesQuestionSubtopic(q, subtopic) ||
     helperAliases.some((alias) => matchesQuestionSubtopic(q, alias))
   )
 
-  // 1. Priority 1: Immediate lower grade (currentGrade - 1) for the EXACT SAME SUBTOPIC
+  // 1. Priority 1: Immediate lower grade (currentGrade - 1) for the EXACT SAME SUBTOPIC - prefer Medium difficulty
+  const exactLowerGradeMed = questionBank.filter((q) => isUnused(q) && Number(q.grade) === targetGrade && isSameSubtopicOrAlias(q) && q.difficulty === 'Medium')
+  if (exactLowerGradeMed.length) {
+    return exactLowerGradeMed[Math.floor(Math.random() * exactLowerGradeMed.length)]
+  }
+
   const exactLowerGrade = questionBank.filter((q) => isUnused(q) && Number(q.grade) === targetGrade && isSameSubtopicOrAlias(q))
   if (exactLowerGrade.length) {
     return exactLowerGrade[Math.floor(Math.random() * exactLowerGrade.length)]
@@ -1136,24 +1141,74 @@ export function advanceGradeBatchTest(state, questionBank, currentQuestion, sele
     } else {
       // Student answered WRONG on a normal question
       if (currentQuestion.difficulty === 'High') {
-        // Failed High — drop to Medium at SAME target grade within SAME strand
+        // User rule: Student failed High question — move to PREVIOUS grade at Medium difficulty strictly matching SAME TOPIC & SAME SUBTOPIC!
         nextDifficulty = 'Medium'
-        const sameGradeMed = questionBank.find(
-          (q) => !usedQuestionIds.includes(q.id) &&
-            Number(q.grade) === state.targetGrade &&
-            matchesStrand(q.topic, currentQuestion.topic) &&
-            q.difficulty === 'Medium' &&
-            matchesQuestionSubtopic(q, subtopic)
-        ) || questionBank.find(
-          (q) => !usedQuestionIds.includes(q.id) &&
-            Number(q.grade) === state.targetGrade &&
-            matchesStrand(q.topic, currentQuestion.topic) &&
-            q.difficulty === 'Medium'
-        )
+        const prevGrade = Math.max(1, questionGrade - 1)
 
-        if (sameGradeMed) {
-          questions = replaceForSameStrand(questions, currentIndex, sameGradeMed, currentQuestion.topic)
-          usedQuestionIds.push(sameGradeMed.id)
+        let prevGradeMedQ = null
+        if (prevGrade < questionGrade) {
+          // Priority 1: Previous grade, Medium difficulty, EXACT SAME TOPIC & EXACT SAME SUBTOPIC
+          prevGradeMedQ = questionBank.find(
+            (q) => !usedQuestionIds.includes(q.id) &&
+              Number(q.grade) === prevGrade &&
+              matchesStrand(q.topic, currentQuestion.topic) &&
+              q.difficulty === 'Medium' &&
+              matchesQuestionSubtopic(q, subtopic)
+          )
+
+          // Priority 2: Previous grade, Medium difficulty, concept family alias of the same subtopic
+          if (!prevGradeMedQ) {
+            const helperAliases = getFoundationAliases(subtopic)
+            prevGradeMedQ = questionBank.find(
+              (q) => !usedQuestionIds.includes(q.id) &&
+                Number(q.grade) === prevGrade &&
+                matchesStrand(q.topic, currentQuestion.topic) &&
+                q.difficulty === 'Medium' &&
+                helperAliases.some((alias) => matchesQuestionSubtopic(q, alias))
+            )
+          }
+
+          // Priority 3: Previous grade, foundational question for the same topic and subtopic
+          if (!prevGradeMedQ) {
+            prevGradeMedQ = findFoundationalQuestion(
+              questionBank,
+              currentQuestion.topic,
+              subtopic,
+              questionGrade,
+              askedIds,
+              usedQuestionIds
+            )
+          }
+        }
+
+        // Fallback: If already at Grade 1 or no lower question exists, stay at target grade Medium
+        if (!prevGradeMedQ) {
+          prevGradeMedQ = questionBank.find(
+            (q) => !usedQuestionIds.includes(q.id) &&
+              Number(q.grade) === state.targetGrade &&
+              matchesStrand(q.topic, currentQuestion.topic) &&
+              q.difficulty === 'Medium' &&
+              matchesQuestionSubtopic(q, subtopic)
+          ) || questionBank.find(
+            (q) => !usedQuestionIds.includes(q.id) &&
+              Number(q.grade) === state.targetGrade &&
+              matchesStrand(q.topic, currentQuestion.topic) &&
+              q.difficulty === 'Medium'
+          )
+        }
+
+        if (prevGradeMedQ) {
+          if (Number(prevGradeMedQ.grade) < state.targetGrade) {
+            activeProbe = {
+              startGrade: state.targetGrade,
+              subtopic: subtopic,
+              topic: currentQuestion.topic,
+              probeGrade: Number(prevGradeMedQ.grade),
+              depth: 1,
+            }
+          }
+          questions = replaceForSameStrand(questions, currentIndex, prevGradeMedQ, currentQuestion.topic)
+          usedQuestionIds.push(prevGradeMedQ.id)
         }
       } else {
         // Failed Medium or Low — START DIAGNOSTIC PROBE to lower grade within SAME strand
