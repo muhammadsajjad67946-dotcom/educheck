@@ -111,7 +111,7 @@ export default function AdminQuestions() {
     setIsLoadingAll(true)
     try {
       const data = await apiRequest('/questions?minGrade=1&maxGrade=8&limit=10000')
-      setQuestions(data.map((question) => ({ ...question, status: 'Active' })))
+      setQuestions(data.map((question) => ({ ...question, status: question.status || 'Active' })))
       setAllQuestionsLoaded(true)
       setCurrentPage(1)
       setFormError('')
@@ -238,6 +238,7 @@ export default function AdminQuestions() {
           subtopicId: subtopicToSave ? subtopicToSave.id : null,
           grade: Number(form.grade),
           options,
+          status: form.status || 'Active',
           explanation: form.explanation?.trim() || null,
           distractor_diagnostics: Object.keys(distractorDiagnosticsPayload).length ? distractorDiagnosticsPayload : null,
         }),

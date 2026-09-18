@@ -417,6 +417,15 @@ export async function ensureDatabaseReady() {
     } catch (e) {
       console.warn('ensureDatabaseReady questions columns note:', e.message)
     }
+
+    // 5. Ensure questions status defaults to 'active' and is_active defaults to 1
+    try {
+      await pool.query("UPDATE questions SET status = 'active' WHERE status IS NULL OR TRIM(status) = ''")
+      await pool.query("UPDATE questions SET is_active = 1 WHERE is_active IS NULL")
+      await pool.query("ALTER TABLE questions MODIFY COLUMN status VARCHAR(20) NOT NULL DEFAULT 'active'")
+    } catch (e) {
+      console.warn('ensureDatabaseReady status column note:', e.message)
+    }
   } catch (err) {
     console.warn('ensureDatabaseReady global note:', err.message)
   }
@@ -1444,6 +1453,9 @@ app.post('/api/admin/questions', async (request, response) => {
   const rawDiagnostics = request.body.distractor_diagnostics ?? request.body.distractorDiagnostics ?? null
   const distractorDiagnosticsJson = rawDiagnostics ? (typeof rawDiagnostics === 'string' ? rawDiagnostics : JSON.stringify(rawDiagnostics)) : null
   const requestedSubtopicId = request.body.subtopicId ?? request.body.subtopic_id
+  const rawStatus = request.body.status ? String(request.body.status).toLowerCase() : 'active'
+  const statusParam = ['active', 'inactive', 'archived'].includes(rawStatus) ? rawStatus : 'active'
+  const isActiveParam = request.body.isActive !== undefined ? (request.body.isActive ? 1 : 0) : (statusParam === 'active' ? 1 : 0)
 
   if (!question?.trim() || !Number.isInteger(Number(grade)) || !['Low', 'Medium', 'High'].includes(difficulty) || !['A', 'B', 'C', 'D'].includes(answer) || ['A', 'B', 'C', 'D'].some((option) => !options[option]?.trim())) {
     return response.status(400).json({ message: 'Question, grade, difficulty, four options, and correct answer are required.' })
@@ -1536,12 +1548,12 @@ app.post('/api/admin/questions', async (request, response) => {
 
     const [result] = await connection.query(
       `INSERT INTO questions
-        (subject_id, topic_id, chapter_id, subtopic_id, subtopic_name, question_text, grade_id, grade, difficulty, option_a, option_b, option_c, option_d, correct_answer, explanation, distractor_diagnostics)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [subjectId, selectedTopicId, chapterId, selectedSubtopicId, normalizedSelectedSubtopicName || null, question.trim(), gradeId, numericGrade, difficulty, options.A.trim(), options.B.trim(), options.C.trim(), options.D.trim(), answer, explanation, distractorDiagnosticsJson],
+        (subject_id, topic_id, chapter_id, subtopic_id, subtopic_name, question_text, grade_id, grade, difficulty, option_a, option_b, option_c, option_d, correct_answer, explanation, distractor_diagnostics, status, is_active)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [subjectId, selectedTopicId, chapterId, selectedSubtopicId, normalizedSelectedSubtopicName || null, question.trim(), gradeId, numericGrade, difficulty, options.A.trim(), options.B.trim(), options.C.trim(), options.D.trim(), answer, explanation, distractorDiagnosticsJson, statusParam, isActiveParam],
     )
     await connection.commit()
-    return response.status(201).json({ id: result.insertId, question: question.trim(), subject: subject.trim(), topic: normalizedTopicName || 'General', subtopic: normalizedSelectedSubtopicName || null, subtopicId: selectedSubtopicId, grade: Number(grade), difficulty, options, answer, status: 'Active', explanation, distractor_diagnostics: rawDiagnostics })
+    return response.status(201).json({ id: result.insertId, question: question.trim(), subject: subject.trim(), topic: normalizedTopicName || 'General', subtopic: normalizedSelectedSubtopicName || null, subtopicId: selectedSubtopicId, grade: Number(grade), difficulty, options, answer, status: statusParam.charAt(0).toUpperCase() + statusParam.slice(1), isActive: isActiveParam === 1, explanation, distractor_diagnostics: rawDiagnostics })
   } catch (error) {
     await connection.rollback()
     console.error('Admin question save failed:', error)
@@ -1727,7 +1739,8 @@ app.get('/api/questions', async (request, response) => {
       `SELECT q.id, q.grade, q.topic_id AS topicId, q.subtopic_id AS subtopicId, s.name AS subject, t.name AS topic, t.parent_topic_id AS parentTopicId, q.subtopic_name AS subtopic,
         q.difficulty, q.question_text AS question,
         q.option_a, q.option_b, q.option_c, q.option_d,
-        q.correct_answer, q.explanation, q.distractor_diagnostics
+        q.correct_answer, q.explanation, q.distractor_diagnostics,
+        q.status, q.is_active
        FROM questions q
        LEFT JOIN topics t ON t.id = q.topic_id
        LEFT JOIN subjects s ON s.id = q.subject_id
@@ -1760,7 +1773,8 @@ app.get('/api/questions', async (request, response) => {
         `SELECT q.id, q.grade, q.topic_id AS topicId, q.subtopic_id AS subtopicId, s.name AS subject, t.name AS topic, t.parent_topic_id AS parentTopicId, q.subtopic_name AS subtopic,
           q.difficulty, q.question_text AS question,
           q.option_a, q.option_b, q.option_c, q.option_d,
-          q.correct_answer, q.explanation, q.distractor_diagnostics
+          q.correct_answer, q.explanation, q.distractor_diagnostics,
+          q.status, q.is_active
          FROM questions q
          LEFT JOIN topics t ON t.id = q.topic_id
          LEFT JOIN subjects s ON s.id = q.subject_id
@@ -1792,7 +1806,9 @@ app.get('/api/questions', async (request, response) => {
         D: question.option_d
       },
       correctAnswer: (question.correct_answer || 'a').toUpperCase(),
-      explanation: question.explanation
+      explanation: question.explanation,
+      status: question.status ? (question.status.charAt(0).toUpperCase() + question.status.slice(1).toLowerCase()) : 'Active',
+      isActive: question.is_active !== 0
     })))
   } catch (error) {
     console.error('Questions load failed:', error.message)
@@ -1806,6 +1822,9 @@ app.put('/api/admin/questions/:questionId', async (request, response) => {
   const distractorDiagnosticsJson = rawDiagnostics ? (typeof rawDiagnostics === 'string' ? rawDiagnostics : JSON.stringify(rawDiagnostics)) : null
   const requestedSubtopicId = request.body.subtopicId ?? request.body.subtopic_id
   const questionId = Number(request.params.questionId)
+  const rawStatus = request.body.status ? String(request.body.status).toLowerCase() : null
+  const statusParam = rawStatus && ['active', 'inactive', 'archived'].includes(rawStatus) ? rawStatus : null
+  const isActiveParam = request.body.isActive !== undefined ? (request.body.isActive ? 1 : 0) : (statusParam ? (statusParam === 'active' ? 1 : 0) : null)
 
   if (!Number.isInteger(questionId) || questionId <= 0 || !question?.trim() || !Number.isInteger(Number(grade)) || !['Low', 'Medium', 'High'].includes(difficulty) || !['A', 'B', 'C', 'D'].includes(answer) || ['A', 'B', 'C', 'D'].some((option) => !options[option]?.trim())) {
     return response.status(400).json({ message: 'Question, grade, difficulty, four options, and correct answer are required.' })
@@ -1856,11 +1875,15 @@ app.put('/api/admin/questions/:questionId', async (request, response) => {
     await connection.query(
       `UPDATE questions SET subject_id = ?, topic_id = ?, chapter_id = ?, subtopic_id = ?, subtopic_name = ?,
        question_text = ?, grade_id = ?, grade = ?, difficulty = ?, option_a = ?, option_b = ?, option_c = ?, option_d = ?,
-       correct_answer = ?, explanation = ?, distractor_diagnostics = ? WHERE id = ?`,
-      [subjectId, selectedTopicId, chapterId, selectedSubtopicId, normalizedSelectedSubtopicName || null, question.trim(), gradeId, Number(grade), difficulty, options.A.trim(), options.B.trim(), options.C.trim(), options.D.trim(), answer, explanation, distractorDiagnosticsJson, questionId],
+       correct_answer = ?, explanation = ?, distractor_diagnostics = ?,
+       status = COALESCE(?, status, 'active'),
+       is_active = COALESCE(?, is_active, 1)
+       WHERE id = ?`,
+      [subjectId, selectedTopicId, chapterId, selectedSubtopicId, normalizedSelectedSubtopicName || null, question.trim(), gradeId, Number(grade), difficulty, options.A.trim(), options.B.trim(), options.C.trim(), options.D.trim(), answer, explanation, distractorDiagnosticsJson, statusParam, isActiveParam, questionId],
     )
     await connection.commit()
-    return response.json({ id: questionId, question: question.trim(), subject: subject.trim(), topic: normalizedTopicName, subtopic: normalizedSelectedSubtopicName || null, subtopicId: selectedSubtopicId, grade: Number(grade), difficulty, options, answer, status: 'Active', explanation, distractor_diagnostics: rawDiagnostics })
+    const resolvedStatus = statusParam || 'active'
+    return response.json({ id: questionId, question: question.trim(), subject: subject.trim(), topic: normalizedTopicName, subtopic: normalizedSelectedSubtopicName || null, subtopicId: selectedSubtopicId, grade: Number(grade), difficulty, options, answer, status: resolvedStatus.charAt(0).toUpperCase() + resolvedStatus.slice(1), isActive: isActiveParam !== 0, explanation, distractor_diagnostics: rawDiagnostics })
   } catch (error) {
     await connection.rollback()
     console.error('Admin question update failed:', error)
