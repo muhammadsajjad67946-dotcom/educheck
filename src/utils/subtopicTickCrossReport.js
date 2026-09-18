@@ -7,6 +7,24 @@ export function resolveSubtopicOutcome({ attempts = 0, correct = 0, wrong = 0 })
   return '–'
 }
 
+export function formatSubtopicTitle(name) {
+  if (!name) return 'General Skills'
+  let clean = String(name).trim()
+  if (clean.includes('>')) {
+    clean = clean.split('>').pop().trim()
+  }
+  return clean
+    .split(/\s+/)
+    .map((word, idx) => {
+      const lower = word.toLowerCase()
+      if (idx > 0 && ['and', 'or', 'of', 'in', 'on', 'to', 'for', 'with', 'a', 'an', 'the', '&'].includes(lower)) {
+        return lower === '&' ? '&' : lower
+      }
+      return word.charAt(0).toUpperCase() + word.slice(1)
+    })
+    .join(' ')
+}
+
 function getQuestionTopic(question) {
   const rawTopic = String(question.topic || '').trim()
   const topic = rawTopic.toLowerCase()
@@ -117,15 +135,15 @@ export function buildSubtopicTickCrossReport(questions = [], answers = {}, targe
     ).trim()
     let subtopic = databaseSubtopic
       || (isParentTopicLabel(rawSubtopic, topic) ? topicDescription : rawSubtopic)
-    if (!databaseSubtopics.length && gradeNumber === 8 && GRADE_EIGHT_CURRICULUM[topic]) {
+    if ((!subtopic || isParentTopicLabel(subtopic, topic)) && gradeNumber === 8 && GRADE_EIGHT_CURRICULUM[topic]) {
       const matched = findTaxonomySubtopic(question, flattenTaxonomy(GRADE_EIGHT_CURRICULUM[topic]))
-      subtopic = matched ? matched.path.join(' > ') : subtopic
+      if (matched?.leaf) subtopic = matched.leaf
     }
     subtopic = subtopic
       || String(question.topicDescription || question.topic_description || question.description || topicDescriptions[topic] || '').trim()
       || 'General Skills'
     if (isParentTopicLabel(subtopic, topic)) subtopic = 'General Skills'
-    const reportSubtopic = subtopic
+    const reportSubtopic = formatSubtopicTitle(subtopic)
 
     const existing = subtopicMap.get(reportSubtopic) || { attempts: 0, correct: 0, wrong: 0 }
     const selectedAnswer = answers[question.id]

@@ -2,7 +2,7 @@ import { BarChart3, BookOpenCheck, Sparkles, AlertCircle, Download } from 'lucid
 import { useApp } from '../context/AppContext'
 import { getDiagnosticConfidence, getPerformanceStatus } from '../utils/scoring'
 import { jsPDF } from 'jspdf'
-import { findWeakestSubtopic } from '../utils/subtopicTickCrossReport'
+import { findWeakestSubtopic, formatSubtopicTitle } from '../utils/subtopicTickCrossReport'
 
 export default function StandardReport({ downloadOnly = false }) {
   const { assessmentResult, assessmentHistory, user, darkMode } = useApp()
@@ -214,7 +214,7 @@ export default function StandardReport({ downloadOnly = false }) {
         pdf.roundedRect(x, difficultyY + 22, data.total ? (48 * data.correct) / data.total : 0, 2, 1, 1, 'F')
       })
       const weakestText = weakestSubtopic
-        ? `Weakest: ${weakestSubtopic.topic} > ${weakestSubtopic.subtopic} | ${weakestSubtopic.correct}/${weakestSubtopic.attempts} correct | ${Math.round(weakestSubtopic.accuracy * 100)}%`
+        ? `Weakest: ${weakestSubtopic.topic} > ${formatSubtopicTitle(weakestSubtopic.subtopic)} | ${weakestSubtopic.correct}/${weakestSubtopic.attempts} correct | ${Math.round(weakestSubtopic.accuracy * 100)}%`
         : 'Weakest: No answered subtopic data available.'
       text(pdf.splitTextToSize(weakestText, contentWidth - 10)[0], margin + 5, difficultyY + 38, 6, [71, 85, 105], 'bold')
     }
@@ -495,7 +495,7 @@ export default function StandardReport({ downloadOnly = false }) {
           <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
             <div>
               <div className={`text-lg font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>{weakestSubtopic.topic}</div>
-              <div className={`mt-1 text-sm ${darkMode ? 'text-red-100' : 'text-red-800'}`}>{weakestSubtopic.subtopic}</div>
+              <div className={`mt-1 text-sm ${darkMode ? 'text-red-100' : 'text-red-800'}`}>{formatSubtopicTitle(weakestSubtopic.subtopic)}</div>
             </div>
             <div className={`text-right text-sm font-semibold ${darkMode ? 'text-red-200' : 'text-red-700'}`}>
               <div>{weakestSubtopic.correct}/{weakestSubtopic.attempts} correct</div>

@@ -18,7 +18,7 @@ import { jsPDF } from 'jspdf'
 import { useApp } from '../context/AppContext'
 import { getDiagnosticConfidence } from '../utils/scoring'
 import { calculateAdaptiveOverallGE, calculateAdaptiveTopicGE } from '../utils/adaptiveTest'
-import { buildSubtopicTickCrossReport } from '../utils/subtopicTickCrossReport'
+import { buildSubtopicTickCrossReport, formatSubtopicTitle } from '../utils/subtopicTickCrossReport'
 import { formatKidFriendlyExplanation, parseExplanationSteps, generateWrongAnswerReason } from '../utils/formatExplanation'
 import { apiRequest } from '../utils/api'
 
@@ -297,7 +297,8 @@ export default function SummaryReport() {
   }
 
   function getLadderConcepts(subtopicName, topicName, rootGrade, targetGrade, prereqConcept) {
-    const norm = String(subtopicName || '').toLowerCase()
+    const cleanSub = formatSubtopicTitle(subtopicName)
+    const norm = cleanSub.toLowerCase()
     const pGrade = Math.max(1, rootGrade - 1)
 
     if (prereqConcept && typeof prereqConcept === 'string' && prereqConcept.trim()) {
@@ -305,7 +306,7 @@ export default function SummaryReport() {
         prevGrade: pGrade,
         prevConcept: 'Foundation',
         rootConcept: prereqConcept.trim(),
-        targetConcept: subtopicName.split(' ')[0] || 'Target',
+        targetConcept: cleanSub.split(' ')[0] || 'Target',
       }
     }
 
@@ -400,13 +401,19 @@ export default function SummaryReport() {
   }
 
   const getSubtopicDiagnosticInfo = (subtopicName, topicName) => {
-    const normSub = String(subtopicName || '').trim().toLowerCase()
+    const rawSub = String(subtopicName || '').trim()
+    const cleanSub = formatSubtopicTitle(rawSub)
+    const normSub = rawSub.toLowerCase()
+    const normClean = cleanSub.toLowerCase()
     const normTopic = String(topicName || '').trim().toLowerCase()
 
     // 1. Check direct match in weaknessMap from adaptive bounce-back probes
     const directEntry = Object.entries(weaknessMap).find(([k]) => {
       const normK = String(k).trim().toLowerCase()
-      return normK === normSub || normK.includes(normSub) || normSub.includes(normK)
+      const cleanK = formatSubtopicTitle(normK).toLowerCase()
+      return normK === normSub || normK === normClean || cleanK === normClean ||
+             normK.includes(normClean) || normClean.includes(normK) ||
+             normSub.includes(normK)
     })
     const mapInfo = directEntry ? directEntry[1] : null
 
@@ -414,9 +421,15 @@ export default function SummaryReport() {
     const matchingWrongQuestions = comprehensiveQuestions.filter((q) => {
       if (q.isCorrect) return false
       const qSub = String(q.subtopic || '').trim().toLowerCase()
+      const cleanQSub = formatSubtopicTitle(qSub).toLowerCase()
       const qTop = String(q.topic || '').trim().toLowerCase()
-      return (qSub === normSub || qSub.includes(normSub) || normSub.includes(qSub)) &&
-             (qTop === normTopic || qTop.includes(normTopic) || normTopic.includes(qTop))
+      const subtopicMatches = !qSub ||
+        qSub === normSub || qSub === normClean || cleanQSub === normClean ||
+        normSub.includes(qSub) || qSub.includes(normSub) ||
+        normClean.includes(cleanQSub) || cleanQSub.includes(normClean) ||
+        normClean.includes(qSub) || qSub.includes(normClean)
+      const topicMatches = !qTop || !normTopic || qTop === normTopic || qTop.includes(normTopic) || normTopic.includes(qTop)
+      return subtopicMatches && topicMatches
     })
 
     const microSkill = matchingWrongQuestions[0]?.micro_skill || null
@@ -593,7 +606,7 @@ export default function SummaryReport() {
             Object.entries(subtopics || {}).map(([subtopicName, outcome]) => ({
               grade: gradeKey,
               topic: topicName,
-              subtopic: subtopicName,
+              subtopic: formatSubtopicTitle(subtopicName),
               status: outcome === '\u2713' ? 'Mastered' : outcome === '\u2717' ? 'Needs Practice' : outcome,
             }))
           ))
@@ -848,7 +861,7 @@ export default function SummaryReport() {
                 const behind = item.diagnostic?.gradesBehind || 0
                 const rootGrade = item.diagnostic?.rootGrade || targetGradeNum
                 const isDeeperGap = behind > 0
-                const displaySkill = item.diagnostic?.microSkill || item.subtopicName
+                const displaySkill = item.diagnostic?.microSkill || formatSubtopicTitle(item.subtopicName)
                 const issue = cleanConciseIssue(item.diagnostic?.specificGap)
                 const fix = cleanConciseFix(item.diagnostic?.remediation)
                 const ladder = getLadderConcepts(item.subtopicName, item.topicName, rootGrade, targetGradeNum, item.diagnostic?.prereqConcept)
@@ -981,7 +994,7 @@ export default function SummaryReport() {
                   key={`mastered-${idx}`}
                   className="inline-flex items-center gap-1.5 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400"
                 >
-                  ✓ {m.subtopicName}
+                  ✓ {formatSubtopicTitle(m.subtopicName)}
                 </span>
               ))}
             </div>
@@ -1262,7 +1275,7 @@ export default function SummaryReport() {
                           <td className="px-5 py-3.5 font-bold text-sky-500">{gradeKey}</td>
                           <td className="px-5 py-3.5 font-medium">{topicName}</td>
                           <td className="px-5 py-3.5">
-                            <div className="font-semibold text-slate-800 dark:text-slate-200">{subtopicName}</div>
+                            <div className="font-semibold text-slate-800 dark:text-slate-200">{formatSubtopicTitle(subtopicName)}</div>
                             {diag?.microSkill && (
                               <div className="text-[11px] font-medium text-sky-500 dark:text-sky-400">
                                 ↳ {diag.microSkill}
