@@ -891,14 +891,22 @@ export default function SummaryReport() {
                       darkMode ? 'border-white/10 bg-slate-900/60' : 'border-slate-200 bg-white'
                     }`}
                   >
-                    {/* ── HEADER: Topic label ─────────────── */}
+                    {/* ── HEADER: Topic label & Foundation Badge ─────────────── */}
                     <div className="flex items-center justify-between gap-2">
                       <span className="text-[11px] font-extrabold text-sky-500 uppercase tracking-wider">
                         {item.topicName}
                       </span>
-                      {behind > 0 && (
-                        <span className="shrink-0 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/15 text-rose-400 border border-rose-500/30">
-                          {behind} grade{behind !== 1 ? 's' : ''} behind
+                      {prereqGrade && prereqGrade < actualGrade ? (
+                        <span className="shrink-0 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/15 text-amber-400 border border-amber-500/30">
+                          Needs Gr {prereqGrade} Foundation
+                        </span>
+                      ) : behind > 0 ? (
+                        <span className="shrink-0 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/15 text-rose-400 border border-rose-500/30">
+                          Foundation Review
+                        </span>
+                      ) : (
+                        <span className="shrink-0 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-sky-500/15 text-sky-400 border border-sky-500/30">
+                          Grade {actualGrade} Practice
                         </span>
                       )}
                     </div>
@@ -918,8 +926,8 @@ export default function SummaryReport() {
                           Grade {actualGrade}
                         </span>
                         {prereqGrade && prereqGrade !== actualGrade && (
-                          <span className={`text-[10px] ${darkMode ? 'text-slate-500' : 'text-slate-400'}`}>
-                            (roots at Gr {prereqGrade})
+                          <span className={`text-[10px] font-medium ${darkMode ? 'text-amber-400/80' : 'text-amber-600'}`}>
+                            (Prerequisite: Grade {prereqGrade})
                           </span>
                         )}
                       </div>
@@ -939,7 +947,7 @@ export default function SummaryReport() {
                       {/* Micro-Skill — THE EXACT WEAKNESS */}
                       {(microSkill || prereqConcept) && (
                         <div className={`flex items-start gap-2 text-[11px] pt-1.5 mt-0.5 border-t ${darkMode ? 'border-white/5' : 'border-sky-100'}`}>
-                          <span className={`w-16 shrink-0 font-semibold mt-0.5 ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>Skill:</span>
+                          <span className={`w-16 shrink-0 font-semibold mt-0.5 ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>Weak Skill:</span>
                           <span className="font-bold text-amber-400">
                             {microSkill || prereqConcept}
                           </span>
@@ -947,20 +955,8 @@ export default function SummaryReport() {
                       )}
                     </div>
 
-                    {/* ── WHAT WENT WRONG ─────────────────── */}
-                    {issue && (
-                      <div className="space-y-1">
-                        <div className="text-[10px] font-bold uppercase tracking-wider text-rose-400">
-                          ❌ What Went Wrong
-                        </div>
-                        <p className={`text-[11px] leading-relaxed ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                          {issue}
-                        </p>
-                      </div>
-                    )}
-
                     {/* ── HOW TO FIX ──────────────────────── */}
-                    <div className={`mt-auto pt-2.5 border-t space-y-1 ${darkMode ? 'border-white/5' : 'border-slate-100'}`}>
+                    <div className={`mt-auto pt-2.5 border-t space-y-1.5 ${darkMode ? 'border-white/5' : 'border-slate-100'}`}>
                       <div className="text-[10px] font-bold uppercase tracking-wider text-emerald-400">
                         ✅ How to Fix
                       </div>
@@ -968,9 +964,11 @@ export default function SummaryReport() {
                         {fix}
                       </p>
                       {(microSkill || prereqConcept) && (
-                        <p className="text-[11px] font-semibold text-sky-400 pt-0.5">
-                          📚 Practice: Grade {prereqGrade || actualGrade} — {microSkill || prereqConcept}
-                        </p>
+                        <div className="pt-1">
+                          <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-sky-400 bg-sky-500/10 border border-sky-400/20 px-2 py-1 rounded-lg">
+                            📚 Practice: Grade {prereqGrade || actualGrade} — {microSkill || prereqConcept}
+                          </span>
+                        </div>
                       )}
                     </div>
                   </div>
