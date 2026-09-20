@@ -262,22 +262,23 @@ export default function SummaryReport() {
     || {}
 
   function cleanConciseIssue(raw) {
-    if (!raw) return 'Needs review on this foundational concept.'
+    if (!raw) return null
     let str = String(raw).trim()
+    // Filter out question context text — these are NOT misconceptions
+    const looksLikeQuestionText = (
+      /battery|pencil|drains|per hour|selected pencil|just selected|chose option|picked option|length of pencil/i.test(str) ||
+      str.length > 90 ||
+      /^the battery/i.test(str) ||
+      /^student just/i.test(str)
+    )
+    if (looksLikeQuestionText) return null
     str = str.replace(/^the student\s+/i, '')
-    if (str.includes(':')) {
-      str = str.split(':')[0].trim()
-    }
+    if (str.includes(':')) str = str.split(':')[0].trim()
     str = str.replace(/\s*[\(\[].*?[\)\]]/g, '').trim()
     str = str.replace(/\s*=\s*\d+.*$/g, '').trim()
-    if (/^\d+\s*[\+\-\*×÷\/]/.test(str)) {
-      str = 'Calculated total without checking problem constraints.'
-    } else if (/^\d+\s+is the value/i.test(str)) {
-      str = 'Confused the variable value with the required answer.'
-    }
-    if (str.length > 0) {
-      str = str.charAt(0).toUpperCase() + str.slice(1)
-    }
+    if (/^\d+\s*[\+\-\*×÷\/]/.test(str)) return null
+    if (str.length < 5) return null
+    str = str.charAt(0).toUpperCase() + str.slice(1)
     if (!str.endsWith('.')) str += '.'
     return str
   }
@@ -432,40 +433,55 @@ export default function SummaryReport() {
       return subtopicMatches && topicMatches
     })
 
-    const microSkill = matchingWrongQuestions[0]?.micro_skill || null
-    const prereqConcept = matchingWrongQuestions[0]?.prerequisite_concept || null
+    const microSkill = matchingWrongQuestions.find((q) => q.micro_skill)?.micro_skill || null
+    const prereqConcept = matchingWrongQuestions.find((q) => q.prerequisite_concept)?.prerequisite_concept || null
+    // prereqGrade from DB column — this is the actual root concept grade
+    const prereqGrade = matchingWrongQuestions.find((q) => q.prerequisite_grade && Number(q.prerequisite_grade) >= 1)?.prerequisite_grade || null
 
+    const primaryGap = matchingWrongQuestions.find((q) => q.diagnosedGap)?.diagnosedGap
+      || matchingWrongQuestions[0]?.reason
+      || null
+    const primaryRemediation = matchingWrongQuestions.find((q) => q.diagnosedRemediation)?.diagnosedRemediation
+      || 'Review this concept and practice similar problems.'
+
+    // CASE A: Probe ran and found real weakness at a lower grade (weaknessMap has data)
     if (mapInfo && mapInfo.rootGrade) {
-      const rootGrade = Number(mapInfo.rootGrade)
-      const gradesBehind = Math.max(0, targetGradeNum - rootGrade)
-      const primaryGap = matchingWrongQuestions.find((q) => q.diagnosedGap)?.diagnosedGap || matchingWrongQuestions[0]?.reason || 'Foundational prerequisite gap'
-      const primaryRemediation = matchingWrongQuestions.find((q) => q.diagnosedRemediation)?.diagnosedRemediation || 'Review earlier grade concepts before advancing.'
+      const probeRootGrade = Number(mapInfo.rootGrade)
+      // Sanity check: root grade should be <= targetGrade and >= 1
+      const validProbeGrade = probeRootGrade >= 1 && probeRootGrade <= targetGradeNum
+      const rootGrade = validProbeGrade ? probeRootGrade : targetGradeNum
+      const gradesBehind = validProbeGrade ? Math.max(0, targetGradeNum - rootGrade) : 0
       return {
         rootGrade,
         gradesBehind,
+        probeRan: true,
         probeDepth: mapInfo.probeDepth || 1,
         resolved: mapInfo.resolved,
         specificGap: primaryGap,
         remediation: primaryRemediation,
         microSkill,
         prereqConcept,
+        prereqGrade: prereqGrade ? Number(prereqGrade) : null,
       }
     }
 
+    // CASE B: No probe — use actual question grade (NOT minGrade which can be wrong)
     if (matchingWrongQuestions.length > 0) {
-      const minGrade = Math.min(...matchingWrongQuestions.map((q) => Number(q.grade) || targetGradeNum))
-      const gradesBehind = Math.max(0, targetGradeNum - minGrade)
-      const primaryGap = matchingWrongQuestions.find((q) => q.diagnosedGap)?.diagnosedGap || matchingWrongQuestions[0]?.reason || 'Needs targeted practice'
-      const primaryRemediation = matchingWrongQuestions.find((q) => q.diagnosedRemediation)?.diagnosedRemediation || 'Practice fundamental problems in this area.'
+      // Use the grade of the actual wrong question — not the minimum across all
+      const actualQuestionGrade = Number(matchingWrongQuestions[0]?.grade) || targetGradeNum
+      // Only show "grades behind" if prereqGrade from DB says so
+      const rootGrade = prereqGrade ? Number(prereqGrade) : actualQuestionGrade
+      const gradesBehind = prereqGrade ? Math.max(0, actualQuestionGrade - Number(prereqGrade)) : 0
       return {
-        rootGrade: minGrade,
+        rootGrade: actualQuestionGrade,   // always show actual question grade
         gradesBehind,
-        probeDepth: gradesBehind,
+        probeRan: false,
         resolved: false,
         specificGap: primaryGap,
         remediation: primaryRemediation,
         microSkill,
         prereqConcept,
+        prereqGrade: prereqGrade ? Number(prereqGrade) : null,
       }
     }
 
@@ -858,101 +874,109 @@ export default function SummaryReport() {
 
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {(showAllGaps ? weakSubtopicGaps : weakSubtopicGaps.slice(0, 6)).map((item, idx) => {
-                const behind = item.diagnostic?.gradesBehind || 0
-                const rootGrade = item.diagnostic?.rootGrade || targetGradeNum
-                const isDeeperGap = behind > 0
-                const displaySkill = item.diagnostic?.microSkill || formatSubtopicTitle(item.subtopicName)
-                const issue = cleanConciseIssue(item.diagnostic?.specificGap)
-                const fix = cleanConciseFix(item.diagnostic?.remediation)
-                const ladder = getLadderConcepts(item.subtopicName, item.topicName, rootGrade, targetGradeNum, item.diagnostic?.prereqConcept)
+                const actualGrade    = item.diagnostic?.rootGrade || targetGradeNum
+                const prereqGrade    = item.diagnostic?.prereqGrade || null
+                const behind         = item.diagnostic?.gradesBehind || 0
+                const probeRan       = item.diagnostic?.probeRan || false
+                const microSkill     = item.diagnostic?.microSkill || null
+                const prereqConcept  = item.diagnostic?.prereqConcept || null
+                const issue          = cleanConciseIssue(item.diagnostic?.specificGap)
+                const fix            = cleanConciseFix(item.diagnostic?.remediation)
+                const subtopicLabel  = formatSubtopicTitle(item.subtopicName)
 
                 return (
                   <div
                     key={`gap-${idx}`}
-                    className={`rounded-2xl border p-4.5 transition hover:border-sky-400/50 shadow-sm flex flex-col justify-between ${
+                    className={`rounded-2xl border p-4 flex flex-col gap-3 transition hover:border-sky-400/40 shadow-sm ${
                       darkMode ? 'border-white/10 bg-slate-900/60' : 'border-slate-200 bg-white'
                     }`}
                   >
-                    <div>
-                      {/* Header: Topic & Root Badge */}
-                      <div className="flex items-start justify-between gap-2">
-                        <span className="text-[11px] font-extrabold text-sky-500 uppercase tracking-wider">
-                          {item.topicName}
+                    {/* ── HEADER: Topic label ─────────────── */}
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-[11px] font-extrabold text-sky-500 uppercase tracking-wider">
+                        {item.topicName}
+                      </span>
+                      {behind > 0 && (
+                        <span className="shrink-0 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/15 text-rose-400 border border-rose-500/30">
+                          {behind} grade{behind !== 1 ? 's' : ''} behind
                         </span>
-                        <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold ${
-                          isDeeperGap
-                            ? 'bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30'
-                            : 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30'
-                        }`}>
-                          {isDeeperGap ? `Gr ${rootGrade} Review` : `At Grade ${rootGrade}`}
-                        </span>
-                      </div>
-
-                      {/* Micro-Skill / Subtopic Title */}
-                      <h4 className="mt-2 font-bold text-sm text-slate-900 dark:text-white line-clamp-1">
-                        {displaySkill}
-                      </h4>
-
-                      {/* Identified Issue & Root Weakness */}
-                      <div className="mt-2.5">
-                        <div className="text-[11px] font-bold text-rose-500 dark:text-rose-400 uppercase tracking-wide">
-                          Identified Issue:
-                        </div>
-                        <p className="mt-0.5 text-xs text-slate-700 dark:text-slate-200 font-medium line-clamp-2">
-                          {issue}
-                        </p>
-                        <div className="mt-1 text-[11px] text-slate-500 dark:text-slate-400">
-                          <strong className="text-slate-700 dark:text-slate-300">Root Weakness: </strong>
-                          <span className="text-rose-500 font-semibold">{ladder.rootConcept}</span>
-                          {isDeeperGap && (
-                            <span className="text-slate-400"> (Grade {rootGrade}, {behind} {behind === 1 ? 'grade' : 'grades'} behind)</span>
-                          )}
-                        </div>
-                      </div>
-
-                      {/* Learning Ladder with Concept Names */}
-                      <div className="mt-3 py-2 px-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-white/5 text-[11px]">
-                        <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
-                          Ladder:
-                        </div>
-                        <div className="flex flex-wrap items-center gap-1 font-semibold text-[11px]">
-                          {isDeeperGap ? (
-                            <>
-                              <span className="text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded">
-                                Gr {ladder.prevGrade}: {ladder.prevConcept} ✓
-                              </span>
-                              <span className="text-slate-400">→</span>
-                              <span className="text-rose-600 dark:text-rose-400 bg-rose-500/10 px-1.5 py-0.5 rounded border border-rose-500/20">
-                                Gr {rootGrade}: {ladder.rootConcept} ❌
-                              </span>
-                              <span className="text-slate-400">→</span>
-                              <span className="text-amber-600 dark:text-amber-400 bg-amber-500/10 px-1.5 py-0.5 rounded">
-                                Gr {targetGradeNum}: {ladder.targetConcept} ⚠️
-                              </span>
-                            </>
-                          ) : (
-                            <>
-                              <span className="text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded">
-                                Gr {ladder.prevGrade}: {ladder.prevConcept} ✓
-                              </span>
-                              <span className="text-slate-400">→</span>
-                              <span className="text-amber-600 dark:text-amber-400 bg-amber-500/10 px-1.5 py-0.5 rounded border border-amber-500/20">
-                                Gr {targetGradeNum}: {ladder.targetConcept} ⚠️
-                              </span>
-                            </>
-                          )}
-                        </div>
-                      </div>
+                      )}
                     </div>
 
-                    {/* Quick Fix */}
-                    <div className="mt-3 pt-2.5 border-t border-slate-100 dark:border-white/5 text-xs text-slate-500 dark:text-slate-400">
-                      <span className="font-bold text-sky-500">Quick Fix: </span>
-                      {fix}
+                    {/* ── WEAKNESS LOCATION BOX ─────────────── */}
+                    <div className={`rounded-xl border p-3 space-y-2 ${
+                      darkMode ? 'border-sky-500/20 bg-sky-950/30' : 'border-sky-200 bg-sky-50'
+                    }`}>
+                      <div className="text-[10px] font-bold uppercase tracking-wider text-sky-400">
+                        📍 Weakness Location
+                      </div>
+
+                      {/* Grade */}
+                      <div className="flex items-center gap-2 text-[11px]">
+                        <span className={`w-16 shrink-0 font-semibold ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>Grade:</span>
+                        <span className="font-bold px-2 py-0.5 rounded bg-slate-700 text-white text-[11px]">
+                          Grade {actualGrade}
+                        </span>
+                        {prereqGrade && prereqGrade !== actualGrade && (
+                          <span className={`text-[10px] ${darkMode ? 'text-slate-500' : 'text-slate-400'}`}>
+                            (roots at Gr {prereqGrade})
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Topic */}
+                      <div className="flex items-center gap-2 text-[11px]">
+                        <span className={`w-16 shrink-0 font-semibold ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>Topic:</span>
+                        <span className={`font-semibold ${darkMode ? 'text-slate-200' : 'text-slate-800'}`}>{item.topicName}</span>
+                      </div>
+
+                      {/* Subtopic */}
+                      <div className="flex items-start gap-2 text-[11px]">
+                        <span className={`w-16 shrink-0 font-semibold mt-0.5 ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>Subtopic:</span>
+                        <span className={`font-semibold leading-snug ${darkMode ? 'text-slate-200' : 'text-slate-800'}`}>{subtopicLabel}</span>
+                      </div>
+
+                      {/* Micro-Skill — THE EXACT WEAKNESS */}
+                      {(microSkill || prereqConcept) && (
+                        <div className={`flex items-start gap-2 text-[11px] pt-1.5 mt-0.5 border-t ${darkMode ? 'border-white/5' : 'border-sky-100'}`}>
+                          <span className={`w-16 shrink-0 font-semibold mt-0.5 ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>Skill:</span>
+                          <span className="font-bold text-amber-400">
+                            {microSkill || prereqConcept}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* ── WHAT WENT WRONG ─────────────────── */}
+                    {issue && (
+                      <div className="space-y-1">
+                        <div className="text-[10px] font-bold uppercase tracking-wider text-rose-400">
+                          ❌ What Went Wrong
+                        </div>
+                        <p className={`text-[11px] leading-relaxed ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
+                          {issue}
+                        </p>
+                      </div>
+                    )}
+
+                    {/* ── HOW TO FIX ──────────────────────── */}
+                    <div className={`mt-auto pt-2.5 border-t space-y-1 ${darkMode ? 'border-white/5' : 'border-slate-100'}`}>
+                      <div className="text-[10px] font-bold uppercase tracking-wider text-emerald-400">
+                        ✅ How to Fix
+                      </div>
+                      <p className={`text-[11px] leading-relaxed ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
+                        {fix}
+                      </p>
+                      {(microSkill || prereqConcept) && (
+                        <p className="text-[11px] font-semibold text-sky-400 pt-0.5">
+                          📚 Practice: Grade {prereqGrade || actualGrade} — {microSkill || prereqConcept}
+                        </p>
+                      )}
                     </div>
                   </div>
                 )
               })}
+
             </div>
 
             {/* View All / Show Less Toggle Button */}
