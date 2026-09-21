@@ -2778,6 +2778,7 @@ app.get('/api/assessment-attempts/:attemptId/answers', async (request, response)
               aa.answered_at as answeredAt, 
               q.option_a, q.option_b, q.option_c, q.option_d,
               q.difficulty, q.grade, t.name as topic, q.subtopic_name as subtopic,
+              q.micro_skill, q.prerequisite_grade, q.prerequisite_concept, q.distractor_diagnostics,
               q.explanation, s.name as subject
        FROM attempt_answers aa
        JOIN questions q ON q.id = aa.question_id

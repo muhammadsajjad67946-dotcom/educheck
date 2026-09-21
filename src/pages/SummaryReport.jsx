@@ -46,6 +46,10 @@ export default function SummaryReport() {
               grade: a.grade,
               topic: a.topic || a.subject || 'General',
               subtopic: a.subtopic || 'General',
+              micro_skill: a.micro_skill || null,
+              prerequisite_grade: a.prerequisite_grade || null,
+              prerequisite_concept: a.prerequisite_concept || null,
+              distractor_diagnostics: a.distractor_diagnostics || null,
               question: a.question,
               options: a.options,
               answer: a.correctAnswer,
@@ -401,12 +405,13 @@ export default function SummaryReport() {
     }
   }
 
-  const getSubtopicDiagnosticInfo = (subtopicName, topicName) => {
+  const getSubtopicDiagnosticInfo = (subtopicName, topicName, rowGrade = null) => {
     const rawSub = String(subtopicName || '').trim()
     const cleanSub = formatSubtopicTitle(rawSub)
     const normSub = rawSub.toLowerCase()
     const normClean = cleanSub.toLowerCase()
     const normTopic = String(topicName || '').trim().toLowerCase()
+    const targetGrade = rowGrade ? Number(rowGrade) : targetGradeNum
 
     // 1. Check direct match in weaknessMap from adaptive bounce-back probes
     const directEntry = Object.entries(weaknessMap).find(([k]) => {
@@ -431,12 +436,17 @@ export default function SummaryReport() {
         normClean.includes(qSub) || qSub.includes(normClean)
       const topicMatches = !qTop || !normTopic || qTop === normTopic || qTop.includes(normTopic) || normTopic.includes(qTop)
       return subtopicMatches && topicMatches
+    }).sort((a, b) => {
+      // Prioritize questions matching the actual row grade
+      const aGradeMatch = Number(a.grade) === targetGrade ? 1 : 0
+      const bGradeMatch = Number(b.grade) === targetGrade ? 1 : 0
+      return bGradeMatch - aGradeMatch
     })
 
     const microSkill = matchingWrongQuestions.find((q) => q.micro_skill)?.micro_skill || null
     const prereqConcept = matchingWrongQuestions.find((q) => q.prerequisite_concept)?.prerequisite_concept || null
     // prereqGrade from DB column — this is the actual root concept grade
-    const prereqGrade = matchingWrongQuestions.find((q) => q.prerequisite_grade && Number(q.prerequisite_grade) >= 1)?.prerequisite_grade || null
+    const rawPrereqGrade = matchingWrongQuestions.find((q) => q.prerequisite_grade && Number(q.prerequisite_grade) >= 1)?.prerequisite_grade || null
 
     const primaryGap = matchingWrongQuestions.find((q) => q.diagnosedGap)?.diagnosedGap
       || matchingWrongQuestions[0]?.reason
@@ -444,15 +454,23 @@ export default function SummaryReport() {
     const primaryRemediation = matchingWrongQuestions.find((q) => q.diagnosedRemediation)?.diagnosedRemediation
       || 'Review this concept and practice similar problems.'
 
+    // Determine actual tested grade
+    const testedGrade = Number(matchingWrongQuestions[0]?.grade) || targetGrade || targetGradeNum
+
+    // Sanity check: Prerequisite grade CANNOT be greater than tested grade
+    let prereqGrade = rawPrereqGrade ? Number(rawPrereqGrade) : null
+    if (prereqGrade && prereqGrade > testedGrade) {
+      prereqGrade = testedGrade
+    }
+
     // CASE A: Probe ran and found real weakness at a lower grade (weaknessMap has data)
     if (mapInfo && mapInfo.rootGrade) {
       const probeRootGrade = Number(mapInfo.rootGrade)
-      // Sanity check: root grade should be <= targetGrade and >= 1
-      const validProbeGrade = probeRootGrade >= 1 && probeRootGrade <= targetGradeNum
-      const rootGrade = validProbeGrade ? probeRootGrade : targetGradeNum
-      const gradesBehind = validProbeGrade ? Math.max(0, targetGradeNum - rootGrade) : 0
+      const validProbeGrade = probeRootGrade >= 1 && probeRootGrade <= testedGrade
+      const rootGrade = validProbeGrade ? probeRootGrade : testedGrade
+      const gradesBehind = validProbeGrade ? Math.max(0, testedGrade - rootGrade) : 0
       return {
-        rootGrade,
+        rootGrade: testedGrade,
         gradesBehind,
         probeRan: true,
         probeDepth: mapInfo.probeDepth || 1,
@@ -461,19 +479,15 @@ export default function SummaryReport() {
         remediation: primaryRemediation,
         microSkill,
         prereqConcept,
-        prereqGrade: prereqGrade ? Number(prereqGrade) : null,
+        prereqGrade: prereqGrade || rootGrade,
       }
     }
 
-    // CASE B: No probe — use actual question grade (NOT minGrade which can be wrong)
+    // CASE B: No probe — use actual tested question grade
     if (matchingWrongQuestions.length > 0) {
-      // Use the grade of the actual wrong question — not the minimum across all
-      const actualQuestionGrade = Number(matchingWrongQuestions[0]?.grade) || targetGradeNum
-      // Only show "grades behind" if prereqGrade from DB says so
-      const rootGrade = prereqGrade ? Number(prereqGrade) : actualQuestionGrade
-      const gradesBehind = prereqGrade ? Math.max(0, actualQuestionGrade - Number(prereqGrade)) : 0
+      const gradesBehind = prereqGrade && prereqGrade < testedGrade ? testedGrade - prereqGrade : 0
       return {
-        rootGrade: actualQuestionGrade,   // always show actual question grade
+        rootGrade: testedGrade,
         gradesBehind,
         probeRan: false,
         resolved: false,
@@ -494,7 +508,8 @@ export default function SummaryReport() {
         .filter(([, outcome]) => outcome !== '–')
         .map(([subtopicName, outcome]) => {
           const isSuccess = outcome === '\u2713' || outcome === 'Correct'
-          const diagnostic = !isSuccess ? getSubtopicDiagnosticInfo(subtopicName, topicName) : null
+          const rowGrade = Number(String(gradeKey).replace(/\D+/g, '')) || targetGradeNum
+          const diagnostic = !isSuccess ? getSubtopicDiagnosticInfo(subtopicName, topicName, rowGrade) : null
           return {
             gradeKey,
             topicName,
@@ -955,22 +970,14 @@ export default function SummaryReport() {
                       )}
                     </div>
 
-                    {/* ── HOW TO FIX ──────────────────────── */}
-                    <div className={`mt-auto pt-2.5 border-t space-y-1.5 ${darkMode ? 'border-white/5' : 'border-slate-100'}`}>
-                      <div className="text-[10px] font-bold uppercase tracking-wider text-emerald-400">
-                        ✅ How to Fix
+                    {/* ── PRACTICE RECOMMENDATION ──────────────────────── */}
+                    {(microSkill || prereqConcept) && (
+                      <div className={`mt-auto pt-2.5 border-t ${darkMode ? 'border-white/5' : 'border-slate-100'}`}>
+                        <span className="w-full inline-flex items-center gap-1.5 text-[11px] font-bold text-sky-400 bg-sky-500/10 border border-sky-400/20 px-2.5 py-1.5 rounded-xl">
+                          📚 Practice: Grade {prereqGrade || actualGrade} — {microSkill || prereqConcept}
+                        </span>
                       </div>
-                      <p className={`text-[11px] leading-relaxed ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
-                        {fix}
-                      </p>
-                      {(microSkill || prereqConcept) && (
-                        <div className="pt-1">
-                          <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-sky-400 bg-sky-500/10 border border-sky-400/20 px-2 py-1 rounded-lg">
-                            📚 Practice: Grade {prereqGrade || actualGrade} — {microSkill || prereqConcept}
-                          </span>
-                        </div>
-                      )}
-                    </div>
+                    )}
                   </div>
                 )
               })}
