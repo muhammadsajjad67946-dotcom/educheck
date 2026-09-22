@@ -46,9 +46,22 @@ function getFoundationAliases(subtopic) {
 
 function findFoundationalQuestion(questionBank, topic, subtopic, currentGrade, askedIds = [], usedQuestionIds = []) {
   const helperAliases = getFoundationAliases(subtopic)
-  const targetGrade = Math.max(1, Number(currentGrade) - 1)
+  const currentGradeNum = Number(currentGrade) || 8
+  // Maximum bounded drop: Only test 1 or 2 grades below, never drop below (currentGrade - 2)
+  const minAllowedGrade = Math.max(1, currentGradeNum - 2)
+  const targetGrade = Math.max(1, currentGradeNum - 1)
   const alreadyAsked = new Set(Array.isArray(askedIds) ? askedIds : [])
-  const isUnused = (q) => !alreadyAsked.has(q.id) && matchesStrand(q.topic, topic)
+  const usedSet = new Set(Array.isArray(usedQuestionIds) ? usedQuestionIds : [])
+
+  const hasDiagnostics = (q) => Boolean(
+    q &&
+    q.explanation &&
+    String(q.explanation).trim() !== '' &&
+    q.distractor_diagnostics &&
+    (typeof q.distractor_diagnostics === 'object' || String(q.distractor_diagnostics).trim() !== '')
+  )
+
+  const isUnused = (q) => !alreadyAsked.has(q.id) && !usedSet.has(q.id) && matchesStrand(q.topic, topic) && hasDiagnostics(q)
 
   const isSameSubtopicOrAlias = (q) => (
     matchesQuestionSubtopic(q, subtopic) ||
@@ -66,8 +79,8 @@ function findFoundationalQuestion(questionBank, topic, subtopic, currentGrade, a
     return exactLowerGrade[Math.floor(Math.random() * exactLowerGrade.length)]
   }
 
-  // 2. Priority 2: Any lower grade (< currentGrade) for the EXACT SAME SUBTOPIC
-  for (let g = targetGrade - 1; g >= 1; g--) {
+  // 2. Priority 2: 2 grades lower (currentGrade - 2) for the EXACT SAME SUBTOPIC (Bounded search, never lower)
+  for (let g = targetGrade - 1; g >= minAllowedGrade; g--) {
     const earlierGrade = questionBank.filter((q) => isUnused(q) && Number(q.grade) === g && isSameSubtopicOrAlias(q))
     if (earlierGrade.length) {
       return earlierGrade[Math.floor(Math.random() * earlierGrade.length)]
@@ -75,19 +88,19 @@ function findFoundationalQuestion(questionBank, topic, subtopic, currentGrade, a
   }
 
   // 3. Priority 3: Low difficulty foundational question of the EXACT SAME SUBTOPIC at current grade
-  const sameSubtopicLow = questionBank.filter((q) => isUnused(q) && Number(q.grade) === Number(currentGrade) && isSameSubtopicOrAlias(q) && q.difficulty === 'Low')
+  const sameSubtopicLow = questionBank.filter((q) => isUnused(q) && Number(q.grade) === currentGradeNum && isSameSubtopicOrAlias(q) && q.difficulty === 'Low')
   if (sameSubtopicLow.length) {
     return sameSubtopicLow[Math.floor(Math.random() * sameSubtopicLow.length)]
   }
 
-  // 4. Priority 4: Any other unused question of the EXACT SAME SUBTOPIC
-  const sameSubtopicAny = questionBank.filter((q) => isUnused(q) && isSameSubtopicOrAlias(q))
+  // 4. Priority 4: Any other unused question of the EXACT SAME SUBTOPIC within allowed grade range
+  const sameSubtopicAny = questionBank.filter((q) => isUnused(q) && Number(q.grade) >= minAllowedGrade && Number(q.grade) <= currentGradeNum && isSameSubtopicOrAlias(q))
   if (sameSubtopicAny.length) {
     return sameSubtopicAny[Math.floor(Math.random() * sameSubtopicAny.length)]
   }
 
-  // 5. Fallback only if no questions exist for this subtopic: Low difficulty from the same topic
-  const fallback = questionBank.filter((q) => isUnused(q) && (Number(q.grade) <= targetGrade || q.difficulty === 'Low'))
+  // 5. Fallback strictly bounded: Within [minAllowedGrade, currentGradeNum] only! NEVER drop to Grade 1 blindly!
+  const fallback = questionBank.filter((q) => isUnused(q) && Number(q.grade) >= minAllowedGrade && Number(q.grade) <= targetGrade && q.difficulty === 'Low')
   if (fallback.length) {
     return fallback[Math.floor(Math.random() * fallback.length)]
   }
@@ -896,10 +909,18 @@ export function createGradeBatchTestState(questionBank, targetGrade, selectedStr
 
     topics.forEach((topic) => {
       const isTopicMatch = (q) => matchesStrand(q.topic, topic)
+      const hasDiagnostics = (q) => Boolean(
+        q &&
+        q.explanation &&
+        String(q.explanation).trim() !== '' &&
+        q.distractor_diagnostics &&
+        (typeof q.distractor_diagnostics === 'object' || String(q.distractor_diagnostics).trim() !== '')
+      )
 
-      // Prioritize questions strictly at the selected targetGrade
-      const targetGradeQuestions = questionBank.filter((q) => isTopicMatch(q) && Number(q.grade) === maxGrade && !usedIds.has(q.id))
-      const lowerGradeQuestions = questionBank.filter((q) => isTopicMatch(q) && Number(q.grade) < maxGrade && !usedIds.has(q.id))
+      // Prioritize questions strictly at the selected targetGrade with verified diagnostics
+      const targetGradeQuestions = questionBank.filter((q) => isTopicMatch(q) && Number(q.grade) === maxGrade && hasDiagnostics(q) && !usedIds.has(q.id))
+      // Only fallback to (maxGrade - 1) if target grade runs short, never drop to Grade 1
+      const nearLowerGradeQuestions = questionBank.filter((q) => isTopicMatch(q) && Number(q.grade) === Math.max(1, maxGrade - 1) && hasDiagnostics(q) && !usedIds.has(q.id))
 
       const targetMed = shuffleArray(targetGradeQuestions.filter((q) => q.difficulty === 'Medium'))
       const targetLow = shuffleArray(targetGradeQuestions.filter((q) => q.difficulty === 'Low'))
@@ -907,14 +928,14 @@ export function createGradeBatchTestState(questionBank, targetGrade, selectedStr
 
       // Primary pool: strictly target grade questions starting at Medium baseline
       const primaryTargetPool = [...targetMed, ...targetLow, ...targetHigh]
-      const fallbackLowerPool = shuffleArray(lowerGradeQuestions)
+      const fallbackLowerPool = shuffleArray(nearLowerGradeQuestions)
 
       const picked = []
       // Take up to questionsPerTopic from target grade first
       while (picked.length < questionsPerTopic && primaryTargetPool.length > 0) {
         picked.push(primaryTargetPool.shift())
       }
-      // If target grade runs short, backfill from lower grades
+      // If target grade runs short, backfill only from immediate previous grade
       while (picked.length < questionsPerTopic && fallbackLowerPool.length > 0) {
         picked.push(fallbackLowerPool.shift())
       }
@@ -1281,7 +1302,7 @@ export function createWeakPointsRetakeState(questionBank, targetGrade, weakTopic
   let pool = []
 
   // Prioritize questions from student's weak subtopics/topics
-  const weakQuestions = shuffleArray(questionBank.filter((q) => {
+  const weakQuestions = questionBank.filter((q) => {
     const qTopic = String(q.topic || '')
     const qSubtopic = String(q.subtopic || '')
     const matchesWeak = normalizedWeakTopics.some((item) => {
@@ -1289,7 +1310,12 @@ export function createWeakPointsRetakeState(questionBank, targetGrade, weakTopic
       return qTopic.toLowerCase().includes(needle) || qSubtopic.toLowerCase().includes(needle)
     })
     return matchesWeak && Number(q.grade) <= maxGrade
-  })).sort((a, b) => (diffOrder[a.difficulty] || 2) - (diffOrder[b.difficulty] || 2))
+  }).sort((a, b) => {
+    // Progressive ordering: First foundational grades, then target grade
+    const gradeDiff = Number(a.grade) - Number(b.grade)
+    if (gradeDiff !== 0) return gradeDiff
+    return (diffOrder[a.difficulty] || 2) - (diffOrder[b.difficulty] || 2)
+  })
 
   for (const q of weakQuestions) {
     if (pool.length >= questionLimit) break
@@ -1297,10 +1323,14 @@ export function createWeakPointsRetakeState(questionBank, targetGrade, weakTopic
     usedIds.add(q.id)
   }
 
-  // If weak question pool is less than questionLimit, fill with general grade questions
+  // If weak question pool is less than questionLimit, fill with target grade questions
   if (pool.length < questionLimit) {
-    const extraQuestions = shuffleArray(questionBank.filter((q) => !usedIds.has(q.id) && Number(q.grade) <= maxGrade))
-      .sort((a, b) => (diffOrder[a.difficulty] || 2) - (diffOrder[b.difficulty] || 2))
+    const extraQuestions = questionBank.filter((q) => !usedIds.has(q.id) && Number(q.grade) <= maxGrade)
+      .sort((a, b) => {
+        const gradeDiff = Number(a.grade) - Number(b.grade)
+        if (gradeDiff !== 0) return gradeDiff
+        return (diffOrder[a.difficulty] || 2) - (diffOrder[b.difficulty] || 2)
+      })
     for (const q of extraQuestions) {
       if (pool.length >= questionLimit) break
       pool.push(q)
