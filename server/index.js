@@ -2380,6 +2380,10 @@ app.post('/api/assessment-attempts/start', async (request, response) => {
         const lowerQ = candidates.filter((q) => isMatch(q) && Number(q.grade) < safeMaxGrade && Number(q.grade) >= safeMinGrade)
           .sort((a, b) => Number(b.grade) - Number(a.grade))
         
+        // Sort targetQ with Medium difficulty baseline first, then High, then Low
+        const startingOrder = { Medium: 1, High: 2, Low: 3 }
+        targetQ.sort((a, b) => (startingOrder[a.difficulty] || 2) - (startingOrder[b.difficulty] || 2))
+
         // Group by subtopic to ensure strict subtopic diversity (max 1 per subtopic in first pass)
         const subMap = new Map()
         ;[...targetQ, ...lowerQ].forEach((q) => {
@@ -2401,14 +2405,17 @@ app.post('/api/assessment-attempts/start', async (request, response) => {
         topicBuckets[top] = diverseList
       })
 
-      // Interleave round-robin across the 5 topics so every strand appears evenly from question 1 to 30
-      for (let round = 0; round < perTopic; round++) {
-        for (const top of topics) {
-          const bucket = topicBuckets[top] || []
-          const candidate = bucket.find((c) => !selectedIds.has(c.id))
-          if (candidate) {
+      // Strand-by-Strand Sequential Model (ADAM subtests):
+      // Complete each strand's questions (all unique subtopics) before advancing to the next strand!
+      for (const top of topics) {
+        const bucket = topicBuckets[top] || []
+        let addedForTopic = 0
+        for (const candidate of bucket) {
+          if (addedForTopic >= perTopic || selected.length >= safeQuestionCount) break
+          if (!selectedIds.has(candidate.id)) {
             selected.push(candidate)
             selectedIds.add(candidate.id)
+            addedForTopic++
           }
         }
       }

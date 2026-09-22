@@ -980,20 +980,21 @@ export function createGradeBatchTestState(questionBank, targetGrade, selectedStr
         picked = [...picked, ...fallbackPicked]
       }
 
-      // Sort topic questions adaptively: Medium baseline first, then Low, then High
-      const startingOrder = { Medium: 1, Low: 2, High: 3 }
+      // Sort topic questions adaptively: Medium baseline first, then High, then Low
+      const startingOrder = { Medium: 1, High: 2, Low: 3 }
       picked.sort((a, b) => (startingOrder[a.difficulty] || 2) - (startingOrder[b.difficulty] || 2))
 
       picked.forEach((q) => usedIds.add(q.id))
       topicPools[topic] = picked
     })
 
-    // Interleave round-robin across the 5 topics so every strand appears evenly from Q1 to the end
-    for (let round = 0; round < questionsPerTopic; round++) {
-      for (const topic of topics) {
-        const bucket = topicPools[topic] || []
-        if (bucket[round]) {
-          initialPool.push(bucket[round])
+    // Strand-by-Strand Sequential Model (ADAM subtests):
+    // Complete each strand's questions (all unique subtopics) before advancing to the next strand!
+    for (const topic of topics) {
+      const bucket = topicPools[topic] || []
+      for (const q of bucket) {
+        if (initialPool.length < questionLimit) {
+          initialPool.push(q)
         }
       }
     }
