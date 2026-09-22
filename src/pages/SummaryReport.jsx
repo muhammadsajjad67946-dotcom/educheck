@@ -19,6 +19,7 @@ import { useApp } from '../context/AppContext'
 import { getDiagnosticConfidence } from '../utils/scoring'
 import { calculateAdaptiveOverallGE, calculateAdaptiveTopicGE } from '../utils/adaptiveTest'
 import { buildSubtopicTickCrossReport, formatSubtopicTitle } from '../utils/subtopicTickCrossReport'
+import { getInferredPrerequisites, getDiagnosedPrerequisiteGap, calculateStrandDomainScore, normalizeStrand } from '../utils/prerequisiteGraph'
 import { formatKidFriendlyExplanation, parseExplanationSteps, generateWrongAnswerReason } from '../utils/formatExplanation'
 import { apiRequest } from '../utils/api'
 
@@ -544,26 +545,56 @@ export default function SummaryReport() {
     })
 
     flatSubtopicRows.forEach((row) => {
-      const match = coreStrandOrder.find(
-        (c) => row.topicName.toLowerCase().includes(c.key.toLowerCase()) || c.key.toLowerCase().includes(row.topicName.toLowerCase())
-      )
-      const strandKey = match ? match.key : 'Number & Operations'
+      const strandKey = normalizeStrand(row.topicName)
 
-      // Calculate realistic GLS score:
-      // If mastered at target grade => e.g. Grade 6.0 / Grade 8.0 (No fake 8.9)
-      // If gap found => e.g. Grade 4.5 / Grade 6.2 based on root grade
-      let glsDisplay = `Grade ${targetGradeNum}.0`
-      if (!row.isSuccess) {
-        const rootG = Number(row.diagnostic?.prereqGrade || row.diagnostic?.rootGrade || Math.max(1, targetGradeNum - 1))
-        // Fraction based on attempt accuracy if available
-        glsDisplay = `Grade ${rootG.toFixed(1)}`
-      }
+      if (row.isSuccess) {
+        // Direct Mastered row
+        if (!strandMap[strandKey].some((s) => s.subtopicName === row.subtopicName)) {
+          strandMap[strandKey].push({
+            ...row,
+            testedGradeDisplay: `Grade ${targetGradeNum}`,
+            prereqStatus: 'Verified at Grade Level',
+            statusBadge: '✓ Mastered',
+            isInferred: false,
+          })
+        }
 
-      if (!strandMap[strandKey].some((s) => s.subtopicName === row.subtopicName)) {
-        strandMap[strandKey].push({
-          ...row,
-          glsScore: glsDisplay,
+        // Upward Inferred Mastery: Add foundational subtopics as Mastered
+        const inferred = getInferredPrerequisites(row.subtopicName, strandKey, targetGradeNum)
+        inferred.forEach((inf) => {
+          if (!strandMap[strandKey].some((s) => s.subtopicName.toLowerCase() === inf.subtopicName.toLowerCase())) {
+            strandMap[strandKey].push({
+              subtopicName: inf.subtopicName,
+              topicName: strandKey,
+              isSuccess: true,
+              isInferred: true,
+              testedGradeDisplay: `Grade ${inf.grade}`,
+              prereqStatus: 'Verified by Higher Problem',
+              statusBadge: '✓ Mastered (Inferred)',
+            })
+          }
         })
+      } else {
+        // Diagnosed Gap row
+        const testedG = Number(String(row.gradeKey).replace(/\D+/g, '')) || targetGradeNum
+        const diag = getDiagnosedPrerequisiteGap(
+          row.subtopicName,
+          strandKey,
+          testedG,
+          row.diagnostic?.prereqGrade,
+          row.diagnostic
+        )
+
+        if (!strandMap[strandKey].some((s) => s.subtopicName === row.subtopicName)) {
+          strandMap[strandKey].push({
+            ...row,
+            testedGradeDisplay: `Grade ${diag.testedGrade}`,
+            prereqStatus: `Needs Gr ${diag.rootGrade} Foundation`,
+            statusBadge: '✗ Needs Practice',
+            diagnosticGap: diag,
+            isInferred: false,
+          })
+        }
       }
     })
 
@@ -1347,9 +1378,7 @@ export default function SummaryReport() {
 
               const masteredCount = rows.filter((r) => r.isSuccess).length
               const totalCount = rows.length
-              const strandScore = rows.every((r) => r.isSuccess)
-                ? `Grade ${targetGradeNum}.0`
-                : rows.find((r) => !r.isSuccess)?.glsScore || `Grade ${targetGradeNum}.0`
+              const strandScore = calculateStrandDomainScore(rows, targetGradeNum)
 
               return (
                 <div
@@ -1377,55 +1406,66 @@ export default function SummaryReport() {
                     </span>
                   </div>
 
-                  {/* Perfectly Aligned Equal Columns Grid Table */}
+                  {/* Perfectly Aligned 4-Column Table */}
                   <div className="overflow-x-auto">
                     <table className="w-full text-left text-xs sm:text-sm">
                       <thead className={`text-[11px] font-bold uppercase tracking-wider ${
                         darkMode ? 'text-slate-400 bg-slate-950/40' : 'text-slate-500 bg-slate-100/50'
                       }`}>
                         <tr>
-                          <th className="px-5 py-2.5 w-1/2">Subtopic Name</th>
-                          <th className="px-5 py-2.5 text-center w-1/4">Grade Level Score</th>
-                          <th className="px-5 py-2.5 text-right w-1/4">Status</th>
+                          <th className="px-5 py-2.5 w-5/12">Subtopic Name</th>
+                          <th className="px-5 py-2.5 text-center w-2/12">Tested Standard</th>
+                          <th className="px-5 py-2.5 text-center w-3/12">Prerequisite Foundation</th>
+                          <th className="px-5 py-2.5 text-right w-2/12">Status</th>
                         </tr>
                       </thead>
                       <tbody className={`divide-y ${darkMode ? 'divide-white/5' : 'divide-slate-200/70'}`}>
                         {rows.map((row, rIdx) => {
                           const isMaster = row.isSuccess
+                          const isInf = row.isInferred
                           return (
                             <tr
                               key={`${strand.key}-${rIdx}`}
                               className={`transition ${darkMode ? 'hover:bg-slate-800/30' : 'hover:bg-white'}`}
                             >
-                              {/* Column 1: Subtopic Name */}
+                              {/* Column 1: Subtopic Name (Clean, no weird question texts) */}
                               <td className="px-5 py-3 font-semibold text-slate-800 dark:text-slate-200">
-                                {formatSubtopicTitle(row.subtopicName)}
-                                {row.diagnostic?.microSkill && (
-                                  <div className="text-[11px] font-normal text-sky-400 mt-0.5">
-                                    ↳ {row.diagnostic.microSkill}
-                                  </div>
-                                )}
+                                <div className="flex items-center gap-2">
+                                  <span>{formatSubtopicTitle(row.subtopicName)}</span>
+                                  {isInf && (
+                                    <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-sky-500/10 text-sky-400 border border-sky-500/20">
+                                      Inferred
+                                    </span>
+                                  )}
+                                </div>
                               </td>
 
-                              {/* Column 2: Grade Level Score (Perfect Equal Alignment) */}
-                              <td className="px-5 py-3 text-center">
-                                <span className={`inline-block font-extrabold px-2.5 py-0.5 rounded text-xs ${
-                                  isMaster
-                                    ? 'text-emerald-400 bg-emerald-500/10'
-                                    : 'text-amber-400 bg-amber-500/10'
-                                }`}>
-                                  {row.glsScore}
+                              {/* Column 2: Tested Standard */}
+                              <td className="px-5 py-3 text-center text-slate-600 dark:text-slate-300 font-medium">
+                                <span className="inline-block px-2.5 py-0.5 rounded text-xs bg-slate-700/20 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold">
+                                  {row.testedGradeDisplay || `Grade ${targetGradeNum}`}
                                 </span>
                               </td>
 
-                              {/* Column 3: Status Badge */}
+                              {/* Column 3: Prerequisite Foundation */}
+                              <td className="px-5 py-3 text-center">
+                                <span className={`inline-block px-2.5 py-0.5 rounded text-xs font-semibold ${
+                                  isMaster
+                                    ? 'text-emerald-500 dark:text-emerald-400 bg-emerald-500/10'
+                                    : 'text-amber-500 dark:text-amber-400 bg-amber-500/10 border border-amber-500/20'
+                                }`}>
+                                  {row.prereqStatus}
+                                </span>
+                              </td>
+
+                              {/* Column 4: Status Badge */}
                               <td className="px-5 py-3 text-right">
                                 <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold ${
                                   isMaster
-                                    ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30'
-                                    : 'bg-rose-500/15 text-rose-400 border border-rose-500/30'
+                                    ? 'bg-emerald-500/15 text-emerald-500 dark:text-emerald-400 border border-emerald-500/30'
+                                    : 'bg-rose-500/15 text-rose-500 dark:text-rose-400 border border-rose-500/30'
                                 }`}>
-                                  {isMaster ? '✓ Mastered' : '✗ Needs Practice'}
+                                  {row.statusBadge || (isMaster ? '✓ Mastered' : '✗ Needs Practice')}
                                 </span>
                               </td>
                             </tr>
