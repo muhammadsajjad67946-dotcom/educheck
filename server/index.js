@@ -2379,7 +2379,26 @@ app.post('/api/assessment-attempts/start', async (request, response) => {
         const targetQ = candidates.filter((q) => isMatch(q) && Number(q.grade) === safeMaxGrade)
         const lowerQ = candidates.filter((q) => isMatch(q) && Number(q.grade) < safeMaxGrade && Number(q.grade) >= safeMinGrade)
           .sort((a, b) => Number(b.grade) - Number(a.grade))
-        topicBuckets[top] = [...targetQ, ...lowerQ]
+        
+        // Group by subtopic to ensure strict subtopic diversity (max 1 per subtopic in first pass)
+        const subMap = new Map()
+        ;[...targetQ, ...lowerQ].forEach((q) => {
+          const sub = String(q.subtopic || q.subtopic_name || q.micro_skill || 'general').trim().toLowerCase()
+          if (!subMap.has(sub)) subMap.set(sub, [])
+          subMap.get(sub).push(q)
+        })
+
+        const diverseList = []
+        const subKeys = [...subMap.keys()]
+        for (let pass = 0; pass < 3; pass++) {
+          for (const k of subKeys) {
+            const list = subMap.get(k)
+            if (list && list.length > pass) {
+              diverseList.push(list[pass])
+            }
+          }
+        }
+        topicBuckets[top] = diverseList
       })
 
       // Interleave round-robin across the 5 topics so every strand appears evenly from question 1 to 30

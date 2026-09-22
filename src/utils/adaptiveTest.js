@@ -907,6 +907,16 @@ export function createGradeBatchTestState(questionBank, targetGrade, selectedStr
     const questionsPerTopic = Math.floor(questionLimit / topics.length) // 30 / 5 = 6 questions per topic
     const topicPools = {}
 
+    const getQuestionSubtopicKey = (q) => {
+      const raw = String(q.subtopic || q.subtopic_name || q.micro_skill || '').trim().toLowerCase()
+      return raw || 'general'
+    }
+
+    const isLongWordProblem = (q) => {
+      const text = String(q.question || q.question_text || '').trim()
+      return text.length > 115 || /^(a|an|three|two|four|in a|at a|if a|suppose|a student|a quality|a store|an elevator|a restaurant|on a map|a blueprint|a model)/i.test(text)
+    }
+
     topics.forEach((topic) => {
       const isTopicMatch = (q) => matchesStrand(q.topic, topic)
       const hasDiagnostics = (q) => Boolean(
@@ -917,30 +927,60 @@ export function createGradeBatchTestState(questionBank, targetGrade, selectedStr
         (typeof q.distractor_diagnostics === 'object' || String(q.distractor_diagnostics).trim() !== '')
       )
 
-      // Prioritize questions strictly at the selected targetGrade with verified diagnostics
+      // Target grade questions
       const targetGradeQuestions = questionBank.filter((q) => isTopicMatch(q) && Number(q.grade) === maxGrade && hasDiagnostics(q) && !usedIds.has(q.id))
-      // Only fallback to (maxGrade - 1) if target grade runs short, never drop to Grade 1
       const nearLowerGradeQuestions = questionBank.filter((q) => isTopicMatch(q) && Number(q.grade) === Math.max(1, maxGrade - 1) && hasDiagnostics(q) && !usedIds.has(q.id))
 
-      const targetMed = shuffleArray(targetGradeQuestions.filter((q) => q.difficulty === 'Medium'))
-      const targetLow = shuffleArray(targetGradeQuestions.filter((q) => q.difficulty === 'Low'))
-      const targetHigh = shuffleArray(targetGradeQuestions.filter((q) => q.difficulty === 'High'))
+      // Diverse Subtopic Picker: Enforces MAX 1 question per subtopic, balances direct math vs word problems
+      const pickDiversePool = (candidates, count) => {
+        const subtopicBuckets = {}
+        candidates.forEach((q) => {
+          const sub = getQuestionSubtopicKey(q)
+          if (!subtopicBuckets[sub]) subtopicBuckets[sub] = []
+          subtopicBuckets[sub].push(q)
+        })
 
-      // Primary pool: strictly target grade questions starting at Medium baseline
-      const primaryTargetPool = [...targetMed, ...targetLow, ...targetHigh]
-      const fallbackLowerPool = shuffleArray(nearLowerGradeQuestions)
+        // Sort inside each subtopic bucket: prioritize direct math over long word problems
+        Object.keys(subtopicBuckets).forEach((sub) => {
+          subtopicBuckets[sub] = shuffleArray(subtopicBuckets[sub]).sort((a, b) => {
+            const aW = isLongWordProblem(a) ? 1 : 0
+            const bW = isLongWordProblem(b) ? 1 : 0
+            return aW - bW // direct math first
+          })
+        })
 
-      const picked = []
-      // Take up to questionsPerTopic from target grade first
-      while (picked.length < questionsPerTopic && primaryTargetPool.length > 0) {
-        picked.push(primaryTargetPool.shift())
+        const diversePicked = []
+        const uniqueSubs = shuffleArray(Object.keys(subtopicBuckets))
+
+        // Round 1: Strictly MAX 1 question per unique subtopic
+        for (const sub of uniqueSubs) {
+          if (diversePicked.length >= count) break
+          const q = subtopicBuckets[sub].shift()
+          if (q) diversePicked.push(q)
+        }
+
+        // Round 2: Only if more needed, take another question from available buckets
+        if (diversePicked.length < count) {
+          for (const sub of uniqueSubs) {
+            if (diversePicked.length >= count) break
+            const q = subtopicBuckets[sub].shift()
+            if (q) diversePicked.push(q)
+          }
+        }
+
+        return diversePicked
       }
-      // If target grade runs short, backfill only from immediate previous grade
-      while (picked.length < questionsPerTopic && fallbackLowerPool.length > 0) {
-        picked.push(fallbackLowerPool.shift())
+
+      let picked = pickDiversePool(targetGradeQuestions, questionsPerTopic)
+
+      // If target grade ran short of subtopics, backfill diverse questions from immediate previous grade
+      if (picked.length < questionsPerTopic) {
+        const needed = questionsPerTopic - picked.length
+        const fallbackPicked = pickDiversePool(nearLowerGradeQuestions, needed)
+        picked = [...picked, ...fallbackPicked]
       }
 
-      // Sort topic questions adaptively: Medium first (baseline), then Low, then High
+      // Sort topic questions adaptively: Medium baseline first, then Low, then High
       const startingOrder = { Medium: 1, Low: 2, High: 3 }
       picked.sort((a, b) => (startingOrder[a.difficulty] || 2) - (startingOrder[b.difficulty] || 2))
 
@@ -948,7 +988,7 @@ export function createGradeBatchTestState(questionBank, targetGrade, selectedStr
       topicPools[topic] = picked
     })
 
-    // Interleave round-robin across the 5 topics so every strand appears evenly throughout the test
+    // Interleave round-robin across the 5 topics so every strand appears evenly from Q1 to the end
     for (let round = 0; round < questionsPerTopic; round++) {
       for (const topic of topics) {
         const bucket = topicPools[topic] || []
@@ -971,22 +1011,40 @@ export function createGradeBatchTestState(questionBank, targetGrade, selectedStr
   } else {
     // Specific strand selected by student
     const isTopicMatch = (q) => matchesStrand(q.topic, selectedStrand)
+    const targetGradeQuestions = questionBank.filter((q) => isTopicMatch(q) && Number(q.grade) === maxGrade)
+    const lowerQuestions = questionBank.filter((q) => isTopicMatch(q) && Number(q.grade) < maxGrade)
 
-    const targetMed = shuffleArray(questionBank.filter((q) => isTopicMatch(q) && Number(q.grade) === maxGrade && q.difficulty === 'Medium'))
-    const targetLow = shuffleArray(questionBank.filter((q) => isTopicMatch(q) && Number(q.grade) === maxGrade && q.difficulty === 'Low'))
-    const targetHigh = shuffleArray(questionBank.filter((q) => isTopicMatch(q) && Number(q.grade) === maxGrade && q.difficulty === 'High'))
+    const subtopicBuckets = {}
+    targetGradeQuestions.forEach((q) => {
+      const sub = String(q.subtopic || q.subtopic_name || q.micro_skill || 'general').trim().toLowerCase()
+      if (!subtopicBuckets[sub]) subtopicBuckets[sub] = []
+      subtopicBuckets[sub].push(q)
+    })
 
-    const lowerQuestions = shuffleArray(questionBank.filter((q) => isTopicMatch(q) && Number(q.grade) < maxGrade))
-
-    const combined = [
-      ...targetMed.slice(0, 1),
-      ...shuffleArray([...targetMed.slice(1), ...targetHigh, ...targetLow, ...lowerQuestions]),
-    ]
-    initialPool = combined.slice(0, questionLimit)
-    if (initialPool.length < questionLimit) {
-      const remaining = shuffleArray(questionBank.filter((q) => isTopicMatch(q) && !initialPool.some(p => p.id === q.id)))
-      initialPool = [...initialPool, ...remaining].slice(0, questionLimit)
+    const diversePicked = []
+    const uniqueSubs = shuffleArray(Object.keys(subtopicBuckets))
+    for (const sub of uniqueSubs) {
+      if (diversePicked.length >= questionLimit) break
+      const q = subtopicBuckets[sub].shift()
+      if (q) diversePicked.push(q)
     }
+    if (diversePicked.length < questionLimit) {
+      for (const sub of uniqueSubs) {
+        if (diversePicked.length >= questionLimit) break
+        const q = subtopicBuckets[sub].shift()
+        if (q) diversePicked.push(q)
+      }
+    }
+    if (diversePicked.length < questionLimit) {
+      for (const q of shuffleArray(lowerQuestions)) {
+        if (diversePicked.length >= questionLimit) break
+        if (!diversePicked.some((p) => p.id === q.id)) {
+          diversePicked.push(q)
+        }
+      }
+    }
+
+    initialPool = diversePicked.slice(0, questionLimit)
     initialPool.forEach((q) => usedIds.add(q.id))
   }
 
