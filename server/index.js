@@ -2392,8 +2392,39 @@ app.post('/api/assessment-attempts/start', async (request, response) => {
           subMap.get(sub).push(q)
         })
 
+        // Helper to detect wordy narrative story problems
+        const isLongWordProblem = (q) => {
+          if (!q) return false
+          const text = String(q.question || q.question_text || '').trim()
+          const isMultiSentenceStory = text.split(/[.?!]\s+/).length > 2
+          const hasStoryIntro = /^(a\s|an\s|in a\s|at a\s|if a\s|suppose|a student|a store|an elevator|a restaurant|on a map|a blueprint|a model|a scuba|a car|a train|a company|a park)/i.test(text)
+          return text.length > 110 || (isMultiSentenceStory && hasStoryIntro) || (hasStoryIntro && text.length > 80)
+        }
+
+        const getConciseScore = (q) => {
+          if (!q) return 999
+          const text = String(q.question || q.question_text || '').trim()
+          let score = text.length
+          if (isLongWordProblem(q)) score += 300 // heavily penalize wordy story problems
+          return score
+        }
+
+        // Sort inside each subtopic: concise conceptual questions first
+        subMap.forEach((list) => {
+          list.sort((a, b) => {
+            const scoreDiff = getConciseScore(a) - getConciseScore(b)
+            if (scoreDiff !== 0) return scoreDiff
+            return (startingOrder[a.difficulty] || 2) - (startingOrder[b.difficulty] || 2)
+          })
+        })
+
         const diverseList = []
-        const subKeys = [...subMap.keys()]
+        // Sort subtopics: prefer subtopics with concise, direct conceptual questions first
+        const subKeys = [...subMap.keys()].sort((a, b) => {
+          const qA = subMap.get(a)?.[0]
+          const qB = subMap.get(b)?.[0]
+          return getConciseScore(qA) - getConciseScore(qB)
+        })
         for (let pass = 0; pass < 3; pass++) {
           for (const k of subKeys) {
             const list = subMap.get(k)

@@ -913,8 +913,19 @@ export function createGradeBatchTestState(questionBank, targetGrade, selectedStr
     }
 
     const isLongWordProblem = (q) => {
+      if (!q) return false
       const text = String(q.question || q.question_text || '').trim()
-      return text.length > 115 || /^(a|an|three|two|four|in a|at a|if a|suppose|a student|a quality|a store|an elevator|a restaurant|on a map|a blueprint|a model)/i.test(text)
+      const isMultiSentenceStory = text.split(/[.?!]\s+/).length > 2
+      const hasStoryIntro = /^(a\s|an\s|in a\s|at a\s|if a\s|suppose|a student|a store|an elevator|a restaurant|on a map|a blueprint|a model|a scuba|a car|a train|a company|a park)/i.test(text)
+      return text.length > 110 || (isMultiSentenceStory && hasStoryIntro) || (hasStoryIntro && text.length > 80)
+    }
+
+    const getConciseScore = (q) => {
+      if (!q) return 999
+      const text = String(q.question || q.question_text || '').trim()
+      let score = text.length
+      if (isLongWordProblem(q)) score += 300 // heavily penalize wordy story problems
+      return score
     }
 
     topics.forEach((topic) => {
@@ -940,17 +951,24 @@ export function createGradeBatchTestState(questionBank, targetGrade, selectedStr
           subtopicBuckets[sub].push(q)
         })
 
-        // Sort inside each subtopic bucket: prioritize direct math over long word problems
+        // Sort inside each subtopic bucket: prioritize concise conceptual math over long word problems
         Object.keys(subtopicBuckets).forEach((sub) => {
           subtopicBuckets[sub] = shuffleArray(subtopicBuckets[sub]).sort((a, b) => {
-            const aW = isLongWordProblem(a) ? 1 : 0
-            const bW = isLongWordProblem(b) ? 1 : 0
-            return aW - bW // direct math first
+            const scoreDiff = getConciseScore(a) - getConciseScore(b)
+            if (scoreDiff !== 0) return scoreDiff
+            const diffA = a.difficulty === 'Medium' ? 1 : a.difficulty === 'High' ? 2 : 3
+            const diffB = b.difficulty === 'Medium' ? 1 : b.difficulty === 'High' ? 2 : 3
+            return diffA - diffB
           })
         })
 
         const diversePicked = []
-        const uniqueSubs = shuffleArray(Object.keys(subtopicBuckets))
+        // Prioritize subtopics whose questions are concise, direct, and conceptual
+        const uniqueSubs = shuffleArray(Object.keys(subtopicBuckets)).sort((subA, subB) => {
+          const qA = subtopicBuckets[subA]?.[0]
+          const qB = subtopicBuckets[subB]?.[0]
+          return getConciseScore(qA) - getConciseScore(qB)
+        })
 
         // Round 1: Strictly MAX 1 question per unique subtopic
         for (const sub of uniqueSubs) {
@@ -1022,8 +1040,18 @@ export function createGradeBatchTestState(questionBank, targetGrade, selectedStr
       subtopicBuckets[sub].push(q)
     })
 
+    Object.keys(subtopicBuckets).forEach((sub) => {
+      subtopicBuckets[sub] = shuffleArray(subtopicBuckets[sub]).sort((a, b) => {
+        return getConciseScore(a) - getConciseScore(b)
+      })
+    })
+
     const diversePicked = []
-    const uniqueSubs = shuffleArray(Object.keys(subtopicBuckets))
+    const uniqueSubs = shuffleArray(Object.keys(subtopicBuckets)).sort((subA, subB) => {
+      const qA = subtopicBuckets[subA]?.[0]
+      const qB = subtopicBuckets[subB]?.[0]
+      return getConciseScore(qA) - getConciseScore(qB)
+    })
     for (const sub of uniqueSubs) {
       if (diversePicked.length >= questionLimit) break
       const q = subtopicBuckets[sub].shift()
