@@ -1199,24 +1199,8 @@ export function advanceGradeBatchTest(state, questionBank, currentQuestion, sele
         }
       }
 
-      // Inject elevated difficulty question at target grade within SAME strand
-      const elevatedQ = questionBank.find(
-        (q) => !usedQuestionIds.includes(q.id) &&
-          Number(q.grade) === state.targetGrade &&
-          matchesStrand(q.topic, currentQuestion.topic) &&
-          q.difficulty === targetDiff &&
-          matchesQuestionSubtopic(q, subtopic)
-      ) || questionBank.find(
-        (q) => !usedQuestionIds.includes(q.id) &&
-          Number(q.grade) === state.targetGrade &&
-          matchesStrand(q.topic, currentQuestion.topic) &&
-          q.difficulty === targetDiff
-      )
-
-      if (elevatedQ) {
-        questions = replaceForSameStrand(questions, currentIndex, elevatedQ, currentQuestion.topic)
-        usedQuestionIds.push(elevatedQ.id)
-      }
+      // In ADAM diagnostic model, answering correctly verifies mastery of this subtopic.
+      // We do NOT inject the same subtopic again. The student advances to the next diverse concept!
     } else {
       // Student answered WRONG on a normal question
       if (currentQuestion.difficulty === 'High') {
