@@ -165,13 +165,15 @@ export default function SummaryReport() {
     return overall !== null && Number.isFinite(overall) && overall >= 1.0 ? overall : null
   })()
 
+  const maxAllowedGrade = Math.max(0.0, Number((targetGradeNum - 0.1).toFixed(1))) // Max 7.9 for Grade 8
+  const baseFloorGrade = Math.max(0.0, targetGradeNum - 1.0)
   const demonstratedGradeRaw = report.demonstratedMathLevel ?? effectiveAssessment?.estimatedGrade ?? 0
-  const fallbackDemonstrated = 1.0 + (scorePercent / 100) * Math.max(0, targetGradeNum - 1)
-  const isOldInflated = demonstratedGradeRaw && scorePercent < 60 && Number(demonstratedGradeRaw) > (fallbackDemonstrated + 1.0)
+  const fallbackDemonstrated = baseFloorGrade + (scorePercent / 100) * 0.9
+  const isOldInflated = demonstratedGradeRaw && (Number(demonstratedGradeRaw) > maxAllowedGrade || (scorePercent < 60 && Number(demonstratedGradeRaw) > (fallbackDemonstrated + 1.0)))
   const effectiveRawGrade = isOldInflated
-    ? (computedAdaptiveGrade ?? fallbackDemonstrated)
-    : (demonstratedGradeRaw && Number(demonstratedGradeRaw) >= 1.0 ? Number(demonstratedGradeRaw) : (computedAdaptiveGrade ?? fallbackDemonstrated))
-  const demonstratedGradeNum = Number(effectiveRawGrade.toFixed(1))
+    ? Math.min(maxAllowedGrade, computedAdaptiveGrade ?? fallbackDemonstrated)
+    : Math.min(maxAllowedGrade, (demonstratedGradeRaw && Number(demonstratedGradeRaw) > 0 ? Number(demonstratedGradeRaw) : (computedAdaptiveGrade ?? fallbackDemonstrated)))
+  const demonstratedGradeNum = Number(Math.min(maxAllowedGrade, Math.max(0.0, effectiveRawGrade)).toFixed(1))
   const gradeGap = (demonstratedGradeNum - targetGradeNum).toFixed(1)
 
   const subtopicReport = reportQuestions.length

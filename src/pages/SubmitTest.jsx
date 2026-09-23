@@ -171,8 +171,8 @@ export default function SubmitTest() {
 
       const currentGradeNumber = Number(String(user.grade || '').match(/\d+/)?.[0] || selectedTargetGrade)
       const passedGrade = percentage >= 70
-      const promotedGrade = passedGrade && currentGradeNumber < 8 ? `Grade ${currentGradeNumber + 1}` : user.grade
-      const estimatedGrade = reportData.demonstratedMathLevel.toFixed(2)
+      const maxCeiling = Math.max(0.0, Number((selectedTargetGrade - 0.1).toFixed(1)))
+      const estimatedGrade = Math.min(maxCeiling, reportData.demonstratedMathLevel).toFixed(2)
 
       // Build difficulty breakdown
       const difficultyBreakdown = ['Low', 'Medium', 'High'].map((difficulty) => {

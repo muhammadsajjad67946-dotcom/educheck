@@ -116,11 +116,13 @@ export function buildDashboardMetrics({
     ? Math.round(uniqueEntries.reduce((sum, entry) => sum + Number(entry.percentage || 0), 0) / uniqueEntries.length)
     : latestAccuracy
 
-  // If still not found, compute reasonable grade level from accuracy
+  const maxAllowedGrade = Math.max(0.0, Number((selectedGradeNumber - 0.1).toFixed(1))) // E.g. 7.9 for Grade 8
+  const baseFloorGrade = Math.max(0.0, selectedGradeNumber - 1.0)
+  const fallbackCalc = baseFloorGrade + (latestAccuracy / 100) * 0.9
   const currentGradeLevel = totalAssessments > 0
     ? (Number.isFinite(parsedAssessedGrade) && parsedAssessedGrade > 0
-        ? Number(parsedAssessedGrade.toFixed(1))
-        : Number((1 + (latestAccuracy / 100) * Math.max(0, selectedGradeNumber - 1)).toFixed(1)))
+        ? Number(Math.min(maxAllowedGrade, parsedAssessedGrade).toFixed(1))
+        : Number(Math.min(maxAllowedGrade, fallbackCalc).toFixed(1)))
     : 0
 
   const paymentStatus = Array.isArray(payments) && payments.some((payment) => String(payment?.status || '').toLowerCase() === 'paid') ? 'paid' : 'pending'

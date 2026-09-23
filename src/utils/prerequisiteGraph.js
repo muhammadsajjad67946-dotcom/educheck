@@ -640,20 +640,26 @@ export function getDiagnosedPrerequisiteGap(subtopicName, rawStrand, testedGrade
  * Calculates a mathematically sound Domain Level Score for a strand
  */
 export function calculateStrandDomainScore(rows, targetGrade = 8) {
-  if (!rows || rows.length === 0) return `Grade ${targetGrade}.0`
+  const baseTarget = Number(targetGrade) || 8
+  const maxScore = Math.max(0.0, Number((baseTarget - 0.1).toFixed(1))) // E.g. 7.9 for Grade 8
+  const floorGrade = Math.max(0.0, baseTarget - 1.0) // E.g. 7.0 for Grade 8
+
+  if (!rows || rows.length === 0) return `Grade ${maxScore.toFixed(1)}`
 
   const total = rows.length
   const mastered = rows.filter((r) => r.isSuccess).length
 
   if (mastered === total) {
-    return `Grade ${targetGrade}.0 (Mastered)`
+    return `Grade ${maxScore.toFixed(1)} (Mastered)`
   }
 
-  // Calculate grade equivalent based on proportion of mastery
-  // E.g. If target is 8 and 3/4 mastered => 8 - (1 - 3/4)*2 = 7.5
-  const baseGrade = Number(targetGrade) || 8
   const ratio = mastered / total
-  const estimatedGE = Math.max(1.0, baseGrade - (1 - ratio) * 2.0)
+  let estimatedGE = 0
+  if (ratio > 0) {
+    estimatedGE = floorGrade + ratio * 0.9
+  }
+  estimatedGE = Math.min(maxScore, Math.max(0.0, estimatedGE))
 
   return `Grade ${estimatedGE.toFixed(1)}`
 }
+

@@ -306,9 +306,11 @@ export function calculateOverallResult(gradeScores, selectedTargetGrade) {
   const totalQuestions = relevantGrades.reduce((sum, grade) => sum + grade.total, 0)
   const totalCorrect = relevantGrades.reduce((sum, grade) => sum + grade.correct, 0)
   const accuracy = totalQuestions > 0 ? totalCorrect / totalQuestions : 0
+  const maxCeiling = Math.max(0.0, Number((selectedTargetGrade - 0.1).toFixed(1))) // E.g. 7.9 for Grade 8
+  const baseFloor = Math.max(0.0, selectedTargetGrade - 1.0) // E.g. 7.0 for Grade 8
   const demonstratedMathLevel = selectedTargetGrade > 0 && totalQuestions > 0
-    ? clamp(1.0 + accuracy * Math.max(0, selectedTargetGrade - 1), 1.0, selectedTargetGrade)
-    : 1.0
+    ? clamp(accuracy > 0 ? baseFloor + accuracy * 0.9 : 0.0, 0.0, maxCeiling)
+    : 0.0
 
   let totalWrong = 0
   let totalUnanswered = 0
@@ -688,11 +690,13 @@ export function generateCompleteAssessmentResult(allQuestions, answers, selected
     ? parseFloat((overallResult.totalCorrect / overallResult.totalAttempted).toFixed(2))
     : 0
 
+  const maxCeiling = Math.max(0.0, Number((gradeNum - 0.1).toFixed(1))) // E.g. 7.9 for Grade 8
+  const baseFloor = Math.max(0.0, gradeNum - 1.0) // E.g. 7.0 for Grade 8
   const adaptiveOverall = calculateAdaptiveOverallGE(topicGradeEquivalents, gradeNum)
-  const accuracyBasedGE = accuracy > 0 ? 1.0 + accuracy * (gradeNum - 1.0) : 1.0
-  const finalDemonstratedLevel = adaptiveOverall !== null && Number.isFinite(adaptiveOverall) && adaptiveOverall >= 1.0
-    ? clamp(adaptiveOverall, 1.0, gradeNum)
-    : clamp(accuracyBasedGE, 1.0, gradeNum)
+  const accuracyBasedGE = accuracy > 0 ? baseFloor + accuracy * 0.9 : 0.0
+  const finalDemonstratedLevel = adaptiveOverall !== null && Number.isFinite(adaptiveOverall)
+    ? clamp(adaptiveOverall, 0.0, maxCeiling)
+    : clamp(accuracyBasedGE, 0.0, maxCeiling)
 
   const overallGradeEquivalent = parseFloat(finalDemonstratedLevel.toFixed(2))
   const validTopicGEs = Object.values(topicGradeEquivalents)
@@ -742,7 +746,7 @@ export function generateCompleteAssessmentResult(allQuestions, answers, selected
     testDate: validatedStudentInfo.testDate,
     selectedGrade: gradeNum,
     overallGradeEquivalent,
-    demonstratedMathLevel: parseFloat(clamp(finalDemonstratedLevel, 1.0, gradeNum).toFixed(2)),
+    demonstratedMathLevel: parseFloat(clamp(finalDemonstratedLevel, 0.0, maxCeiling).toFixed(2)),
     finalCumulativeScore: overallResult.finalCumulativeScore,
     totalAttempted: overallResult.totalAttempted,
     totalQuestions: overallResult.totalQuestions,

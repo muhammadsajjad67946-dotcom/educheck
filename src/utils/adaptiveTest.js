@@ -10,20 +10,26 @@ export const QUESTIONS_PER_GRADE_BATCH = 6
 export const BATCH_PASSING_SCORE = 4
 export const MAX_PROBE_DEPTH = 1
 
-export function getItemDifficultyParameter(question) {
-  if (!question) return 5.0
-  const grade = Number(question.grade) || 5.0
-  const diffOffset = question.difficulty === 'High' ? 0.6 : question.difficulty === 'Low' ? -0.6 : 0.0
-  return Number((grade + diffOffset).toFixed(2))
+export function getItemDifficultyParameter(question, targetGrade = 8) {
+  const target = Math.max(1, Number(targetGrade) || 8)
+  const maxCeiling = Math.max(0.0, Number((target - 0.1).toFixed(1))) // 7.9 for Grade 8
+  const baseFloor = Math.max(0.0, target - 1.0) // 7.0 for Grade 8
+  const qGrade = Number(question?.grade) || baseFloor
+  const normalizedGrade = clamp(qGrade >= target ? baseFloor + 0.4 : qGrade, 0.0, maxCeiling)
+  const diffOffset = question?.difficulty === 'High' ? 0.3 : question?.difficulty === 'Low' ? -0.3 : 0.0
+  return Number(clamp(normalizedGrade + diffOffset, 0.0, maxCeiling).toFixed(2))
 }
 
-export function updateIrtAbility(currentTheta, itemDifficulty, isCorrect, learningRate = 0.35) {
-  const theta = Number(currentTheta) || 5.0
-  const b = Number(itemDifficulty) || 5.0
+export function updateIrtAbility(currentTheta, itemDifficulty, isCorrect, learningRate = 0.35, targetGrade = 8) {
+  const target = Math.max(1, Number(targetGrade) || 8)
+  const maxCeiling = Math.max(0.0, Number((target - 0.1).toFixed(1))) // 7.9 for Grade 8
+  const defaultTheta = Math.max(0.0, target - 0.6) // 7.4 for Grade 8
+  const theta = currentTheta != null && !Number.isNaN(Number(currentTheta)) ? Number(currentTheta) : defaultTheta
+  const b = itemDifficulty != null && !Number.isNaN(Number(itemDifficulty)) ? Number(itemDifficulty) : defaultTheta
   const p = 1 / (1 + Math.exp(-(theta - b)))
   const outcome = isCorrect ? 1.0 : 0.0
   const nextTheta = theta + learningRate * (outcome - p)
-  return Number(clamp(nextTheta, 1.0, 9.0).toFixed(2))
+  return Number(clamp(nextTheta, 0.0, maxCeiling).toFixed(2))
 }
 
 export function isLongWordProblem(q) {
@@ -805,7 +811,8 @@ export function calculateAdaptiveTopicGE(questions, answers, targetGrade) {
   if (!attempted.length) return null
 
   const target = Math.max(1, Number(targetGrade) || 8)
-  const maxSpan = Math.max(0, target - 1.0)
+  const maxCeiling = Math.max(0.0, Number((target - 0.1).toFixed(1))) // 7.9 for Grade 8
+  const baseFloor = Math.max(0.0, target - 1.0) // 7.0 for Grade 8
 
   let weightedScore = 0
   let weightedTotal = 0
@@ -821,15 +828,17 @@ export function calculateAdaptiveTopicGE(questions, answers, targetGrade) {
   })
 
   const topicAccuracy = weightedTotal > 0 ? weightedScore / weightedTotal : 0
-  const topicGE = 1.0 + topicAccuracy * maxSpan
-  return Number(clamp(topicGE, 1.0, target).toFixed(2))
+  const topicGE = topicAccuracy > 0 ? baseFloor + topicAccuracy * 0.9 : 0.0
+  return Number(clamp(topicGE, 0.0, maxCeiling).toFixed(2))
 }
 
 export function calculateAdaptiveOverallGE(topicResults, targetGrade) {
   const values = Object.values(topicResults).filter((value) => typeof value === 'number' && Number.isFinite(value))
   if (!values.length) return null
   const target = Math.max(1, Number(targetGrade) || 8)
-  return Number(clamp(values.reduce((sum, value) => sum + value, 0) / values.length, 1.0, target).toFixed(2))
+  const maxCeiling = Math.max(0.0, Number((target - 0.1).toFixed(1))) // 7.9 for Grade 8
+  const avg = values.reduce((sum, value) => sum + value, 0) / values.length
+  return Number(clamp(avg, 0.0, maxCeiling).toFixed(2))
 }
 
 export function matchesStrand(questionTopic, selectedStrand) {
@@ -1115,7 +1124,7 @@ export function createGradeBatchTestState(questionBank, targetGrade, selectedStr
     probeHistory: [],
     weaknessMap: {},
     inferredMastery: {},
-    theta: Number(maxGrade) || 5.0,
+    theta: Math.max(0.0, Number(((Number(maxGrade) || 8) - 0.6).toFixed(1))),
     irtHistory: [],
   }
 }
@@ -1247,9 +1256,9 @@ export function advanceGradeBatchTest(state, questionBank, currentQuestion, sele
   let inferredMastery = { ...(state.inferredMastery || {}) }
 
   // IRT Latent Ability Update
-  const itemDifficulty = getItemDifficultyParameter(currentQuestion)
-  const prevTheta = Number(state.theta || state.targetGrade || 5.0)
-  const newTheta = updateIrtAbility(prevTheta, itemDifficulty, isCorrect)
+  const itemDifficulty = getItemDifficultyParameter(currentQuestion, state.targetGrade)
+  const prevTheta = state.theta != null ? Number(state.theta) : Math.max(0.0, Number(((state.targetGrade || 8) - 0.6).toFixed(1)))
+  const newTheta = updateIrtAbility(prevTheta, itemDifficulty, isCorrect, 0.35, state.targetGrade)
   const irtHistory = [
     ...(state.irtHistory || []),
     {
