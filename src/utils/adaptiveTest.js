@@ -1129,17 +1129,29 @@ export function createGradeBatchTestState(questionBank, targetGrade, selectedStr
   }
 }
 
-export function calibrateNextQuestion(questions, currentIndex, targetDifficulty, targetStrand, questionBank, usedQuestionIds) {
+export function calibrateNextQuestion(questions, currentIndex, targetDifficulty, targetStrand, questionBank, usedQuestionIds, targetGrade = 8) {
   if (!questions || currentIndex + 1 >= questions.length) return questions
   const nextQ = questions[currentIndex + 1]
   if (!nextQ) return questions
 
-  // If next question already matches targetDifficulty, no change needed
-  if (nextQ.difficulty === targetDifficulty) return questions
+  const currentGradeTarget = Number(targetGrade) || 8
 
-  // 1. Search ahead in current strand in questions array for a question matching targetDifficulty
+  // If next question is from a different strand (transitioning to next strand),
+  // let it start with its own targetGrade baseline without overriding its strand!
+  if (!matchesStrand(nextQ.topic, targetStrand)) {
+    return questions
+  }
+
+  // If next question already matches targetDifficulty and is at targetGrade, no change needed
+  if (nextQ.difficulty === targetDifficulty && Number(nextQ.grade) === currentGradeTarget) return questions
+
+  // 1. Search ahead in current strand in questions array for a question matching targetDifficulty at targetGrade
   for (let i = currentIndex + 2; i < questions.length; i++) {
-    if (matchesStrand(questions[i].topic, targetStrand) && questions[i].difficulty === targetDifficulty) {
+    if (
+      matchesStrand(questions[i].topic, targetStrand) &&
+      questions[i].difficulty === targetDifficulty &&
+      Number(questions[i].grade) === currentGradeTarget
+    ) {
       const updated = [...questions]
       const temp = updated[currentIndex + 1]
       updated[currentIndex + 1] = updated[i]
@@ -1148,12 +1160,18 @@ export function calibrateNextQuestion(questions, currentIndex, targetDifficulty,
     }
   }
 
-  // 2. Search questionBank for an unused question matching targetStrand and targetDifficulty
+  // 2. Search questionBank for an unused question matching targetStrand, targetDifficulty, AND targetGrade
   const usedSet = new Set(usedQuestionIds)
   const candidate = questionBank.find(
     (q) => !usedSet.has(q.id) &&
       matchesStrand(q.topic, targetStrand) &&
+      Number(q.grade) === currentGradeTarget &&
       q.difficulty === targetDifficulty &&
+      !isLongWordProblem(q)
+  ) || questionBank.find(
+    (q) => !usedSet.has(q.id) &&
+      matchesStrand(q.topic, targetStrand) &&
+      Number(q.grade) === currentGradeTarget &&
       !isLongWordProblem(q)
   )
 
@@ -1164,11 +1182,12 @@ export function calibrateNextQuestion(questions, currentIndex, targetDifficulty,
     return updated
   }
 
-  // 3. Fallback: If target is High and nextQ is Low, prefer Medium over Low (never downgrade to Low on correct)
+  // 3. Fallback: If target is High and nextQ is Low, prefer Medium over Low at targetGrade
   if (targetDifficulty === 'High' && nextQ.difficulty === 'Low') {
     const medCandidate = questionBank.find(
       (q) => !usedSet.has(q.id) &&
         matchesStrand(q.topic, targetStrand) &&
+        Number(q.grade) === currentGradeTarget &&
         q.difficulty === 'Medium' &&
         !isLongWordProblem(q)
     )
@@ -1237,7 +1256,8 @@ export function ensureQuestionLimit(questions, questionLimit, questionBank, used
 export function advanceGradeBatchTest(state, questionBank, currentQuestion, selectedAnswer) {
   if (!state || state.mode !== 'grade-batch' || !currentQuestion) return state
 
-  const isCorrect = String(selectedAnswer || '').trim().toUpperCase() === String(currentQuestion.answer || '').trim().toUpperCase()
+  const expectedAnswer = currentQuestion.correct_answer || currentQuestion.answer || currentQuestion.correctAnswer || currentQuestion.correct_option || currentQuestion.correctOption || ''
+  const isCorrect = String(selectedAnswer || '').trim().toUpperCase() === String(expectedAnswer).trim().toUpperCase()
   const batchQuestionCount = Number(state.batchQuestionCount || 0) + 1
   const batchCorrect = Number(state.batchCorrect || 0) + (isCorrect ? 1 : 0)
   const batchWrong = Number(state.batchWrong || 0) + (isCorrect ? 0 : 1)
@@ -1571,7 +1591,7 @@ export function advanceGradeBatchTest(state, questionBank, currentQuestion, sele
   }
 
   // 1. Calibrate next question to match nextDifficulty (True IRT Adaptive Branching)
-  questions = calibrateNextQuestion(questions, currentIndex, nextDifficulty, currentQuestion.topic, questionBank, usedQuestionIds)
+  questions = calibrateNextQuestion(questions, currentIndex, nextDifficulty, currentQuestion.topic, questionBank, usedQuestionIds, state.targetGrade)
 
   // 2. Strictly guarantee exact assessment length (never shrink down to 21 questions)
   const questionLimit = state.questionLimit || GRADE_BATCH_QUESTION_COUNT
