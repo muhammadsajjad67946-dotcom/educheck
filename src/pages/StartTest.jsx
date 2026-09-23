@@ -12,6 +12,7 @@ import {
   Ruler,
   Shapes,
   Sparkles,
+  Zap,
 } from 'lucide-react'
 import { useApp } from '../context/AppContext'
 import { apiRequest } from '../utils/api'
@@ -250,6 +251,9 @@ export default function StartTest() {
 
   const current = testState.questions?.[index]
   const totalQuestions = testState.questions?.length ?? 0
+  const currentTheta = testState.adaptiveState?.theta != null
+    ? Number(testState.adaptiveState.theta).toFixed(2)
+    : (effectiveGradeNumber ? Math.max(0.0, Number((effectiveGradeNumber - 0.6).toFixed(2))).toFixed(2) : '7.40')
 
   useEffect(() => {
     if (current?.id && testState.answers?.[current.id]) {
@@ -430,6 +434,10 @@ export default function StartTest() {
             'border-emerald-400/30 text-emerald-400 bg-emerald-500/10'
           }`}>
             {current?.difficulty || 'Medium'}
+          </span>
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-indigo-400/40 bg-gradient-to-r from-indigo-500/15 via-purple-500/15 to-sky-500/15 px-3 py-1 font-bold text-indigo-400 shadow-sm">
+            <Zap size={13} className="text-amber-400 fill-amber-400" />
+            <span>IRT Ability (&theta;): {currentTheta}</span>
           </span>
           <span className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium ${
             darkMode ? 'border-white/10 text-slate-300' : 'border-slate-200 text-slate-600'
