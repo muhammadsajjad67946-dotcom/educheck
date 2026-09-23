@@ -1,4 +1,5 @@
 import { CONCEPT_FAMILY_MAP } from './gradeOneTaxonomy.js'
+import { isPrerequisiteOf, getInferredPrerequisites } from './prerequisiteGraph.js'
 
 export const ADAPTIVE_TOPICS = ['Number & Operations', 'Algebra', 'Geometry', 'Measurement', 'Data Analysis']
 export const ADAPTIVE_DIFFICULTIES = ['Low', 'Medium', 'High']
@@ -8,6 +9,38 @@ export const QUESTIONS_PER_CATEGORY = 6
 export const QUESTIONS_PER_GRADE_BATCH = 6
 export const BATCH_PASSING_SCORE = 4
 export const MAX_PROBE_DEPTH = 1
+
+export function getItemDifficultyParameter(question) {
+  if (!question) return 5.0
+  const grade = Number(question.grade) || 5.0
+  const diffOffset = question.difficulty === 'High' ? 0.6 : question.difficulty === 'Low' ? -0.6 : 0.0
+  return Number((grade + diffOffset).toFixed(2))
+}
+
+export function updateIrtAbility(currentTheta, itemDifficulty, isCorrect, learningRate = 0.35) {
+  const theta = Number(currentTheta) || 5.0
+  const b = Number(itemDifficulty) || 5.0
+  const p = 1 / (1 + Math.exp(-(theta - b)))
+  const outcome = isCorrect ? 1.0 : 0.0
+  const nextTheta = theta + learningRate * (outcome - p)
+  return Number(clamp(nextTheta, 1.0, 9.0).toFixed(2))
+}
+
+export function isLongWordProblem(q) {
+  if (!q) return false
+  const text = String(q.question || q.question_text || '').trim()
+  const isMultiSentenceStory = text.split(/[.?!]\s+/).length > 2
+  const hasStoryIntro = /^(a\s|an\s|in a\s|at a\s|if a\s|suppose|a student|a store|an elevator|a restaurant|on a map|a blueprint|a model|a scuba|a car|a train|a company|a park)/i.test(text)
+  return text.length > 110 || (isMultiSentenceStory && hasStoryIntro) || (hasStoryIntro && text.length > 80)
+}
+
+export function getConciseScore(q) {
+  if (!q) return 999
+  const text = String(q.question || q.question_text || '').trim()
+  let score = text.length
+  if (isLongWordProblem(q)) score += 300 // heavily penalize wordy story problems
+  return score
+}
 
 export function shuffleArray(array) {
   const arr = [...(array || [])]
@@ -912,22 +945,6 @@ export function createGradeBatchTestState(questionBank, targetGrade, selectedStr
       return raw || 'general'
     }
 
-    const isLongWordProblem = (q) => {
-      if (!q) return false
-      const text = String(q.question || q.question_text || '').trim()
-      const isMultiSentenceStory = text.split(/[.?!]\s+/).length > 2
-      const hasStoryIntro = /^(a\s|an\s|in a\s|at a\s|if a\s|suppose|a student|a store|an elevator|a restaurant|on a map|a blueprint|a model|a scuba|a car|a train|a company|a park)/i.test(text)
-      return text.length > 110 || (isMultiSentenceStory && hasStoryIntro) || (hasStoryIntro && text.length > 80)
-    }
-
-    const getConciseScore = (q) => {
-      if (!q) return 999
-      const text = String(q.question || q.question_text || '').trim()
-      let score = text.length
-      if (isLongWordProblem(q)) score += 300 // heavily penalize wordy story problems
-      return score
-    }
-
     topics.forEach((topic) => {
       const isTopicMatch = (q) => matchesStrand(q.topic, topic)
       const hasDiagnostics = (q) => Boolean(
@@ -1097,6 +1114,9 @@ export function createGradeBatchTestState(questionBank, targetGrade, selectedStr
     activeProbe: null,
     probeHistory: [],
     weaknessMap: {},
+    inferredMastery: {},
+    theta: Number(maxGrade) || 5.0,
+    irtHistory: [],
   }
 }
 
@@ -1119,6 +1139,24 @@ export function advanceGradeBatchTest(state, questionBank, currentQuestion, sele
   let activeProbe = state.activeProbe ? { ...state.activeProbe } : null
   let probeHistory = [...(state.probeHistory || [])]
   let weaknessMap = { ...(state.weaknessMap || {}) }
+  let inferredMastery = { ...(state.inferredMastery || {}) }
+
+  // IRT Latent Ability Update
+  const itemDifficulty = getItemDifficultyParameter(currentQuestion)
+  const prevTheta = Number(state.theta || state.targetGrade || 5.0)
+  const newTheta = updateIrtAbility(prevTheta, itemDifficulty, isCorrect)
+  const irtHistory = [
+    ...(state.irtHistory || []),
+    {
+      questionId: currentQuestion.id,
+      subtopic,
+      grade: questionGrade,
+      difficulty: currentQuestion.difficulty,
+      b: itemDifficulty,
+      isCorrect,
+      theta: newTheta,
+    },
+  ]
 
   const isProbeQuestion = activeProbe && questionGrade < state.targetGrade
   const currentIndex = questions.findIndex((q) => q.id === currentQuestion.id)
@@ -1222,14 +1260,95 @@ export function advanceGradeBatchTest(state, questionBank, currentQuestion, sele
       const targetDiff = currentQuestion.difficulty === 'Low' ? 'Medium' : 'High'
       nextDifficulty = targetDiff
 
-      if (targetDiff === 'High') {
-        if (questionGrade >= state.targetGrade && !strongPoints.includes(subtopic)) {
-          strongPoints.push(subtopic)
+      if (!strongPoints.includes(subtopic)) {
+        strongPoints.push(subtopic)
+      }
+
+      // ========== ADAM DYNAMIC TOPIC SKIPPING & PREREQUISITE QUEUE PRUNING ==========
+      // 1. Get all inferred subordinate prerequisites for this concept
+      const prereqs = getInferredPrerequisites(subtopic, currentQuestion.topic, questionGrade)
+      prereqs.forEach((p) => {
+        inferredMastery[p.subtopicName] = true
+        if (!strongPoints.includes(p.subtopicName)) {
+          strongPoints.push(p.subtopicName)
+        }
+      })
+
+      // 2. Scan remaining unasked questions in the current strand and prune any subordinate prerequisites!
+      const currentStrand = currentQuestion.topic
+      const prunedQuestions = []
+      let prunedCount = 0
+
+      for (let i = 0; i < questions.length; i++) {
+        if (i <= currentIndex) {
+          prunedQuestions.push(questions[i])
+        } else {
+          const q = questions[i]
+          const isSameStrand = matchesStrand(q.topic, currentStrand)
+          const qSub = q.subtopic || q.subtopic_name || ''
+          const isSubordinate = isSameStrand && (
+            isPrerequisiteOf(qSub, subtopic, currentStrand) ||
+            prereqs.some((p) => matchesQuestionSubtopic(q, p.subtopicName))
+          )
+
+          if (isSubordinate) {
+            // Prune (skip) this question from the test queue!
+            prunedCount++
+            usedQuestionIds.push(q.id)
+            inferredMastery[qSub] = true
+            if (!strongPoints.includes(qSub)) {
+              strongPoints.push(qSub)
+            }
+          } else {
+            prunedQuestions.push(q)
+          }
         }
       }
 
-      // In ADAM diagnostic model, answering correctly verifies mastery of this subtopic.
-      // We do NOT inject the same subtopic again. The student advances to the next diverse concept!
+      // 3. Dynamic replacement: Backfill with fresh distinct conceptual skills in this strand
+      if (prunedCount > 0) {
+        const existingSubtopics = new Set(
+          prunedQuestions.map((q) => String(q.subtopic || q.subtopic_name || '').trim().toLowerCase())
+        )
+
+        // Find unused questions at target grade (or higher) in the same strand from distinct subtopics
+        const replacementCandidates = questionBank.filter((q) =>
+          !usedQuestionIds.includes(q.id) &&
+          matchesStrand(q.topic, currentStrand) &&
+          Number(q.grade) >= Math.min(state.targetGrade, questionGrade) &&
+          !isPrerequisiteOf(q.subtopic || q.subtopic_name, subtopic, currentStrand) &&
+          !existingSubtopics.has(String(q.subtopic || q.subtopic_name || '').trim().toLowerCase())
+        ).sort((a, b) => {
+          const scoreDiff = getConciseScore(a) - getConciseScore(b)
+          if (scoreDiff !== 0) return scoreDiff
+          return (a.difficulty === 'High' ? 1 : 2) - (b.difficulty === 'High' ? 1 : 2)
+        })
+
+        // Find insertion point right after the last remaining question of this strand
+        let lastStrandIdx = currentIndex
+        for (let i = currentIndex + 1; i < prunedQuestions.length; i++) {
+          if (matchesStrand(prunedQuestions[i].topic, currentStrand)) {
+            lastStrandIdx = i
+          } else {
+            break // next strand begins
+          }
+        }
+
+        let added = 0
+        for (const repQ of replacementCandidates) {
+          if (added >= prunedCount) break
+          const repSub = String(repQ.subtopic || repQ.subtopic_name || '').trim().toLowerCase()
+          if (!existingSubtopics.has(repSub)) {
+            prunedQuestions.splice(lastStrandIdx + 1, 0, repQ)
+            usedQuestionIds.push(repQ.id)
+            existingSubtopics.add(repSub)
+            lastStrandIdx++
+            added++
+          }
+        }
+      }
+
+      questions = prunedQuestions
     } else {
       // Student answered WRONG on a normal question
       if (currentQuestion.difficulty === 'High') {
@@ -1360,6 +1479,9 @@ export function advanceGradeBatchTest(state, questionBank, currentQuestion, sele
     activeProbe,
     probeHistory,
     weaknessMap,
+    inferredMastery,
+    theta: newTheta,
+    irtHistory,
   }
 }
 

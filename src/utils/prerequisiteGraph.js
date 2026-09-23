@@ -230,6 +230,208 @@ export const DOMAIN_PROGRESSIONS = {
   ],
 }
 
+export const DIAGNOSTIC_BRANCH_PREREQUISITES = {
+  // Number & Operations - Decimal & Multi-Digit Progression Tree
+  'multi-digit & decimal operations': [
+    'place value & powers of 10',
+    'decimals',
+    'decimals to thousandths',
+    'rounding decimals',
+    'place value system',
+    'place value & 10x relationships',
+    'multi-digit computation',
+    'multi-digit multiplication',
+    'multi-digit division & remainders',
+    'multi-digit addition & subtraction',
+    'multi-digit representation & expanded form',
+    'addition using place value',
+    '3-digit addition & subtraction',
+    'place value addition & subtraction',
+    'place value',
+    'understand place value - tens & ones',
+    'counting & number representation',
+  ],
+  'decimals': [
+    'place value & powers of 10',
+    'rounding decimals',
+    'place value system',
+    'addition using place value',
+    'place value addition & subtraction',
+    'place value',
+  ],
+  'rounding decimals': [
+    'place value & powers of 10',
+    'rounding multi-digit numbers',
+    'place value system',
+    'place value',
+  ],
+  'place value & powers of 10': [
+    'place value system',
+    'place value & 10x relationships',
+    'multiply by multiples of ten',
+    'place value',
+    'understand place value - tens & ones',
+  ],
+  'multi-digit multiplication': [
+    'multiplication & division operations',
+    'properties of multiplication',
+    'multiplication, division & fractions',
+    'equal groups & rectangular arrays',
+    'addition using place value',
+  ],
+
+  // Number & Operations - Fraction Progression Tree
+  'fraction multiplication & division': [
+    'fraction addition & subtraction',
+    'fraction division word problems',
+    'fractions',
+    'comparing fractions',
+    'equivalent fractions & whole numbers',
+    'fractions on a number line',
+    'understanding fractions as equal parts',
+    'equal areas & unit fractions',
+    'fractions of shapes',
+  ],
+  'fraction division': [
+    'fraction multiplication & division',
+    'fraction addition & subtraction',
+    'fractions',
+    'comparing fractions',
+    'equivalent fractions & whole numbers',
+  ],
+  'fraction addition & subtraction': [
+    'fractions',
+    'comparing fractions',
+    'equivalent fractions & whole numbers',
+    'fractions on a number line',
+    'understanding fractions as equal parts',
+  ],
+
+  // Number & Operations - Exponents & Radicals Tree
+  'square roots': [
+    'integer exponents & radicals',
+    'factors & multiples (lcm/hcf)',
+    'multiplication & division operations',
+  ],
+  'integer exponents & radicals': [
+    'integers',
+    'multiplication, division & fractions',
+    'factors & multiples',
+  ],
+  'rational numbers operations': [
+    'integers',
+    'rational numbers',
+    'multi-digit & decimal operations',
+    'fraction multiplication & division',
+  ],
+
+  // Algebra Progression Tree
+  'systems of linear equations': [
+    'linear equations',
+    'slope-intercept form',
+    'two-variable equations',
+    'multi-step equations',
+    'one-variable equations',
+    'algebraic expressions',
+    'numerical expressions',
+    'order of operations',
+  ],
+  'linear equations': [
+    'one-variable equations',
+    'multi-step equations',
+    'algebraic expressions',
+    'inequalities',
+    'numerical expressions',
+    'order of operations',
+    'two-step word problems',
+  ],
+  'algebraic expressions': [
+    'numerical expressions',
+    'order of operations',
+    'number patterns',
+    'unknowns',
+    'two-step word problems',
+  ],
+
+  // Geometry Progression Tree
+  'pythagorean theorem': [
+    'square roots',
+    'squares, rectangles & rhombuses',
+    'area of triangles',
+    'triangle construction',
+    'area of rectangles',
+  ],
+  'volume of cylinders, cones & spheres': [
+    'area of circles',
+    'circumference',
+    'volume of rectangular prisms',
+    'volume concepts',
+    'composite volume',
+    'unit cubes',
+  ],
+  'area of composite figures': [
+    'area of polygons',
+    'area of triangles',
+    'area of quadrilaterals',
+    'rectangle area & perimeter',
+    'area of rectangles',
+    'area concepts & unit squares',
+    'perimeter',
+  ],
+  'area of polygons': [
+    'area of triangles',
+    'area of rectangles',
+    'area concepts & unit squares',
+    'rectangle area & perimeter',
+    'perimeter',
+  ],
+
+  // Measurement Progression Tree
+  'real-world volume applications': [
+    'measurement unit conversion',
+    'volume concepts',
+    'volume of rectangular prisms',
+    'measurement word problems',
+    'mass & liquid volume',
+  ],
+  'scale & measurement applications': [
+    'scale drawings',
+    'measurement unit conversion',
+    'measuring length',
+    'length word problems',
+  ],
+
+  // Data Analysis Progression Tree
+  'scatter plots': [
+    'coordinate data',
+    'ordered pairs',
+    'line plots',
+    'dot plots',
+    'scaled bar graphs',
+    'data tables',
+  ],
+  'two-way tables': [
+    'data tables',
+    'data representation',
+    'scaled bar graphs',
+    'categories',
+  ],
+  'compound probability': [
+    'probability',
+    'sample space',
+    'probability models',
+    'comparing data',
+  ],
+  'measures of center': [
+    'mean',
+    'median',
+    'range',
+    'dot plots',
+    'data distribution',
+    'data tables',
+  ],
+}
+
 /**
  * Normalizes strand names to match the 5 standard keys
  */
@@ -241,6 +443,98 @@ export function normalizeStrand(rawStrand) {
   if (s.includes('measur') || s.includes('volume') || s.includes('area') || s.includes('length')) return 'Measurement'
   if (s.includes('data') || s.includes('stat') || s.includes('prob') || s.includes('graph')) return 'Data Analysis'
   return 'Number & Operations'
+}
+
+/**
+ * Checks whether candidateSubtopic is a subordinate prerequisite of masteredSubtopic.
+ * (ADAM Topic Skipping Rule: If masteredSubtopic is correct, candidateSubtopic is bypassed).
+ */
+export function isPrerequisiteOf(candidateSubtopic, masteredSubtopic, rawStrand = 'Number & Operations') {
+  if (!candidateSubtopic || !masteredSubtopic) return false
+  const cNorm = String(candidateSubtopic).toLowerCase().trim()
+  const mNorm = String(masteredSubtopic).toLowerCase().trim()
+  if (cNorm === mNorm) return false
+
+  // 1. Direct match in diagnostic branch tree
+  for (const [key, prereqs] of Object.entries(DIAGNOSTIC_BRANCH_PREREQUISITES)) {
+    if (mNorm.includes(key) || key.includes(mNorm)) {
+      if (prereqs.some((p) => cNorm.includes(p.toLowerCase()) || p.toLowerCase().includes(cNorm))) {
+        return true
+      }
+    }
+  }
+
+  // 2. Conceptual family check
+  const isDecimalOrMultFamily = (s) => /decimal|place value|multi-digit|powers of 10|rounding|addition using place value/i.test(s)
+  const isFractionFamily = (s) => /fraction/i.test(s)
+  const isAlgebraFamily = (s) => /equation|expression|variable|unknown|pattern|slope/i.test(s)
+  const isGeometryAreaFamily = (s) => /area|perimeter|polygon|rectangle|triangle|circle|circumference/i.test(s)
+  const isGeometryVolumeFamily = (s) => /volume|prism|cube|cylinder|cone|sphere/i.test(s)
+
+  const strandKey = normalizeStrand(rawStrand)
+  const progression = DOMAIN_PROGRESSIONS[strandKey] || []
+
+  let masteredGrade = -1
+  let candidateGrade = -1
+
+  for (const step of progression) {
+    if (step.skills.some((sk) => mNorm.includes(sk.toLowerCase()) || sk.toLowerCase().includes(mNorm))) {
+      if (masteredGrade === -1 || step.grade > masteredGrade) masteredGrade = step.grade
+    }
+    if (step.skills.some((sk) => cNorm.includes(sk.toLowerCase()) || sk.toLowerCase().includes(cNorm))) {
+      if (candidateGrade === -1 || step.grade < candidateGrade) candidateGrade = step.grade
+    }
+  }
+
+  if (masteredGrade > 0 && candidateGrade > 0 && candidateGrade < masteredGrade) {
+    if (isDecimalOrMultFamily(mNorm) && isDecimalOrMultFamily(cNorm)) return true
+    if (isFractionFamily(mNorm) && isFractionFamily(cNorm)) return true
+    if (isAlgebraFamily(mNorm) && isAlgebraFamily(cNorm)) return true
+    if (isGeometryAreaFamily(mNorm) && isGeometryAreaFamily(cNorm)) return true
+    if (isGeometryVolumeFamily(mNorm) && isGeometryVolumeFamily(cNorm)) return true
+
+    const currentStep = progression.find((step) => step.grade === masteredGrade)
+    if (currentStep && currentStep.prereqs.some((pr) => cNorm.includes(pr.toLowerCase()) || pr.toLowerCase().includes(cNorm))) {
+      return true
+    }
+  }
+
+  return false
+}
+
+/**
+ * Returns all subordinate prerequisite subtopic names for a given mastered subtopic.
+ */
+export function getPrerequisiteSubtopicNames(masteredSubtopic, rawStrand = 'Number & Operations') {
+  if (!masteredSubtopic) return []
+  const mNorm = String(masteredSubtopic).toLowerCase().trim()
+  const results = new Set()
+
+  for (const [key, prereqs] of Object.entries(DIAGNOSTIC_BRANCH_PREREQUISITES)) {
+    if (mNorm.includes(key) || key.includes(mNorm)) {
+      prereqs.forEach((p) => results.add(p))
+    }
+  }
+
+  const strandKey = normalizeStrand(rawStrand)
+  const progression = DOMAIN_PROGRESSIONS[strandKey] || []
+  let foundGrade = -1
+  for (const step of progression) {
+    if (step.skills.some((sk) => mNorm.includes(sk.toLowerCase()) || sk.toLowerCase().includes(mNorm))) {
+      foundGrade = step.grade
+      break
+    }
+  }
+
+  if (foundGrade > 1) {
+    progression.forEach((step) => {
+      if (step.grade < foundGrade) {
+        step.skills.forEach((skill) => results.add(skill))
+      }
+    })
+  }
+
+  return [...results]
 }
 
 /**
@@ -260,17 +554,39 @@ export function getInferredPrerequisites(subtopicName, rawStrand, targetGrade = 
     }
   }
 
-  // Collect all foundational skills strictly below this grade
   const inferred = []
+  const seenSkills = new Set()
+
+  // 1. Collect from explicit branch prerequisites
+  for (const [key, prereqs] of Object.entries(DIAGNOSTIC_BRANCH_PREREQUISITES)) {
+    if (normSub.includes(key) || key.includes(normSub)) {
+      prereqs.forEach((p) => {
+        if (!seenSkills.has(p.toLowerCase())) {
+          seenSkills.add(p.toLowerCase())
+          inferred.push({
+            subtopicName: p,
+            grade: Math.max(1, foundGrade - 1),
+            strand: strandKey,
+            isInferred: true,
+          })
+        }
+      })
+    }
+  }
+
+  // 2. Collect all foundational skills strictly below this grade
   progression.forEach((step) => {
     if (step.grade < foundGrade) {
       step.skills.forEach((skill) => {
-        inferred.push({
-          subtopicName: skill,
-          grade: step.grade,
-          strand: strandKey,
-          isInferred: true,
-        })
+        if (!seenSkills.has(skill.toLowerCase())) {
+          seenSkills.add(skill.toLowerCase())
+          inferred.push({
+            subtopicName: skill,
+            grade: step.grade,
+            strand: strandKey,
+            isInferred: true,
+          })
+        }
       })
     }
   })
