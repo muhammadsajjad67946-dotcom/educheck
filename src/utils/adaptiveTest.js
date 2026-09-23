@@ -1120,6 +1120,111 @@ export function createGradeBatchTestState(questionBank, targetGrade, selectedStr
   }
 }
 
+export function calibrateNextQuestion(questions, currentIndex, targetDifficulty, targetStrand, questionBank, usedQuestionIds) {
+  if (!questions || currentIndex + 1 >= questions.length) return questions
+  const nextQ = questions[currentIndex + 1]
+  if (!nextQ) return questions
+
+  // If next question already matches targetDifficulty, no change needed
+  if (nextQ.difficulty === targetDifficulty) return questions
+
+  // 1. Search ahead in current strand in questions array for a question matching targetDifficulty
+  for (let i = currentIndex + 2; i < questions.length; i++) {
+    if (matchesStrand(questions[i].topic, targetStrand) && questions[i].difficulty === targetDifficulty) {
+      const updated = [...questions]
+      const temp = updated[currentIndex + 1]
+      updated[currentIndex + 1] = updated[i]
+      updated[i] = temp
+      return updated
+    }
+  }
+
+  // 2. Search questionBank for an unused question matching targetStrand and targetDifficulty
+  const usedSet = new Set(usedQuestionIds)
+  const candidate = questionBank.find(
+    (q) => !usedSet.has(q.id) &&
+      matchesStrand(q.topic, targetStrand) &&
+      q.difficulty === targetDifficulty &&
+      !isLongWordProblem(q)
+  )
+
+  if (candidate) {
+    const updated = [...questions]
+    usedQuestionIds.push(candidate.id)
+    updated[currentIndex + 1] = candidate
+    return updated
+  }
+
+  // 3. Fallback: If target is High and nextQ is Low, prefer Medium over Low (never downgrade to Low on correct)
+  if (targetDifficulty === 'High' && nextQ.difficulty === 'Low') {
+    const medCandidate = questionBank.find(
+      (q) => !usedSet.has(q.id) &&
+        matchesStrand(q.topic, targetStrand) &&
+        q.difficulty === 'Medium' &&
+        !isLongWordProblem(q)
+    )
+    if (medCandidate) {
+      const updated = [...questions]
+      usedQuestionIds.push(medCandidate.id)
+      updated[currentIndex + 1] = medCandidate
+      return updated
+    }
+  }
+
+  return questions
+}
+
+export function ensureQuestionLimit(questions, questionLimit, questionBank, usedQuestionIds, targetGrade = 5) {
+  let updated = [...(questions || [])]
+  const usedSet = new Set(usedQuestionIds || [])
+
+  if (updated.length > questionLimit) {
+    return updated.slice(0, questionLimit)
+  }
+
+  // If questions were pruned below questionLimit, backfill so total is ALWAYS exactly questionLimit!
+  while (updated.length < questionLimit) {
+    const targetG = Number(targetGrade) || 5
+    // 1. Prefer target grade Medium or High questions
+    let candidate = questionBank.find(
+      (q) => !usedSet.has(q.id) &&
+        Number(q.grade) === targetG &&
+        (q.difficulty === 'Medium' || q.difficulty === 'High') &&
+        !isLongWordProblem(q)
+    )
+    // 2. Fallback to any target grade question
+    if (!candidate) {
+      candidate = questionBank.find(
+        (q) => !usedSet.has(q.id) &&
+          Number(q.grade) === targetG &&
+          !isLongWordProblem(q)
+      )
+    }
+    // 3. Fallback to any grade within [targetGrade - 1, targetGrade + 1]
+    if (!candidate) {
+      candidate = questionBank.find(
+        (q) => !usedSet.has(q.id) &&
+          Number(q.grade) >= Math.max(1, targetG - 1) &&
+          !isLongWordProblem(q)
+      )
+    }
+    // 4. Any remaining question
+    if (!candidate) {
+      candidate = questionBank.find((q) => !usedSet.has(q.id))
+    }
+
+    if (candidate) {
+      usedSet.add(candidate.id)
+      usedQuestionIds.push(candidate.id)
+      updated.push(candidate)
+    } else {
+      break
+    }
+  }
+
+  return updated
+}
+
 export function advanceGradeBatchTest(state, questionBank, currentQuestion, selectedAnswer) {
   if (!state || state.mode !== 'grade-batch' || !currentQuestion) return state
 
@@ -1456,11 +1561,12 @@ export function advanceGradeBatchTest(state, questionBank, currentQuestion, sele
     }
   }
 
-  // Keep the fixed assessment length
+  // 1. Calibrate next question to match nextDifficulty (True IRT Adaptive Branching)
+  questions = calibrateNextQuestion(questions, currentIndex, nextDifficulty, currentQuestion.topic, questionBank, usedQuestionIds)
+
+  // 2. Strictly guarantee exact assessment length (never shrink down to 21 questions)
   const questionLimit = state.questionLimit || GRADE_BATCH_QUESTION_COUNT
-  if (questions.length > questionLimit) {
-    questions = questions.slice(0, questionLimit)
-  }
+  questions = ensureQuestionLimit(questions, questionLimit, questionBank, usedQuestionIds, state.targetGrade)
 
   const assessmentComplete = batchQuestionCount >= questionLimit
 
