@@ -232,7 +232,7 @@ export const DOMAIN_PROGRESSIONS = {
 
 export const DIAGNOSTIC_BRANCH_PREREQUISITES = {
   // Number & Operations - Decimal & Multi-Digit Progression Tree
-  'multi-digit & decimal operations': [
+  'number & operations:multi-digit & decimal operations': [
     'place value & powers of 10',
     'decimals',
     'decimals to thousandths',
@@ -251,7 +251,7 @@ export const DIAGNOSTIC_BRANCH_PREREQUISITES = {
     'understand place value - tens & ones',
     'counting & number representation',
   ],
-  'decimals': [
+  'number & operations:decimals': [
     'place value & powers of 10',
     'rounding decimals',
     'place value system',
@@ -259,20 +259,20 @@ export const DIAGNOSTIC_BRANCH_PREREQUISITES = {
     'place value addition & subtraction',
     'place value',
   ],
-  'rounding decimals': [
+  'number & operations:rounding decimals': [
     'place value & powers of 10',
     'rounding multi-digit numbers',
     'place value system',
     'place value',
   ],
-  'place value & powers of 10': [
+  'number & operations:place value & powers of 10': [
     'place value system',
     'place value & 10x relationships',
     'multiply by multiples of ten',
     'place value',
     'understand place value - tens & ones',
   ],
-  'multi-digit multiplication': [
+  'number & operations:multi-digit multiplication': [
     'multiplication & division operations',
     'properties of multiplication',
     'multiplication, division & fractions',
@@ -280,10 +280,9 @@ export const DIAGNOSTIC_BRANCH_PREREQUISITES = {
     'addition using place value',
   ],
 
-  // Number & Operations - Fraction Progression Tree
-  'fraction multiplication & division': [
+  // Number & Operations - Fraction Progression Tree (Strict 1-Way Dependency: Mult -> Div)
+  'number & operations:fraction multiplication & division': [
     'fraction addition & subtraction',
-    'fraction division word problems',
     'fractions',
     'comparing fractions',
     'equivalent fractions & whole numbers',
@@ -292,14 +291,14 @@ export const DIAGNOSTIC_BRANCH_PREREQUISITES = {
     'equal areas & unit fractions',
     'fractions of shapes',
   ],
-  'fraction division': [
+  'number & operations:fraction division': [
     'fraction multiplication & division',
     'fraction addition & subtraction',
     'fractions',
     'comparing fractions',
     'equivalent fractions & whole numbers',
   ],
-  'fraction addition & subtraction': [
+  'number & operations:fraction addition & subtraction': [
     'fractions',
     'comparing fractions',
     'equivalent fractions & whole numbers',
@@ -308,17 +307,17 @@ export const DIAGNOSTIC_BRANCH_PREREQUISITES = {
   ],
 
   // Number & Operations - Exponents & Radicals Tree
-  'square roots': [
+  'number & operations:square roots': [
     'integer exponents & radicals',
     'factors & multiples (lcm/hcf)',
     'multiplication & division operations',
   ],
-  'integer exponents & radicals': [
+  'number & operations:integer exponents & radicals': [
     'integers',
     'multiplication, division & fractions',
     'factors & multiples',
   ],
-  'rational numbers operations': [
+  'number & operations:rational numbers operations': [
     'integers',
     'rational numbers',
     'multi-digit & decimal operations',
@@ -326,7 +325,7 @@ export const DIAGNOSTIC_BRANCH_PREREQUISITES = {
   ],
 
   // Algebra Progression Tree
-  'systems of linear equations': [
+  'algebra:systems of linear equations': [
     'linear equations',
     'slope-intercept form',
     'two-variable equations',
@@ -336,7 +335,7 @@ export const DIAGNOSTIC_BRANCH_PREREQUISITES = {
     'numerical expressions',
     'order of operations',
   ],
-  'linear equations': [
+  'algebra:linear equations': [
     'one-variable equations',
     'multi-step equations',
     'algebraic expressions',
@@ -345,7 +344,7 @@ export const DIAGNOSTIC_BRANCH_PREREQUISITES = {
     'order of operations',
     'two-step word problems',
   ],
-  'algebraic expressions': [
+  'algebra:algebraic expressions': [
     'numerical expressions',
     'order of operations',
     'number patterns',
@@ -354,14 +353,14 @@ export const DIAGNOSTIC_BRANCH_PREREQUISITES = {
   ],
 
   // Geometry Progression Tree
-  'pythagorean theorem': [
+  'geometry:pythagorean theorem': [
     'square roots',
     'squares, rectangles & rhombuses',
     'area of triangles',
     'triangle construction',
     'area of rectangles',
   ],
-  'volume of cylinders, cones & spheres': [
+  'geometry:volume of cylinders, cones & spheres': [
     'area of circles',
     'circumference',
     'volume of rectangular prisms',
@@ -369,7 +368,7 @@ export const DIAGNOSTIC_BRANCH_PREREQUISITES = {
     'composite volume',
     'unit cubes',
   ],
-  'area of composite figures': [
+  'geometry:area of composite figures': [
     'area of polygons',
     'area of triangles',
     'area of quadrilaterals',
@@ -378,23 +377,43 @@ export const DIAGNOSTIC_BRANCH_PREREQUISITES = {
     'area concepts & unit squares',
     'perimeter',
   ],
-  'area of polygons': [
+  'geometry:area of polygons': [
     'area of triangles',
-    'area of rectangles',
-    'area concepts & unit squares',
-    'rectangle area & perimeter',
-    'perimeter',
+    'area of quadrilaterals',
+    'coordinate plane',
+    'graphing points',
+    'quadrilaterals',
+    'squares, rectangles & rhombuses',
+  ],
+  'geometry:area of triangles': [
+    'coordinate plane',
+    'graphing points',
+    'quadrilaterals',
+    'squares, rectangles & rhombuses',
+  ],
+  'geometry:surface area': [
+    'area of polygons',
+    'area of quadrilaterals',
+    'coordinate plane',
+    'graphing points',
   ],
 
   // Measurement Progression Tree
-  'area of triangles': [
+  'measurement:area of triangles': [
     'rectangle area & perimeter',
     'area of rectangles',
     'decomposing area',
     'area concepts & unit squares',
     'perimeter',
   ],
-  'surface area': [
+  'measurement:area of polygons': [
+    'rectangle area & perimeter',
+    'area of rectangles',
+    'decomposing area',
+    'area concepts & unit squares',
+    'perimeter',
+  ],
+  'measurement:surface area': [
     'area of rectangles',
     'rectangle area & perimeter',
     'area of triangles',
@@ -402,20 +421,20 @@ export const DIAGNOSTIC_BRANCH_PREREQUISITES = {
     'volume of rectangular prisms',
     'volume concepts',
   ],
-  'volume of composite figures': [
+  'measurement:volume of composite figures': [
     'composite volume',
     'volume of rectangular prisms',
     'volume concepts',
     'unit cubes',
   ],
-  'real-world volume applications': [
+  'measurement:real-world volume applications': [
     'measurement unit conversion',
     'volume concepts',
     'volume of rectangular prisms',
     'measurement word problems',
     'mass & liquid volume',
   ],
-  'scale & measurement applications': [
+  'measurement:scale & measurement applications': [
     'scale drawings',
     'measurement unit conversion',
     'measuring length',
@@ -423,7 +442,7 @@ export const DIAGNOSTIC_BRANCH_PREREQUISITES = {
   ],
 
   // Data Analysis Progression Tree
-  'scatter plots': [
+  'data analysis:scatter plots': [
     'coordinate data',
     'ordered pairs',
     'line plots',
@@ -431,19 +450,19 @@ export const DIAGNOSTIC_BRANCH_PREREQUISITES = {
     'scaled bar graphs',
     'data tables',
   ],
-  'two-way tables': [
+  'data analysis:two-way tables': [
     'data tables',
     'data representation',
     'scaled bar graphs',
     'categories',
   ],
-  'compound probability': [
+  'data analysis:compound probability': [
     'probability',
     'sample space',
     'probability models',
     'comparing data',
   ],
-  'measures of center': [
+  'data analysis:measures of center': [
     'mean',
     'median',
     'range',
@@ -467,6 +486,51 @@ export function normalizeStrand(rawStrand) {
 }
 
 /**
+ * Safely tests whether candidateSubtopic matches targetSubtopic using exact or word-boundary token matching.
+ * Prevents loose substring false-positives (e.g., 'area' matching 'area of triangles').
+ */
+export function matchSubtopic(a, b) {
+  if (!a || !b) return false
+  const s1 = String(a).toLowerCase().trim()
+  const s2 = String(b).toLowerCase().trim()
+  if (s1 === s2) return true
+
+  // Escape special regex characters
+  const escapeRegex = (str) => str.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')
+
+  // Check whole-phrase match with word boundaries
+  const r1 = new RegExp(`(^|\\b)${escapeRegex(s1)}(\\b|$)`, 'i')
+  const r2 = new RegExp(`(^|\\b)${escapeRegex(s2)}(\\b|$)`, 'i')
+
+  const minLength = Math.min(s1.length, s2.length)
+  const maxLength = Math.max(s1.length, s2.length)
+  // Short tokens (like "area", "data", "unit") should never match distinct composite topics
+  if (minLength < 4) return false
+
+  // Allow match if one is a major word-bounded substring of the other (at least 70% of total length)
+  if (r1.test(s2) && s1.length >= maxLength * 0.7) return true
+  if (r2.test(s1) && s2.length >= maxLength * 0.7) return true
+
+  return false
+}
+
+/**
+ * Matches a branch key against a subtopic name, verifying both the strand prefix and subtopic token match.
+ */
+export function matchBranchKey(branchKey, subtopicName, rawStrand) {
+  if (!branchKey || !subtopicName) return false
+  const normTargetStrand = normalizeStrand(rawStrand).toLowerCase()
+  const parts = branchKey.split(':')
+  if (parts.length > 1) {
+    const keyStrand = parts[0].trim().toLowerCase()
+    if (keyStrand !== normTargetStrand) return false
+    const keySubtopic = parts.slice(1).join(':').trim()
+    return matchSubtopic(keySubtopic, subtopicName)
+  }
+  return matchSubtopic(branchKey, subtopicName)
+}
+
+/**
  * Checks whether candidateSubtopic is a subordinate prerequisite of masteredSubtopic.
  * (ADAM Topic Skipping Rule: If masteredSubtopic is correct, candidateSubtopic is bypassed).
  */
@@ -476,10 +540,12 @@ export function isPrerequisiteOf(candidateSubtopic, masteredSubtopic, rawStrand 
   const mNorm = String(masteredSubtopic).toLowerCase().trim()
   if (cNorm === mNorm) return false
 
-  // 1. Direct match in diagnostic branch tree
-  for (const [key, prereqs] of Object.entries(DIAGNOSTIC_BRANCH_PREREQUISITES)) {
-    if (mNorm.includes(key) || key.includes(mNorm)) {
-      if (prereqs.some((p) => cNorm.includes(p.toLowerCase()) || p.toLowerCase().includes(cNorm))) {
+  const strandKey = normalizeStrand(rawStrand)
+
+  // 1. Direct match in strand-scoped diagnostic branch tree
+  for (const [branchKey, prereqs] of Object.entries(DIAGNOSTIC_BRANCH_PREREQUISITES)) {
+    if (matchBranchKey(branchKey, mNorm, strandKey)) {
+      if (prereqs.some((p) => matchSubtopic(p, cNorm))) {
         return true
       }
     }
@@ -492,17 +558,16 @@ export function isPrerequisiteOf(candidateSubtopic, masteredSubtopic, rawStrand 
   const isGeometryAreaFamily = (s) => /area|perimeter|polygon|rectangle|triangle|circle|circumference/i.test(s)
   const isGeometryVolumeFamily = (s) => /volume|prism|cube|cylinder|cone|sphere/i.test(s)
 
-  const strandKey = normalizeStrand(rawStrand)
   const progression = DOMAIN_PROGRESSIONS[strandKey] || []
 
   let masteredGrade = -1
   let candidateGrade = -1
 
   for (const step of progression) {
-    if (step.skills.some((sk) => mNorm.includes(sk.toLowerCase()) || sk.toLowerCase().includes(mNorm))) {
+    if (step.skills.some((sk) => matchSubtopic(sk, mNorm))) {
       if (masteredGrade === -1 || step.grade > masteredGrade) masteredGrade = step.grade
     }
-    if (step.skills.some((sk) => cNorm.includes(sk.toLowerCase()) || sk.toLowerCase().includes(cNorm))) {
+    if (step.skills.some((sk) => matchSubtopic(sk, cNorm))) {
       if (candidateGrade === -1 || step.grade < candidateGrade) candidateGrade = step.grade
     }
   }
@@ -519,7 +584,7 @@ export function isPrerequisiteOf(candidateSubtopic, masteredSubtopic, rawStrand 
     if (isGeometryVolumeFamily(mNorm) && isGeometryVolumeFamily(cNorm)) return true
 
     const currentStep = progression.find((step) => step.grade === masteredGrade)
-    if (currentStep && currentStep.prereqs.some((pr) => cNorm.includes(pr.toLowerCase()) || pr.toLowerCase().includes(cNorm))) {
+    if (currentStep && currentStep.prereqs.some((pr) => matchSubtopic(pr, cNorm))) {
       return true
     }
   }
@@ -533,19 +598,19 @@ export function isPrerequisiteOf(candidateSubtopic, masteredSubtopic, rawStrand 
 export function getPrerequisiteSubtopicNames(masteredSubtopic, rawStrand = 'Number & Operations') {
   if (!masteredSubtopic) return []
   const mNorm = String(masteredSubtopic).toLowerCase().trim()
+  const strandKey = normalizeStrand(rawStrand)
   const results = new Set()
 
-  for (const [key, prereqs] of Object.entries(DIAGNOSTIC_BRANCH_PREREQUISITES)) {
-    if (mNorm.includes(key) || key.includes(mNorm)) {
+  for (const [branchKey, prereqs] of Object.entries(DIAGNOSTIC_BRANCH_PREREQUISITES)) {
+    if (matchBranchKey(branchKey, mNorm, strandKey)) {
       prereqs.forEach((p) => results.add(p))
     }
   }
 
-  const strandKey = normalizeStrand(rawStrand)
   const progression = DOMAIN_PROGRESSIONS[strandKey] || []
   let foundGrade = -1
   for (const step of progression) {
-    if (step.skills.some((sk) => mNorm.includes(sk.toLowerCase()) || sk.toLowerCase().includes(mNorm))) {
+    if (step.skills.some((sk) => matchSubtopic(sk, mNorm))) {
       foundGrade = step.grade
       break
     }
@@ -573,7 +638,7 @@ export function getInferredPrerequisites(subtopicName, rawStrand, targetGrade = 
   // Find the grade level of this subtopic
   let foundGrade = Number(targetGrade) || 8
   for (const step of progression) {
-    if (step.skills.some((sk) => normSub.includes(sk.toLowerCase()) || sk.toLowerCase().includes(normSub))) {
+    if (step.skills.some((sk) => matchSubtopic(sk, normSub))) {
       foundGrade = step.grade
       break
     }
@@ -582,9 +647,9 @@ export function getInferredPrerequisites(subtopicName, rawStrand, targetGrade = 
   const inferred = []
   const seenSkills = new Set()
 
-  // 1. Collect from explicit branch prerequisites
-  for (const [key, prereqs] of Object.entries(DIAGNOSTIC_BRANCH_PREREQUISITES)) {
-    if (normSub.includes(key) || key.includes(normSub)) {
+  // 1. Collect from explicit strand-scoped branch prerequisites
+  for (const [branchKey, prereqs] of Object.entries(DIAGNOSTIC_BRANCH_PREREQUISITES)) {
+    if (matchBranchKey(branchKey, normSub, strandKey)) {
       prereqs.forEach((p) => {
         if (!seenSkills.has(p.toLowerCase())) {
           seenSkills.add(p.toLowerCase())
@@ -621,7 +686,7 @@ export function getInferredPrerequisites(subtopicName, rawStrand, targetGrade = 
 
 /**
  * Returns the exact isolated root weakness when a question is wrong.
- * Avoids blind Grade 1 drop; pinpoints immediate prerequisite grade (N-1 or N-2).
+ * Avoids blind Grade 1 drop; pinpoints immediate prerequisite grade dynamically from the DAG graph.
  */
 export function getDiagnosedPrerequisiteGap(subtopicName, rawStrand, testedGrade = 8, dbPrereqGrade = null, distractorDiagnostic = null) {
   const strandKey = normalizeStrand(rawStrand)
@@ -629,61 +694,69 @@ export function getDiagnosedPrerequisiteGap(subtopicName, rawStrand, testedGrade
   const currentGrade = Number(testedGrade) || 8
   const normSub = String(subtopicName || '').toLowerCase()
 
-  // Find progression entry
-  let matchedStepIndex = progression.findIndex((step) => step.grade === currentGrade)
-  if (matchedStepIndex === -1) {
-    matchedStepIndex = progression.findIndex((step) =>
-      step.skills.some((sk) => normSub.includes(sk.toLowerCase()) || sk.toLowerCase().includes(normSub))
+  // 1. Find the current progression step for the tested grade or skill
+  let currentStep = progression.find((step) => step.grade === currentGrade)
+  if (!currentStep) {
+    currentStep = progression.find((step) =>
+      step.skills.some((sk) => matchSubtopic(sk, normSub))
     )
   }
 
-  // Determine root gap grade: prefer DB prereq if valid, else N-1 (max drop 2 grades)
-  let rootGrade = dbPrereqGrade ? Number(dbPrereqGrade) : Math.max(1, currentGrade - 1)
+  // 2. Collect candidate prerequisites:
+  // First priority: strand-scoped DIAGNOSTIC_BRANCH_PREREQUISITES
+  let candidatePrereqs = []
+  for (const [branchKey, prereqs] of Object.entries(DIAGNOSTIC_BRANCH_PREREQUISITES)) {
+    if (matchBranchKey(branchKey, normSub, strandKey)) {
+      candidatePrereqs = prereqs
+      break
+    }
+  }
+
+  // Second priority: current step's prereqs in DOMAIN_PROGRESSIONS
+  if (candidatePrereqs.length === 0 && currentStep && Array.isArray(currentStep.prereqs)) {
+    candidatePrereqs = currentStep.prereqs
+  }
+
+  // 3. Generic DAG Derivation:
+  // Find which grade step in DOMAIN_PROGRESSIONS[strandKey] defines the candidate prerequisite skill
+  let matchedRootGrade = null
+  let matchedRootSkill = null
+
+  if (candidatePrereqs.length > 0) {
+    for (const prereqName of candidatePrereqs) {
+      // Find the highest grade strictly below currentGrade where this skill is taught
+      for (let i = progression.length - 1; i >= 0; i--) {
+        const step = progression[i]
+        if (step.grade < currentGrade) {
+          const found = step.skills.find((sk) => matchSubtopic(sk, prereqName))
+          if (found) {
+            matchedRootGrade = step.grade
+            matchedRootSkill = found
+            break
+          }
+        }
+      }
+      if (matchedRootGrade !== null) break
+    }
+  }
+
+  // 4. Resolve rootGrade:
+  // Prefer explicit dbPrereqGrade if valid, else dynamically matched grade, else N-1 (max drop 2 grades)
+  let rootGrade = dbPrereqGrade
+    ? Number(dbPrereqGrade)
+    : (matchedRootGrade !== null ? matchedRootGrade : Math.max(1, currentGrade - 1))
+
   if (rootGrade > currentGrade) rootGrade = currentGrade
   if (rootGrade < Math.max(1, currentGrade - 2)) rootGrade = Math.max(1, currentGrade - 2)
 
-  // If tested skill is 2D Area in Measurement at Grade 6, its foundational predecessor is Grade 4 Rectangle Area & Perimeter
-  const is2DArea = /area of triangle|area of polygon/i.test(normSub)
-  if (is2DArea && strandKey === 'Measurement' && currentGrade === 6 && !dbPrereqGrade) {
-    rootGrade = 4
-  }
-
-  // Find the prerequisite skill at rootGrade
-  const rootStep = progression.find((step) => step.grade === rootGrade)
-  let rootSkill = null
-
-  // 1. Check explicit DIAGNOSTIC_BRANCH_PREREQUISITES for matching skill at rootGrade
-  for (const [branchKey, branchPrereqs] of Object.entries(DIAGNOSTIC_BRANCH_PREREQUISITES)) {
-    if (normSub.includes(branchKey) || branchKey.includes(normSub)) {
-      if (rootStep) {
-        const matchingPrereq = branchPrereqs.find((bp) =>
-          rootStep.skills.some((sk) => sk.toLowerCase() === bp.toLowerCase())
-        )
-        if (matchingPrereq) {
-          rootSkill = rootStep.skills.find((sk) => sk.toLowerCase() === matchingPrereq.toLowerCase())
-          break
-        }
-      }
-    }
-  }
-
-  // 2. Check conceptual family match within rootStep
-  if (!rootSkill && rootStep) {
-    const isArea = /area|perimeter|triangle|polygon|rectangle/i.test(normSub)
-    const isVolume = /volume|prism|cube|cylinder/i.test(normSub)
-    if (isArea) {
-      rootSkill = rootStep.skills.find((sk) => /area|perimeter|polygon|rectangle|triangle/i.test(sk))
-    } else if (isVolume) {
-      rootSkill = rootStep.skills.find((sk) => /volume|prism|cube/i.test(sk))
-    }
-  }
-
-  // 3. Fallback to first skill at rootGrade or default label
-  if (!rootSkill) {
+  // 5. Resolve rootSkill:
+  let rootSkill = matchedRootSkill
+  if (!rootSkill || matchedRootGrade !== rootGrade) {
+    const rootStep = progression.find((step) => step.grade === rootGrade)
     rootSkill = rootStep ? rootStep.skills[0] : `Grade ${rootGrade} Foundation`
   }
 
-  // Build clean recommendation
+  // 6. Build clean recommendation
   let recommendation = `Review Grade ${rootGrade} ${rootSkill} to master this concept.`
   if (distractorDiagnostic?.remediation) {
     recommendation = distractorDiagnostic.remediation
