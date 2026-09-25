@@ -172,7 +172,7 @@ export const DOMAIN_PROGRESSIONS = {
     {
       grade: 6,
       skills: ['Area of Triangles', 'Area of Polygons', 'Surface Area', 'Volume of Composite Figures'],
-      prereqs: ['Volume Concepts', 'Volume of Rectangular Prisms'],
+      prereqs: ['Rectangle Area & Perimeter', 'Decomposing Area', 'Volume Concepts', 'Volume of Rectangular Prisms'],
     },
     {
       grade: 7,
@@ -387,6 +387,27 @@ export const DIAGNOSTIC_BRANCH_PREREQUISITES = {
   ],
 
   // Measurement Progression Tree
+  'area of triangles': [
+    'rectangle area & perimeter',
+    'area of rectangles',
+    'decomposing area',
+    'area concepts & unit squares',
+    'perimeter',
+  ],
+  'surface area': [
+    'area of rectangles',
+    'rectangle area & perimeter',
+    'area of triangles',
+    'area of polygons',
+    'volume of rectangular prisms',
+    'volume concepts',
+  ],
+  'volume of composite figures': [
+    'composite volume',
+    'volume of rectangular prisms',
+    'volume concepts',
+    'unit cubes',
+  ],
   'real-world volume applications': [
     'measurement unit conversion',
     'volume concepts',
@@ -487,6 +508,10 @@ export function isPrerequisiteOf(candidateSubtopic, masteredSubtopic, rawStrand 
   }
 
   if (masteredGrade > 0 && candidateGrade > 0 && candidateGrade < masteredGrade) {
+    // Prevent 2D Area and 3D Volume from cross-pollinating unless bridged by surface area
+    if (isGeometryAreaFamily(mNorm) && isGeometryVolumeFamily(cNorm) && !mNorm.includes('surface')) return false
+    if (isGeometryVolumeFamily(mNorm) && isGeometryAreaFamily(cNorm) && !mNorm.includes('surface')) return false
+
     if (isDecimalOrMultFamily(mNorm) && isDecimalOrMultFamily(cNorm)) return true
     if (isFractionFamily(mNorm) && isFractionFamily(cNorm)) return true
     if (isAlgebraFamily(mNorm) && isAlgebraFamily(cNorm)) return true
@@ -617,9 +642,46 @@ export function getDiagnosedPrerequisiteGap(subtopicName, rawStrand, testedGrade
   if (rootGrade > currentGrade) rootGrade = currentGrade
   if (rootGrade < Math.max(1, currentGrade - 2)) rootGrade = Math.max(1, currentGrade - 2)
 
+  // If tested skill is 2D Area in Measurement at Grade 6, its foundational predecessor is Grade 4 Rectangle Area & Perimeter
+  const is2DArea = /area of triangle|area of polygon/i.test(normSub)
+  if (is2DArea && strandKey === 'Measurement' && currentGrade === 6 && !dbPrereqGrade) {
+    rootGrade = 4
+  }
+
   // Find the prerequisite skill at rootGrade
   const rootStep = progression.find((step) => step.grade === rootGrade)
-  const rootSkill = rootStep ? rootStep.skills[0] : `Grade ${rootGrade} Foundation`
+  let rootSkill = null
+
+  // 1. Check explicit DIAGNOSTIC_BRANCH_PREREQUISITES for matching skill at rootGrade
+  for (const [branchKey, branchPrereqs] of Object.entries(DIAGNOSTIC_BRANCH_PREREQUISITES)) {
+    if (normSub.includes(branchKey) || branchKey.includes(normSub)) {
+      if (rootStep) {
+        const matchingPrereq = branchPrereqs.find((bp) =>
+          rootStep.skills.some((sk) => sk.toLowerCase() === bp.toLowerCase())
+        )
+        if (matchingPrereq) {
+          rootSkill = rootStep.skills.find((sk) => sk.toLowerCase() === matchingPrereq.toLowerCase())
+          break
+        }
+      }
+    }
+  }
+
+  // 2. Check conceptual family match within rootStep
+  if (!rootSkill && rootStep) {
+    const isArea = /area|perimeter|triangle|polygon|rectangle/i.test(normSub)
+    const isVolume = /volume|prism|cube|cylinder/i.test(normSub)
+    if (isArea) {
+      rootSkill = rootStep.skills.find((sk) => /area|perimeter|polygon|rectangle|triangle/i.test(sk))
+    } else if (isVolume) {
+      rootSkill = rootStep.skills.find((sk) => /volume|prism|cube/i.test(sk))
+    }
+  }
+
+  // 3. Fallback to first skill at rootGrade or default label
+  if (!rootSkill) {
+    rootSkill = rootStep ? rootStep.skills[0] : `Grade ${rootGrade} Foundation`
+  }
 
   // Build clean recommendation
   let recommendation = `Review Grade ${rootGrade} ${rootSkill} to master this concept.`
