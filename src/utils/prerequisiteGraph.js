@@ -717,6 +717,23 @@ export function getDiagnosedPrerequisiteGap(subtopicName, rawStrand, testedGrade
     candidatePrereqs = currentStep.prereqs
   }
 
+  const isAreaFamily = (s) => /area|perimeter|polygon|rectangle|triangle|circle|circumference/i.test(s)
+  const isVolumeFamily = (s) => /volume|prism|cube|cylinder|cone|sphere/i.test(s)
+  const isFractionFamily = (s) => /fraction/i.test(s)
+  const isDecimalOrMultFamily = (s) => /decimal|place value|multi-digit|powers of 10|rounding|addition using place value/i.test(s)
+  const isAlgebraFamily = (s) => /equation|expression|variable|unknown|pattern|slope|linear/i.test(s)
+  const isDataFamily = (s) => /data|plot|graph|table|probability|statistic|mean|median|scatter/i.test(s)
+
+  const getFamily = (s) => {
+    if (isVolumeFamily(s)) return 'volume'
+    if (isAreaFamily(s)) return 'area'
+    if (isFractionFamily(s)) return 'fraction'
+    if (isDecimalOrMultFamily(s)) return 'decimal_mult'
+    if (isAlgebraFamily(s)) return 'algebra'
+    if (isDataFamily(s)) return 'data'
+    return null
+  }
+
   // 3. Generic DAG Derivation:
   // Find which grade step in DOMAIN_PROGRESSIONS[strandKey] defines the candidate prerequisite skill
   let matchedRootGrade = null
@@ -724,7 +741,6 @@ export function getDiagnosedPrerequisiteGap(subtopicName, rawStrand, testedGrade
 
   if (candidatePrereqs.length > 0) {
     for (const prereqName of candidatePrereqs) {
-      // Find the highest grade strictly below currentGrade where this skill is taught
       for (let i = progression.length - 1; i >= 0; i--) {
         const step = progression[i]
         if (step.grade < currentGrade) {
@@ -749,11 +765,40 @@ export function getDiagnosedPrerequisiteGap(subtopicName, rawStrand, testedGrade
   if (rootGrade > currentGrade) rootGrade = currentGrade
   if (rootGrade < Math.max(1, currentGrade - 2)) rootGrade = Math.max(1, currentGrade - 2)
 
-  // 5. Resolve rootSkill:
+  // 5. Resolve rootSkill with intelligent conceptual fallback and consistency synchronization:
   let rootSkill = matchedRootSkill
+
   if (!rootSkill || matchedRootGrade !== rootGrade) {
     const rootStep = progression.find((step) => step.grade === rootGrade)
-    rootSkill = rootStep ? rootStep.skills[0] : `Grade ${rootGrade} Foundation`
+    let resolvedClampedSkill = null
+
+    if (rootStep) {
+      // a) Check if the clamped grade contains a skill directly in candidatePrereqs
+      resolvedClampedSkill = rootStep.skills.find((sk) =>
+        candidatePrereqs.some((cp) => matchSubtopic(sk, cp))
+      )
+
+      // b) Check if the clamped grade contains a skill in the same conceptual family
+      if (!resolvedClampedSkill) {
+        const targetFamily = getFamily(normSub) || getFamily(matchedRootSkill)
+        if (targetFamily) {
+          resolvedClampedSkill = rootStep.skills.find((sk) => getFamily(sk) === targetFamily)
+        }
+      }
+    }
+
+    if (resolvedClampedSkill) {
+      rootSkill = resolvedClampedSkill
+    } else if (matchedRootSkill) {
+      // Consistency-Fix: When clamped grade has no related concept, preserve high-fidelity matchedRootSkill
+      // AND synchronize rootGrade to matchedRootGrade so grade & skill are 100% consistent!
+      rootSkill = matchedRootSkill
+      if (matchedRootGrade !== null) {
+        rootGrade = matchedRootGrade
+      }
+    } else {
+      rootSkill = rootStep ? rootStep.skills[0] : `Grade ${rootGrade} Foundation`
+    }
   }
 
   // 6. Build clean recommendation
