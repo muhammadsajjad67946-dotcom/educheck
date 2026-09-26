@@ -13,7 +13,7 @@ import { generateDiagnosticsWithGemini, generateGeminiQuestions, generateGeminiR
 import { isMailConfigured, sendContactEmails } from './mailer.js'
 import { autoSeedDatabaseIfNeeded } from './autoSeed.js'
 import { microSkillsData } from './microSkillsData.js'
-import { getGradeSelectionBounds } from '../src/utils/gradeBounds.js'
+import { getGradeSelectionBounds, DIAGNOSTICS_SQL_CONDITION } from '../src/utils/gradeBounds.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -1714,18 +1714,15 @@ app.get('/api/questions', async (request, response) => {
     const safeMaxGrade = Math.min(Math.max(Number.isFinite(maxGradeId) ? maxGradeId : 6, 1), 8)
     const safeMinGrade = Math.min(Math.max(Number.isFinite(minGradeId) ? minGradeId : 1, 1), safeMaxGrade)
 
-    let whereClause = "q.grade IS NOT NULL AND q.explanation IS NOT NULL AND TRIM(q.explanation) != '' AND q.distractor_diagnostics IS NOT NULL AND TRIM(q.distractor_diagnostics) != ''"
+    let whereClause = `q.grade IS NOT NULL AND ${DIAGNOSTICS_SQL_CONDITION}`
     const queryValues = []
 
     if (Number.isFinite(gradeId) && gradeId >= 1 && gradeId <= 8) {
       whereClause += ' AND q.grade = ?'
       queryValues.push(gradeId)
-    } else if (Number.isFinite(minGradeId) && Number.isFinite(maxGradeId)) {
-      whereClause += ' AND q.grade BETWEEN ? AND ?'
-      queryValues.push(safeMinGrade, safeMaxGrade)
     } else {
       whereClause += ' AND q.grade BETWEEN ? AND ?'
-      queryValues.push(1, 6)
+      queryValues.push(safeMinGrade, safeMaxGrade)
     }
 
     if (topicFilter) {
@@ -1762,17 +1759,14 @@ app.get('/api/questions', async (request, response) => {
     // Fallback: If excluding previous answers leaves fewer than 30 questions,
     // query without the previous attempt exclusion so retakes always have a full question pool
     if (rows.length < 30 && Number.isInteger(studentId) && studentId > 0) {
-      let fallbackWhere = "q.grade IS NOT NULL AND q.explanation IS NOT NULL AND TRIM(q.explanation) != '' AND q.distractor_diagnostics IS NOT NULL AND TRIM(q.distractor_diagnostics) != ''"
+      let fallbackWhere = `q.grade IS NOT NULL AND ${DIAGNOSTICS_SQL_CONDITION}`
       const fallbackValues = []
       if (Number.isFinite(gradeId) && gradeId >= 1 && gradeId <= 8) {
         fallbackWhere += ' AND q.grade = ?'
         fallbackValues.push(gradeId)
-      } else if (Number.isFinite(minGradeId) && Number.isFinite(maxGradeId)) {
-        fallbackWhere += ' AND q.grade BETWEEN ? AND ?'
-        fallbackValues.push(safeMinGrade, safeMaxGrade)
       } else {
         fallbackWhere += ' AND q.grade BETWEEN ? AND ?'
-        fallbackValues.push(1, 6)
+        fallbackValues.push(safeMinGrade, safeMaxGrade)
       }
       if (topicFilter) {
         fallbackWhere += ' AND (t.name LIKE ?)'
@@ -2306,8 +2300,7 @@ app.post('/api/assessment-attempts/start', async (request, response) => {
        FROM questions q
        LEFT JOIN topics t ON t.id = q.topic_id
       WHERE q.grade BETWEEN ? AND ?
-         AND q.explanation IS NOT NULL AND TRIM(q.explanation) != ''
-         AND q.distractor_diagnostics IS NOT NULL AND TRIM(q.distractor_diagnostics) != ''
+         AND ${DIAGNOSTICS_SQL_CONDITION}
          ${topicClause ? topicClause : ''}
        ORDER BY RAND()
        LIMIT 10000
@@ -2325,8 +2318,7 @@ app.post('/api/assessment-attempts/start', async (request, response) => {
          FROM questions q
          LEFT JOIN topics t ON t.id = q.topic_id
          WHERE q.grade BETWEEN ? AND ?
-           AND q.explanation IS NOT NULL AND TRIM(q.explanation) != ''
-           AND q.distractor_diagnostics IS NOT NULL AND TRIM(q.distractor_diagnostics) != ''
+           AND ${DIAGNOSTICS_SQL_CONDITION}
            ${topicClause ? topicClause : ''}
          ORDER BY RAND()
          LIMIT 10000
@@ -2346,8 +2338,7 @@ app.post('/api/assessment-attempts/start', async (request, response) => {
          FROM questions q
          LEFT JOIN topics t ON t.id = q.topic_id
          WHERE q.grade BETWEEN ? AND ?
-           AND q.explanation IS NOT NULL AND TRIM(q.explanation) != ''
-           AND q.distractor_diagnostics IS NOT NULL AND TRIM(q.distractor_diagnostics) != ''
+           AND ${DIAGNOSTICS_SQL_CONDITION}
            ${topicClause ? topicClause : ''}
          ORDER BY RAND()
          LIMIT 10000

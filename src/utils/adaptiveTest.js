@@ -1,6 +1,6 @@
 import { CONCEPT_FAMILY_MAP } from './gradeOneTaxonomy.js'
 import { isPrerequisiteOf, getInferredPrerequisites } from './prerequisiteGraph.js'
-import { getGradeSelectionBounds } from './gradeBounds.js'
+import { getGradeSelectionBounds, hasDiagnostics } from './gradeBounds.js'
 
 export const ADAPTIVE_TOPICS = ['Number & Operations', 'Algebra', 'Geometry', 'Measurement', 'Data Analysis']
 export const ADAPTIVE_DIFFICULTIES = ['Low', 'Medium', 'High']
@@ -92,14 +92,6 @@ function findFoundationalQuestion(questionBank, topic, subtopic, currentGrade, a
   const targetGrade = Math.max(1, currentGradeNum - 1)
   const alreadyAsked = new Set(Array.isArray(askedIds) ? askedIds : [])
   const usedSet = new Set(Array.isArray(usedQuestionIds) ? usedQuestionIds : [])
-
-  const hasDiagnostics = (q) => Boolean(
-    q &&
-    q.explanation &&
-    String(q.explanation).trim() !== '' &&
-    q.distractor_diagnostics &&
-    (typeof q.distractor_diagnostics === 'object' || String(q.distractor_diagnostics).trim() !== '')
-  )
 
   const isUnused = (q) => !alreadyAsked.has(q.id) && !usedSet.has(q.id) && matchesStrand(q.topic, topic) && hasDiagnostics(q)
 
@@ -958,13 +950,6 @@ export function createGradeBatchTestState(questionBank, targetGrade, selectedStr
 
     topics.forEach((topic) => {
       const isTopicMatch = (q) => matchesStrand(q.topic, topic)
-      const hasDiagnostics = (q) => Boolean(
-        q &&
-        q.explanation &&
-        String(q.explanation).trim() !== '' &&
-        q.distractor_diagnostics &&
-        (typeof q.distractor_diagnostics === 'object' || String(q.distractor_diagnostics).trim() !== '')
-      )
 
       // Target grade questions
       const targetGradeQuestions = questionBank.filter((q) => isTopicMatch(q) && Number(q.grade) === maxGrade && hasDiagnostics(q) && !usedIds.has(q.id))
@@ -1207,14 +1192,6 @@ export function calibrateNextQuestion(questions, currentIndex, targetDifficulty,
 export function ensureQuestionLimit(questions, questionLimit, questionBank, usedQuestionIds, targetGrade = 5) {
   let updated = [...(questions || [])]
   const usedSet = new Set(usedQuestionIds || [])
-
-  const hasDiagnostics = (q) => Boolean(
-    q &&
-    q.explanation &&
-    String(q.explanation).trim() !== '' &&
-    q.distractor_diagnostics &&
-    (typeof q.distractor_diagnostics === 'object' || String(q.distractor_diagnostics).trim() !== '')
-  )
 
   if (updated.length > questionLimit) {
     return updated.slice(0, questionLimit)

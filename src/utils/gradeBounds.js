@@ -41,3 +41,23 @@ export function getGradeSelectionBounds(targetGrade, tier = 'immediate') {
     },
   }
 }
+
+/**
+ * Shared SQL condition ensuring only questions with valid explanation and distractor diagnostics are queried.
+ */
+export const DIAGNOSTICS_SQL_CONDITION = "q.explanation IS NOT NULL AND TRIM(q.explanation) != '' AND q.distractor_diagnostics IS NOT NULL AND TRIM(q.distractor_diagnostics) != ''"
+
+/**
+ * Shared validation utility checking if a question object has valid explanation and distractor diagnostics.
+ * @param {Object} q - Question candidate object
+ * @returns {boolean}
+ */
+export function hasDiagnostics(q) {
+  if (!q) return false
+  const hasExpl = Boolean(q.explanation && String(q.explanation).trim() !== '')
+  const hasDiag = Boolean(
+    q.distractor_diagnostics &&
+    (typeof q.distractor_diagnostics === 'object' || String(q.distractor_diagnostics).trim() !== '')
+  )
+  return hasExpl && hasDiag
+}
