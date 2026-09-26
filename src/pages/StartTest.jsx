@@ -12,11 +12,14 @@ import {
   Ruler,
   Shapes,
   Sparkles,
+  Volume2,
+  VolumeX,
   Zap,
 } from 'lucide-react'
 import { useApp } from '../context/AppContext'
 import { apiRequest } from '../utils/api'
 import { advanceGradeBatchTest, createGradeBatchTestState, createWeakPointsRetakeState } from '../utils/adaptiveTest.js'
+import { useSpeechNarration } from '../hooks/useSpeechNarration'
 import InAppPaymentModal from '../components/InAppPaymentModal'
 
 const STRAND_LABEL = 'Mathematics strand'
@@ -249,11 +252,35 @@ export default function StartTest() {
     }
   }, [shouldInitializeQuestions, selectedQuestions, setTestState, adaptiveInitialState])
 
+  const { isSupported: isTtsSupported, isSpeaking, speak, stop: stopSpeech } = useSpeechNarration()
+
   const current = testState.questions?.[index]
   const totalQuestions = testState.questions?.length ?? 0
   const currentTheta = testState.adaptiveState?.theta != null
     ? Number(testState.adaptiveState.theta).toFixed(2)
     : (effectiveGradeNumber ? Math.max(0.0, Number((effectiveGradeNumber - 0.6).toFixed(2))).toFixed(2) : '7.40')
+
+  // Index-change cleanup: stops audio when moving to next/previous question
+  useEffect(() => {
+    stopSpeech()
+  }, [index, stopSpeech])
+
+  const handleToggleSpeech = () => {
+    if (isSpeaking) {
+      stopSpeech()
+      return
+    }
+    if (!current?.question) return
+
+    // Clean, child-friendly reading prompt
+    const optionsText = ['A', 'B', 'C', 'D']
+      .filter((opt) => current.options?.[opt])
+      .map((opt) => `Option ${opt}: ${current.options[opt]}`)
+      .join('. ')
+
+    const fullSpeechText = `${current.question}. ${optionsText}`
+    speak(fullSpeechText)
+  }
 
   useEffect(() => {
     if (current?.id && testState.answers?.[current.id]) {
@@ -265,6 +292,7 @@ export default function StartTest() {
 
   const handleAnswerSelect = (optionKey) => {
     if (!current?.id || !current?.answer) return
+    stopSpeech()
 
     const currentBank = adaptiveQuestionBank.length ? adaptiveQuestionBank : questionBank
     const currentAdaptiveState = testState.adaptiveState || createGradeBatchTestState(currentBank, effectiveGradeNumber, testState.selectedStrand || selectedTopic || DEFAULT_STRAND, questionCount)
@@ -451,12 +479,43 @@ export default function StartTest() {
       <div className={`mt-3.5 rounded-[1.5rem] border p-5 md:p-6 ${
         darkMode ? 'border-white/10 bg-slate-900/80' : 'border-slate-200 bg-slate-50/80'
       }`}>
-        <div className="flex flex-wrap items-center gap-2.5 text-sky-500">
-          <span className="flex items-center gap-2 font-bold text-sm"><Layers3 size={16} /> Question #{index + 1}</span>
-          {current && (
-            <span className="rounded-full border border-sky-400/20 bg-sky-500/10 px-2.5 py-0.5 text-xs font-bold text-sky-400">
-              Grade {current.grade || effectiveGradeNumber}
-            </span>
+        <div className="flex flex-wrap items-center justify-between gap-2.5 text-sky-500">
+          <div className="flex flex-wrap items-center gap-2.5">
+            <span className="flex items-center gap-2 font-bold text-sm"><Layers3 size={16} /> Question #{index + 1}</span>
+            {current && (
+              <span className="rounded-full border border-sky-400/20 bg-sky-500/10 px-2.5 py-0.5 text-xs font-bold text-sky-400">
+                Grade {current.grade || effectiveGradeNumber}
+              </span>
+            )}
+          </div>
+
+          {/* Child-friendly Audio Narration for Grade 1 & 2 */}
+          {isTtsSupported && (Number(current?.grade ?? effectiveGradeNumber) <= 2) && (
+            <button
+              type="button"
+              onClick={handleToggleSpeech}
+              aria-label={isSpeaking ? 'Stop reading question aloud' : 'Read question aloud'}
+              aria-pressed={isSpeaking}
+              className={`inline-flex items-center gap-2 rounded-full px-3.5 py-1 text-xs md:text-sm font-bold transition-all duration-200 cursor-pointer shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-400 ${
+                isSpeaking
+                  ? 'bg-amber-500 text-white shadow-amber-500/30 animate-pulse ring-2 ring-amber-400/50'
+                  : darkMode
+                  ? 'border border-amber-400/40 bg-amber-500/15 text-amber-300 hover:bg-amber-500/25'
+                  : 'border border-amber-300 bg-amber-50 text-amber-800 hover:bg-amber-100'
+              }`}
+            >
+              {isSpeaking ? (
+                <>
+                  <VolumeX size={15} />
+                  <span>Stop Reading</span>
+                </>
+              ) : (
+                <>
+                  <Volume2 size={15} className="text-amber-500" />
+                  <span>Read Aloud</span>
+                </>
+              )}
+            </button>
           )}
         </div>
 
