@@ -13,6 +13,7 @@ import { generateDiagnosticsWithGemini, generateGeminiQuestions, generateGeminiR
 import { isMailConfigured, sendContactEmails } from './mailer.js'
 import { autoSeedDatabaseIfNeeded } from './autoSeed.js'
 import { microSkillsData } from './microSkillsData.js'
+import { getGradeSelectionBounds } from '../src/utils/gradeBounds.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -1709,6 +1710,7 @@ app.get('/api/questions', async (request, response) => {
     const studentId = Number(request.query.studentId)
     const limit = Math.min(Number(request.query.limit) || 5000, 10000)
 
+    // safeMaxGrade: Strictly clamped ceiling (1-8) to ensure tests never query questions above student's grade
     const safeMaxGrade = Math.min(Math.max(Number.isFinite(maxGradeId) ? maxGradeId : 6, 1), 8)
     const safeMinGrade = Math.min(Math.max(Number.isFinite(minGradeId) ? minGradeId : 1, 1), safeMaxGrade)
 
@@ -2231,6 +2233,7 @@ app.post('/api/assessment-attempts/start', async (request, response) => {
   const { studentId, minGrade = 1, maxGrade = 8, topic = 'Overall', questionCount = 30 } = request.body
   const safeStudentId = Number(studentId)
   const safeMinGrade = Math.min(Math.max(Number(minGrade) || 1, 1), 8)
+  // safeMaxGrade: Student's target grade ceiling (1-8); prevents any higher-grade questions from leaking into the test pool
   const safeMaxGrade = Math.min(Math.max(Number(maxGrade) || 8, safeMinGrade), 8)
   const safeQuestionCount = Math.min(Math.max(Number(questionCount) || 30, 1), 60)
 
@@ -2333,6 +2336,7 @@ app.post('/api/assessment-attempts/start', async (request, response) => {
       candidates.push(...gradeFallback)
     }
     if (candidates.length < safeQuestionCount) {
+      const { minGrade: fallbackMin, maxGrade: fallbackMax } = getGradeSelectionBounds(safeMaxGrade, 'extended')
       const [bankFallback] = await connection.query(
         `SELECT q.id, q.grade, t.name AS topic, t.parent_topic_id AS parentTopicId, q.subtopic_name AS subtopic,
                 ${microSelect}
@@ -2341,14 +2345,14 @@ app.post('/api/assessment-attempts/start', async (request, response) => {
                 q.correct_answer, q.explanation, q.distractor_diagnostics
          FROM questions q
          LEFT JOIN topics t ON t.id = q.topic_id
-         WHERE q.grade IS NOT NULL
+         WHERE q.grade BETWEEN ? AND ?
            AND q.explanation IS NOT NULL AND TRIM(q.explanation) != ''
            AND q.distractor_diagnostics IS NOT NULL AND TRIM(q.distractor_diagnostics) != ''
            ${topicClause ? topicClause : ''}
          ORDER BY RAND()
          LIMIT 10000
          FOR UPDATE`,
-        filterTopicParams,
+        [fallbackMin, fallbackMax, ...filterTopicParams],
       )
       candidates.push(...bankFallback)
     }
@@ -2453,10 +2457,12 @@ app.post('/api/assessment-attempts/start', async (request, response) => {
     }
 
     if (selected.length < safeQuestionCount) {
+      const candidateBounds = getGradeSelectionBounds(safeMaxGrade, 'extended')
       for (const question of candidates) {
         if (selected.length >= safeQuestionCount) break
         if (selectedIds.has(question.id)) continue
         if (topicFilter && topicFilter !== 'Overall' && !isMatchTopic(question.topic, topicFilter)) continue
+        if (!candidateBounds.isWithinBounds(question.grade)) continue
         selected.push(question)
         selectedIds.add(question.id)
       }

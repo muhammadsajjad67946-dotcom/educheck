@@ -1,5 +1,6 @@
 import { CONCEPT_FAMILY_MAP } from './gradeOneTaxonomy.js'
 import { isPrerequisiteOf, getInferredPrerequisites } from './prerequisiteGraph.js'
+import { getGradeSelectionBounds } from './gradeBounds.js'
 
 export const ADAPTIVE_TOPICS = ['Number & Operations', 'Algebra', 'Geometry', 'Measurement', 'Data Analysis']
 export const ADAPTIVE_DIFFICULTIES = ['Low', 'Medium', 'High']
@@ -901,9 +902,10 @@ function selectGradeBatchQuestions(questionBank, grade, selectedStrand, usedQues
 
   if (exactGrade.length) return exactGrade.slice(0, QUESTIONS_PER_GRADE_BATCH)
 
+  const immediateBounds = getGradeSelectionBounds(grade, 'immediate')
   const fallback = questionBank.filter((question) => (
     matchesStrand(question.topic, selectedStrand)
-    && Number(question.grade) >= Number(grade)
+    && immediateBounds.isWithinBounds(question.grade)
     && !usedIds.has(question.id)
   ))
   return fallback.slice(0, QUESTIONS_PER_GRADE_BATCH)
@@ -1228,17 +1230,23 @@ export function ensureQuestionLimit(questions, questionLimit, questionBank, used
           !isLongWordProblem(q)
       )
     }
-    // 3. Fallback to any grade within [targetGrade - 1, targetGrade + 1]
+    // 3. Fallback to immediate bounded grade window [targetGrade - 1, targetGrade]
     if (!candidate) {
+      const immediateBounds = getGradeSelectionBounds(targetG, 'immediate')
       candidate = questionBank.find(
         (q) => !usedSet.has(q.id) &&
-          Number(q.grade) >= Math.max(1, targetG - 1) &&
+          immediateBounds.isWithinBounds(q.grade) &&
           !isLongWordProblem(q)
       )
     }
-    // 4. Any remaining question
+    // 4. Extended fallback: Maximum 2-grade bounded drop window [targetGrade - 2, targetGrade]
     if (!candidate) {
-      candidate = questionBank.find((q) => !usedSet.has(q.id))
+      const extendedBounds = getGradeSelectionBounds(targetG, 'extended')
+      candidate = questionBank.find(
+        (q) => !usedSet.has(q.id) &&
+          extendedBounds.isWithinBounds(q.grade) &&
+          !isLongWordProblem(q)
+      )
     }
 
     if (candidate) {
@@ -1445,11 +1453,12 @@ export function advanceGradeBatchTest(state, questionBank, currentQuestion, sele
           prunedQuestions.map((q) => String(q.subtopic || q.subtopic_name || '').trim().toLowerCase())
         )
 
-        // Find unused questions at target grade (or higher) in the same strand from distinct subtopics
+        // Find unused questions at target grade (immediate adjacent window) in the same strand from distinct subtopics
+        const repBounds = getGradeSelectionBounds(state.targetGrade, 'immediate')
         const replacementCandidates = questionBank.filter((q) =>
           !usedQuestionIds.includes(q.id) &&
           matchesStrand(q.topic, currentStrand) &&
-          Number(q.grade) >= Math.min(state.targetGrade, questionGrade) &&
+          repBounds.isWithinBounds(q.grade) &&
           !isPrerequisiteOf(q.subtopic || q.subtopic_name, subtopic, currentStrand) &&
           !existingSubtopics.has(String(q.subtopic || q.subtopic_name || '').trim().toLowerCase())
         ).sort((a, b) => {
