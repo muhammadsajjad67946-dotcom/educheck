@@ -1762,7 +1762,7 @@ app.get('/api/questions', async (request, response) => {
     // Fallback: If excluding previous answers leaves fewer than 30 questions,
     // query without the previous attempt exclusion so retakes always have a full question pool
     if (rows.length < 30 && Number.isInteger(studentId) && studentId > 0) {
-      let fallbackWhere = 'q.grade IS NOT NULL'
+      let fallbackWhere = "q.grade IS NOT NULL AND q.explanation IS NOT NULL AND TRIM(q.explanation) != '' AND q.distractor_diagnostics IS NOT NULL AND TRIM(q.distractor_diagnostics) != ''"
       const fallbackValues = []
       if (Number.isFinite(gradeId) && gradeId >= 1 && gradeId <= 8) {
         fallbackWhere += ' AND q.grade = ?'

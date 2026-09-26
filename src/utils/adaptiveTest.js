@@ -1208,6 +1208,14 @@ export function ensureQuestionLimit(questions, questionLimit, questionBank, used
   let updated = [...(questions || [])]
   const usedSet = new Set(usedQuestionIds || [])
 
+  const hasDiagnostics = (q) => Boolean(
+    q &&
+    q.explanation &&
+    String(q.explanation).trim() !== '' &&
+    q.distractor_diagnostics &&
+    (typeof q.distractor_diagnostics === 'object' || String(q.distractor_diagnostics).trim() !== '')
+  )
+
   if (updated.length > questionLimit) {
     return updated.slice(0, questionLimit)
   }
@@ -1218,6 +1226,7 @@ export function ensureQuestionLimit(questions, questionLimit, questionBank, used
     // 1. Prefer target grade Medium or High questions
     let candidate = questionBank.find(
       (q) => !usedSet.has(q.id) &&
+        hasDiagnostics(q) &&
         Number(q.grade) === targetG &&
         (q.difficulty === 'Medium' || q.difficulty === 'High') &&
         !isLongWordProblem(q)
@@ -1226,6 +1235,7 @@ export function ensureQuestionLimit(questions, questionLimit, questionBank, used
     if (!candidate) {
       candidate = questionBank.find(
         (q) => !usedSet.has(q.id) &&
+          hasDiagnostics(q) &&
           Number(q.grade) === targetG &&
           !isLongWordProblem(q)
       )
@@ -1235,6 +1245,7 @@ export function ensureQuestionLimit(questions, questionLimit, questionBank, used
       const immediateBounds = getGradeSelectionBounds(targetG, 'immediate')
       candidate = questionBank.find(
         (q) => !usedSet.has(q.id) &&
+          hasDiagnostics(q) &&
           immediateBounds.isWithinBounds(q.grade) &&
           !isLongWordProblem(q)
       )
@@ -1244,6 +1255,7 @@ export function ensureQuestionLimit(questions, questionLimit, questionBank, used
       const extendedBounds = getGradeSelectionBounds(targetG, 'extended')
       candidate = questionBank.find(
         (q) => !usedSet.has(q.id) &&
+          hasDiagnostics(q) &&
           extendedBounds.isWithinBounds(q.grade) &&
           !isLongWordProblem(q)
       )
