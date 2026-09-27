@@ -20,6 +20,7 @@ import { validateQuestionBank } from '../utils/questionBankValidation'
 import { apiRequest } from '../utils/api'
 import { getUserStorageKey } from '../utils/userStorage'
 import { buildSubtopicTickCrossReport } from '../utils/subtopicTickCrossReport'
+import { calculateStrandIrtAbility } from '../utils/adaptiveTest'
 
 export default function SubmitTest() {
   const navigate = useNavigate()
@@ -202,13 +203,19 @@ export default function SubmitTest() {
         const correctInTopic = data.questions.filter(
           (q) => String(answers[q.id] || '').toUpperCase() === String(q.correct_answer || q.answer || q.correctAnswer || q.correct_option || '').toUpperCase()
         ).length
+        const irtResult = calculateStrandIrtAbility(data.questions, answers, selectedTargetGrade)
         return {
           topic: topicName,
           total: data.questions.length,
           correct: correctInTopic,
           percentage: data.questions.length ? Math.round((correctInTopic / data.questions.length) * 100) : 0,
+          irt: irtResult,
         }
       })
+
+      const liveOverallTheta = testState.adaptiveState?.theta != null
+        ? Number(Number(testState.adaptiveState.theta).toFixed(2))
+        : Number(estimatedGrade || 0)
 
       updateProfile({ actualGrade: estimatedGrade })
 
@@ -219,6 +226,7 @@ export default function SubmitTest() {
         wrong: wrongCount,
         unanswered,
         percentage,
+        overallTheta: liveOverallTheta,
         score: correctCount,
         studentName: user.name || 'Student',
         subject: questions[0]?.topic || 'General Assessment',
@@ -237,7 +245,11 @@ export default function SubmitTest() {
         subtopicReport: subtopicTickCrossReport,
         weaknessMap: testState.adaptiveState?.weaknessMap || {},
         probeHistory: testState.adaptiveState?.probeHistory || [],
-        reportData,
+        reportData: {
+          ...reportData,
+          overallTheta: liveOverallTheta,
+          topicBreakdown,
+        },
         submittedAt: new Date().toISOString(),
       }
 

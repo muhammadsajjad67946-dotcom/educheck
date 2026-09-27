@@ -17,7 +17,7 @@ import {
 import { jsPDF } from 'jspdf'
 import { useApp } from '../context/AppContext'
 import { getDiagnosticConfidence } from '../utils/scoring'
-import { calculateAdaptiveOverallGE, calculateAdaptiveTopicGE } from '../utils/adaptiveTest'
+import { calculateAdaptiveOverallGE, calculateAdaptiveTopicGE, calculateStrandIrtAbility, matchesStrand } from '../utils/adaptiveTest'
 import { buildSubtopicTickCrossReport, formatSubtopicTitle } from '../utils/subtopicTickCrossReport'
 import { getInferredPrerequisites, getDiagnosedPrerequisiteGap, calculateStrandDomainScore, normalizeStrand } from '../utils/prerequisiteGraph'
 import { formatKidFriendlyExplanation, parseExplanationSteps, generateWrongAnswerReason } from '../utils/formatExplanation'
@@ -809,20 +809,37 @@ export default function SummaryReport() {
       card(margin + (metricWidth + 3) * 2, 66, metricWidth, 16, 'WRONG ANSWERS', totalWrong, [254, 242, 242])
       card(margin + (metricWidth + 3) * 3, 66, metricWidth, 16, 'OVERALL ACCURACY', `${scorePercent}%`, [254, 249, 195])
 
+      const overallIrtVal = report.overallTheta ?? latestAssessment?.overallTheta ?? reportData.overallTheta ?? null
+      const overallIrtDisplay = overallIrtVal != null ? `θ: ${Number(overallIrtVal).toFixed(2)}` : 'Active'
+
       const gradePerformanceRows = (report.gradePerformance || [])
         .filter((grade) => Number(grade.total || 0) > 0)
-        .map((grade) => ({
-          label: `Grade ${grade.gradeNumber}`,
-          correct: Number(grade.correct || 0),
-          total: Number(grade.total || 0),
-        }))
-      const topicPerformanceRows = (report.topicWisePerformance || [])
-        .filter((topic) => Number(topic.totalAttempted || topic.attemptedQuestions || 0) > 0)
-        .map((topic) => ({
-          label: topic.topicName,
-          correct: Number(topic.totalCorrect ?? topic.correctAnswers ?? 0),
-          total: Number(topic.totalAttempted ?? topic.attemptedQuestions ?? 0),
-        }))
+        .map((grade) => {
+          const gradeQs = (comprehensiveQuestions || []).filter((q) => Number(q.grade) === Number(grade.gradeNumber))
+          const irt = calculateStrandIrtAbility(gradeQs, effectiveAssessment?.answers || reportAnswers, targetGradeNum)
+          return {
+            label: `Grade ${grade.gradeNumber}`,
+            correct: Number(grade.correct || 0),
+            total: Number(grade.total || 0),
+            irt,
+          }
+        })
+
+      const rawTopics = (report.topicWisePerformance || report.topicBreakdown || [])
+      const topicPerformanceRows = rawTopics
+        .filter((topic) => Number(topic.totalAttempted || topic.total || topic.attemptedQuestions || 0) > 0)
+        .map((topic) => {
+          const tName = topic.topicName || topic.topic || 'General'
+          const topicQs = (comprehensiveQuestions || []).filter((q) => matchesStrand(q.topic, tName) || q.topic === tName)
+          const irt = topic.irt || calculateStrandIrtAbility(topicQs, effectiveAssessment?.answers || reportAnswers, targetGradeNum)
+          return {
+            label: tName,
+            correct: Number(topic.totalCorrect ?? topic.correct ?? topic.correctAnswers ?? 0),
+            total: Number(topic.totalAttempted ?? topic.total ?? topic.attemptedQuestions ?? 0),
+            irt,
+          }
+        })
+
       const drawPerformanceTable = (title, firstColumn, rows, startY) => {
         const tableHeight = 12 + Math.max(rows.length, 1) * 8
         if (startY + tableHeight > 280) {
@@ -832,17 +849,17 @@ export default function SummaryReport() {
 
         text(title, margin, startY, 10, [15, 23, 42], 'bold')
         const tableY = startY + 4
-        const columnX = [margin, margin + contentWidth * 0.47, margin + contentWidth * 0.72]
-        const columnWidths = [contentWidth * 0.47, contentWidth * 0.25, contentWidth * 0.28]
+        const columnX = [margin, margin + contentWidth * 0.40, margin + contentWidth * 0.60, margin + contentWidth * 0.77]
+        const columnWidths = [contentWidth * 0.40, contentWidth * 0.20, contentWidth * 0.17, contentWidth * 0.23]
         pdf.setFillColor(241, 245, 249)
         pdf.setDrawColor(214, 222, 232)
         pdf.rect(margin, tableY, contentWidth, 9, 'FD')
-        ;[firstColumn, 'Correct/Total', 'Accuracy'].forEach((label, index) => {
+        ;[firstColumn, 'Correct/Total', 'Accuracy', 'IRT Ability'].forEach((label, index) => {
           text(label, columnX[index] + 3, tableY + 6, 8, [30, 41, 59], 'bold')
-          if (index < 2) pdf.line(columnX[index] + columnWidths[index], tableY, columnX[index] + columnWidths[index], tableY + tableHeight - 3)
+          if (index < 3) pdf.line(columnX[index] + columnWidths[index], tableY, columnX[index] + columnWidths[index], tableY + tableHeight - 3)
         })
 
-        const tableRows = rows.length ? rows : [{ label: 'No data', correct: 0, total: 0 }]
+        const tableRows = rows.length ? rows : [{ label: 'No data', correct: 0, total: 0, irt: { isReliable: false, theta: 0 } }]
         tableRows.forEach((row, index) => {
           const rowY = tableY + 9 + index * 8
           pdf.setDrawColor(226, 232, 240)
@@ -851,6 +868,10 @@ export default function SummaryReport() {
           text(row.label, columnX[0] + 3, rowY + 5.5, 8, [15, 23, 42], 'normal')
           text(`${row.correct}/${row.total}`, columnX[1] + 3, rowY + 5.5, 8, [15, 23, 42], 'normal')
           text(`${accuracy}%`, columnX[2] + 3, rowY + 5.5, 8, accuracy >= 70 ? [5, 150, 105] : accuracy >= 40 ? [180, 110, 10] : [220, 38, 38], 'bold')
+          
+          const irtText = row.irt?.isReliable ? `Score: ${row.irt.theta.toFixed(2)}` : 'Not enough data'
+          const irtColor = row.irt?.isReliable ? [99, 102, 241] : [148, 163, 184]
+          text(irtText, columnX[3] + 3, rowY + 5.5, 7.5, irtColor, row.irt?.isReliable ? 'bold' : 'normal')
         })
         return tableY + 9 + tableRows.length * 8 + 8
       }

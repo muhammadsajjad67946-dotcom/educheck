@@ -87,11 +87,14 @@ function normalizeQuestionRecord(question, fallbackId = 0) {
     ? (() => { try { return JSON.parse(question.distractor_diagnostics) } catch { return null } })()
     : question?.distractor_diagnostics || null
 
+  const topicName = String(question?.topic ?? question?.topic_name ?? question?.topicName ?? '').trim()
+
   return {
     ...question,
     id: question?.id ?? fallbackId,
     grade: Number.isFinite(gradeId) ? gradeId : 1,
     gradeId: Number.isFinite(gradeId) ? gradeId : 1,
+    topic: topicName || question?.topic || 'Mathematics',
     difficulty,
     answer: String(question?.correct_answer ?? question?.answer ?? question?.correctAnswer ?? question?.correct_option ?? question?.correctOption ?? 'A').toUpperCase(),
     options,
@@ -440,7 +443,7 @@ export default function StartTest() {
               : 'Adaptive Diagnostic Assessment'}
           </p>
           <h2 className={`mt-0.5 text-xl font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>
-            Grade {current?.grade || effectiveGradeNumber} • {current?.topic || STRAND_LABEL}
+            Grade {current?.grade || effectiveGradeNumber} • {current?.topic || (testState.selectedStrand && testState.selectedStrand !== 'Overall' ? testState.selectedStrand : (selectedTopic !== 'Overall' ? selectedTopic : 'Mathematics'))}
           </h2>
           {current?.subtopic && (
             <p className="text-xs font-medium text-slate-400">Subtopic: {current.subtopic}</p>

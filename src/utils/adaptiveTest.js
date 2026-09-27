@@ -33,6 +33,33 @@ export function updateIrtAbility(currentTheta, itemDifficulty, isCorrect, learni
   return Number(clamp(nextTheta, 0.0, maxCeiling).toFixed(2))
 }
 
+export function calculateStrandIrtAbility(strandQuestions = [], answers = {}, targetGrade = 8) {
+  const target = Math.max(1, Number(targetGrade) || 8)
+  const defaultTheta = Math.max(0.0, Number((target - 0.6).toFixed(1)))
+  const answeredQuestions = (strandQuestions || []).filter((q) => {
+    const ans = answers[q.id]
+    return ans !== undefined && ans !== null && ans !== ''
+  })
+
+  const itemCount = answeredQuestions.length
+  // Psychometric standard threshold: at least 3 items required for reliable latent trait estimation
+  const isReliable = itemCount >= 3
+
+  let theta = defaultTheta
+  for (const q of answeredQuestions) {
+    const itemDiff = getItemDifficultyParameter(q, target)
+    const expectedAns = q.correct_answer || q.answer || q.correctAnswer || q.correct_option || ''
+    const isCorrect = String(answers[q.id] || '').trim().toUpperCase() === String(expectedAns).trim().toUpperCase()
+    theta = updateIrtAbility(theta, itemDiff, isCorrect, 0.35, target)
+  }
+
+  return {
+    theta: Number(theta.toFixed(2)),
+    isReliable,
+    itemCount,
+  }
+}
+
 export function isLongWordProblem(q) {
   if (!q) return false
   const text = String(q.question || q.question_text || '').trim()
