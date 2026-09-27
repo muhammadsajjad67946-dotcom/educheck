@@ -36,8 +36,10 @@ export function updateIrtAbility(currentTheta, itemDifficulty, isCorrect, learni
 export function calculateStrandIrtAbility(strandQuestions = [], answers = {}, targetGrade = 8) {
   const target = Math.max(1, Number(targetGrade) || 8)
   const defaultTheta = Math.max(0.0, Number((target - 0.6).toFixed(1)))
+  const safeAnswers = answers && typeof answers === 'object' ? answers : {}
   const answeredQuestions = (strandQuestions || []).filter((q) => {
-    const ans = answers[q.id]
+    if (!q || q.id === undefined || q.id === null) return false
+    const ans = safeAnswers[q.id]
     return ans !== undefined && ans !== null && ans !== ''
   })
 
@@ -49,7 +51,7 @@ export function calculateStrandIrtAbility(strandQuestions = [], answers = {}, ta
   for (const q of answeredQuestions) {
     const itemDiff = getItemDifficultyParameter(q, target)
     const expectedAns = q.correct_answer || q.answer || q.correctAnswer || q.correct_option || ''
-    const isCorrect = String(answers[q.id] || '').trim().toUpperCase() === String(expectedAns).trim().toUpperCase()
+    const isCorrect = String(safeAnswers[q.id] || '').trim().toUpperCase() === String(expectedAns).trim().toUpperCase()
     theta = updateIrtAbility(theta, itemDiff, isCorrect, 0.35, target)
   }
 

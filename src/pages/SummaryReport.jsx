@@ -809,14 +809,13 @@ export default function SummaryReport() {
       card(margin + (metricWidth + 3) * 2, 66, metricWidth, 16, 'WRONG ANSWERS', totalWrong, [254, 242, 242])
       card(margin + (metricWidth + 3) * 3, 66, metricWidth, 16, 'OVERALL ACCURACY', `${scorePercent}%`, [254, 249, 195])
 
-      const overallIrtVal = report.overallTheta ?? latestAssessment?.overallTheta ?? reportData.overallTheta ?? null
-      const overallIrtDisplay = overallIrtVal != null ? `θ: ${Number(overallIrtVal).toFixed(2)}` : 'Active'
+      const safeAnswers = effectiveAssessment?.answers || reportAnswers || {}
 
       const gradePerformanceRows = (report.gradePerformance || [])
         .filter((grade) => Number(grade.total || 0) > 0)
         .map((grade) => {
           const gradeQs = (comprehensiveQuestions || []).filter((q) => Number(q.grade) === Number(grade.gradeNumber))
-          const irt = calculateStrandIrtAbility(gradeQs, effectiveAssessment?.answers || reportAnswers, targetGradeNum)
+          const irt = calculateStrandIrtAbility(gradeQs, safeAnswers, targetGradeNum)
           return {
             label: `Grade ${grade.gradeNumber}`,
             correct: Number(grade.correct || 0),
@@ -831,7 +830,7 @@ export default function SummaryReport() {
         .map((topic) => {
           const tName = topic.topicName || topic.topic || 'General'
           const topicQs = (comprehensiveQuestions || []).filter((q) => matchesStrand(q.topic, tName) || q.topic === tName)
-          const irt = topic.irt || calculateStrandIrtAbility(topicQs, effectiveAssessment?.answers || reportAnswers, targetGradeNum)
+          const irt = topic.irt || calculateStrandIrtAbility(topicQs, safeAnswers, targetGradeNum)
           return {
             label: tName,
             correct: Number(topic.totalCorrect ?? topic.correct ?? topic.correctAnswers ?? 0),
@@ -883,7 +882,7 @@ export default function SummaryReport() {
       pdf.save(`EduCheck_Report_${(report.studentName || user.name || 'Student').replace(/\s+/g, '_')}.pdf`)
     } catch (error) {
       console.error('PDF generation failed:', error)
-      alert('Error generating PDF. Please try again.')
+      alert(`Error generating PDF: ${error?.message || 'Please try again.'}`)
     }
   }
 
