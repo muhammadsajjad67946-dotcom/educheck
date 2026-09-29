@@ -266,6 +266,10 @@ export default function SubmitTest() {
             estimatedGrade,
             reportData,
             topicBreakdown,
+            // BUG-06 Fix: Send IRT-derived subtopic weak points + ADAM probe data
+            weakPoints: testState.adaptiveState?.weakPoints || [],
+            weaknessMap: testState.adaptiveState?.weaknessMap || {},
+            probeHistory: testState.adaptiveState?.probeHistory || [],
           }),
         }).catch((err) => console.warn('Background assessment save notice:', err.message))
       }

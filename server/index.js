@@ -1571,7 +1571,13 @@ app.post('/api/admin/questions', async (request, response) => {
 })
 
 app.post('/api/assessment-attempts', async (request, response) => {
-  const { studentId, attemptId = null, questions = [], answers = {}, selectedTargetGrade = null, estimatedGrade = null, reportData = {}, topicBreakdown = [] } = request.body
+  const {
+    studentId, attemptId = null, questions = [], answers = {},
+    selectedTargetGrade = null, estimatedGrade = null,
+    reportData = {}, topicBreakdown = [],
+    // BUG-06 Fix: Receive IRT-derived subtopic data
+    weakPoints = [], weaknessMap = {}, probeHistory = [],
+  } = request.body
 
   if (!studentId || !Array.isArray(questions)) {
     return response.status(400).json({ message: 'Student and assessment questions are required.' })
@@ -1586,19 +1592,55 @@ app.post('/api/assessment-attempts', async (request, response) => {
   const connection = await pool.getConnection()
   try {
     await connection.beginTransaction()
+
+    // BUG-06 Fix: Ensure new columns exist in reports table (idempotent)
+    for (const [col, def] of [
+      ['weakness_map', 'LONGTEXT NULL'],
+      ['probe_history', 'LONGTEXT NULL'],
+      ['weak_subtopics', 'LONGTEXT NULL'],
+    ]) {
+      try {
+        await connection.query(`ALTER TABLE reports ADD COLUMN ${col} ${def}`)
+      } catch (e) {
+        if (e.code !== 'ER_DUP_FIELDNAME') throw e
+      }
+    }
+
     const saveReport = async (savedAttemptId) => {
       const overallScore = Number(reportData.accuracy ?? reportData.overallResult?.accuracy ?? 0) * 100
       const gradeLetter = overallScore >= 90 ? 'A' : overallScore >= 80 ? 'B' : overallScore >= 70 ? 'C' : overallScore >= 60 ? 'D' : 'F'
       const strongTopics = Array.isArray(reportData.strengths) ? reportData.strengths : []
-      const weakTopics = Array.isArray(reportData.gaps) ? reportData.gaps : []
+      // Merge strand-level gaps + IRT subtopic weak points for complete picture
+      const strandGaps = Array.isArray(reportData.gaps) ? reportData.gaps : []
+      const subtopicWeakPoints = Array.isArray(weakPoints) && weakPoints.length ? weakPoints : []
+      const mergedWeakTopics = [...new Set([...strandGaps, ...subtopicWeakPoints])]
       const recommendations = Array.isArray(reportData.recommendedLearningFocus) ? reportData.recommendedLearningFocus : []
 
       await connection.query(
         `INSERT INTO reports
-         (assessment_id, student_id, overall_score, grade_letter, strong_topics, weak_topics, topic_breakdown, recommendations)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-         ON DUPLICATE KEY UPDATE overall_score = VALUES(overall_score), grade_letter = VALUES(grade_letter), strong_topics = VALUES(strong_topics), weak_topics = VALUES(weak_topics), topic_breakdown = VALUES(topic_breakdown), recommendations = VALUES(recommendations), generated_at = CURRENT_TIMESTAMP`,
-        [savedAttemptId, studentId, overallScore, gradeLetter, JSON.stringify(strongTopics), JSON.stringify(weakTopics), JSON.stringify(topicBreakdown), JSON.stringify(recommendations)],
+         (assessment_id, student_id, overall_score, grade_letter, strong_topics, weak_topics, topic_breakdown, recommendations, weak_subtopics, weakness_map, probe_history)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+         ON DUPLICATE KEY UPDATE
+           overall_score = VALUES(overall_score),
+           grade_letter = VALUES(grade_letter),
+           strong_topics = VALUES(strong_topics),
+           weak_topics = VALUES(weak_topics),
+           topic_breakdown = VALUES(topic_breakdown),
+           recommendations = VALUES(recommendations),
+           weak_subtopics = VALUES(weak_subtopics),
+           weakness_map = VALUES(weakness_map),
+           probe_history = VALUES(probe_history),
+           generated_at = CURRENT_TIMESTAMP`,
+        [
+          savedAttemptId, studentId, overallScore, gradeLetter,
+          JSON.stringify(strongTopics),
+          JSON.stringify(mergedWeakTopics),
+          JSON.stringify(topicBreakdown),
+          JSON.stringify(recommendations),
+          JSON.stringify(subtopicWeakPoints),        // pure subtopic weak points
+          JSON.stringify(weaknessMap || {}),          // ADAM probe root-cause map
+          JSON.stringify(Array.isArray(probeHistory) ? probeHistory : []), // probe trail
+        ],
       )
     }
 
