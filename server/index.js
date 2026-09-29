@@ -2235,6 +2235,20 @@ app.post('/api/assessment-attempts/start', async (request, response) => {
     return response.status(400).json({ message: 'Student is required.' })
   }
 
+  // BUG-01 Fix: Backend subscription enforcement — prevents API bypass of payment paywall
+  try {
+    const subscription = await getSubscriptionStatus(safeStudentId)
+    if (!subscription.active) {
+      return response.status(403).json({
+        code: 'SUBSCRIPTION_REQUIRED',
+        message: 'An active subscription is required to start a diagnostic assessment.',
+      })
+    }
+  } catch (subError) {
+    console.error('Subscription check failed:', subError.message)
+    return response.status(500).json({ message: 'Unable to verify subscription status.' })
+  }
+
   const connection = await pool.getConnection()
   try {
     await connection.beginTransaction()
