@@ -28,12 +28,13 @@ export default function AdminReports() {
 
   const deleteReport = async (report) => {
     if (!window.confirm(`Delete the report for ${report.student}?`)) return
+    setError('')
     try {
       await apiRequest(`/admin/reports/${report.id}`, { method: 'DELETE' })
       setReports((previous) => previous.filter((item) => item.id !== report.id))
       setStats((previous) => ({ ...previous, total: Math.max(0, previous.total - 1) }))
     } catch (deleteError) {
-      setError(deleteError.message)
+      setError(deleteError.message || 'Failed to delete report.')
     }
   }
 

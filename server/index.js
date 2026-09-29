@@ -355,7 +355,12 @@ app.put('/api/profile', async (request, response) => {
   }
 })
 
+let isSchemaReady = false
+
 export async function ensureDatabaseReady() {
+  if (isSchemaReady) return
+  isSchemaReady = true
+
   try {
     // 1. Clean up invalid/orphaned zero-id rows from prior failed inserts
     try {
@@ -417,15 +422,6 @@ export async function ensureDatabaseReady() {
       }
     } catch (e) {
       console.warn('ensureDatabaseReady questions columns note:', e.message)
-    }
-
-    // 5. Ensure questions status defaults to 'active' and is_active defaults to 1
-    try {
-      await pool.query("UPDATE questions SET status = 'active' WHERE status IS NULL OR TRIM(status) = ''")
-      await pool.query("UPDATE questions SET is_active = 1 WHERE is_active IS NULL")
-      await pool.query("ALTER TABLE questions MODIFY COLUMN status VARCHAR(20) NOT NULL DEFAULT 'active'")
-    } catch (e) {
-      console.warn('ensureDatabaseReady status column note:', e.message)
     }
   } catch (err) {
     console.warn('ensureDatabaseReady global note:', err.message)
@@ -1114,15 +1110,28 @@ app.get('/api/admin/reports', async (_request, response) => {
 })
 
 app.delete('/api/admin/reports/:reportId', async (request, response) => {
+  const attemptId = Number(request.params.reportId)
+  if (!Number.isInteger(attemptId) || attemptId <= 0) {
+    return response.status(400).json({ message: 'Invalid report ID.' })
+  }
+
+  const connection = await pool.getConnection()
   try {
-    const attemptId = request.params.reportId
-    await pool.query('DELETE FROM reports WHERE assessment_id = ?', [attemptId])
-    const [result] = await pool.query("DELETE FROM assessment_attempts WHERE id = ? AND status = 'submitted'", [attemptId])
+    await connection.beginTransaction()
+    await connection.query('DELETE FROM reports WHERE assessment_id = ?', [attemptId])
+    await connection.query('DELETE FROM attempt_answers WHERE attempt_id = ?', [attemptId])
+    await connection.query('DELETE FROM attempt_questions WHERE attempt_id = ?', [attemptId])
+    const [result] = await connection.query('DELETE FROM assessment_attempts WHERE id = ?', [attemptId])
+    await connection.commit()
+
     if (!result.affectedRows) return response.status(404).json({ message: 'Report not found.' })
     return response.status(204).send()
   } catch (error) {
+    await connection.rollback()
     console.error('Admin report delete failed:', error)
-    return response.status(500).json({ message: 'Unable to delete report.' })
+    return response.status(500).json({ message: error.message || 'Unable to delete report.' })
+  } finally {
+    connection.release()
   }
 })
 
