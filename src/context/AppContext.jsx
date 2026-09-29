@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import { getInitialDarkMode, applyTheme, THEME_STORAGE_KEY } from '../utils/theme'
 import { getUserStorageKey } from '../utils/userStorage'
+import { apiRequest } from '../utils/api'
 
 const AppContext = createContext(null)
 const PAYMENT_STATUS_STORAGE_KEY = 'educheck_paymentStatus_v2'
@@ -120,11 +121,29 @@ export function AppProvider({ children }) {
   useEffect(() => {
     try {
       setAssessmentResult(readStoredAssessment('educheck_assessmentResult', user))
-      setAssessmentHistory(readStoredAssessment('educheck_assessmentHistory', user) || [])
+      const storedHistory = readStoredAssessment('educheck_assessmentHistory', user) || []
+      setAssessmentHistory(storedHistory)
     } catch (error) {
       console.error('Failed to load user assessment data:', error)
       setAssessmentResult(null)
       setAssessmentHistory([])
+    }
+
+    // BUG-NEW-02 Fix: Sync assessment history from backend so data is available across devices
+    if (user?.id) {
+      apiRequest(`/assessments?studentId=${user.id}`)
+        .then((dbAssessments) => {
+          if (Array.isArray(dbAssessments) && dbAssessments.length > 0) {
+            setAssessmentHistory((prev) => {
+              const existingIds = new Set(dbAssessments.map((a) => a.id))
+              const unSynced = (prev || []).filter((p) => p.id && !existingIds.has(p.id))
+              return [...unSynced, ...dbAssessments]
+            })
+          }
+        })
+        .catch((err) => {
+          console.warn('Background assessment history sync notice:', err.message)
+        })
     }
   }, [user.id, user.email])
 

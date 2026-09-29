@@ -1693,8 +1693,8 @@ app.post('/api/assessment-attempts', async (request, response) => {
       const weakGrade = weakSubtopics.size ? Math.min(...[...weakSubtopics.values()].map((item) => item.grade)) : null
       const isPassed = (correctAnswers / Math.max(questions.length, 1)) >= 0.7
       const enrolledGradeNum = Number(selectedTargetGrade || currentGrade)
-      const nextGrade = isPassed && enrolledGradeNum < 8 ? enrolledGradeNum + 1 : enrolledGradeNum
-      await connection.query('UPDATE student_profiles SET actual_grade = ?, grade = ? WHERE user_id = ?', [estimatedGrade, `Grade ${nextGrade}`, studentId])
+      // BUG-02 Fix: Preserve enrolled school grade, only update evaluated actual_grade
+      await connection.query('UPDATE student_profiles SET actual_grade = ? WHERE user_id = ?', [estimatedGrade, studentId])
       await connection.query('DELETE FROM attempt_questions WHERE attempt_id = ?', [attemptId])
       await saveReport(attemptId)
       await connection.commit()

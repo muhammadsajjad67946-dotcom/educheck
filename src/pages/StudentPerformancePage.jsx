@@ -1,15 +1,17 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { ArrowLeft, CalendarDays, BookOpenCheck, Trophy, UserRound, BarChart3 } from 'lucide-react'
 import { useApp } from '../context/AppContext'
 import { ALL_TOPICS } from '../utils/scoring'
+import { apiRequest } from '../utils/api'
 
 export default function StudentPerformancePage() {
   const { assessmentId } = useParams()
   const navigate = useNavigate()
   const { assessmentHistory, assessmentResult, user, darkMode } = useApp()
+  const [fetchedAssessment, setFetchedAssessment] = useState(null)
 
-  const selectedAssessment = useMemo(() => {
+  const inMemoryAssessment = useMemo(() => {
     const entries = [...(assessmentHistory || [])]
 
     if (assessmentResult && !entries.some((entry) => String(entry?.submittedAt || entry?.id) === String(assessmentId))) {
@@ -18,6 +20,20 @@ export default function StudentPerformancePage() {
 
     return entries.find((entry) => String(entry?.submittedAt || entry?.id) === String(assessmentId)) || entries[entries.length - 1] || assessmentResult || null
   }, [assessmentHistory, assessmentResult, assessmentId])
+
+  // BUG-NEW-04 Fix: If assessment not found in memory (direct link or page refresh), load from backend
+  useEffect(() => {
+    if (!inMemoryAssessment && assessmentId && user?.id) {
+      apiRequest(`/assessments?studentId=${user.id}`)
+        .then((items) => {
+          const match = (items || []).find((a) => String(a.id) === String(assessmentId))
+          if (match) setFetchedAssessment(match)
+        })
+        .catch(() => {})
+    }
+  }, [assessmentId, inMemoryAssessment, user?.id])
+
+  const selectedAssessment = inMemoryAssessment || fetchedAssessment
 
   const topicBreakdown = useMemo(() => {
     if (!selectedAssessment) return []

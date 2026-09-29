@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import { BarChart3, CheckCircle2 } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { BarChart3, CheckCircle2, Eye } from 'lucide-react'
 import { useApp } from '../context/AppContext'
 import { apiRequest } from '../utils/api'
 
@@ -60,6 +61,7 @@ export default function UserAssessments() {
                   <th className="px-6 py-4">Wrong</th>
                   <th className="px-6 py-4">Status</th>
                   <th className="px-6 py-4">Submitted</th>
+                  <th className="px-6 py-4 text-center">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -82,6 +84,19 @@ export default function UserAssessments() {
                       </span>
                     </td>
                     <td className={`px-6 py-4 ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>{attempt.submitted_at ? new Date(attempt.submitted_at).toLocaleString() : 'N/A'}</td>
+                    <td className="px-6 py-4 text-center">
+                      <Link
+                        to={`/student-performance/${attempt.id}`}
+                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+                          darkMode
+                            ? 'bg-indigo-600/30 text-indigo-300 hover:bg-indigo-600/50 border border-indigo-500/30'
+                            : 'bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-200'
+                        }`}
+                      >
+                        <Eye size={13} />
+                        View Report
+                      </Link>
+                    </td>
                   </tr>
                 ))}
               </tbody>
