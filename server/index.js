@@ -1115,7 +1115,9 @@ app.get('/api/admin/reports', async (_request, response) => {
 
 app.delete('/api/admin/reports/:reportId', async (request, response) => {
   try {
-    const [result] = await pool.query("DELETE FROM assessment_attempts WHERE id = ? AND status = 'submitted'", [request.params.reportId])
+    const attemptId = request.params.reportId
+    await pool.query('DELETE FROM reports WHERE assessment_id = ?', [attemptId])
+    const [result] = await pool.query("DELETE FROM assessment_attempts WHERE id = ? AND status = 'submitted'", [attemptId])
     if (!result.affectedRows) return response.status(404).json({ message: 'Report not found.' })
     return response.status(204).send()
   } catch (error) {
@@ -1421,6 +1423,41 @@ app.post('/api/admin/students', async (request, response) => {
     if (error.code === 'ER_DUP_ENTRY') return response.status(409).json({ message: 'A student with this email already exists.' })
     console.error('Admin student save failed:', error)
     return response.status(500).json({ message: 'Unable to save student.' })
+  } finally {
+    connection.release()
+  }
+})
+
+app.delete('/api/admin/students/:studentId', async (request, response) => {
+  const studentId = Number(request.params.studentId)
+  if (!Number.isInteger(studentId) || studentId <= 0) {
+    return response.status(400).json({ message: 'Invalid student ID.' })
+  }
+
+  const connection = await pool.getConnection()
+  try {
+    await connection.beginTransaction()
+    await connection.query('DELETE FROM reports WHERE student_id = ?', [studentId])
+    const [attempts] = await connection.query('SELECT id FROM assessment_attempts WHERE student_id = ?', [studentId])
+    if (attempts.length > 0) {
+      const attemptIds = attempts.map((a) => a.id)
+      await connection.query('DELETE FROM attempt_answers WHERE attempt_id IN (?)', [attemptIds])
+      await connection.query('DELETE FROM attempt_questions WHERE attempt_id IN (?)', [attemptIds])
+      await connection.query('DELETE FROM assessment_attempts WHERE student_id = ?', [studentId])
+    }
+    await connection.query('DELETE FROM payments WHERE user_id = ?', [studentId])
+    await connection.query('DELETE FROM subscriptions WHERE user_id = ?', [studentId])
+    await connection.query('DELETE FROM feedback WHERE student_id = ?', [studentId])
+    await connection.query('DELETE FROM student_profiles WHERE user_id = ?', [studentId])
+    const [result] = await connection.query('DELETE FROM users WHERE id = ? AND role = "student"', [studentId])
+    await connection.commit()
+
+    if (!result.affectedRows) return response.status(404).json({ message: 'Student not found.' })
+    return response.status(204).send()
+  } catch (error) {
+    await connection.rollback()
+    console.error('Admin student delete failed:', error)
+    return response.status(500).json({ message: 'Unable to delete student.' })
   } finally {
     connection.release()
   }

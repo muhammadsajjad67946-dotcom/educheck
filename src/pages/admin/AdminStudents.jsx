@@ -111,12 +111,19 @@ export default function AdminStudents() {
       .catch((error) => setFormError(error.message))
   }
 
-  const handleDeleteStudent = (studentId) => {
-    setStudents((prev) => prev.filter((student) => student.id !== studentId))
+  const handleDeleteStudent = async (studentId) => {
+    if (!window.confirm('Are you sure you want to delete this student and their records?')) return
+    try {
+      await apiRequest(`/admin/students/${studentId}`, { method: 'DELETE' })
+      setStudents((prev) => prev.filter((student) => student.id !== studentId))
+    } catch (error) {
+      setFormError(error.message || 'Unable to delete student.')
+    }
   }
 
   const handleStartStudentTest = (student) => {
     setUser({
+      id: student.id,
       name: student.name,
       email: student.email,
       fatherName: '',

@@ -125,6 +125,11 @@ export default function AdminQuestions() {
     }
   }
 
+  // BUG-ADM-03 Fix: Automatically load questions when admin enters Question Bank
+  useEffect(() => {
+    loadAllQuestions()
+  }, [])
+
   const handleAutoGenerateAI = async () => {
     if (!form.question.trim()) {
       setFormError('Please enter the question text first before generating with AI.')
@@ -318,7 +323,7 @@ export default function AdminQuestions() {
         C: { error: diag.C?.error || '', remediation: diag.C?.remediation || '' },
         D: { error: diag.D?.error || '', remediation: diag.D?.remediation || '' },
       },
-      micro_skill: question.micro_skill || '',
+      micro_skill: question.micro_skill || question.subtopic || question.subtopic_name || '',
       prerequisite_grade: question.prerequisite_grade != null ? String(question.prerequisite_grade) : '',
       prerequisite_concept: question.prerequisite_concept || '',
     })
@@ -662,7 +667,12 @@ export default function AdminQuestions() {
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex justify-end gap-1.5">
-                      <button className="rounded-lg p-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition">
+                      <button
+                        type="button"
+                        onClick={() => openEditModal(question)}
+                        title="View question details"
+                        className="rounded-lg p-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition cursor-pointer"
+                      >
                         <Eye size={18} />
                       </button>
                       <button type="button" onClick={() => openEditModal(question)} title="Edit question" className="rounded-lg p-2 text-slate-500 dark:text-slate-400 hover:bg-sky-50 dark:hover:bg-sky-950/60 hover:text-sky-600 dark:hover:text-sky-400 transition">
@@ -793,6 +803,62 @@ export default function AdminQuestions() {
                 </label>
               </div>
 
+              {/* Diagnostic & Prerequisite Skills */}
+              <div className="rounded-xl border border-sky-200 dark:border-sky-900/60 bg-sky-50/50 dark:bg-sky-950/20 p-3.5 space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold uppercase tracking-wider text-sky-700 dark:text-sky-400">
+                    🎯 Diagnostic & Prerequisite Skills (Micro-Skill)
+                  </span>
+                  <span className="text-[11px] text-sky-600/70 dark:text-sky-400/70">
+                    Auto-configured / Gap Analysis
+                  </span>
+                </div>
+
+                <div className="grid gap-3 sm:grid-cols-3">
+                  <div>
+                    <label className="mb-1 block text-xs font-semibold text-slate-700 dark:text-slate-300">
+                      Micro-Skill
+                    </label>
+                    <input
+                      type="text"
+                      value={form.micro_skill || ''}
+                      onChange={(e) => updateForm('micro_skill', e.target.value)}
+                      className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-2.5 py-1.5 text-xs text-slate-900 dark:text-white placeholder-slate-400 focus:border-sky-400 focus:outline-none"
+                      placeholder="e.g. Multiplying Decimals"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="mb-1 block text-xs font-semibold text-slate-700 dark:text-slate-300">
+                      Prerequisite Grade
+                    </label>
+                    <select
+                      value={form.prerequisite_grade ?? ''}
+                      onChange={(e) => updateForm('prerequisite_grade', e.target.value)}
+                      className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-2.5 py-1.5 text-xs text-slate-900 dark:text-white focus:border-sky-400 focus:outline-none cursor-pointer"
+                    >
+                      <option value="">Same / Auto-detect</option>
+                      {[1, 2, 3, 4, 5, 6, 7, 8].map((g) => (
+                        <option key={g} value={g}>Grade {g}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="mb-1 block text-xs font-semibold text-slate-700 dark:text-slate-300">
+                      Prerequisite Concept
+                    </label>
+                    <input
+                      type="text"
+                      value={form.prerequisite_concept || ''}
+                      onChange={(e) => updateForm('prerequisite_concept', e.target.value)}
+                      className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-2.5 py-1.5 text-xs text-slate-900 dark:text-white placeholder-slate-400 focus:border-sky-400 focus:outline-none"
+                      placeholder="e.g. Multiplication Facts"
+                    />
+                  </div>
+                </div>
+              </div>
+
               <div className="grid gap-4 sm:grid-cols-2">
                 {['A', 'B', 'C', 'D'].map((option) => (
                   <label key={option}>
@@ -887,62 +953,6 @@ export default function AdminQuestions() {
                       />
                     </div>
                   ))}
-                </div>
-              </div>
-
-              {/* Diagnostic & Prerequisite Skills */}
-              <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-800/40 p-3.5 space-y-2.5">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400">
-                    🎯 Diagnostic & Prerequisite Skills (Adaptive Testing)
-                  </span>
-                  <span className="text-[11px] text-slate-400 dark:text-slate-500">
-                    Used in Gap Analysis
-                  </span>
-                </div>
-
-                <div className="grid gap-3 sm:grid-cols-3">
-                  <div>
-                    <label className="mb-1 block text-xs font-medium text-slate-700 dark:text-slate-300">
-                      Micro-Skill
-                    </label>
-                    <input
-                      type="text"
-                      value={form.micro_skill || ''}
-                      onChange={(e) => updateForm('micro_skill', e.target.value)}
-                      className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-2.5 py-1.5 text-xs text-slate-900 dark:text-white placeholder-slate-400 focus:border-sky-400 focus:outline-none"
-                      placeholder="e.g. Multiplying Decimals"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="mb-1 block text-xs font-medium text-slate-700 dark:text-slate-300">
-                      Prerequisite Grade
-                    </label>
-                    <select
-                      value={form.prerequisite_grade ?? ''}
-                      onChange={(e) => updateForm('prerequisite_grade', e.target.value)}
-                      className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-2.5 py-1.5 text-xs text-slate-900 dark:text-white focus:border-sky-400 focus:outline-none cursor-pointer"
-                    >
-                      <option value="">Same / Auto-detect</option>
-                      {[1, 2, 3, 4, 5, 6, 7, 8].map((g) => (
-                        <option key={g} value={g}>Grade {g}</option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="mb-1 block text-xs font-medium text-slate-700 dark:text-slate-300">
-                      Prerequisite Concept
-                    </label>
-                    <input
-                      type="text"
-                      value={form.prerequisite_concept || ''}
-                      onChange={(e) => updateForm('prerequisite_concept', e.target.value)}
-                      className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-2.5 py-1.5 text-xs text-slate-900 dark:text-white placeholder-slate-400 focus:border-sky-400 focus:outline-none"
-                      placeholder="e.g. Multiplication Facts"
-                    />
-                  </div>
                 </div>
               </div>
 
