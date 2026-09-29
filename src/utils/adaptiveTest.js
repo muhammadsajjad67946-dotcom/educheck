@@ -1119,6 +1119,10 @@ export function createGradeBatchTestState(questionBank, targetGrade, selectedStr
     initialPool.forEach((q) => usedIds.add(q.id))
   }
 
+  const effectiveQuestionLimit = initialPool.length > 0 && initialPool.length < questionLimit
+    ? initialPool.length
+    : questionLimit
+
   return {
     mode: 'grade-batch',
     selectedStrand,
@@ -1131,8 +1135,8 @@ export function createGradeBatchTestState(questionBank, targetGrade, selectedStr
     askedIds: [],
     questions: initialPool,
     usedQuestionIds: initialPool.map((question) => question.id),
-    maxBudget: questionLimit,
-    questionLimit,
+    maxBudget: effectiveQuestionLimit,
+    questionLimit: effectiveQuestionLimit,
     weakPoints: [],
     strongPoints: [],
     prerequisiteChecks: {},

@@ -302,8 +302,9 @@ export default function StartTest() {
     const nextAdaptiveState = advanceGradeBatchTest(currentAdaptiveState, currentBank, current, optionKey)
 
     const answeredCount = Object.keys(testState.answers || {}).length + 1
-    const shouldComplete = nextAdaptiveState.assessmentComplete === true || answeredCount >= questionCount
-    const nextQuestions = nextAdaptiveState.questions.slice(0, questionCount)
+    const effectiveTotal = testState.questions?.length || questionCount
+    const shouldComplete = nextAdaptiveState.assessmentComplete === true || answeredCount >= effectiveTotal
+    const nextQuestions = nextAdaptiveState.questions.slice(0, effectiveTotal)
 
     setSelected(optionKey)
     setAssessmentComplete(shouldComplete)

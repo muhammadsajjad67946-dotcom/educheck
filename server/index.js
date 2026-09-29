@@ -2458,81 +2458,82 @@ app.post('/api/assessment-attempts/start', async (request, response) => {
         selectedIds.add(question.id)
       }
     }
-    if (selected.length < safeQuestionCount) {
-      const generatedTopic = topicFilter && topicFilter !== 'Overall' ? topicFilter : 'Number & Operations'
-      const [topicRows] = await connection.query(
-        `SELECT t.id, t.name, t.subject_id AS subjectId, c.id AS chapterId
-         FROM topics t
-         LEFT JOIN chapters c ON c.subject_id = t.subject_id AND c.name = t.name
-         WHERE t.name LIKE ?
-         ORDER BY t.parent_topic_id IS NULL DESC, t.id
-         LIMIT 1`,
-        [`%${generatedTopic}%`],
-      )
-      let topicRow = topicRows[0]
-      if (!topicRow) {
-        const [fallbackTopicRows] = await connection.query(
+    // Only attempt Gemini question generation if no questions were found and Gemini API key is configured
+    if (selected.length === 0 && process.env.GEMINI_API_KEY) {
+      try {
+        const generatedTopic = topicFilter && topicFilter !== 'Overall' ? topicFilter : 'Number & Operations'
+        const [topicRows] = await connection.query(
           `SELECT t.id, t.name, t.subject_id AS subjectId, c.id AS chapterId
            FROM topics t
            LEFT JOIN chapters c ON c.subject_id = t.subject_id AND c.name = t.name
-           JOIN questions existing ON existing.topic_id = t.id AND existing.status = 'active'
-           ORDER BY existing.id
+           WHERE t.name LIKE ?
+           ORDER BY t.parent_topic_id IS NULL DESC, t.id
            LIMIT 1`,
+          [`%${generatedTopic}%`],
         )
-        topicRow = fallbackTopicRows[0]
-      }
-      if (topicRow) {
-        let chapterId = topicRow.chapterId
-        if (!chapterId) {
-          const [chapterResult] = await connection.query(
-            `INSERT INTO chapters (subject_id, name) VALUES (?, ?)
-             ON DUPLICATE KEY UPDATE name = VALUES(name)`,
-            [topicRow.subjectId, topicRow.name],
+        let topicRow = topicRows[0]
+        if (!topicRow) {
+          const [fallbackTopicRows] = await connection.query(
+            `SELECT t.id, t.name, t.subject_id AS subjectId, c.id AS chapterId
+             FROM topics t
+             LEFT JOIN chapters c ON c.subject_id = t.subject_id AND c.name = t.name
+             JOIN questions existing ON existing.topic_id = t.id AND existing.status = 'active'
+             ORDER BY existing.id
+             LIMIT 1`,
           )
-          const [chapterRows] = await connection.query(
-            'SELECT id FROM chapters WHERE subject_id = ? AND name = ? LIMIT 1',
-            [topicRow.subjectId, topicRow.name],
-          )
-          chapterId = chapterRows[0]?.id || chapterResult.insertId
+          topicRow = fallbackTopicRows[0]
         }
-        const generatedQuestions = await generateGeminiQuestions({
-          grade: safeMaxGrade,
-          topic: topicRow.name,
-          difficulty: 'Medium',
-          count: safeQuestionCount - selected.length,
-        })
-        for (const generated of generatedQuestions) {
-          const options = generated.options || {}
-          const [result] = await connection.query(
-            `INSERT INTO questions
-             (subject_id, topic_id, chapter_id, subtopic_name, question_text, grade, difficulty, option_a, option_b, option_c, option_d, correct_answer, explanation, status)
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'active')`,
-            [topicRow.subjectId, topicRow.id, chapterId, generated.subtopic || 'General', generated.question, safeMaxGrade, generated.difficulty || 'Medium', options.A, options.B, options.C, options.D, generated.answer, generated.explanation || null],
-          )
-          selected.push({
-            id: result.insertId,
+        if (topicRow) {
+          let chapterId = topicRow.chapterId
+          if (!chapterId) {
+            const [chapterResult] = await connection.query(
+              `INSERT INTO chapters (subject_id, name) VALUES (?, ?)
+               ON DUPLICATE KEY UPDATE name = VALUES(name)`,
+              [topicRow.subjectId, topicRow.name],
+            )
+            const [chapterRows] = await connection.query(
+              'SELECT id FROM chapters WHERE subject_id = ? AND name = ? LIMIT 1',
+              [topicRow.subjectId, topicRow.name],
+            )
+            chapterId = chapterRows[0]?.id || chapterResult.insertId
+          }
+          const generatedQuestions = await generateGeminiQuestions({
             grade: safeMaxGrade,
             topic: topicRow.name,
-            subtopic: generated.subtopic || 'General',
-            difficulty: generated.difficulty || 'Medium',
-            question: generated.question,
-            option_a: options.A,
-            option_b: options.B,
-            option_c: options.C,
-            option_d: options.D,
-            correct_answer: generated.answer,
-            explanation: generated.explanation || null,
+            difficulty: 'Medium',
+            count: safeQuestionCount - selected.length,
           })
+          for (const generated of generatedQuestions) {
+            const options = generated.options || {}
+            const [result] = await connection.query(
+              `INSERT INTO questions
+               (subject_id, topic_id, chapter_id, subtopic_name, question_text, grade, difficulty, option_a, option_b, option_c, option_d, correct_answer, explanation, status)
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'active')`,
+              [topicRow.subjectId, topicRow.id, chapterId, generated.subtopic || 'General', generated.question, safeMaxGrade, generated.difficulty || 'Medium', options.A, options.B, options.C, options.D, generated.answer, generated.explanation || null],
+            )
+            selected.push({
+              id: result.insertId,
+              grade: safeMaxGrade,
+              topic: topicRow.name,
+              subtopic: generated.subtopic || 'General',
+              difficulty: generated.difficulty || 'Medium',
+              question: generated.question,
+              option_a: options.A,
+              option_b: options.B,
+              option_c: options.C,
+              option_d: options.D,
+              correct_answer: generated.answer,
+              explanation: generated.explanation || null,
+            })
+          }
         }
+      } catch (geminiError) {
+        console.warn('Gemini question generation fallback failed:', geminiError.message)
       }
     }
     if (!selected.length) {
       await connection.rollback()
       return response.status(409).json({ message: 'No unused questions are currently available for this selection.' })
-    }
-    if (selected.length < safeQuestionCount) {
-      await connection.rollback()
-      return response.status(409).json({ message: `Only ${selected.length} questions are available and Gemini could not fill the requested ${safeQuestionCount}.` })
     }
 
     for (const question of selected) {
