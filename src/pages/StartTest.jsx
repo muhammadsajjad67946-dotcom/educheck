@@ -153,20 +153,26 @@ export default function StartTest() {
           return
         }
 
+        // BUG-05 Fix: In retakeMode, use first focusTopics item as the topic so backend reserves
+        // relevant questions. createWeakPointsRetakeState handles subtopic-level filtering client-side.
+        const effectiveTopic = (testState.retakeMode && testState.focusTopics?.length)
+          ? (testState.focusTopics[0] || selectedTopic)
+          : selectedTopic
+
         let payload = await apiRequest('/assessment-attempts/start', {
           method: 'POST',
           body: JSON.stringify({
             studentId: Number(user?.id),
             minGrade: 1,
             maxGrade: effectiveGradeNumber,
-            topic: selectedTopic,
+            topic: effectiveTopic,
             difficulty: selectedDifficulty,
             questionCount,
           }),
         })
 
         // Fetch comprehensive questions across all relevant grades for selected topic
-        const topicQuery = selectedTopic !== 'Overall' ? `&topic=${encodeURIComponent(selectedTopic)}` : ''
+        const topicQuery = effectiveTopic !== 'Overall' ? `&topic=${encodeURIComponent(effectiveTopic)}` : ''
         const comprehensiveQuestions = await apiRequest(`/questions?studentId=${Number(user?.id)}&minGrade=1&maxGrade=${effectiveGradeNumber}&limit=1000${topicQuery}`).catch(() => [])
         const rawList = Array.isArray(comprehensiveQuestions) && comprehensiveQuestions.length > 0
           ? comprehensiveQuestions

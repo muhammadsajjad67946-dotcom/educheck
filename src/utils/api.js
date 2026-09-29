@@ -5,8 +5,20 @@ const inflightRequests = new Map()
 
 const DEFAULT_CACHE_TTL = 20000 // 20 seconds for GET requests
 
-export function clearApiCache() {
-  requestCache.clear()
+// BUG-13 Fix: Surgical cache invalidation by path prefix instead of wiping all cache.
+// Paths that should be invalidated when a mutation happens on a related resource.
+const MUTATION_INVALIDATION_MAP = {
+  '/assessment-attempts': ['/assessment-attempts', '/reports', '/student-profile'],
+  '/reports': ['/reports'],
+  '/payments': ['/payments', '/subscription'],
+  '/subscription': ['/subscription'],
+  '/profile': ['/profile', '/student-profile'],
+}
+
+export function clearApiCacheByPrefix(prefix) {
+  for (const key of requestCache.keys()) {
+    if (key.includes(prefix)) requestCache.delete(key)
+  }
 }
 
 export async function apiRequest(path, options = {}) {
@@ -15,9 +27,17 @@ export async function apiRequest(path, options = {}) {
   const bypassCache = Boolean(options.bypassCache)
   const cacheKey = `${method}:${path}`
 
-  // If mutation, clear GET cache so next reads are fresh
+  // BUG-13 Fix: On mutation, only invalidate related cache keys (not entire cache)
   if (!isGet) {
-    requestCache.clear()
+    const matchedPrefixes = Object.entries(MUTATION_INVALIDATION_MAP)
+      .filter(([mutationPath]) => path.includes(mutationPath))
+      .flatMap(([, invalidated]) => invalidated)
+    if (matchedPrefixes.length) {
+      for (const prefix of matchedPrefixes) clearApiCacheByPrefix(prefix)
+    } else {
+      // Unknown mutation path — wipe only exact duplicates, not full cache
+      requestCache.delete(`GET:${path}`)
+    }
   }
 
   // Check cache for GET

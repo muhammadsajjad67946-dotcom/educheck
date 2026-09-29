@@ -118,18 +118,29 @@ export default function SubmitTest() {
         }
       }).filter((question) => question.status === 'Wrong')
 
-      // 2. Request AI enhancements without cancelling normal Gemini responses too early.
+      // 2. Request AI enhancements with proper AbortController so fetch is cancelled on timeout.
+      // BUG-14 Fix: Previously Promise.race only abandoned the await, but the HTTP request
+      // kept running on the server. Now we abort the actual network request on timeout.
+      const geminiController = new AbortController()
+      let geminiTimeoutId = null
       try {
         const geminiPromise = apiRequest('/reports/gemini', {
           method: 'POST',
+          signal: geminiController.signal,
           body: JSON.stringify({
             studentGrade: selectedTargetGrade,
             accuracy: reportData.accuracy,
             questionReview: reportData.questionReview.slice(0, 5),
           }),
         })
-        const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('AI timeout')), 12000))
+        const timeoutPromise = new Promise((_, reject) => {
+          geminiTimeoutId = setTimeout(() => {
+            geminiController.abort()           // ← actually cancels the fetch
+            reject(new Error('AI timeout'))
+          }, 12000)
+        })
         const geminiResponse = await Promise.race([geminiPromise, timeoutPromise])
+        clearTimeout(geminiTimeoutId)
 
         if (geminiResponse?.report) {
           reportData.geminiReport = geminiResponse.report
@@ -142,6 +153,7 @@ export default function SubmitTest() {
           }))
         }
       } catch (aiError) {
+        clearTimeout(geminiTimeoutId)
         console.warn('AI report generation fallback activated for fast completion:', aiError.message)
       }
 

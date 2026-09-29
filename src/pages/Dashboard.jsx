@@ -176,10 +176,10 @@ export default function Dashboard() {
       if (Number.isFinite(parsedAssessed) && parsedAssessed > 0) return Number(parsedAssessed.toFixed(1))
     }
 
-    const selectedGradeNumber = Number(String(user?.grade || '').match(/Grade\s*(\d+)/i)?.[1] || 1)
-    const accuracy = displayAccuracy / 100
-    return Number((1 + accuracy * Math.max(0, selectedGradeNumber - 1)).toFixed(1))
-  }, [assessmentHistory, assessmentResult, displayAccuracy, latestAssessment, user?.grade])
+    // BUG-08 Fix: If no valid demonstratedMathLevel found in any history entry,
+    // return 0 so the UI shows 'Pending' instead of a misleading "Grade 1.0"
+    return 0
+  }, [assessmentHistory, assessmentResult, latestAssessment])
 
   const currentGradeLevel = Number.isFinite(liveDashboardMetrics.currentGradeLevel) && liveDashboardMetrics.currentGradeLevel > 0
     ? liveDashboardMetrics.currentGradeLevel

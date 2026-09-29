@@ -1323,7 +1323,10 @@ export function advanceGradeBatchTest(state, questionBank, currentQuestion, sele
   ]
 
   const isProbeQuestion = activeProbe && questionGrade < state.targetGrade
-  const currentIndex = questions.findIndex((q) => q.id === currentQuestion.id)
+  // BUG-03 Fix: Use String() coercion on both sides — DB returns numeric IDs but
+  // after normalizeQuestionRecord() they may become strings. Strict === mismatch
+  // between '101' (string) and 101 (number) returns -1, breaking queue insertion.
+  const currentIndex = questions.findIndex((q) => String(q.id) === String(currentQuestion.id))
 
   if (isProbeQuestion) {
     // ========== PROBE QUESTION RESPONSE ==========

@@ -57,7 +57,11 @@ export function getPerformanceColor(score) {
 }
 
 export function getDiagnosticConfidence(totalAttempted, selectedTargetGrade, totalQuestions = 0, totalCorrect = 0) {
-  const expectedQuestions = Math.max(Number(totalQuestions) || Number(selectedTargetGrade) || 1, 1)
+  // BUG-12 Fix: Use actual question count (30) as baseline, NOT grade number.
+  // Previous code used selectedTargetGrade as fallback which gave wildly wrong ratios
+  // e.g. 4 questions answered, grade=5 → 4/5=0.8 = "High" (wrong); now 4/30=0.13 = "Low" (correct)
+  const ASSESSMENT_QUESTION_COUNT = 30
+  const expectedQuestions = Math.max(Number(totalQuestions) || ASSESSMENT_QUESTION_COUNT, 1)
   const attempted = Number(totalAttempted || 0)
   const correct = Number(totalCorrect || 0)
   const evidenceRatio = attempted / expectedQuestions
