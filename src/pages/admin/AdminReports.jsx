@@ -51,8 +51,8 @@ export default function AdminReports() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Results & Reports</h1>
-          <p className="mt-1 text-slate-600 dark:text-slate-400">View detailed assessment results and student performance reports</p>
+          <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Submissions & Reports</h1>
+          <p className="mt-1 text-slate-600 dark:text-slate-400">View detailed student assessment submissions and performance reports</p>
         </div>
         <button className="inline-flex items-center gap-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/80 px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 transition">
           <Download size={18} />
@@ -173,22 +173,28 @@ export default function AdminReports() {
                   </td>
                   <td className="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">{report.date}</td>
                   <td className="px-6 py-4">
-                    <div className="flex justify-end gap-1.5">
+                    <div className="flex items-center justify-end gap-2">
+                      <Link
+                        to={`/student-performance/${report.id}`}
+                        className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-bold text-sky-500 hover:text-sky-400 hover:bg-sky-500/10 transition"
+                      >
+                        View Report
+                      </Link>
                       <button
                         type="button"
                         onClick={() => setSelectedReport(report)}
-                        className="rounded-lg p-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition"
-                        title="View report"
+                        className="rounded-lg p-1.5 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition"
+                        title="Quick preview"
                       >
-                        <Eye size={18} />
+                        <Eye size={17} />
                       </button>
                       <button
                         type="button"
                         onClick={() => deleteReport(report)}
-                        className="rounded-lg p-2 text-slate-500 dark:text-slate-400 hover:bg-red-50 dark:hover:bg-red-950/50 hover:text-red-600 dark:hover:text-red-400 transition"
+                        className="rounded-lg p-1.5 text-slate-500 dark:text-slate-400 hover:bg-red-50 dark:hover:bg-red-950/50 hover:text-red-600 dark:hover:text-red-400 transition"
                         title="Delete report"
                       >
-                        <Trash2 size={18} />
+                        <Trash2 size={17} />
                       </button>
                     </div>
                   </td>

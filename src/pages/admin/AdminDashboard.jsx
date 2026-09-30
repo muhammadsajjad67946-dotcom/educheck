@@ -277,12 +277,12 @@ function RecentTestsTable({ assessments = [], darkMode }) {
           <h3 className="text-lg font-bold tracking-tight">Recent Student Assessments</h3>
           <p className={`text-xs ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>Live diagnostic submissions from students</p>
         </div>
-        <a
-          href="/admin/reports"
+        <Link
+          to="/admin/reports"
           className="inline-flex items-center gap-1.5 text-xs font-bold text-sky-400 hover:text-sky-300 transition"
         >
           View All Submissions <ArrowRight size={14} />
-        </a>
+        </Link>
       </div>
 
       {localRows.length === 0 ? (
@@ -365,31 +365,33 @@ export default function AdminDashboard() {
   const [loadError, setLoadError] = useState('')
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    let isMounted = true
-
-    apiRequest('/admin/dashboard')
-      .then((dashboard) => {
-        if (!isMounted) return
-        setDashboardData((prev) => ({ ...prev, ...dashboard }))
-        setLoading(false)
-      })
-      .catch((error) => {
-        if (!isMounted) return
-        setLoadError(error.message || 'Unable to load dashboard data.')
-        setLoading(false)
-      })
-
-    apiRequest('/admin/analytics')
-      .then((analytics) => {
-        if (!isMounted) return
-        setDashboardData((prev) => ({ ...prev, topicCandles: analytics?.topicCandles || [] }))
-      })
-      .catch(() => {})
-
-    return () => {
-      isMounted = false
+  const loadDashboard = async (isRetry = false) => {
+    try {
+      setLoading(true)
+      setLoadError('')
+      const dashboard = await apiRequest('/admin/dashboard')
+      setDashboardData((prev) => ({ ...prev, ...dashboard }))
+      setLoading(false)
+    } catch (error) {
+      if (!isRetry) {
+        // Automatic cold-start retry after 1.5 seconds
+        setTimeout(() => loadDashboard(true), 1500)
+        return
+      }
+      setLoadError(error.message || 'Unable to load dashboard data.')
+      setLoading(false)
     }
+
+    try {
+      const analytics = await apiRequest('/admin/analytics')
+      setDashboardData((prev) => ({ ...prev, topicCandles: analytics?.topicCandles || [] }))
+    } catch {
+      // analytics is non-critical
+    }
+  }
+
+  useEffect(() => {
+    loadDashboard()
   }, [])
 
   const stats = useMemo(() => {
@@ -445,8 +447,15 @@ export default function AdminDashboard() {
       </div>
 
       {loadError && (
-        <div className="rounded-2xl border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm font-semibold text-rose-400">
-          {loadError}
+        <div className="flex items-center justify-between rounded-2xl border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm font-semibold text-rose-400">
+          <span>{loadError}</span>
+          <button
+            type="button"
+            onClick={() => loadDashboard(true)}
+            className="rounded-lg bg-rose-500/20 px-3 py-1 text-xs font-bold text-rose-300 hover:bg-rose-500/30 transition cursor-pointer"
+          >
+            Retry
+          </button>
         </div>
       )}
 
