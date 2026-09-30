@@ -1,19 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Search, Download, Eye, Trash2, Award } from 'lucide-react'
+import { Search, Download, Trash2 } from 'lucide-react'
 import { apiRequest } from '../../utils/api'
-
-// Score Badge
-function ScoreBadge({ score }) {
-  let color = 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-200/50 dark:border-emerald-800/50'
-  if (score < 70) color = 'bg-rose-100 dark:bg-rose-950/60 text-rose-800 dark:text-rose-300 border border-rose-200/50 dark:border-rose-800/50'
-  else if (score < 80) color = 'bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-200/50 dark:border-amber-800/50'
-  return (
-    <span className={`inline-block rounded-full px-3 py-1 text-xs font-semibold ${color}`}>
-      {score}%
-    </span>
-  )
-}
 
 export default function AdminReports() {
   const [searchTerm, setSearchTerm] = useState('')
@@ -22,7 +10,6 @@ export default function AdminReports() {
   const [reports, setReports] = useState([])
   const [stats, setStats] = useState({ total: 0, averageScore: 0, completionRate: 0, thisMonth: 0 })
   const [error, setError] = useState('')
-  const [selectedReport, setSelectedReport] = useState(null)
 
   const loadReports = () => apiRequest('/admin/reports').then((data) => { setReports(data.reports); setStats(data.stats) }).catch((loadError) => setError(loadError.message))
   useEffect(() => { loadReports() }, [])
@@ -139,9 +126,8 @@ export default function AdminReports() {
                 <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Student</th>
                 <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Subject</th>
                 <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Grade</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Score</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Level</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Correct/Wrong</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">IRT Ability (θ)</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Accurate MCQs</th>
                 <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Date</th>
                 <th className="px-6 py-4 text-right text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Actions</th>
               </tr>
@@ -160,16 +146,14 @@ export default function AdminReports() {
                   <td className="px-6 py-4 text-sm text-slate-600 dark:text-slate-300">{report.subject}</td>
                   <td className="px-6 py-4 text-sm font-medium text-slate-800 dark:text-slate-200">{report.grade}</td>
                   <td className="px-6 py-4">
-                    <ScoreBadge score={report.score} />
-                  </td>
-                  <td className="px-6 py-4">
-                    <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-sky-600 dark:text-sky-400">
-                      <Award size={16} />
-                      {report.level}
+                    <span className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold bg-sky-100 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 border border-sky-200/60 dark:border-sky-800/60">
+                      θ = {report.level && report.level !== 'N/A' ? report.level : (report.score ? (report.score / 20).toFixed(2) : '0.00')}
                     </span>
                   </td>
-                  <td className="px-6 py-4 text-sm text-slate-600 dark:text-slate-300">
-                    {report.correct}/{report.wrong} ({report.unanswered} ?)
+                  <td className="px-6 py-4 text-sm">
+                    <span className="font-bold text-emerald-600 dark:text-emerald-400">{report.correct}</span>
+                    <span className="text-slate-400"> / {Number(report.correct || 0) + Number(report.wrong || 0)}</span>
+                    <span className="ml-1 text-xs text-slate-400 font-medium">MCQs</span>
                   </td>
                   <td className="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">{report.date}</td>
                   <td className="px-6 py-4">
@@ -180,14 +164,6 @@ export default function AdminReports() {
                       >
                         View Report
                       </Link>
-                      <button
-                        type="button"
-                        onClick={() => setSelectedReport(report)}
-                        className="rounded-lg p-1.5 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition"
-                        title="Quick preview"
-                      >
-                        <Eye size={17} />
-                      </button>
                       <button
                         type="button"
                         onClick={() => deleteReport(report)}
@@ -204,48 +180,6 @@ export default function AdminReports() {
           </table>
         </div>
       </div>
-
-      {selectedReport && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 p-4 backdrop-blur-md transition">
-          <div className="w-full max-w-md rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-2xl transition">
-            <div className="flex items-center justify-between">
-              <h2 className="text-xl font-bold text-slate-900 dark:text-white">Assessment Report</h2>
-              <button
-                type="button"
-                onClick={() => setSelectedReport(null)}
-                className="rounded-full p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-300 transition"
-              >
-                ×
-              </button>
-            </div>
-            <div className="mt-5 space-y-3 text-sm text-slate-700 dark:text-slate-300">
-              <p><strong className="text-slate-900 dark:text-white">Student:</strong> {selectedReport.student}</p>
-              <p><strong className="text-slate-900 dark:text-white">Subject:</strong> {selectedReport.subject}</p>
-              <p><strong className="text-slate-900 dark:text-white">Grade:</strong> {selectedReport.grade}</p>
-              <p><strong className="text-slate-900 dark:text-white">Score:</strong> {selectedReport.score}%</p>
-              <p><strong className="text-slate-900 dark:text-white">Level:</strong> {selectedReport.level}</p>
-              <p><strong className="text-slate-900 dark:text-white">Correct / Wrong / Unanswered:</strong> {selectedReport.correct} / {selectedReport.wrong} / {selectedReport.unanswered}</p>
-              <p><strong className="text-slate-900 dark:text-white">Date:</strong> {selectedReport.date}</p>
-            </div>
-            <div className="mt-6 flex gap-3">
-              <button
-                type="button"
-                onClick={() => setSelectedReport(null)}
-                className="flex-1 rounded-xl bg-slate-100 dark:bg-slate-800 px-4 py-2.5 font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 transition"
-              >
-                Close
-              </button>
-              <Link
-                to={`/student-performance/${selectedReport.id}`}
-                onClick={() => setSelectedReport(null)}
-                className="flex-1 rounded-xl bg-sky-600 px-4 py-2.5 text-center font-semibold text-white hover:bg-sky-500 transition shadow-sm inline-flex items-center justify-center gap-1.5"
-              >
-                Full Report
-              </Link>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   )
 }
