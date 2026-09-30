@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Search, Download, Eye, Trash2, Award } from 'lucide-react'
 import { apiRequest } from '../../utils/api'
 
@@ -220,13 +221,22 @@ export default function AdminReports() {
               <p><strong className="text-slate-900 dark:text-white">Correct / Wrong / Unanswered:</strong> {selectedReport.correct} / {selectedReport.wrong} / {selectedReport.unanswered}</p>
               <p><strong className="text-slate-900 dark:text-white">Date:</strong> {selectedReport.date}</p>
             </div>
-            <button
-              type="button"
-              onClick={() => setSelectedReport(null)}
-              className="mt-6 w-full rounded-xl bg-slate-100 dark:bg-slate-800 px-4 py-2.5 font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 transition"
-            >
-              Close
-            </button>
+            <div className="mt-6 flex gap-3">
+              <button
+                type="button"
+                onClick={() => setSelectedReport(null)}
+                className="flex-1 rounded-xl bg-slate-100 dark:bg-slate-800 px-4 py-2.5 font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 transition"
+              >
+                Close
+              </button>
+              <Link
+                to={`/student-performance/${selectedReport.id}`}
+                onClick={() => setSelectedReport(null)}
+                className="flex-1 rounded-xl bg-sky-600 px-4 py-2.5 text-center font-semibold text-white hover:bg-sky-500 transition shadow-sm inline-flex items-center justify-center gap-1.5"
+              >
+                Full Report
+              </Link>
+            </div>
           </div>
         </div>
       )}

@@ -51,7 +51,7 @@ function UserRouteGuard() {
     return <Navigate to="/login" replace state={{ from: location.pathname }} />
   }
 
-  if (user?.role === 'admin') {
+  if (user?.role === 'admin' && !location.pathname.startsWith('/student-performance')) {
     return <Navigate to="/admin/dashboard" replace />
   }
 
@@ -116,6 +116,7 @@ export default function AppRoutes() {
         <Route path="/admin/questions" element={<AdminQuestions />} />
         <Route path="/admin/assessments" element={<AdminAssessments />} />
         <Route path="/admin/reports" element={<AdminReports />} />
+        <Route path="/admin/reports/:assessmentId" element={<StudentPerformancePage />} />
         <Route path="/admin/analytics" element={<AdminAnalytics />} />
         <Route path="/admin/payments" element={<AdminPayments />} />
         <Route path="/admin/feedback" element={<AdminFeedback />} />

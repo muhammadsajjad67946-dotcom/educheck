@@ -10,27 +10,43 @@ export default function StudentPerformancePage() {
   const navigate = useNavigate()
   const { assessmentHistory, assessmentResult, user, darkMode } = useApp()
   const [fetchedAssessment, setFetchedAssessment] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
 
   const inMemoryAssessment = useMemo(() => {
+    if (!assessmentId) return null
     const entries = [...(assessmentHistory || [])]
 
     if (assessmentResult && !entries.some((entry) => String(entry?.submittedAt || entry?.id) === String(assessmentId))) {
       entries.push(assessmentResult)
     }
 
-    return entries.find((entry) => String(entry?.submittedAt || entry?.id) === String(assessmentId)) || entries[entries.length - 1] || assessmentResult || null
+    return entries.find((entry) => String(entry?.submittedAt || entry?.id) === String(assessmentId)) || null
   }, [assessmentHistory, assessmentResult, assessmentId])
 
-  // BUG-NEW-04 Fix: If assessment not found in memory (direct link or page refresh), load from backend
+  // Fetch assessment from backend if not already in memory
   useEffect(() => {
-    if (!inMemoryAssessment && assessmentId && user?.id) {
-      apiRequest(`/assessments?studentId=${user.id}`)
-        .then((items) => {
-          const match = (items || []).find((a) => String(a.id) === String(assessmentId))
-          if (match) setFetchedAssessment(match)
-        })
-        .catch(() => {})
-    }
+    if (!assessmentId) return
+    if (inMemoryAssessment) return
+
+    setIsLoading(true)
+    apiRequest(`/assessments/${assessmentId}`)
+      .then((data) => {
+        if (data && data.id) setFetchedAssessment(data)
+      })
+      .catch((err) => {
+        console.warn('Failed to load assessment by id:', err?.message)
+        if (user?.id) {
+          apiRequest(`/assessments?studentId=${user.id}`)
+            .then((items) => {
+              const match = (items || []).find((a) => String(a.id) === String(assessmentId))
+              if (match) setFetchedAssessment(match)
+            })
+            .catch(() => {})
+        }
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }, [assessmentId, inMemoryAssessment, user?.id])
 
   const selectedAssessment = inMemoryAssessment || fetchedAssessment
@@ -75,6 +91,16 @@ export default function StudentPerformancePage() {
   const [selectedTopic, setSelectedTopic] = useState(topicOptions[0]?.name || null)
 
   const activeTopic = topicOptions.find((topic) => topic.name === selectedTopic) || topicOptions[0] || null
+
+  if (isLoading) {
+    return (
+      <div className={`mx-auto max-w-5xl rounded-[2rem] border p-12 text-center backdrop-blur-xl transition-all duration-300 ${darkMode ? 'border-white/10 bg-slate-950/80 text-white' : 'border-slate-200 bg-white text-slate-900 shadow-xl'}`}>
+        <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-sky-500 border-r-transparent mb-4" />
+        <h2 className="text-xl font-bold">Loading student performance report...</h2>
+        <p className="mt-2 text-sm text-slate-400">Fetching assessment metrics from database</p>
+      </div>
+    )
+  }
 
   if (!selectedAssessment) {
     return (

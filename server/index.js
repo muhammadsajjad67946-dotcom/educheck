@@ -1053,6 +1053,73 @@ app.get('/api/assessments', async (request, response) => {
   }
 })
 
+app.get('/api/assessments/:attemptId', async (request, response) => {
+  const attemptId = Number(request.params.attemptId)
+
+  if (!Number.isInteger(attemptId) || attemptId <= 0) {
+    return response.status(400).json({ message: 'Valid attempt ID is required.' })
+  }
+
+  try {
+    const [rows] = await pool.query(
+      `SELECT a.id,
+              a.student_id AS studentId,
+              u.name AS studentName,
+              u.email AS studentEmail,
+              COALESCE(sp.grade, a.estimated_grade, 'Grade 1') AS grade,
+              a.assessment_id,
+              a.total_questions,
+              a.correct_answers,
+              a.wrong_answers,
+              a.score,
+              a.percentage,
+              a.estimated_grade AS estimatedGrade,
+              a.status,
+              a.submitted_at AS submittedAt,
+              r.topic_breakdown AS topicBreakdown,
+              r.strong_topics AS strongTopics,
+              r.weak_topics AS weakTopics,
+              r.recommendations,
+              r.grade_letter AS gradeLetter
+       FROM assessment_attempts a
+       JOIN users u ON u.id = a.student_id
+       LEFT JOIN student_profiles sp ON sp.user_id = a.student_id
+       LEFT JOIN reports r ON r.id = (
+         SELECT id FROM reports WHERE assessment_id = a.id ORDER BY id DESC LIMIT 1
+       )
+       WHERE a.id = ?
+       LIMIT 1`,
+      [attemptId],
+    )
+
+    if (!rows.length) {
+      return response.status(404).json({ message: 'Assessment attempt not found.' })
+    }
+
+    const row = rows[0]
+    const parsedRow = {
+      ...row,
+      topicBreakdown: typeof row.topicBreakdown === 'string'
+        ? (() => { try { return JSON.parse(row.topicBreakdown) } catch { return [] } })()
+        : (Array.isArray(row.topicBreakdown) ? row.topicBreakdown : []),
+      strongTopics: typeof row.strongTopics === 'string'
+        ? (() => { try { return JSON.parse(row.strongTopics) } catch { return [] } })()
+        : (Array.isArray(row.strongTopics) ? row.strongTopics : []),
+      weakTopics: typeof row.weakTopics === 'string'
+        ? (() => { try { return JSON.parse(row.weakTopics) } catch { return [] } })()
+        : (Array.isArray(row.weakTopics) ? row.weakTopics : []),
+      recommendations: typeof row.recommendations === 'string'
+        ? (() => { try { return JSON.parse(row.recommendations) } catch { return [] } })()
+        : (Array.isArray(row.recommendations) ? row.recommendations : []),
+    }
+
+    return response.json(parsedRow)
+  } catch (error) {
+    console.error('Single assessment load failed:', error)
+    return response.status(500).json({ message: 'Unable to load assessment details.' })
+  }
+})
+
 app.get('/api/admin/students', async (_request, response) => {
   try {
     const [rows] = await pool.query(
