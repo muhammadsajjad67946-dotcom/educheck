@@ -159,7 +159,7 @@ export default function AdminReports() {
                   <td className="px-6 py-4">
                     <div className="flex items-center justify-end gap-2">
                       <Link
-                        to={`/student-performance/${report.id}`}
+                        to={`/admin/reports/${report.id}`}
                         className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-bold text-sky-500 hover:text-sky-400 hover:bg-sky-500/10 transition"
                       >
                         View Report

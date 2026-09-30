@@ -89,6 +89,19 @@ function normalizeQuestionRecord(question, fallbackId = 0) {
 
   const topicName = String(question?.topic ?? question?.topic_name ?? question?.topicName ?? '').trim()
 
+  const rawAnswer = String(question?.correct_answer ?? question?.answer ?? question?.correctAnswer ?? question?.correct_option ?? question?.correctOption ?? 'A').trim()
+  let resolvedAnswer = rawAnswer.toUpperCase()
+  if (!['A', 'B', 'C', 'D'].includes(resolvedAnswer) && options && typeof options === 'object') {
+    for (const [key, val] of Object.entries(options)) {
+      if (String(val).trim().toLowerCase() === rawAnswer.toLowerCase()) {
+        resolvedAnswer = key.toUpperCase()
+        break
+      }
+    }
+  }
+
+  const finalAnswer = ['A', 'B', 'C', 'D'].includes(resolvedAnswer) ? resolvedAnswer : 'A'
+
   return {
     ...question,
     id: question?.id ?? fallbackId,
@@ -96,7 +109,8 @@ function normalizeQuestionRecord(question, fallbackId = 0) {
     gradeId: Number.isFinite(gradeId) ? gradeId : 1,
     topic: topicName || question?.topic || 'Mathematics',
     difficulty,
-    answer: String(question?.correct_answer ?? question?.answer ?? question?.correctAnswer ?? question?.correct_option ?? question?.correctOption ?? 'A').toUpperCase(),
+    answer: finalAnswer,
+    correct_answer: finalAnswer,
     options,
     question: question?.question || question?.question_text || 'Question text unavailable',
     distractor_diagnostics: diagnostics,

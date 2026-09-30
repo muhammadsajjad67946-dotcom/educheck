@@ -310,10 +310,10 @@ export function calculateOverallResult(gradeScores, selectedTargetGrade) {
   const totalQuestions = relevantGrades.reduce((sum, grade) => sum + grade.total, 0)
   const totalCorrect = relevantGrades.reduce((sum, grade) => sum + grade.correct, 0)
   const accuracy = totalQuestions > 0 ? totalCorrect / totalQuestions : 0
-  const maxCeiling = Math.max(0.0, Number((selectedTargetGrade - 0.1).toFixed(1))) // E.g. 7.9 for Grade 8
+  const maxCeiling = selectedTargetGrade
   const baseFloor = Math.max(0.0, selectedTargetGrade - 1.0) // E.g. 7.0 for Grade 8
   const demonstratedMathLevel = selectedTargetGrade > 0 && totalQuestions > 0
-    ? clamp(accuracy > 0 ? baseFloor + accuracy * 0.9 : 0.0, 0.0, maxCeiling)
+    ? clamp(accuracy > 0 ? baseFloor + accuracy * 1.0 : 0.0, 0.0, maxCeiling)
     : 0.0
 
   let totalWrong = 0
@@ -694,10 +694,10 @@ export function generateCompleteAssessmentResult(allQuestions, answers, selected
     ? parseFloat((overallResult.totalCorrect / overallResult.totalAttempted).toFixed(2))
     : 0
 
-  const maxCeiling = Math.max(0.0, Number((gradeNum - 0.1).toFixed(1))) // E.g. 7.9 for Grade 8
+  const maxCeiling = gradeNum
   const baseFloor = Math.max(0.0, gradeNum - 1.0) // E.g. 7.0 for Grade 8
   const adaptiveOverall = calculateAdaptiveOverallGE(topicGradeEquivalents, gradeNum)
-  const accuracyBasedGE = accuracy > 0 ? baseFloor + accuracy * 0.9 : 0.0
+  const accuracyBasedGE = accuracy > 0 ? baseFloor + accuracy * 1.0 : 0.0
   const finalDemonstratedLevel = adaptiveOverall !== null && Number.isFinite(adaptiveOverall)
     ? clamp(adaptiveOverall, 0.0, maxCeiling)
     : clamp(accuracyBasedGE, 0.0, maxCeiling)

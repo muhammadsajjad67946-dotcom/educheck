@@ -7,14 +7,10 @@ import {
   DollarSign,
   ArrowUpRight,
   ArrowDownRight,
-  FileText,
-  Sparkles,
   ArrowRight,
-  Layers3,
   Activity,
-  TrendingUp,
 } from 'lucide-react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useApp } from '../../context/AppContext'
 import { apiRequest } from '../../utils/api'
 import { TopicWaveChart } from './AdminAnalytics'
@@ -70,47 +66,6 @@ function StatCard({ icon: Icon, label, value, change, isPositive, color, subtitl
   )
 }
 
-// Quick Action Button
-function QuickActionBtn({ icon: Icon, label, description, onClick, accent = 'sky', darkMode }) {
-  const accentStyles = {
-    sky: 'from-sky-500 to-cyan-600 text-white shadow-sky-500/25',
-    purple: 'from-violet-500 to-indigo-600 text-white shadow-purple-500/25',
-    emerald: 'from-emerald-500 to-teal-600 text-white shadow-emerald-500/25',
-    slate: 'from-slate-700 to-slate-900 text-white shadow-slate-700/25',
-  }
-
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={`group relative flex items-center gap-4 rounded-2xl border p-4 text-left shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${
-        darkMode
-          ? 'border-slate-800/90 bg-slate-900/80 hover:border-slate-700 hover:bg-slate-850'
-          : 'border-slate-200/90 bg-white hover:border-slate-300 hover:shadow-slate-200/50'
-      }`}
-    >
-      <div
-        className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br ${accentStyles[accent]} shadow-md transition-transform duration-300 group-hover:scale-110`}
-      >
-        <Icon size={22} />
-      </div>
-      <div className="flex-1 min-w-0">
-        <p
-          className={`text-base font-bold transition-colors group-hover:text-sky-400 ${
-            darkMode ? 'text-white' : 'text-slate-900'
-          }`}
-        >
-          {label}
-        </p>
-        {description && (
-          <p className={`text-xs truncate mt-0.5 ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>
-            {description}
-          </p>
-        )}
-      </div>
-    </button>
-  )
-}
 
 // Chart Component
 function PerformanceChart({ trend = [], darkMode }) {
@@ -342,7 +297,7 @@ function RecentTestsTable({ assessments = [], darkMode }) {
                   </td>
                   <td className="px-4 py-3.5 text-right">
                     <Link
-                      to={`/student-performance/${encodeURIComponent(test.id)}`}
+                      to={`/admin/reports/${encodeURIComponent(test.id)}`}
                       className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-bold text-sky-400 hover:bg-sky-500/10 transition"
                     >
                       View Report
@@ -359,7 +314,6 @@ function RecentTestsTable({ assessments = [], darkMode }) {
 }
 
 export default function AdminDashboard() {
-  const navigate = useNavigate()
   const { darkMode } = useApp()
   const [dashboardData, setDashboardData] = useState({ stats: null, payments: [], assessments: [], topicCandles: [] })
   const [loadError, setLoadError] = useState('')
@@ -425,23 +379,6 @@ export default function AdminDashboard() {
             <p className="mt-1 text-xs sm:text-sm text-slate-300 max-w-lg leading-relaxed">
               Real-time diagnostic analytics & student performance overview.
             </p>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-2.5">
-            <button
-              type="button"
-              onClick={() => navigate('/admin/reports')}
-              className="inline-flex items-center gap-1.5 rounded-xl border border-white/15 bg-white/10 px-3.5 py-2 text-xs sm:text-sm font-semibold text-white backdrop-blur-md transition hover:bg-white/20 hover:scale-[1.01]"
-            >
-              <BarChart3 size={15} /> Reports
-            </button>
-            <button
-              type="button"
-              onClick={() => navigate('/admin/questions')}
-              className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-sky-500 to-indigo-600 px-4 py-2 text-xs sm:text-sm font-semibold text-white shadow-md shadow-sky-500/25 transition hover:scale-[1.02] hover:shadow-sky-500/40"
-            >
-              <FileText size={15} /> Question Bank
-            </button>
           </div>
         </div>
       </div>
@@ -511,46 +448,7 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      {/* Quick Actions */}
-      <div>
-        <h2 className={`mb-4 text-base font-bold uppercase tracking-wider ${darkMode ? 'text-slate-300' : 'text-slate-900'}`}>
-          Quick Actions & Management
-        </h2>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <QuickActionBtn
-            icon={Users}
-            label="Students"
-            description="Manage learners & grades"
-            accent="sky"
-            onClick={() => navigate('/admin/students')}
-            darkMode={darkMode}
-          />
-          <QuickActionBtn
-            icon={Layers3}
-            label="Curriculum Topics"
-            description="5 Strands & 184 Subtopics"
-            accent="purple"
-            onClick={() => navigate('/admin/topics')}
-            darkMode={darkMode}
-          />
-          <QuickActionBtn
-            icon={FileText}
-            label="Question Bank"
-            description="Calibrate 655 MCQs"
-            accent="emerald"
-            onClick={() => navigate('/admin/questions')}
-            darkMode={darkMode}
-          />
-          <QuickActionBtn
-            icon={BarChart3}
-            label="Analytics & Reports"
-            description="Diagnostic gap audits"
-            accent="slate"
-            onClick={() => navigate('/admin/reports')}
-            darkMode={darkMode}
-          />
-        </div>
-      </div>
+
 
       {/* Charts Grid */}
       <div className="grid gap-6 lg:grid-cols-3">

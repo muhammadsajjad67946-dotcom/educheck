@@ -19,7 +19,7 @@ import { updateStudentAfterAssessment } from '../utils/studentRecords'
 import { validateQuestionBank } from '../utils/questionBankValidation'
 import { apiRequest } from '../utils/api'
 import { getUserStorageKey } from '../utils/userStorage'
-import { buildSubtopicTickCrossReport } from '../utils/subtopicTickCrossReport'
+import { buildSubtopicTickCrossReport, findWeakSubtopics } from '../utils/subtopicTickCrossReport'
 import { calculateStrandIrtAbility } from '../utils/adaptiveTest'
 
 export default function SubmitTest() {
@@ -160,7 +160,10 @@ export default function SubmitTest() {
       const questionBankReport = validateQuestionBank(questions)
       reportData.questionBankCoverage = questionBankReport.coverage
       reportData.incompleteQuestionGroups = questionBankReport.incompleteGroups
-      reportData.weakPoints = testState.adaptiveState?.weakPoints?.length ? testState.adaptiveState.weakPoints : reportData.gaps
+      const subtopicGaps = findWeakSubtopics(questions, answers).map((item) => item.subtopic)
+      reportData.weakPoints = testState.adaptiveState?.weakPoints?.length
+        ? testState.adaptiveState.weakPoints
+        : (subtopicGaps.length ? subtopicGaps : (reportData.gaps || []))
       reportData.strongPoints = testState.adaptiveState?.strongPoints?.length ? testState.adaptiveState.strongPoints : reportData.strengths
 
       // Calculate totals
@@ -185,7 +188,7 @@ export default function SubmitTest() {
       const currentGradeNumber = Number(String(user.grade || '').match(/\d+/)?.[0] || selectedTargetGrade)
       const passedGrade = percentage >= 70
       const promotedGrade = passedGrade && currentGradeNumber < 8 ? `Grade ${currentGradeNumber + 1}` : user.grade
-      const maxCeiling = Math.max(0.0, Number((selectedTargetGrade - 0.1).toFixed(1)))
+      const maxCeiling = selectedTargetGrade
       const estimatedGrade = Math.min(maxCeiling, reportData.demonstratedMathLevel).toFixed(2)
 
       // Build difficulty breakdown

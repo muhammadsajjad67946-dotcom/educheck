@@ -116,9 +116,9 @@ export function buildDashboardMetrics({
     ? Math.round(uniqueEntries.reduce((sum, entry) => sum + Number(entry.percentage || 0), 0) / uniqueEntries.length)
     : latestAccuracy
 
-  const maxAllowedGrade = Math.max(0.0, Number((selectedGradeNumber - 0.1).toFixed(1))) // E.g. 7.9 for Grade 8
+  const maxAllowedGrade = selectedGradeNumber // Allow full mastery at enrolled grade
   const baseFloorGrade = Math.max(0.0, selectedGradeNumber - 1.0)
-  const fallbackCalc = baseFloorGrade + (latestAccuracy / 100) * 0.9
+  const fallbackCalc = baseFloorGrade + (latestAccuracy / 100) * 1.0
   const currentGradeLevel = totalAssessments > 0
     ? (Number.isFinite(parsedAssessedGrade) && parsedAssessedGrade > 0
         ? Number(Math.min(maxAllowedGrade, parsedAssessedGrade).toFixed(1))

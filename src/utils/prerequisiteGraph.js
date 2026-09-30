@@ -821,7 +821,7 @@ export function getDiagnosedPrerequisiteGap(subtopicName, rawStrand, testedGrade
  */
 export function calculateStrandDomainScore(rows, targetGrade = 8) {
   const baseTarget = Number(targetGrade) || 8
-  const maxScore = Math.max(0.0, Number((baseTarget - 0.1).toFixed(1))) // E.g. 7.9 for Grade 8
+  const maxScore = baseTarget
   const floorGrade = Math.max(0.0, baseTarget - 1.0) // E.g. 7.0 for Grade 8
 
   if (!rows || rows.length === 0) return `Grade ${maxScore.toFixed(1)}`

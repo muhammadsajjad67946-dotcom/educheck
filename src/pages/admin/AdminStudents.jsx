@@ -19,11 +19,11 @@ function EmptyState() {
 
 export default function AdminStudents() {
   const navigate = useNavigate()
-  const { setUser, setAuthenticated, darkMode } = useApp()
+  const { setUser, setAuthenticated } = useApp()
   const [searchTerm, setSearchTerm] = useState('')
   const [filterGrade, setFilterGrade] = useState('All')
   const [filterStatus, setFilterStatus] = useState('All')
-  const [sortBy, setSortBy] = useState('name')
+  const [sortBy] = useState('name')
   const [students, setStudents] = useState([])
   const [showAddModal, setShowAddModal] = useState(false)
   const [selectedStudent, setSelectedStudent] = useState(null)

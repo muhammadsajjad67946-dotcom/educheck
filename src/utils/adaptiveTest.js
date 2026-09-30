@@ -13,7 +13,7 @@ export const MAX_PROBE_DEPTH = 1
 
 export function getItemDifficultyParameter(question, targetGrade = 8) {
   const target = Math.max(1, Number(targetGrade) || 8)
-  const maxCeiling = Math.max(0.0, Number((target - 0.1).toFixed(1))) // 7.9 for Grade 8
+  const maxCeiling = target // Allow full mastery at target grade
   const baseFloor = Math.max(0.0, target - 1.0) // 7.0 for Grade 8
   const qGrade = Number(question?.grade) || baseFloor
   const normalizedGrade = clamp(qGrade >= target ? baseFloor + 0.4 : qGrade, 0.0, maxCeiling)
@@ -23,7 +23,7 @@ export function getItemDifficultyParameter(question, targetGrade = 8) {
 
 export function updateIrtAbility(currentTheta, itemDifficulty, isCorrect, learningRate = 0.35, targetGrade = 8) {
   const target = Math.max(1, Number(targetGrade) || 8)
-  const maxCeiling = Math.max(0.0, Number((target - 0.1).toFixed(1))) // 7.9 for Grade 8
+  const maxCeiling = target // Allow full mastery at target grade
   const defaultTheta = Math.max(0.0, target - 0.6) // 7.4 for Grade 8
   const theta = currentTheta != null && !Number.isNaN(Number(currentTheta)) ? Number(currentTheta) : defaultTheta
   const b = itemDifficulty != null && !Number.isNaN(Number(itemDifficulty)) ? Number(itemDifficulty) : defaultTheta
@@ -833,7 +833,7 @@ export function calculateAdaptiveTopicGE(questions, answers, targetGrade) {
   if (!attempted.length) return null
 
   const target = Math.max(1, Number(targetGrade) || 8)
-  const maxCeiling = Math.max(0.0, Number((target - 0.1).toFixed(1))) // 7.9 for Grade 8
+  const maxCeiling = target
   const baseFloor = Math.max(0.0, target - 1.0) // 7.0 for Grade 8
 
   let weightedScore = 0
@@ -850,7 +850,7 @@ export function calculateAdaptiveTopicGE(questions, answers, targetGrade) {
   })
 
   const topicAccuracy = weightedTotal > 0 ? weightedScore / weightedTotal : 0
-  const topicGE = topicAccuracy > 0 ? baseFloor + topicAccuracy * 0.9 : 0.0
+  const topicGE = topicAccuracy > 0 ? baseFloor + topicAccuracy * 1.0 : 0.0
   return Number(clamp(topicGE, 0.0, maxCeiling).toFixed(2))
 }
 
@@ -858,7 +858,7 @@ export function calculateAdaptiveOverallGE(topicResults, targetGrade) {
   const values = Object.values(topicResults).filter((value) => typeof value === 'number' && Number.isFinite(value))
   if (!values.length) return null
   const target = Math.max(1, Number(targetGrade) || 8)
-  const maxCeiling = Math.max(0.0, Number((target - 0.1).toFixed(1))) // 7.9 for Grade 8
+  const maxCeiling = target
   const avg = values.reduce((sum, value) => sum + value, 0) / values.length
   return Number(clamp(avg, 0.0, maxCeiling).toFixed(2))
 }
@@ -887,7 +887,7 @@ export function matchesStrand(questionTopic, selectedStrand) {
 }
 
 export function replaceForSameStrand(questions, currentIndex, newQuestion, targetTopic) {
-  if (!newQuestion || !Array.isArray(questions)) return questions
+  if (!newQuestion || !Array.isArray(questions) || currentIndex < 0) return questions
 
   // Find the LAST unasked question belonging to targetTopic
   let replaceIdx = -1
@@ -1287,7 +1287,15 @@ export function advanceGradeBatchTest(state, questionBank, currentQuestion, sele
   if (!state || state.mode !== 'grade-batch' || !currentQuestion) return state
 
   const expectedAnswer = currentQuestion.correct_answer || currentQuestion.answer || currentQuestion.correctAnswer || currentQuestion.correct_option || currentQuestion.correctOption || ''
-  const isCorrect = String(selectedAnswer || '').trim().toUpperCase() === String(expectedAnswer).trim().toUpperCase()
+  const normSelected = String(selectedAnswer || '').trim().toUpperCase()
+  const normExpected = String(expectedAnswer || '').trim().toUpperCase()
+  let isCorrect = normSelected === normExpected
+  if (!isCorrect && currentQuestion.options && typeof currentQuestion.options === 'object') {
+    const selectedOptionVal = currentQuestion.options[normSelected] || currentQuestion.options[selectedAnswer]
+    if (selectedOptionVal && String(selectedOptionVal).trim().toLowerCase() === String(expectedAnswer).trim().toLowerCase()) {
+      isCorrect = true
+    }
+  }
   const batchQuestionCount = Number(state.batchQuestionCount || 0) + 1
   const batchCorrect = Number(state.batchCorrect || 0) + (isCorrect ? 1 : 0)
   const batchWrong = Number(state.batchWrong || 0) + (isCorrect ? 0 : 1)
@@ -1356,7 +1364,6 @@ export function advanceGradeBatchTest(state, questionBank, currentQuestion, sele
     } else {
       // Probe question answered WRONG
       if (activeProbe.depth < MAX_PROBE_DEPTH && questionGrade > 1) {
-        const deeperGrade = questionGrade - 1
         const deeperQ = findFoundationalQuestion(
           questionBank,
           activeProbe.topic,
