@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Mail, Trash2, RefreshCw, Search, Eye, Inbox, X, Check } from 'lucide-react'
+import { Mail, Trash2, RefreshCw, Search, Eye, Inbox, X, Check, Copy, ExternalLink } from 'lucide-react'
 import { apiRequest } from '../../utils/api'
 
 const STATUS_CONFIG = {
@@ -33,6 +33,18 @@ export default function AdminContacts() {
   const [error, setError] = useState('')
   const [viewingContact, setViewingContact] = useState(null)
   const [updatingId, setUpdatingId] = useState(null)
+  const [copiedId, setCopiedId] = useState(null)
+
+  const copyEmail = (e, email, id) => {
+    e?.stopPropagation?.()
+    if (!email) return
+    navigator.clipboard.writeText(email)
+    setCopiedId(id)
+    setTimeout(() => setCopiedId(null), 2000)
+  }
+
+  const getGmailUrl = (email, subject) =>
+    `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email || '')}&su=${encodeURIComponent('Re: ' + (subject || 'EduCheck Support'))}`
 
   const loadContacts = async () => {
     setLoading(true)
@@ -220,8 +232,7 @@ export default function AdminContacts() {
                   return (
                     <tr
                       key={contact.id}
-                      className="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition group cursor-pointer"
-                      onClick={() => setViewingContact(contact)}
+                      className="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition"
                     >
                       {/* Sender */}
                       <td className="px-6 py-4">
@@ -233,9 +244,19 @@ export default function AdminContacts() {
                             <p className="truncate text-sm font-semibold text-slate-900 dark:text-white">
                               {contact.name}
                             </p>
-                            <p className="truncate text-xs text-slate-400 dark:text-slate-500">
-                              {contact.email}
-                            </p>
+                            <div className="flex items-center gap-1.5 mt-0.5">
+                              <p className="truncate text-xs text-slate-400 dark:text-slate-500">
+                                {contact.email}
+                              </p>
+                              <button
+                                type="button"
+                                onClick={(e) => copyEmail(e, contact.email, contact.id)}
+                                className="rounded p-0.5 text-slate-400 hover:text-sky-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+                                title="Copy email address"
+                              >
+                                {copiedId === contact.id ? <Check size={12} className="text-emerald-500" /> : <Copy size={12} />}
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </td>
@@ -251,7 +272,7 @@ export default function AdminContacts() {
                       </td>
 
                       {/* Status */}
-                      <td className="px-6 py-4" onClick={(e) => e.stopPropagation()}>
+                      <td className="px-6 py-4">
                         <select
                           value={contact.status}
                           disabled={updatingId === contact.id}
@@ -275,7 +296,7 @@ export default function AdminContacts() {
                       </td>
 
                       {/* Actions */}
-                      <td className="px-6 py-4 text-right whitespace-nowrap" onClick={(e) => e.stopPropagation()}>
+                      <td className="px-6 py-4 text-right whitespace-nowrap">
                         <div className="flex items-center justify-end gap-1.5">
                           <button
                             type="button"
@@ -286,9 +307,11 @@ export default function AdminContacts() {
                             <Eye size={17} />
                           </button>
                           <a
-                            href={`mailto:${contact.email}?subject=Re: ${encodeURIComponent(contact.subject || 'Support Request')}`}
+                            href={getGmailUrl(contact.email, contact.subject)}
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="rounded-lg p-2 text-slate-500 hover:bg-sky-50 dark:text-slate-400 dark:hover:bg-slate-800 hover:text-sky-600 dark:hover:text-sky-400 transition"
-                            title="Reply via Email"
+                            title="Reply via Gmail"
                           >
                             <Mail size={17} />
                           </a>
@@ -338,17 +361,36 @@ export default function AdminContacts() {
             </div>
 
             {/* Sender Info */}
-            <div className="my-4 rounded-xl border border-slate-100 dark:border-slate-800/80 bg-slate-50 dark:bg-slate-800/50 p-3.5 flex items-center justify-between">
+            <div className="my-4 rounded-xl border border-slate-100 dark:border-slate-800/80 bg-slate-50 dark:bg-slate-800/50 p-3.5 flex flex-wrap items-center justify-between gap-3">
               <div>
                 <p className="text-sm font-semibold text-slate-900 dark:text-white">{viewingContact.name}</p>
                 <p className="text-xs text-slate-500 dark:text-slate-400">{viewingContact.email}</p>
               </div>
-              <a
-                href={`mailto:${viewingContact.email}?subject=Re: ${encodeURIComponent(viewingContact.subject || 'Support Request')}`}
-                className="inline-flex items-center gap-1.5 rounded-lg bg-sky-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-sky-500 transition shadow-sm"
-              >
-                <Mail size={14} /> Send Email
-              </a>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={(e) => copyEmail(e, viewingContact.email, 'modal')}
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 transition shadow-sm"
+                >
+                  {copiedId === 'modal' ? (
+                    <>
+                      <Check size={13} className="text-emerald-500" /> Copied!
+                    </>
+                  ) : (
+                    <>
+                      <Copy size={13} /> Copy Email
+                    </>
+                  )}
+                </button>
+                <a
+                  href={getGmailUrl(viewingContact.email, viewingContact.subject)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 rounded-lg bg-sky-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-sky-500 transition shadow-sm"
+                >
+                  <Mail size={13} /> Reply via Gmail <ExternalLink size={11} />
+                </a>
+              </div>
             </div>
 
             {/* Message Body */}
