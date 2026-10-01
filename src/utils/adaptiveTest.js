@@ -959,9 +959,10 @@ function selectLowerGradeQuestions(questionBank, targetGrade, selectedStrand, qu
   return selectedQuestions
 }
 
-export function createGradeBatchTestState(questionBank, targetGrade, selectedStrand = 'Overall', requestedQuestionCount = GRADE_BATCH_QUESTION_COUNT) {
+export function createGradeBatchTestState(questionBank, targetGrade, selectedStrand = 'Overall', requestedQuestionCount = null) {
   const maxGrade = clamp(Number(targetGrade) || 8, 1, 8)
-  const questionLimit = Math.max(1, Number(requestedQuestionCount) || GRADE_BATCH_QUESTION_COUNT)
+  const defaultCount = selectedStrand === 'Overall' ? GRADE_BATCH_QUESTION_COUNT : 20
+  const questionLimit = Math.max(1, Number(requestedQuestionCount) || defaultCount)
   const diffOrder = { Low: 1, Medium: 2, High: 3 }
 
   const topics = ['Number & Operations', 'Algebra', 'Geometry', 'Measurement', 'Data Analysis']
@@ -1634,8 +1635,9 @@ export function advanceGradeBatchTest(state, questionBank, currentQuestion, sele
   // 1. Calibrate next question to match nextDifficulty (True IRT Adaptive Branching)
   questions = calibrateNextQuestion(questions, currentIndex, nextDifficulty, currentQuestion.topic, questionBank, usedQuestionIds, state.targetGrade)
 
-  // 2. Strictly guarantee exact assessment length (never shrink down to 21 questions)
-  const questionLimit = state.questionLimit || GRADE_BATCH_QUESTION_COUNT
+  // 2. Strictly guarantee exact assessment length
+  const defaultLimit = state.selectedStrand === 'Overall' ? GRADE_BATCH_QUESTION_COUNT : 20
+  const questionLimit = state.questionLimit || defaultLimit
   questions = ensureQuestionLimit(questions, questionLimit, questionBank, usedQuestionIds, state.targetGrade)
 
   const assessmentComplete = batchQuestionCount >= questionLimit

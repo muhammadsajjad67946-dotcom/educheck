@@ -124,7 +124,7 @@ export default function StartTest() {
   const [selected, setSelected] = useState('')
   const [selectedDifficulty, setSelectedDifficulty] = useState(user?.currentDifficulty || 'Medium')
   const [selectedTopic, setSelectedTopic] = useState('Overall')
-  const questionCount = 30
+  const questionCount = selectedTopic === 'Overall' ? 30 : 20
   const [hasStarted, setHasStarted] = useState(false)
   const [loadingQuestions, setLoadingQuestions] = useState(false)
   const [loadError, setLoadError] = useState('')
@@ -413,6 +413,14 @@ export default function StartTest() {
                         : darkMode ? 'text-slate-200 group-hover:text-white' : 'text-slate-800'
                     }`}>
                       {item.title}
+                    </span>
+
+                    <span className={`text-[11px] font-semibold px-2 py-0.5 rounded-full border transition-colors ${
+                      isSelected
+                        ? darkMode ? 'border-sky-400/40 bg-sky-500/20 text-sky-300 font-bold' : 'border-sky-500/40 bg-sky-100 text-sky-800 font-bold'
+                        : darkMode ? 'border-white/5 bg-slate-900/60 text-slate-400' : 'border-slate-200 bg-slate-100 text-slate-500'
+                    }`}>
+                      {item.id === 'Overall' ? '30 MCQs' : '20 MCQs'}
                     </span>
                   </button>
                 )

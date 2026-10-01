@@ -2379,12 +2379,13 @@ app.post('/api/assessment-attempts', async (request, response) => {
 */
 
 app.post('/api/assessment-attempts/start', async (request, response) => {
-  const { studentId, minGrade = 1, maxGrade = 8, topic = 'Overall', questionCount = 30 } = request.body
+  const { studentId, minGrade = 1, maxGrade = 8, topic = 'Overall', questionCount } = request.body
   const safeStudentId = Number(studentId)
   const safeMinGrade = Math.min(Math.max(Number(minGrade) || 1, 1), 8)
   // safeMaxGrade: Student's target grade ceiling (1-8); prevents any higher-grade questions from leaking into the test pool
   const safeMaxGrade = Math.min(Math.max(Number(maxGrade) || 8, safeMinGrade), 8)
-  const safeQuestionCount = Math.min(Math.max(Number(questionCount) || 30, 1), 60)
+  const defaultCount = topic === 'Overall' ? 30 : 20
+  const safeQuestionCount = Math.min(Math.max(Number(questionCount) || defaultCount, 1), 60)
 
   if (!Number.isInteger(safeStudentId) || safeStudentId < 1) {
     return response.status(400).json({ message: 'Student is required.' })
