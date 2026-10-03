@@ -111,7 +111,7 @@ export default function Footer() {
             <ul className="space-y-4 text-sm text-slate-300">
               <li className="flex items-center gap-3">
                 <Mail size={18} className="text-cyan-300" />
-                <a href="mailto:hello@educheck.com" className="transition hover:text-white">hello@educheck.com</a>
+                <a href="mailto:support@educheck.com" className="transition hover:text-white">support@educheck.com</a>
               </li>
               <li className="flex items-center gap-3">
                 <Phone size={18} className="text-violet-300" />

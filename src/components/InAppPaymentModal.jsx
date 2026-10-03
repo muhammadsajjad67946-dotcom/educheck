@@ -5,10 +5,17 @@ import { CheckCircle2, Lock, Loader2, ShieldCheck, X, Sparkles, AlertTriangle, E
 import { apiRequest } from '../utils/api'
 import { useApp } from '../context/AppContext'
 
-const stripePromise = loadStripe(
-  import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY ||
-  'pk_test_51U8YmjByHXvcCn91FVe6xv1pmeQVCxVJtoITBRhErrGhPCLphxxNmbdRM4cHYKiPLwaE2PjEkzLhOQQ5GnEjHUXx00dvATKrK2'
-)
+let cachedStripePromise = null
+function getStripePromise() {
+  if (!cachedStripePromise) {
+    cachedStripePromise = loadStripe(
+      import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY ||
+      'pk_test_51U8YmjByHXvcCn91FVe6xv1pmeQVCxVJtoITBRhErrGhPCLphxxNmbdRM4cHYKiPLwaE2PjEkzLhOQQ5GnEjHUXx00dvATKrK2'
+    )
+  }
+  return cachedStripePromise
+}
+
 
 class ModalErrorBoundary extends React.Component {
   constructor(props) {
@@ -357,7 +364,7 @@ export default function InAppPaymentModal({ isOpen, onClose, onPaymentComplete }
             </div>
           ) : clientSecret ? (
             <Elements
-              stripe={stripePromise}
+              stripe={getStripePromise()}
               options={{
                 clientSecret,
                 appearance: {
